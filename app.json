@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "ARKIVE",
+    "slug": "ARKIVE",
+    "version": "1.2.34",
+    "orientation": "portrait",
+    "icon": "./assets/ARKIVE.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/ARKIVE.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#121212"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.smartsoftware.sas"
+    },
+    "android": {
+      "versionCode": 139,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [],
+      "useNextNotificationsApi": true,
+      "package": "com.sparktech.sas",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyC4fsrgciACjhUacg9umvRHflrJJHFovdY"
+        }
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ],
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "1.9.24",
+            "composeCompilerVersion": "1.5.14"
+          }
+        }
+      ],
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b201e9f7-b613-48e1-8105-5a13fc2da0d9"
+      }
+    }
+  }
+}

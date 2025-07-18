@@ -1,0 +1,25 @@
+const plugin = require("tailwindcss");
+const { plugins } = require("./tailwind.config");
+
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: [
+      ["babel-preset-expo", { jsxImportSource: "nativewind" }],
+      "nativewind/babel",
+    ],
+    plugins: [
+      [
+        "module:react-native-dotenv",
+        {
+          moduleName: "@native-env",
+          path: ".env",
+          blacklist: null,
+          whitelist: null,
+          safe: false,
+          allowUndefined: true,
+        },
+      ],
+    ],
+  };
+};
