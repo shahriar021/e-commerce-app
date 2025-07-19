@@ -1,5 +1,5 @@
 export { default as Profile } from "./Profile/Profile";
-export { default as LoginScreen } from "./Auth/LoginScreen";
+export {default as OnBoarding} from "./Auth/OnBoarding";
 export { default as HomeScreen } from "./Home/HomeScreen";
 export { default as NearbyRestaurantList } from "./Restaurant/NearbyRestaurantList";
 export { default as AboutUs } from "./Profile/AboutUs";

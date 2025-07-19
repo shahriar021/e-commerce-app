@@ -1,119 +1,53 @@
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  useWindowDimensions,
-  Alert,
-  ScrollView,
-  ImageBackground,
-} from "react-native";
-import React, { useState } from "react";
-import { Entypo, Feather } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-import { useDispatch } from "react-redux";
-import { setToken, setUser, setUserType } from "src/redux/features/auth/authSlice";
-import { useLoginMutation } from "src/redux/features/auth/authApi";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useFonts } from "expo-font";
-import { useNavigation } from "@react-navigation/native";
-import SignUpRider from "./SignUpRider";
-import SignUpUser from "./SignUpUser";
-import { scale, verticalScale } from "react-native-size-matters";
+import { AntDesign } from "@expo/vector-icons"
+import { useNavigation } from "@react-navigation/native"
+import React, { useLayoutEffect } from "react"
+import { Text, TextInput, TouchableOpacity, View } from "react-native"
 
-const LoginScreen = () => {
-  const { height, width } = useWindowDimensions();
-  const [isSignIn, setIsSignIn] = useState(true)
-  const [isUser, setIsUser] = useState("user")
-  const [roleOff, setRoleOff] = useState(true)
-  const [postLogin] = useLoginMutation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const LoginScreen =()=>{
+    
+    const navigatgion =useNavigation()
 
-  const navigation = useNavigation()
+    useLayoutEffect(()=>{
+       navigatgion.setOptions({
+         headerStyle:{
+            backgroundColor:"#121212"
+        },
+        headerTintColor:"#FFFFFF",
+        headerTitle:()=>null
+       })
+    },[navigatgion])
 
-  const dispatch = useDispatch();
+    return (
+        <View className="flex-1 bg-[#121212] p-3">
+            <View className="px-3">
+                <Text className="text-[#FFFFFF] text-2xl font-playFairDisplay mb-2" style={{ fontFamily: 'playFairDisplay' }}>Login to Your Account</Text>
+                <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-playFairDisplay"  style={{ fontFamily: 'playFairDisplay' }}>It is quick and easy to log in. Enter your email and password below.</Text>
 
-  const handleLogin = async () => {
-    // if (email !== "" && password !== "") {
-    //   try {
-    //     const output = { email, password };
-    //     const result = await postLogin(output).unwrap();
-    //     if (result?.status) {
-    //       const { data } = result;
-    //       dispatch(setUser({ user: data, Credential: output }));
-    //     }
-    //     if (!result?.status) {
-    //       Alert.alert(result.message);
-    //     }
-    //   } catch (err: any) {
-    //     Alert.alert("Something went wrong!", err);
-    //   }
-    // } else {
-    //   Alert.alert("Please Enter a valid Email or password.");
-    // }
-    console.log(email, "email.")
-    const normalizedEmail = email.trim().toLowerCase();
-    const type = normalizedEmail === "user@gmail.com" ? "user" : "rider";
-    console.log(type, "type")
-    dispatch(setToken(true))
-    dispatch(setUserType(type))
-  };
-  const [fontsLoaded] = useFonts({
-    'Roboto-Bold': require('../../../assets/fonts/Roboto-Bold.ttf'),
-  });
+                <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+                    <TextInput className="flex-1" placeholder="user" placeholderTextColor={"#ADAEBC"}/>
+                    <AntDesign name="downcircle" size={24} color="#626870" />
+                </View>
+                <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+                    <TextInput className="flex-1" placeholder="Enter your email address" placeholderTextColor={"#ADAEBC"}/>
+                </View>
+                <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+                    <TextInput className="flex-1" placeholder="Enter Password" placeholderTextColor={"#ADAEBC"}/>
+                </View>
 
-  if (!fontsLoaded) return null;
+                <TouchableOpacity className="mt-1 mb-3">
+                    <Text className="text-[#1E80DD]">Forgot Password?</Text>
+                </TouchableOpacity>
 
-  const handleVerify = () => {
-    navigation.navigate("VerifyEmail" as never)
-  }
+                 <TouchableOpacity className="mt-1 mb-3 items-center">
+                    <Text className="text-[#979797] text-xl">I don’t have an account</Text>
+                </TouchableOpacity>
 
-
-  return (
-
-    <SafeAreaView className="flex-1 bg-[#121212] ">
-      <ImageBackground
-        source={require("../../../assets/e-icon/logBack.png")}
-        style={{ flex: 1, width: "100%", height: "100%" }}
-        resizeMode="cover"
-      >
-        <View className="flex-1 items-center justify-end px-4 mb-5 p-3 ">
-          <View className="  items-start mt-1 mb-2  " style={{ width: width, height: verticalScale(54) }}>
-            <Image source={require("../../../assets/ARKIVE.png")} style={{ width: "70%", height: "100%", marginLeft: 10 }} resizeMode="contain" />
-          </View>
-          <View className=" w-full items-start">
-            <Text className="text-[#ADAEBC] font-prostoOne text-4xl  ">Define yourself in your unique way.</Text>
-          </View>
-
-
-          <TouchableOpacity className="mt-4 border border-[#FFFFFF] w-full items-center p-3 rounded-lg" onPress={handleLogin}>
-            <Text className="text-white text-lg font-prostoOne">Log In</Text>
-          </TouchableOpacity>
-
-          <View className="w-full mt-2 rounded-lg overflow-hidden">
-            <LinearGradient
-              colors={["#9DC7E9", "#E6F6FF"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              className="w-full rounded-lg mt-2"
-            >
-              <TouchableOpacity className="w-full items-center p-3 rounded-lg bg-transparent">
-                <Text className="text-black font-semibold font-prostoOne">Create Branch Account</Text>
-              </TouchableOpacity>
-            </LinearGradient>
-          </View>
-
-          <TouchableOpacity className="mt-2 border border-[#FFFFFF] w-full items-center p-3 rounded-lg">
-            <Text className="text-white font-prostoOne">Sign Up as Us</Text>
-          </TouchableOpacity>
+                <TouchableOpacity className="mt-1 mb-3 items-center bg-[#4A4A4A] p-3 rounded-lg ">
+                    <Text className="text-[#979797] text-xl font-prostoOne" style={{fontFamily:'prosto-One'}}>login</Text>
+                </TouchableOpacity>
+            </View>
         </View>
-      </ImageBackground>
-    </SafeAreaView>
+    )
+}
 
-
-  );
-};
-
-export default LoginScreen;
+export default LoginScreen

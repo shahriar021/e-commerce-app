@@ -23,7 +23,8 @@ module.exports = {
         interBold:['Inter_18pt-Bold'],
         urbanistBold:['Urbanist-Bold'],
         urbanistRegular:['Urbanist-Regular'],
-        prostoOne:['ProstoOne-Regular']
+        prostoOne:['ProstoOne-Regular'],
+        playFairDisplay:['PlayfairDisplay-Bold']
       },
       colors:{
         darkYellow:'#FFC107',

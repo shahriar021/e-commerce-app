@@ -16,7 +16,8 @@ const MainLayout = () => {
   const [isSplashVisible, setIsSplashVisible] = useState(true);
 
   const [fontsLoaded] = useFonts({
-    'prosto-One':require("../../../assets/fonts/ProstoOne-Regular.ttf")
+    'prosto-One':require("../../../assets/fonts/ProstoOne-Regular.ttf"),
+    'playFairDisplay':require("../../../assets/fonts/PlayfairDisplay-Bold.ttf")
   });
 
   
