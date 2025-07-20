@@ -11,13 +11,13 @@ import SplashScreen from "../ui/splashScreen/SplashScreen";
 const MainLayout = () => {
   // const token = useAppSelector((state) => state.auth.user?.access_token);
   // const token = useAppSelector((state)=>state.auth.token);
-  const token = 0;
-  const [, setCurrentScreen] = useState("");
+  const token = 1;
   const [isSplashVisible, setIsSplashVisible] = useState(true);
 
   const [fontsLoaded] = useFonts({
     'prosto-One':require("../../../assets/fonts/ProstoOne-Regular.ttf"),
-    'playFairDisplay':require("../../../assets/fonts/PlayfairDisplay-Bold.ttf")
+    'playFairDisplay':require("../../../assets/fonts/PlayfairDisplay-Bold.ttf"),
+    'podKova-bold':require("../../../assets/fonts/Podkova-Bold.ttf")
   });
 
   

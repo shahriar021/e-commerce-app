@@ -1,181 +1,170 @@
+import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   View,
-  Text,
-  TouchableOpacity,
   ScrollView,
   Image,
   Dimensions,
-  TextInput,
+  Text,
+  TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { AntDesign, Entypo, SimpleLineIcons } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
-import * as Font from "expo-font";
+import { scale, verticalScale } from "react-native-size-matters";
+import { homeInfo } from "./demo";
 
-const { width, height } = Dimensions.get("screen");
+const { width } = Dimensions.get("screen");
 
-const DashboardScreen = ({ navigation }: { navigation: any }) => {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [numbers] = useState(Array.from({length:30},(_,i)=>i+1))
+const images = [
+  require("../../../assets/e-icon/homeSwipe.png"),
+  require("../../../assets/e-icon/homeSwipe.png"),
+  require("../../../assets/e-icon/homeSwipe.png"),
+];
+
+const HomeScreen = () => {
+  const scrollRef = useRef<ScrollView>(null);
+  const indexRef = useRef(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: "#121212",
+      },
+    });
+  }, [navigation]);
 
   useEffect(() => {
-    Font.loadAsync({
-      "Nunito-Bold": require("../../../assets/fonts/Nunito-Bold.ttf"),
-      // ... other fonts
-    }).then(() => setFontsLoaded(true));
+    const interval = setInterval(() => {
+      const nextIndex = (indexRef.current + 1) % images.length;
+      scrollRef.current?.scrollTo({ x: nextIndex * width, animated: true });
+      indexRef.current = nextIndex;
+      setCurrentIndex(nextIndex);
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, []);
 
-  if (!fontsLoaded) return null;
+  const handleScroll = (event) => {
+    const index = Math.round(event.nativeEvent.contentOffset.x / width);
+    indexRef.current = index;
+    setCurrentIndex(index);
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <View className="p-3">
-        <View className="flex-row justify-between items-center">
-          <View className=" rounded-full overflow-hidden " style={{ width: width * 0.15, height: width * 0.15, }}>
-            <Image source={require("../../../assets/restroIcon/tikaImg.jpg")} style={{ width: "100%", height: "100%", resizeMode: "stretch" }} />
-          </View>
-          <View className="flex-row items-center">
-            <Image source={require("../../../assets/restroIcon/location-05.png")} style={{ width: 20, height: 20, marginRight: 6 }} />
-            <Text className="text-[#FE724C]">4102 Pretty View Lane</Text>
-          </View>
-        </View>
-        <Text className="  mt-3 mb-3 text-[#BA1414] text-3xl font-nunitoBold">What would like to order</Text>
-        <View className="border flex-row items-center rounded-full p-2 border-gray-200 bg-[#F2F2F2] gap-2">
-          <AntDesign name="search1" size={24} color="gray" />
-          <TextInput className="flex-1" placeholder="Seach for restaurants or dishes..." />
-        </View>
-       <ScrollView contentContainerStyle={{paddingBottom:200}} showsVerticalScrollIndicator={false}>
-         <View className="flex-row justify-between items-center mt-2 mb-2">
-          <Text className="text-2xl font-bold">Nearby Restaurants</Text>
-          <TouchableOpacity className="flex-row items-center " onPress={()=>navigation.navigate("Nearby Restaurants List")}>
-            <Text className="text-red-700">View All</Text>
-            <Entypo name="chevron-small-right" size={24} color="red" />
-          </TouchableOpacity>
-        </View>
-        <ScrollView contentContainerStyle={{ flexDirection: 'row', gap: 10, }} horizontal showsHorizontalScrollIndicator={false}>
-          {numbers.map(item =>
-            
-            <View
-              key={item} // add key
-              className="border border-gray-200 rounded-lg overflow-hidden"
-              style={{
-                width: width * 0.7,  // slightly wider for better content space
-                backgroundColor: "white",
-
-                borderRadius: 10,
-                overflow: "hidden", 
-                marginRight: 12,
-              }}
-            >
-              <Image
-                source={require("../../../assets/restroIcon/nearbyRes.png")}
-                style={{ width: "100%", height: 140, resizeMode: "cover" }}
-                className="rounded-t-lg"
-              />
-              <Text className="absolute text-xl font-semibold bg-white p-1 left-3 top-3 rounded-full text-[#19CC49]">
-                Open Now
-              </Text>
-
-              <View
-                style={{
-                  paddingHorizontal: 10,
-                  paddingVertical: 12,
-                  flexShrink: 1,
-                }}
-              >
-                <Text
-                  className="font-bold text-xl"
-                  style={{ flexWrap: "wrap" }}
-                  numberOfLines={2} // limit lines to avoid overflow if needed
-                >
-                  Urban Palate
-                </Text>
-
-                <View
-                  className="flex-row justify-between"
-                  style={{ marginTop: 8 }}
-                >
-                  <View className="flex-row items-center gap-2" style={{ flexShrink: 1 }}>
-                    <SimpleLineIcons name="clock" size={20} color="black" />
-                    <Text numberOfLines={1} style={{ flexShrink: 1 }}>
-                      9am - 11 pm
-                    </Text>
-                  </View>
-                  <Text>1.2 km away</Text>
-                </View>
-              </View>
-            </View>
-
-          )}
+    <ScrollView className="bg-[#121212] flex-1">
+      {/* Image Slider Wrapper */}
+      <View style={{ position: "relative" }} >
+        {/* Image ScrollView */}
+        <ScrollView
+          ref={scrollRef}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+          className="bg-red-300"
+        >
+          {images.map((image, index) => (
+            <Image
+              key={index}
+              source={image}
+              style={{ width, height: verticalScale(450) }}
+              resizeMode="cover"
+            />
+          ))}
         </ScrollView>
-        {/*  */}
-        <View className="flex-row justify-between items-center mt-2 mb-2">
-          <Text className="text-2xl font-bold">Popular Items</Text>
-          <TouchableOpacity className="flex-row items-center " onPress={()=>navigation.navigate("Popular Items")}>
-            <Text className="text-red-700">View All</Text>
-            <Entypo name="chevron-small-right" size={24} color="red" />
-          </TouchableOpacity>
+
+        <View
+          className="absolute right-5 top-5"
+          style={{ width: scale(30), height: verticalScale(30) }}
+        >
+          <Image
+            source={require("../../../assets/e-icon/Frame.png")}
+            style={{ width: "100%", height: "100%" }}
+          />
+          <View
+            className="absolute bg-[#0CB24C] rounded-full items-center justify-center"
+            style={{
+              top: -2,
+              right: -3,
+              width: 15,
+              height: 15,
+            }}
+          >
+            <Text className="text-white text-[10px] font-bold">3</Text>
+          </View>
         </View>
-        <ScrollView contentContainerStyle={{ flexDirection: 'row', gap: 10, }} horizontal showsHorizontalScrollIndicator={false}>
-          {numbers.map(item =>
-            
+
+        <View className="absolute bottom-0 right-0 left-0 top-0 items-center justify-center ">
+          <Text className="text-white font-playFairDisplay text-3xl max-w-[90%] text-center">
+            One Platform, A Thousand Brands
+          </Text>
+          <TouchableOpacity className="bg-[#fff] w-[90%]  rounded-3xl p-4 items-center mt-3">
+            <Text className="font-playFairDisplay text-[#111827]">Explore Collections</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+            className="w-[90%] rounded-3xl p-4 items-center mt-3 border border-[#fff]"
+          >
+            <Text className="font-playFairDisplay text-white">Explore Collections</Text>
+          </TouchableOpacity>
+
+        </View>
+
+        {/* Dot Indicator - Absolute over image */}
+        <View
+          style={{
+            position: "absolute",
+            bottom: 10,
+            left: 0,
+            right: 0,
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          {images.map((_, index) => (
             <View
-              key={item} // add key
-              className="border border-gray-200 rounded-lg overflow-hidden"
+              key={index}
               style={{
-                width: width * 0.5,  // slightly wider for better content space
-                backgroundColor: "white",
-
-                borderRadius: 10,
-                overflow: "hidden", 
-                marginRight: 12,
+                width: 8,
+                height: 8,
+                borderRadius: 4,
+                marginHorizontal: 4,
+                backgroundColor:
+                  index === currentIndex ? "#FFFFFF" : "#888888",
               }}
-            >
-              <Image
-                source={require("../../../assets/restroIcon/popularImg.png")}
-                style={{ width: "100%", height: 140, resizeMode: "cover" }}
-                className="rounded-t-lg relative"
-              />
-             <View className="flex-row justify-between items-center absolute  w-full">
-               <View className=" flex-row items-center border border-red-700 rounded-full bg-white  top-2 left-2">
-                <Text className="text-red-700 font-semibold mx-2">$</Text>
-                <Text className="text-black font-semibold">10.35</Text>
-                <View className="bg-red-100 rounded-full p-1"><Text className="text-red-800">-9%</Text></View>
-              </View>
-
-              <View className=" right-2 top-2 bg-[#C21A1E] rounded-full p-1">
-                <Image source={require("../../../assets/restroIcon/Basket.png")} style={{width:30,height:30}}/>
-              </View>
-             </View>
-              
-
-              <View
-                style={{
-                  paddingHorizontal: 10,
-                  paddingVertical: 12,
-                  flexShrink: 1,
-                }}
-              >
-                <Text
-                  className="font-bold text-xl"
-                  style={{ flexWrap: "wrap" }}
-                  numberOfLines={2} // limit lines to avoid overflow if needed
-                >
-                  Classic CheeseBurger
-                </Text>
-
-                <Text>
-                  Beef patty with cheddar chicken.
-                </Text>
-              </View>
-            </View>
-
-          )}
-        </ScrollView>
-       </ScrollView>
+            />
+          ))}
+        </View>
       </View>
-    </SafeAreaView>
+
+      <View className=" items-center p-3 ">
+        <Text className="font-prostoOne text-3xl text-center text-[#fff] mt-5">Featured Brands</Text>
+        <Text className="font-prostoOne text-lg text-center text-[#fff] mt-2 max-w-[90%]">Discover premium collections from top designers</Text>
+
+        {homeInfo?.map(item => <View className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }}>
+          <View className="rounded-3xl overflow-hidden" style={{ width: scale(80), height: verticalScale(80) }}>
+            <Image source={item.image} style={{ width: "100%", height: "100%" }} className="rounded-3xl" />
+          </View>
+          <View className="flex-1">
+            <Text className="text-[#E5E7EB] font-prostoOne text-xl">{item.name}</Text>
+            <Text className="text-[#E5E7EB] font-prostoOne text-base mb-2">{item.info}</Text>
+            <TouchableOpacity className="bg-[#DCF3FF] p-1 items-center rounded-2xl w-[80%]">
+              <Text className="font-playFairDisplay">View Collection</Text>
+            </TouchableOpacity>
+          </View>
+          <AntDesign name="right" size={24} color="#9CA3AF" />
+        </View>)}
+
+        <TouchableOpacity className=" items-center border rounded-3xl border-[#fff] p-2 mt-3" style={{ width: "95%" }}>
+          <Text className="font-prostoOne text-white text-xl">View All</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
-export default DashboardScreen;
+export default HomeScreen;

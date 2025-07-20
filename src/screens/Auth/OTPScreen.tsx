@@ -38,67 +38,49 @@ const OTPScreen = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: "Verify your email",
       headerStyle: {
-        backgroundColor: "white",
-        elevation: 0, // for Android
-        shadowOpacity: 0, // for iOS
-        borderBottomWidth: 0, // for iOS
+        backgroundColor: "#121212"
       },
-      headerTintColor: "black",
-      headerTitleAlign: "center",
-      headerLeft: () => (
-        <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
-          <View className='w-[35px] h-[35px] border border-red-100 items-center justify-center rounded-full'>
-            <Entypo name="chevron-small-left" size={24} color="red" />
-          </View>
-        </TouchableOpacity>
-      )
-    });
-  }, [navigation]);
+      headerTintColor: "#FFFFFF",
+      headerTitle: '', // hides title in header center
+      headerBackTitleVisible: false, // hides back label
+      headerBackTitle: '', // extra safety for iOS
+    })
+  }, [navigation])
 
   return (
-    <View className='flex-1 items-center justify-center bg-white'>
-      <Text className='font-robotoBold text-xl mb-2'>Enter OTP</Text>
-      <Text className='text-center text-gray-500'>
-        {` We have just sent you a 4-digit code \n via your email.`}
-      </Text>
+    <View className="flex-1 bg-[#121212] p-3">
+      <View className="px-3">
+        <Text className="text-[#FFFFFF] text-2xl font-playFairDisplay mb-2" style={{ fontFamily: 'playFairDisplay' }}>OTP Verification</Text>
+        <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-playFairDisplay" style={{ fontFamily: 'playFairDisplay' }}>Enter 6-digit Code</Text>
+        <Text className='text-[#FFFFFF]'>Your code was sent to +1111499350</Text>
 
-      <View className='flex-row gap-5 mt-3 mb-2'>
-        {otpNumbers.map((digit, index) => (
-          <TextInput
-            key={index}
-            ref={(ref) => (inputRefs.current[index] = ref)}
-            onChangeText={(text) => handleChange(text, index)}
-            onKeyPress={(e) => handleKeyPress(e, index)}
-            maxLength={1}
-            keyboardType='numeric'
-            className='border p-1 rounded-lg border-red-600 text-2xl text-red-600 text-center font-bold'
-            style={{ width: width * 0.15, height: height * 0.06 }}
-          />
-        ))}
-      </View>
 
-      <View className="items-center mb-2">
-        <TouchableOpacity
-          className="items-center mt-3 rounded-full overflow-hidden"
-          style={{ width: width * 0.9 }}
-          onPress={handleVerify}
-        >
-          <LinearGradient
-            colors={["#DD0F14", "#C21A1E"]}
-            style={{ width, borderRadius: 999, alignItems: "center" }}
-          >
-            <Text className="text-white p-3">Verify</Text>
-          </LinearGradient>
+        <View className='flex-row gap-5 mt-3 mb-2 justify-center'>
+          {otpNumbers.map((digit, index) => (
+            <TextInput
+              key={index}
+              ref={(ref) => (inputRefs.current[index] = ref)}
+              onChangeText={(text) => handleChange(text, index)}
+              onKeyPress={(e) => handleKeyPress(e, index)}
+              maxLength={1}
+              keyboardType='numeric'
+              className='border-b p-1 rounded-lg border-b-[#E6E6E8] text-2xl text-blue-600 text-center font-bold'
+              style={{ width: width * 0.15, height: height * 0.06 }}
+            />
+          ))}
+        </View>
+        <Text className='text-[#989898] mt-2 mb-3'>Resend code 59s</Text>
+        <TouchableOpacity className="mt-2 mb-3 p-3 items-center bg-[#4A4A4A] rounded-lg overflow-hidden" onPress={() => navigation.navigate("Success page")}>
+            <Text className="text-[#979797] text-xl font-prostoOne" style={{ fontFamily: 'prosto-One' }}>Verify</Text>
         </TouchableOpacity>
       </View>
-
-      <Text className='text-gray-500'>
-        Didn't receive code?<Text className='text-red-800'> Resend Code</Text>
-      </Text>
     </View>
   );
 };
 
 export default OTPScreen;
+
+
+
+

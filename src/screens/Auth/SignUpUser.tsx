@@ -1,53 +1,75 @@
-import { View, Text, useWindowDimensions, ScrollView, TextInput, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { Entypo, Feather } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
+import { AntDesign, Feather } from "@expo/vector-icons"
+import { useNavigation } from "@react-navigation/native"
+import { LinearGradient } from "expo-linear-gradient"
+import React, { useLayoutEffect, useState } from "react"
+import { Text, TextInput, TextInputBase, TouchableOpacity, View } from "react-native"
 
-const SignUpUser = ({setIsSignIn,handleVerify,setRoleOff}:any) => {
-    const { height, width } = useWindowDimensions();
-  return (
-    <ScrollView className="mt-4 flex-1 w-full ">
-            <Text className="font-robotoBold text-2xl text-left mb-2">Create New Account</Text>
-            <Text className="mb-2">Please fill your detail information</Text>
+const SignUpUser =()=>{
+    
+    const navigatgion =useNavigation()
 
-            <Text className="mt-1 mb-1">Name</Text>
-            <TextInput className="border rounded-xl mt-1 border-gray-300 mb-1 p-3" />
-            <Text className="mt-1 mb-1">Email</Text>
-            <TextInput className="border rounded-xl mt-1 border-gray-300 mb-1 p-3" />
-            <Text className="mt-1 mb-1">Mobile Number</Text>
-            <TextInput className="border rounded-xl mt-1 border-gray-300 mb-1 p-3" />
+    const [isShowPassword,setIsShowPassword]=useState(false)
 
-            <Text className="mt-1 mb-1">Password</Text>
-            <View className="flex-row border border-gray-300 rounded-xl items-center px-3">
-              <TextInput className="flex-1 py-3" /><Feather name="eye-off" size={24} color="gray" />
-            </View>
-            <View className="mt-3 flex-row items-center justify-between">
-              <View className="flex-row items-center gap-2">
-                <TouchableOpacity>
-                  <Text>
-                    <Entypo name="circle" size={24} color="gray" />
-                  </Text>
+    useLayoutEffect(()=>{
+       navigatgion.setOptions({
+         headerStyle:{
+            backgroundColor:"#121212"
+        },
+        headerTintColor: "#FFFFFF",
+    headerTitle: '', // hides title in header center
+    headerBackTitleVisible: false, // hides back label
+    headerBackTitle: '', // extra safety for iOS
+       })
+    },[navigatgion])
+
+    return (
+        <View className="flex-1 bg-[#121212] p-3">
+            <View className="px-3">
+                <Text className="text-[#FFFFFF] text-2xl font-playFairDisplay mb-2" style={{ fontFamily: 'playFairDisplay' }}>Create Your Account</Text>
+                <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-playFairDisplay"  style={{ fontFamily: 'playFairDisplay' }}>It is quick and easy to create you account</Text>
+
+                <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+                    <TextInput className="flex-1" placeholder="Enter First Name" placeholderTextColor={"#ADAEBC"}/>
+                </View>
+                <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+                    <TextInput className="flex-1" placeholder="Enter Last Name" placeholderTextColor={"#ADAEBC"}/>
+                </View>
+                <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+                    <TextInput className="flex-1" placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"}/>
+                </View>
+
+                <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+                    <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword}/>
+                    <TouchableOpacity className="flex-row items-center" onPress={()=>setIsShowPassword(!isShowPassword)}>
+                      {isShowPassword?<Feather name="eye" size={24} color="gray" />
+                      :<Feather name="eye-off" size={24} color="gray" />}
+                    </TouchableOpacity>
+                </View>
+
+                <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+                    <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword}/>
+                    <TouchableOpacity className="flex-row items-center" onPress={()=>setIsShowPassword(!isShowPassword)}>
+                      {isShowPassword?<Feather name="eye" size={24} color="gray" />
+                      :<Feather name="eye-off" size={24} color="gray" />}
+                    </TouchableOpacity>
+                </View>
+
+               
+                 
+                <TouchableOpacity className="mt-1 mb-3 items-center bg-[#4A4A4A] rounded-lg overflow-hidden">
+                  <LinearGradient
+                                colors={["#9DC7E9", "#E6F6FF"]}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 0 }}
+                                className="w-full rounded-lg  overflow-hidden"
+                                style={{width:"100%",alignItems:"center",padding:10}}
+                              >
+                    <Text className="text-[#979797] text-xl font-prostoOne" style={{fontFamily:'prosto-One'}}>Create Account</Text>
+                    </LinearGradient>
                 </TouchableOpacity>
-                <Text>Remember Me</Text>
-              </View>
-              <Text className="text-red-700">Forget Password?</Text>
             </View>
-
-            <View className="items-center">
-              <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden" style={{ width: width * 0.9 }} onPress={handleVerify}>
-                <LinearGradient colors={["#DD0F14", "#C21A1E"]} style={{ width, borderRadius: 999, alignItems: "center" }}>
-                  <Text className="text-white p-3 ">Verify Email</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </View>
-            <View className="flex-row items-center mt-4 gap-2 justify-center"><Text className="text-center ">Already have an account?</Text>
-
-              <TouchableOpacity onPress={() => setIsSignIn(true)}><Text className="text-[#B42315]">Log In</Text>
-
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-  )
+        </View>
+    )
 }
 
 export default SignUpUser

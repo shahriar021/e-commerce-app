@@ -34,12 +34,14 @@ import {
 import { RiderBottomNavigation } from "./RiderBottomNavigation";
 import { ActivityIndicator } from "react-native";
 import { useAppSelector } from "src/redux/hooks";
+import BrandDetails from "src/screens/Bage/BrandDetails";
 
 
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {
-  const userType = useAppSelector((store)=>store.auth.userType)
+  // const userType = useAppSelector((store)=>store.auth.userType)
+  const userType="user"
 
 
   if(!userType){
@@ -51,7 +53,7 @@ const StackNavigation = () => {
       <Stack.Navigator
         screenOptions={{
           cardStyle: {
-            backgroundColor: "white",
+            backgroundColor: "#121212",
           },
           headerStyle: {
             elevation: 0,
@@ -64,14 +66,13 @@ const StackNavigation = () => {
       >
         {<Stack.Screen
           name="BottomScreen"
-          component={userType==="user"?BottomNavigation:RiderBottomNavigation}
+          component={BottomNavigation}
           options={{
             headerShown: false,
           }}
         />}
         {/* <Stack.Screen name="Notification" component={} /> */}
         <Stack.Screen name="Profile" options={{headerShown:false}} component={Profile} />
-        <Stack.Screen name="Log in" component={LoginScreen} />
 
         <Stack.Screen name="about" component={AboutUs}/>
         <Stack.Screen name="Privacy" component={Privacy}/>
@@ -101,6 +102,7 @@ const StackNavigation = () => {
         <Stack.Screen name="Bank" component={Bank}/>
         <Stack.Screen name="Bank Edit" component={BankEdit}/>
         <Stack.Screen name="History" component={History}/>
+        <Stack.Screen name="Brand Details" options={{headerShown:true}} component={BrandDetails}/>
       </Stack.Navigator>
     // </NavigationContainer>
   );

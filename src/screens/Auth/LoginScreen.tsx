@@ -34,7 +34,7 @@ const LoginScreen =()=>{
                     <TextInput className="flex-1" placeholder="Enter Password" placeholderTextColor={"#ADAEBC"}/>
                 </View>
 
-                <TouchableOpacity className="mt-1 mb-3">
+                <TouchableOpacity className="mt-1 mb-3" onPress={()=>navigatgion.navigate("Forget Password")}>
                     <Text className="text-[#1E80DD]">Forgot Password?</Text>
                 </TouchableOpacity>
 

@@ -1,60 +1,45 @@
-import { Entypo } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native'
-import { LinearGradient } from 'expo-linear-gradient';
-import React, { useLayoutEffect } from 'react'
-import { Text, TextInput, TouchableOpacity, useWindowDimensions, View } from 'react-native'
+import { AntDesign, Feather } from "@expo/vector-icons"
+import { useNavigation } from "@react-navigation/native"
+import { LinearGradient } from "expo-linear-gradient"
+import React, { useLayoutEffect, useState } from "react"
+import { Text, TextInput, TextInputBase, TouchableOpacity, View } from "react-native"
 
 const ForgetPassword = () => {
 
-  const navigation = useNavigation();
+  const navigatgion = useNavigation()
 
-  const { width, height } = useWindowDimensions();
+  const [isShowPassword, setIsShowPassword] = useState(false)
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      title: "Forgot Password",
+    navigatgion.setOptions({
       headerStyle: {
-        backgroundColor: "white",
-        elevation: 0, // for Android
-        shadowOpacity: 0, // for iOS
-        borderBottomWidth: 0, // for iOS
+        backgroundColor: "#121212"
       },
-      headerTintColor: "black",
-      headerTitleAlign: "center",
-
-
-      headerLeft: () => (
-        <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
-          <View className='w-[35px] h-[35px] border border-red-100 items-center justify-center rounded-full'>
-            <Entypo name="chevron-small-left" size={24} color="red" />
-          </View>
-        </TouchableOpacity>
-      )
-
-    });
-  }, [navigation]);
-
-  const handleVerify = () => {
-    navigation.navigate("Login OTP" as never)
-  }
+      headerTintColor: "#FFFFFF",
+      headerTitle: '', // hides title in header center
+      headerBackTitleVisible: false, // hides back label
+      headerBackTitle: '', // extra safety for iOS
+    })
+  }, [navigatgion])
 
   return (
-    <View className='flex-1 p-1 bg-white'>
-      <Text className='mb-4  mt-2 text-center text-red-700 font-bold text-xl'>No worries!</Text>
-      <Text className='text-center'>
-        {"Enter your registered email address or mobile number and we’ll \n send you instructions to reset your password. Let’s get you back \n on track quickly and securely!"}</Text>
+    <View className="flex-1 bg-[#121212] p-3">
+      <View className="px-3">
+        <Text className="text-[#FFFFFF] text-2xl font-playFairDisplay mb-2" style={{ fontFamily: 'playFairDisplay' }}>Forget Password</Text>
+        <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-playFairDisplay" style={{ fontFamily: 'playFairDisplay' }}>We’ll send a verification code to your mail </Text>
 
-      <View className='mt-4' style={{ alignItems: 'flex-start', width: width * 0.9, alignSelf: 'center' }}>
-        <Text className='mb-2'>Enter new password</Text>
-        <TextInput
-          className='border rounded-xl p-3 border-gray-400'
-          style={{ width: '100%' }}
-        />
-      </View>
-      <View className="items-center ">
-        <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden" style={{ width: width * 0.9 }} onPress={handleVerify}>
-          <LinearGradient colors={["#DD0F14", "#C21A1E"]} style={{ width, borderRadius: 999, alignItems: "center" }}>
-            <Text className="text-white p-3 ">Send Code</Text>
+        <View className="bg-[#2C2C2C] mt-3 mb-5 rounded-lg overflow-hidden flex-row items-center p-2">
+          <TextInput className="flex-1" placeholder="Enter E-Mail Address" placeholderTextColor={"#ADAEBC"} />
+        </View>
+        <TouchableOpacity className="mt-2 mb-3 items-center  rounded-lg overflow-hidden" onPress={() => navigatgion.navigate("OTP Screen")}>
+          <LinearGradient
+            colors={["#9DC7E9", "#E6F6FF"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            className="w-full rounded-lg overflow-hidden "
+            style={{ width: "100%", alignItems: "center", padding: 10 }}
+          >
+            <Text className="text-[#979797] text-xl font-prostoOne" style={{ fontFamily: 'prosto-One' }}>Send Email</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>

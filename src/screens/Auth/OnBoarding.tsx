@@ -9,7 +9,7 @@ import {
   ScrollView,
   ImageBackground,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { Entypo, Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch } from "react-redux";
@@ -34,6 +34,13 @@ const OnBoarding = () => {
   const navigation = useNavigation()
 
   const dispatch = useDispatch();
+
+  useLayoutEffect(() => {
+  navigation.setOptions({
+    title: '', // or any title you want
+  });
+}, [navigation]);
+
 
   const handleLogin = async () => {
     // if (email !== "" && password !== "") {
@@ -105,8 +112,8 @@ const OnBoarding = () => {
             </LinearGradient>
           </View>
 
-          <TouchableOpacity className="mt-2 mb-2 border border-[#FFFFFF] w-full items-center p-3 rounded-lg">
-            <Text className="text-white font-prostoOne">Sign Up as Us</Text>
+          <TouchableOpacity className="mt-2 mb-2 border border-[#FFFFFF] w-full items-center p-3 rounded-lg" onPress={()=>navigation.navigate("Sign Up as User")}>
+            <Text className="text-white font-prostoOne">Sign Up as User</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
