@@ -32,3 +32,31 @@ export const bageData=[
         title:"UNRULY"
     },
 ]
+
+
+export const allProducts=[
+    {
+        image:require("../../../assets/e-icon/proD1.jpg"),
+    },
+    {
+        image:require("../../../assets/e-icon/proD2.jpg"),
+    },
+    {
+        image:require("../../../assets/e-icon/proD1.jpg"),
+    },
+    {
+        image:require("../../../assets/e-icon/proD2.jpg"),
+    },
+    {
+        image:require("../../../assets/e-icon/proD2.jpg"),
+    },
+    {
+        image:require("../../../assets/e-icon/proD1.jpg"),
+    },
+    {
+        image:require("../../../assets/e-icon/proD1.jpg"),
+    },
+    {
+        image:require("../../../assets/e-icon/proD2.jpg"),
+    },
+]

@@ -48,7 +48,7 @@ const InputSelectPicker = ({
   };
 
   return (
-    <View className="w-full relative">
+    <View className="flex-1 relative">
       <Pressable onPress={handlePress} disabled={disabled}>
         {/* Disable the Pressable */}
         <View

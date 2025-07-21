@@ -17,13 +17,13 @@ const BrandDetails = () => {
         },
         headerTitle: () => null,
         headerLeft: () => (
-            <View className='flex-row gap-2 items-center'>
+            <TouchableOpacity className='flex-row gap-2 items-center' onPress={()=>navigation.goBack()}>
                 <AntDesign name="arrowleft" size={24} color="white" />
                 <View className='flex-col'>
                     <Text className='font-podKova text-white text-xl'>ARKIVE</Text>
                     <Text className='font-prostoOne text-white'>Brand Details</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     });
 
@@ -33,7 +33,7 @@ const BrandDetails = () => {
             <Text className='font-playFairDisplay text-white text-5xl mt-5 mb-3'>Coid Supply</Text>
             <Text className='font-prostoOne text-white mt-1 mb-3'>Born from late-night sketch sessions and city grit, COID Supply started in a cramped apartment in Brooklyn with just a screen printer and a dream. Tired of watered-down fashion, we built a brand that reps raw energy, underground culture, and the hustle mentality. Our first drop? Sold out of backpacks at a pop-up on Flatbush Ave. Today, COID is more than a label—it’s a movement for the unheard, the unseen, and the unfazed. We don’t follow trends. We set ‘em.</Text>
 
-            <TouchableOpacity className='bg-[#1F2937] p-2 rounded-lg w-[40%]'>
+            <TouchableOpacity className='bg-[#1F2937] p-2 rounded-lg w-[40%]' onPress={()=>navigation.navigate("Brand Products")}>
                 <Text className='text-white text-center font-prostoOne'>visit our shop</Text>
             </TouchableOpacity>
 

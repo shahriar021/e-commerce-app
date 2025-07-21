@@ -15,8 +15,9 @@ const BottomTabs = createBottomTabNavigator();
 import { TouchableOpacity } from 'react-native';
 import { HomeScreen } from "src/screens";
 import Bage from "src/screens/Bage/Bage";
+import Feed from "src/screens/Feed/Feed";
 
-const CustomTabBarButton = ({ children, onPress, accessibilityState }:any) => {
+const CustomTabBarButton = ({ children, onPress, accessibilityState }: any) => {
   const focused = accessibilityState.selected;
 
   return (
@@ -53,7 +54,7 @@ export const BottomNavigation = () => {
             paddingBottom: 7,
             height: 68,
             backgroundColor: "#252525",
-            overflow:"hidden"
+            overflow: "hidden"
           },
           tabBarLabelStyle: {
             fontSize: width > 450 ? 14 : 12,
@@ -73,12 +74,12 @@ export const BottomNavigation = () => {
 
 
         <BottomTabs.Screen
-          name="Dashboard"
+          name="Home"
           component={HomeScreen}
           options={{
-            headerTitle: ()=>null,
+            headerTitle: () => null,
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="grid" size={size} color={color} />
+              <Image source={require("../../assets/e-icon/home-2.png")} style={{ width: 24, height: 24 }} />
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
           }}
@@ -86,23 +87,23 @@ export const BottomNavigation = () => {
 
 
         <BottomTabs.Screen
-          name="History"
-          component={() => <View />}
+          name="Feed"
+          component={() => <Feed />}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <FontAwesome name="archive" size={size} color={color} />
+              <Image source={require("../../assets/e-icon/image 2.png")} style={{ width: 24, height: 24 }} />
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
           }}
         />
         <BottomTabs.Screen
           name="Brand"
-          component={() => <Bage/>}
+          component={() => <Bage />}
           options={{
             tabBarIcon: ({ color, size }) => (
               <View className="relative">
 
-                <Image source={require("../../assets/e-icon/medal-star.png")} style={{width:24,height:24}}/>
+                <Image source={require("../../assets/e-icon/medal-star.png")} style={{ width: 24, height: 24 }} />
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,

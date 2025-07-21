@@ -35,6 +35,9 @@ import { RiderBottomNavigation } from "./RiderBottomNavigation";
 import { ActivityIndicator } from "react-native";
 import { useAppSelector } from "src/redux/hooks";
 import BrandDetails from "src/screens/Bage/BrandDetails";
+import BrandProducts from "src/screens/Bage/BrandProducts";
+import ProductDetails from "src/screens/Bage/ProductDetails";
+import Feed from "src/screens/Feed/Feed";
 
 
 const Stack = createStackNavigator();
@@ -103,6 +106,8 @@ const StackNavigation = () => {
         <Stack.Screen name="Bank Edit" component={BankEdit}/>
         <Stack.Screen name="History" component={History}/>
         <Stack.Screen name="Brand Details" options={{headerShown:true}} component={BrandDetails}/>
+        <Stack.Screen name="Brand Products" options={{headerShown:true}} component={BrandProducts}/>
+        <Stack.Screen name="Product Details" options={{headerShown:true}} component={ProductDetails}/>
       </Stack.Navigator>
     // </NavigationContainer>
   );
