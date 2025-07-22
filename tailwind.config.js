@@ -25,7 +25,8 @@ module.exports = {
         urbanistRegular:['Urbanist-Regular'],
         prostoOne:['ProstoOne-Regular'],
         playFairDisplay:['PlayfairDisplay-Bold'],
-        podKova:['Podkova-Bold']
+        podKova:['Podkova-Bold'],
+        opansans:['OpenSans-Regular']
       },
       colors:{
         darkYellow:'#FFC107',

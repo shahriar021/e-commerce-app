@@ -16,6 +16,7 @@ import { TouchableOpacity } from 'react-native';
 import { HomeScreen } from "src/screens";
 import Bage from "src/screens/Bage/Bage";
 import Feed from "src/screens/Feed/Feed";
+import { DrawerNavigation } from "./DrawerNavigation";
 
 const CustomTabBarButton = ({ children, onPress, accessibilityState }: any) => {
   const focused = accessibilityState.selected;
@@ -109,6 +110,22 @@ export const BottomNavigation = () => {
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
           }}
         />
+        <BottomTabs.Screen
+          name="Profile"
+          component={DrawerNavigation}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <View className="relative">
+
+                <Image source={require("../../assets/e-icon/profile.png")} style={{ width: 24, height: 24 }} />
+              </View>
+            ),
+            tabBarButton: (props) => <CustomTabBarButton {...props} />,
+          }}
+        />
+
+
       </BottomTabs.Navigator>
     </View>
   );

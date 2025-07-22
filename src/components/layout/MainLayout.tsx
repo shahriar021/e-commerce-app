@@ -17,7 +17,8 @@ const MainLayout = () => {
   const [fontsLoaded] = useFonts({
     'prosto-One':require("../../../assets/fonts/ProstoOne-Regular.ttf"),
     'playFairDisplay':require("../../../assets/fonts/PlayfairDisplay-Bold.ttf"),
-    'podKova-bold':require("../../../assets/fonts/Podkova-Bold.ttf")
+    'podKova-bold':require("../../../assets/fonts/Podkova-Bold.ttf"),
+    'opansans':require("../../../assets/fonts/OpenSans-Regular.ttf")
   });
 
   

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect, useState } from "react";
 import {
   View,
   Text,
@@ -20,8 +20,10 @@ import { profileItems } from "../../constants/profileItems";
 // ✅ SVG imports as components
 import LeftSVG from "../../../assets/restroIcon/leftSVG.svg";
 import RightSVG from "../../../assets/restroIcon/rightSVG.svg";
-import { scale, verticalScale } from "react-native-size-matters";
+import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { useAppSelector } from "src/redux/hooks";
+import Posts from "../Feed/Posts";
+import Details from "../Feed/Details";
 
 const { width } = Dimensions.get("window");
 
@@ -41,110 +43,119 @@ type RootStackParamList = {
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
-const isTablet = width > 768; 
+const isTablet = width > 768;
 
 export default function YourComponent() {
-  const userType=useAppSelector((store)=>store.auth.userType)
-  
+  const userType = useAppSelector((store) => store.auth.userType)
+  const [isPosts, setIsPosts] = useState("Posts")
+
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<NavigationProp>();
 
-  const {width,height}=useWindowDimensions()
+  const { width, height } = useWindowDimensions()
 
-  const SettingsItem = ({ icon, label, onPress }: ProfileItemsProp) => (
-    <TouchableOpacity
-      onPress={onPress}
-      className="flex-row justify-between border p-2 m-2 rounded-lg border-gray-300 w-full"
-    >
-      <View className="flex-row items-center gap-2">
-        <Image source={icon} className="w-[20] h-[20]" />
-        <Text className="text-[#626262] text-xl font-robotoBold">{label}</Text>
-      </View>
-      <View className="p-1">
-        <View className="w-[35px] h-[35px] border border-gray-200 items-center justify-center rounded-full">
-          <Entypo name="chevron-small-right" size={24} color="black" />
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerStyle: { backgroundColor: "#121212" },
+      headerTintColor: "white"
+    })
+  }, [navigation])
 
   return (
-    <>
-      <StatusBar style="dark" translucent backgroundColor="transparent" />
+    <ScrollView
+      contentContainerStyle={{
+        paddingBottom: verticalScale(40),
+        alignItems: 'center',
+      }}
+      style={{ flex: 1, backgroundColor: '#121212' }}
+    >
+      <View
+        style={{
+          width: '92%',
+          height: verticalScale(300),
+          borderRadius: moderateScale(24),
+          overflow: 'hidden',
+          marginTop: verticalScale(16),
 
-      {/* 🔥 Header area including SVGs */}
-      <View style={{ width: "100%", height: height*0.26, position: "relative", backgroundColor: "white" }}>
-        {/* Left SVG */}
-        <LeftSVG
-          width={isTablet ? width * 0.8 : width * 0.65}
-          height="100%"
+        }}
+      >
+        <Image
+          source={require("../../../assets/e-icon/othersProfile.jpg")}
           style={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            zIndex: 1,
+            width: '100%',
+            height: verticalScale(250),
+            borderRadius: moderateScale(24),
           }}
+          resizeMode="cover"
         />
 
-        {/* Right SVG */}
-        <RightSVG
-          width={isTablet ? width * 0.75 : width * 0.6}
-          height="100%"
+        {/* Profile Image (centered bottom) */}
+        <View
           style={{
-            position: "absolute",
-            right: 0,
-            top: 0,
-            zIndex: 1,
+            width: scale(102),
+            height: scale(102),
+            position: 'absolute',
+            bottom: verticalScale(12),
+            left: '50%',
+            transform: [{ translateX: -scale(102) / 2 }],
+            borderRadius: scale(102) / 2,
+            overflow: 'hidden',
+            borderWidth: 4,
+            borderColor: 'white',
+            zIndex: 10,
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
-        />
-
-        {/* Title */}
-        <Text
-          className="font-robotoBold absolute z-10 text-white text-2xl left-1/2 -translate-x-1/2"
-          style={{ top: insets.top + 10 }}
         >
-          Profile
-        </Text>
-
-        {/* Avatar */}
-        <View className=" absolute z-10 overflow-hidden rounded-full left-1/2 bottom-0 -translate-x-1/2 border-4 border-white" style={{width:scale(100),height:verticalScale(100)}}>
           <Image
-            source={require("../../../assets/restroIcon/tikaImg.jpg")}
-            style={{ width: "100%", height: "100%" }}
+            source={require("../../../assets/e-icon/img (1).png")}
+            style={{ width: '100%', height: '100%' }}
             resizeMode="cover"
           />
+
+        </View>
+        <TouchableOpacity className="absolute z-10 bg-[#2A2A2A] p-1 rounded-full" style={{
+          width: scale(24), height: scale(24), bottom: verticalScale(12), left: '50%',
+          transform: [{ translateX: scale(60) / 2 }]
+        }}>
+          <Image source={require("../../../assets/e-icon/Button.png")} style={{ width: '100%', height: '100%' }} />
+        </TouchableOpacity>
+      </View>
+
+      <View className='w-[92%] items-center'>
+        <Text className='text-white text-center font-prostoOne' style={{ fontFamily: 'prosto-One' }}>Jack Robo</Text>
+        <Text className='text-white font-prostoOne text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
+        <View className='mt-3 flex-row gap-3'>
+          <View className='bg-[#252525] p-2 items-center rounded-xl'>
+            <Text className='text-white'>142</Text>
+            <Text className='text-[#9CA3AF]' style={{ fontFamily: 'prosto-One' }}>Posts</Text>
+          </View>
+          <View className='bg-[#252525] p-2 items-center rounded-xl'>
+            <Text className='text-white'>2.1k</Text>
+            <Text className='text-[#9CA3AF]' style={{ fontFamily: 'prosto-One' }}>Likes</Text>
+          </View>
+          <View className='bg-[#252525] p-2 items-center rounded-xl'>
+            <Text className='text-white'>89</Text>
+            <Text className='text-[#9CA3AF]' style={{ fontFamily: 'prosto-One' }}>Followings</Text>
+          </View>
         </View>
       </View>
 
-      {/* ✅ Content Area */}
-      <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-        <Text className="text-center mb-2 font-robotoBold">Lukas Wagner</Text>
 
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View className="p-4 items-center">
-            {profileItems.filter(item=>item.type.includes(userType))?.map((item, index) => (
-              <SettingsItem
-                key={index}
-                icon={item.icon}
-                label={item.label}
-                onPress={() => navigation.navigate(item.route)}
-              />
-            ))}
 
-            <TouchableOpacity className="mt-2 flex-row items-center border p-3 rounded-xl border-red-700 bg-red-50">
-              <Image
-                source={require("../../../assets/restroIcon/logout-02.png")}
-                className="w-[30] h-[30]"
-              />
-              <Text className="text-[#A13430] ml-2">Log out</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+      <View className='w-[92%] flex-row gap-3 mt-2 mb-3 justify-center items-center'>
+        <TouchableOpacity className={`${isPosts == "Posts" ? "border-b border-b-white" : ""} py-1`} onPress={() => setIsPosts("Posts")}>
+          <Text className='font-prostoOne text-white' style={{ fontFamily: 'prosto-One' }}>Posts</Text>
+        </TouchableOpacity>
+        <TouchableOpacity className={`${isPosts == "Details" ? "border-b border-b-white" : ""} py-1`} onPress={() => setIsPosts("Details")}>
+          <Text className='font-prostoOne text-white' style={{ fontFamily: 'prosto-One' }}>My Lookbook</Text>
+        </TouchableOpacity>
+      </View>
+      {isPosts == "Posts" ? <Posts /> : <Posts />}
+    </ScrollView>
   );
 
-  
+
 }
 
 

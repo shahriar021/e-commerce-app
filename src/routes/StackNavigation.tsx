@@ -38,6 +38,10 @@ import BrandDetails from "src/screens/Bage/BrandDetails";
 import BrandProducts from "src/screens/Bage/BrandProducts";
 import ProductDetails from "src/screens/Bage/ProductDetails";
 import Feed from "src/screens/Feed/Feed";
+import UsersORBrandProfile from "src/screens/Feed/UsersORBrandProfile";
+import MyFavourite from "src/screens/Profile/MyFavourite";
+import OrderHistory from "src/screens/Profile/OrderHistory";
+import OrderDetails from "src/screens/Profile/OrderDetails";
 
 
 const Stack = createStackNavigator();
@@ -84,6 +88,9 @@ const StackNavigation = () => {
         <Stack.Screen name="Setting" component={Setting}/>
         <Stack.Screen name="Edit Profile" component={EditProfile}/>
         <Stack.Screen name="Change Password" component={ChangePassword}/>
+        <Stack.Screen name="My Favourite" component={MyFavourite}/>
+        <Stack.Screen name="Order History" component={OrderHistory}/>
+        <Stack.Screen name="Order Details" component={OrderDetails}/>
 
         <Stack.Screen name="Nearby Restaurants List" component={NearbyRestaurantList}/>
         <Stack.Screen name="Restaurant Profile" options={{headerShown:false}} component={RestaurantProfile}/>
@@ -108,6 +115,7 @@ const StackNavigation = () => {
         <Stack.Screen name="Brand Details" options={{headerShown:true}} component={BrandDetails}/>
         <Stack.Screen name="Brand Products" options={{headerShown:true}} component={BrandProducts}/>
         <Stack.Screen name="Product Details" options={{headerShown:true}} component={ProductDetails}/>
+        <Stack.Screen name="Other/brand profile" options={{headerShown:true}} component={UsersORBrandProfile}/>
       </Stack.Navigator>
     // </NavigationContainer>
   );

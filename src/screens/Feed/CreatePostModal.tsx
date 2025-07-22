@@ -3,6 +3,7 @@ import React from 'react'
 import { AntDesign, Entypo } from '@expo/vector-icons'
 import { scale, verticalScale } from 'react-native-size-matters'
 import InputSelectPicker from 'src/components/shared/InputSelectPicker'
+import CreateModalSelecPicker from 'src/components/ui/feed/CreateModalSelecPicker'
 
 const CreatePostModal = ({ visible, onClose }: any) => {
 
@@ -31,8 +32,8 @@ const CreatePostModal = ({ visible, onClose }: any) => {
 
                                 <Text className='font-prostoOne text-white w-full mt-2'>Select Brand</Text>
 
-                                <View className='flex-row items-center mt-4 gap-4'>
-                                    <InputSelectPicker/>
+                                <View className='flex-row items-center mt-4 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
+                                    <CreateModalSelecPicker/>
                                     <AntDesign name="down" size={24} color="white" />
                                 </View>
 
