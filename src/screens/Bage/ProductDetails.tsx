@@ -33,7 +33,6 @@ const ProductDetails = () => {
         )
     });
 
-    console.log(isClothSize)
 
     return (
         <View className='flex-1 bg-[#121212] p-3'>
@@ -99,9 +98,9 @@ const ProductDetails = () => {
                         ))}
                     </View>
 
-                    <View className='mt-2 flex-row justify-between'>
+                    <View className='mt-2 flex-row justify-between mb-5'>
                         <Text className='font-prostoOne text-white'>Review(86)</Text>
-                        <Text className='font-prostoOne text-[#ADAEBC]'>See All</Text>
+                        <TouchableOpacity onPress={()=>navigation.navigate("Review")}><Text className='font-prostoOne text-[#ADAEBC]'>See All</Text></TouchableOpacity>
                     </View>
                     {/* review */}
                     <View className='flex-row justify-between mt-2 mb-1'>
@@ -133,12 +132,12 @@ const ProductDetails = () => {
                         <SimpleLineIcons name="options-vertical" size={24} color="white" />
                     </View>
                     <Text className='font-prostoOne text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
-                    <View className='mt-2 rounded-xl overflow-hidden' style={{width:scale(111),height:verticalScale(111)}}>
-                        <Image source={require("../../../assets/e-icon/review1.png")} style={{width:"100%",height:"100%"}}/>
+                    <View className='mt-2 rounded-xl overflow-hidden' style={{ width: scale(111), height: verticalScale(111) }}>
+                        <Image source={require("../../../assets/e-icon/review1.png")} style={{ width: "100%", height: "100%" }} />
                     </View>
 
-                    <TouchableOpacity className='bg-[#1F2937] flex-row items-center justify-center gap-2 mt-3 p-3 rounded-xl'>
-                        <Image source={require("../../../assets/e-icon/Main Icon.png")}/>
+                    <TouchableOpacity className='bg-[#1F2937] flex-row items-center justify-center gap-2 mt-3 p-3 rounded-xl' onPress={() => navigation.navigate("Cart Page")}>
+                        <Image source={require("../../../assets/e-icon/Main Icon.png")} />
                         <Text className='text-[#DCF3FF] font-prostoOne'>Add to Cart | $80 $110</Text>
                     </TouchableOpacity>
                 </View>

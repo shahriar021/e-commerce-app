@@ -23,7 +23,8 @@ module.exports = {
         interBold:['Inter_18pt-Bold'],
         urbanistBold:['Urbanist-Bold'],
         urbanistRegular:['Urbanist-Regular'],
-        prostoOne:['ProstoOne-Regular'],
+        // prostoOne:['ProstoOne-Regular'],
+        prostoOne:['prosto-One'],
         playFairDisplay:['PlayfairDisplay-Bold'],
         podKova:['Podkova-Bold'],
         opansans:['OpenSans-Regular']

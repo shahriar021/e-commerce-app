@@ -31,7 +31,7 @@ import {
   History
 } from "src/screens";
 
-import { RiderBottomNavigation } from "./RiderBottomNavigation";
+import { ProviderBottomNavigation } from "./ProviderBottomNavigation";
 import { ActivityIndicator } from "react-native";
 import { useAppSelector } from "src/redux/hooks";
 import BrandDetails from "src/screens/Bage/BrandDetails";
@@ -42,13 +42,15 @@ import UsersORBrandProfile from "src/screens/Feed/UsersORBrandProfile";
 import MyFavourite from "src/screens/Profile/MyFavourite";
 import OrderHistory from "src/screens/Profile/OrderHistory";
 import OrderDetails from "src/screens/Profile/OrderDetails";
+import CartPage from "src/screens/Cart/CartPage";
+import Review from "src/screens/Review/Review";
 
 
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {
   // const userType = useAppSelector((store)=>store.auth.userType)
-  const userType="user"
+  const userType="rider"
 
 
   if(!userType){
@@ -73,7 +75,7 @@ const StackNavigation = () => {
       >
         {<Stack.Screen
           name="BottomScreen"
-          component={BottomNavigation}
+          component={userType=="user"?BottomNavigation:ProviderBottomNavigation}
           options={{
             headerShown: false,
           }}
@@ -116,6 +118,9 @@ const StackNavigation = () => {
         <Stack.Screen name="Brand Products" options={{headerShown:true}} component={BrandProducts}/>
         <Stack.Screen name="Product Details" options={{headerShown:true}} component={ProductDetails}/>
         <Stack.Screen name="Other/brand profile" options={{headerShown:true}} component={UsersORBrandProfile}/>
+        <Stack.Screen name="Cart Page" options={{headerShown:true}} component={CartPage}/>
+        <Stack.Screen name="Review" options={{headerShown:true}} component={Review}/>
+
       </Stack.Navigator>
     // </NavigationContainer>
   );

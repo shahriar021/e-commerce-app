@@ -52,7 +52,7 @@ const Feed = () => {
             </TouchableOpacity>
             <View className="mt-1 mb-2">
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 10 }} style={{ height: 40 }}>
-                    {categories.map(item => <TouchableOpacity
+                    {categories.map(item => <TouchableOpacity key={item.label}
                         className={`${selectedItem == item.label ? "bg-[#DCF3FF]" : "bg-[#1F2937]"} rounded-full items-center justify-center px-4 mr-2`}
                         onPress={() => setSelectedItem(item.label)}
                     >

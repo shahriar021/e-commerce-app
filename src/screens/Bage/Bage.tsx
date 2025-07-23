@@ -23,7 +23,7 @@ const Bage = () => {
 }, [navigation]);
 
   return (
-    <View className='flex-1 bg bg-[#121212] p-3'>
+    <View className='flex-1 bg bg-[#121212] p-4 items-center'>
       <View className='border p-2 mt-2 mb-2 rounded-xl bg-[#252525] flex-row gap-3'>
         <Image source={require("../../../assets/e-icon/search-normal.png")} style={{width:24,height:24}}/>
         <TextInput className='flex-1 font-prostoOne' placeholder='Search Brands...' placeholderTextColor={"#ADAEBC"} />
@@ -31,7 +31,7 @@ const Bage = () => {
 
       <ScrollView className='flex-1'>
         <View className='flex-wrap flex-row gap-2 justify-between '>
-            {bageData?.map(item=><TouchableOpacity className='relative rounded-xl overflow-hidden mt-1 mb-1 ' style={{width:"48%",aspectRatio:1}}>
+            {bageData?.map(item=><TouchableOpacity key={item.image} className='relative rounded-xl overflow-hidden mt-1 mb-1 ' style={{width:"48%",aspectRatio:1}}>
             <Image source={item.image} style={{width:"100%",height:"100%"}}/>
             <Text className='absolute  bottom-3 left-0 right-0 text-xl font-podKova text-white text-center'>{item.title}</Text>
         </TouchableOpacity>)}

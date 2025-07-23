@@ -70,14 +70,14 @@ const HomeScreen = () => {
             <Image
               key={index}
               source={image}
-              style={{ width, height: verticalScale(450) }}
+              style={{ width, height: verticalScale(550) }}
               resizeMode="cover"
             />
           ))}
         </ScrollView>
 
         <View
-          className="absolute right-5 top-5"
+          className="absolute right-5 top-16"
           style={{ width: scale(30), height: verticalScale(30) }}
         >
           <Image
@@ -145,7 +145,7 @@ const HomeScreen = () => {
         <Text className="font-prostoOne text-3xl text-center text-[#fff] mt-5">Featured Brands</Text>
         <Text className="font-prostoOne text-lg text-center text-[#fff] mt-2 max-w-[90%]">Discover premium collections from top designers</Text>
 
-        {homeInfo?.map(item => <View className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }}>
+        {homeInfo?.map(item => <View key={item.name} className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }}>
           <View className="rounded-3xl overflow-hidden" style={{ width: scale(80), height: verticalScale(80) }}>
             <Image source={item.image} style={{ width: "100%", height: "100%" }} className="rounded-3xl" />
           </View>

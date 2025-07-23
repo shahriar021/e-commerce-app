@@ -18,6 +18,7 @@ import Bage from "src/screens/Bage/Bage";
 import Feed from "src/screens/Feed/Feed";
 import { DrawerNavigation } from "./DrawerNavigation";
 import Search from "src/screens/Search/Search";
+import ProviderHomePage from "src/screens/Home/ProviderHomePage";
 
 const CustomTabBarButton = ({ children, onPress, accessibilityState }: any) => {
   const focused = accessibilityState.selected;
@@ -40,7 +41,7 @@ const CustomTabBarButton = ({ children, onPress, accessibilityState }: any) => {
 };
 
 
-export const BottomNavigation = () => {
+export const ProviderBottomNavigation = () => {
 
 
   const { width } = useWindowDimensions();
@@ -77,7 +78,7 @@ export const BottomNavigation = () => {
 
         <BottomTabs.Screen
           name="Home"
-          component={HomeScreen}
+          component={ProviderHomePage}
           options={{
             headerShown:false,
             headerTitle: () => null,

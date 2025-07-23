@@ -20,7 +20,7 @@
       "versionCode": 139,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#121212"
       },
       "permissions": [],
       "useNextNotificationsApi": true,

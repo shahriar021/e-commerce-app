@@ -5,6 +5,7 @@ import { AntDesign } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
 import * as Animatable from 'react-native-animatable';
+import { scale, verticalScale } from 'react-native-size-matters'
 
 const PaymentAnimation = () => {
 
@@ -13,7 +14,7 @@ const PaymentAnimation = () => {
     useEffect(() => {
 
         const timer = setTimeout(() => {
-            navigation.navigate("Payment Info")
+            navigation.navigate("Payment Options")
         }, 2000)
 
         return () => clearTimeout(timer)
@@ -23,26 +24,14 @@ const PaymentAnimation = () => {
         <SafeAreaView className='flex-1 items-center justify-center'>
             <Animatable.View
                 animation="bounceInUp"
-                duration={2000}
-                easing="ease-out"
+                duration={3000}
+                easing="ease-in-quad"
             >
-                <LinearGradient
-                    colors={['#3BE824', '#29BE15']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                    style={{
-                        width: 60,
-                        height: 60,
-                        borderRadius: 50,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                >
-                    <AntDesign name="check" size={24} color="white" />
-                </LinearGradient>
+                <View style={{width:scale(300),height:verticalScale(250),borderRadius:20,overflow:"hidden"}} >
+               <Image source={require("../../../assets/e-icon/paymentSuccess.png")} style={{width:"100%",height:"100%"}}/>
+               </View>
             </Animatable.View>
 
-            <Text className='text-[#33363F] font-robotoBold mt-3'>Payment Successfully</Text>
         </SafeAreaView>
     )
 }
