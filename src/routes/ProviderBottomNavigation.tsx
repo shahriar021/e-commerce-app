@@ -19,6 +19,8 @@ import Feed from "src/screens/Feed/Feed";
 import { DrawerNavigation } from "./DrawerNavigation";
 import Search from "src/screens/Search/Search";
 import ProviderHomePage from "src/screens/Home/ProviderHomePage";
+import Products from "src/screens/Products/Products";
+import Earning from "src/screens/Earning/Earning";
 
 const CustomTabBarButton = ({ children, onPress, accessibilityState }: any) => {
   const focused = accessibilityState.selected;
@@ -91,34 +93,25 @@ export const ProviderBottomNavigation = () => {
 
 
         <BottomTabs.Screen
-          name="Feed"
-          component={Feed}
+          name="Earning"
+          component={Earning}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Image source={require("../../assets/e-icon/image 2.png")} style={{ width: 24, height: 24 }} />
+              <Image source={require("../../assets/e-icon/dollar-circle.png")} style={{ width: 24, height: 24 }} />
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
           }}
         />
 
+       
         <BottomTabs.Screen
-          name="Search"
-          component={Search}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Image source={require("../../assets/e-icon/search-zoom-out.png")} style={{ width: 24, height: 24 }} />
-            ),
-            tabBarButton: (props) => <CustomTabBarButton {...props} />,
-          }}
-        />
-        <BottomTabs.Screen
-          name="Brand"
-          component={Bage}
+          name="Products"
+          component={Products}
           options={{
             tabBarIcon: ({ color, size }) => (
               <View className="relative">
 
-                <Image source={require("../../assets/e-icon/medal-star.png")} style={{ width: 24, height: 24 }} />
+                <Image source={require("../../assets/e-icon/products.png")} style={{ width: 24, height: 24 }} />
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,

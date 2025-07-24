@@ -23,7 +23,6 @@ import {
   SpecialInstructions,
   DeliveryRequestView,
   MapScreen,
-  EarningListView,
   Withdraw,
   WithdrawRequest,
   Bank,
@@ -44,6 +43,9 @@ import OrderHistory from "src/screens/Profile/OrderHistory";
 import OrderDetails from "src/screens/Profile/OrderDetails";
 import CartPage from "src/screens/Cart/CartPage";
 import Review from "src/screens/Review/Review";
+import Products from "src/screens/Products/Products";
+import AddProducts from "src/screens/Products/AddProducts";
+import AllProducts from "src/screens/Products/AllProducts";
 
 
 const Stack = createStackNavigator();
@@ -107,7 +109,6 @@ const StackNavigation = () => {
 
         <Stack.Screen name="Delivery Request" component={DeliveryRequestView}/>
         <Stack.Screen name="Map" options={{headerShown:false}} component={MapScreen}/>
-        <Stack.Screen name="Earning List View" component={EarningListView}/>
         
         <Stack.Screen name="Withdraw" component={Withdraw}/>
         <Stack.Screen name="Withdraw Request" component={WithdrawRequest}/>
@@ -120,6 +121,9 @@ const StackNavigation = () => {
         <Stack.Screen name="Other/brand profile" options={{headerShown:true}} component={UsersORBrandProfile}/>
         <Stack.Screen name="Cart Page" options={{headerShown:true}} component={CartPage}/>
         <Stack.Screen name="Review" options={{headerShown:true}} component={Review}/>
+        <Stack.Screen name="Products" options={{headerShown:true}} component={Products}/>
+        <Stack.Screen name="Add Products" options={{headerShown:true}} component={AddProducts}/>
+        <Stack.Screen name="All Products" options={{headerShown:true}} component={AllProducts}/>
 
       </Stack.Navigator>
     // </NavigationContainer>

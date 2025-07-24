@@ -20,7 +20,6 @@ export { default as PaymentOption } from "./Payment/PaymentOption";
 export { default as SpecialInstructions } from "./Cart/SpecialInstructions";
 export { default as DeliveryRequestView } from "./Request/DeliveryRequest";
 export { default as MapScreen } from "./Map/MapScreen";
-export { default as EarningListView } from "./Earning/EarningListView";
 export { default as Withdraw } from "./Withdraw/Withdraw";
 export {default as WithdrawRequest} from "./Withdraw/WithdrawRequest";
 export {default as Bank} from "./Bank/Bank"
