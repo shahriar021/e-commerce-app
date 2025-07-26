@@ -7,7 +7,7 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import NavRight from "src/components/shared/NavRight";
-import { Image, Platform, useWindowDimensions, View } from "react-native";
+import { Image, Platform, Text, useWindowDimensions, View } from "react-native";
 import { useAppSelector } from "src/redux/hooks";
 
 const BottomTabs = createBottomTabNavigator();
@@ -52,6 +52,7 @@ export const ProviderBottomNavigation = () => {
     <View className="bg-transparent flex-1">
       <BottomTabs.Navigator
         screenOptions={{
+          tabBarShowLabel: false,
           tabBarStyle: {
             borderRadius: 60,
             marginHorizontal: 7,
@@ -82,10 +83,13 @@ export const ProviderBottomNavigation = () => {
           name="Home"
           component={ProviderHomePage}
           options={{
-            headerShown:false,
+            headerShown: false,
             headerTitle: () => null,
-            tabBarIcon: ({ color, size }) => (
-              <Image source={require("../../assets/e-icon/home-2.png")} style={{ width: 24, height: 24 }} />
+            tabBarIcon: ({ focused }) => (
+              <View style={{ alignItems: "center" }} className="">
+                <Image source={require("../../assets/e-icon/home-2.png")} style={{ width: 24, height: 24 }} />
+                {focused && <Text className="text-center w-[50]" style={{ color: "#DCF3FF", fontSize: 10 }}>Home</Text>}
+              </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
           }}
@@ -96,22 +100,26 @@ export const ProviderBottomNavigation = () => {
           name="Earning"
           component={Earning}
           options={{
-            tabBarIcon: ({ color, size }) => (
+            tabBarIcon: ({ focused}) => (
+               <View style={{ alignItems: "center" }} className="">
               <Image source={require("../../assets/e-icon/dollar-circle.png")} style={{ width: 24, height: 24 }} />
+              {focused && <Text className="text-center w-[50]" style={{ color: "#DCF3FF", fontSize: 10 }}>Earning</Text>}
+              </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
           }}
         />
 
-       
+
         <BottomTabs.Screen
           name="Products"
           component={Products}
           options={{
-            tabBarIcon: ({ color, size }) => (
-              <View className="relative">
+            tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: "center" }} className="">
 
                 <Image source={require("../../assets/e-icon/products.png")} style={{ width: 24, height: 24 }} />
+                {focused && <Text className="text-center w-[50]" style={{ color: "#DCF3FF", fontSize: 10 }}>Products</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -122,10 +130,11 @@ export const ProviderBottomNavigation = () => {
           component={DrawerNavigation}
           options={{
             headerShown: false,
-            tabBarIcon: ({ color, size }) => (
-              <View className="relative">
+            tabBarIcon: ({ focused }) => (
+              <View style={{ alignItems: "center" }} className="">
 
                 <Image source={require("../../assets/e-icon/profile.png")} style={{ width: 24, height: 24 }} />
+                {focused && <Text className="text-center w-[50]" style={{ color: "#DCF3FF", fontSize: 10 }}>Products</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,

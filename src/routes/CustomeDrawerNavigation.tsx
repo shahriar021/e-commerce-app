@@ -4,11 +4,14 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/native';
+import { useAppSelector } from 'src/redux/hooks';
+import { useDispatch } from 'react-redux';
+import { setToken, setUserType } from 'src/redux/features/auth/authSlice';
 
 export const CustomDrawerContent = (props) => {
   const navigation = useNavigation();
-
-  const items = [
+  const dispatch=useDispatch()
+  const userItems = [
     {
       label: 'Edit Profile',
       icon: require("../../assets/e-icon/profile.png"),
@@ -24,8 +27,26 @@ export const CustomDrawerContent = (props) => {
       icon: require("../../assets/e-icon/b.png"),
       screen: 'My Favourite',
     },
+  ];
+
+  // Items for provider only
+  const providerItems = [
     {
-      label: 'Change Password ',
+      label: 'Seller Profile',
+      icon: require("../../assets/e-icon/medal-star.png"),
+      screen: 'Seller Profile',
+    },
+    {
+      label: 'Brand Profile',
+      icon: require("../../assets/e-icon/profile.png"),
+      screen: 'Brand Profile',
+    },
+  ];
+
+  // Common items for both
+  const commonItems = [
+    {
+      label: 'Change Password',
       icon: require("../../assets/e-icon/Password.png"),
       screen: 'Change Password',
     },
@@ -39,13 +60,18 @@ export const CustomDrawerContent = (props) => {
       icon: require("../../assets/e-icon/privac.png"),
       screen: 'Privacy',
     },
-    {
-      label: 'Log Out',
-      icon: require("../../assets/e-icon/Frame (2).png"),
-      screen: 'Profile screen',
-    },
-
+   
   ];
+   const userType = useAppSelector((store)=>store.auth.userType)
+
+  const items = userType === 'user' ? [...userItems, ...commonItems] : [...providerItems, ...commonItems];
+
+ 
+  // userType == user or provider
+  const handleLogout=()=>{
+    dispatch(setUserType(null))
+    dispatch(setToken(null))
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: '#252525' }}>
@@ -72,7 +98,7 @@ export const CustomDrawerContent = (props) => {
                 
               }}
             />
-            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Shahriar Chowdhury</Text>
+            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>{userType=="user"?"Jack Robo":"Coid Supply"}</Text>
             <View className='w-full border border-[#707070] mt-4'/>
           </View>
         </View>
@@ -100,6 +126,25 @@ export const CustomDrawerContent = (props) => {
               <Feather name="chevron-right" size={20} color="#DCF3FF" />
             </TouchableOpacity>
           ))}
+          <TouchableOpacity
+              
+              onPress={handleLogout}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingVertical: 12,
+                paddingHorizontal: 20,
+                justifyContent: 'space-between',
+              }}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Image source={require("../../assets/e-icon/Frame (2).png")} style={{width:20,height:20}}/>
+                <Text style={{ marginLeft: 15, fontSize: 16, color: '#DCF3FF' }}>
+                  Logout
+                </Text>
+              </View>
+              <Feather name="chevron-right" size={20} color="#DCF3FF" />
+            </TouchableOpacity>
         </View>
       </DrawerContentScrollView>
     </View>

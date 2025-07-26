@@ -9,6 +9,7 @@ import OnBoarding from 'src/screens/Auth/OnBoarding';
 import LoginScreen from 'src/screens/Auth/LoginScreen';
 import SignUpUser from 'src/screens/Auth/SignUpUser';
 import SuccessPage from 'src/screens/Auth/SuccessPage';
+import SignUpRider from 'src/screens/Auth/SignUpRider';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ const AuthStack = () => {
       <Stack.Screen name="OnBoarding" component={OnBoarding} />
       <Stack.Screen options={{headerShown:true}} name="Login Screen" component={LoginScreen}/>
       <Stack.Screen options={{headerShown:true}} name="Sign Up as User" component={SignUpUser}/>
+      <Stack.Screen options={{headerShown:true}} name="Sign Up as Rider" component={SignUpRider}/>
       <Stack.Screen options={{headerShown:true}}  name="Forget Password" component={ForgetPassword}/>
       <Stack.Screen options={{headerShown:true}}  name="Login OTP" component={LoginOTPScreen}/>
       <Stack.Screen options={{headerShown:true}}  name="Reset Password" component={ResetPassword}/>

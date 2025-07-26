@@ -12,20 +12,14 @@ const ProviderHomePage = () => {
     const { width, height } = Dimensions.get("screen");
     const [isAvailble, setIsAvailable] = useState(false)
     const [requestList] = useState(Array.from({ length: 10 }, (_, i) => i + 1))
-    const data = [
-        { value: 50, label: 'Jan' },
-        { value: 80, label: 'Feb' },
-        { value: 90, label: 'Mar' },
-        { value: 70, label: 'Apr' },
-        { value: 60, label: 'May' },
-        { value: 95, label: 'Jun' },
-        { value: 75, label: 'Jul' },
-        { value: 85, label: 'Aug' },
-        { value: 55, label: 'Sep' },
-        { value: 100, label: 'Oct' },
-        { value: 65, label: 'Nov' },
-        { value: 88, label: 'Dec' },
-    ];
+    const currentMonthIndex = new Date().getMonth();
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const data = months.map((label, index) => ({
+        value: Math.floor(Math.random() * 100),
+        label,
+        frontColor: index === currentMonthIndex ? '#DCF3FF' : '#464747', // <-- dynamic color
+    }));
     const [orderHist] = useState(Array.from({ length: 10 }, (_, i) => i + 1))
 
     const navigation = useNavigation()
@@ -49,7 +43,7 @@ const ProviderHomePage = () => {
                 <View className='flex-row flex-wrap  justify-between'>
                     {
                         providerHomepage?.map(item =>
-                            <View className='bg-[#2D2D2D] p-3 rounded-lg mb-1 mt-1 ' style={{
+                            <View key={item.name} className='bg-[#2D2D2D] p-3 rounded-lg mb-1 mt-1 ' style={{
                                 width: width * 0.45
                             }}>
                                 <Text className='text-[#9CA3AF] font-prostoOne mb-2'>{item.name}</Text>
@@ -73,11 +67,15 @@ const ProviderHomePage = () => {
                             <AntDesign name="down" size={20} color="white" />
                         </TouchableOpacity>
                     </View>
+                    <View className='flex-row items-center gap-2 w-full mt-1'>
+                        <View className='border-dashed border-2 border-white flex-1' />
+                        <Text className='text-white'>$150</Text>
+                    </View>
                     <View className=''>
                         <BarChart
                             data={data}
                             barWidth={10}
-                            frontColor="#4A90E2"
+                            frontColor="#DCF3FF"
                             yAxisThickness={0}
                             hideYAxisText
                             xAxisLabelTextStyle={{ color: 'white' }}

@@ -106,7 +106,7 @@ const OnBoarding = () => {
               end={{ x: 1, y: 0 }}
               className="w-full rounded-lg mt-2 overflow-hidden"
             >
-              <TouchableOpacity className="w-full items-center p-3 rounded-lg bg-transparent overflow-hidden">
+              <TouchableOpacity className="w-full items-center p-3 rounded-lg bg-transparent overflow-hidden" onPress={()=>navigation.navigate("Sign Up as Rider")}>
                 <Text className="text-black font-semibold font-prostoOne">Create Branch Account</Text>
               </TouchableOpacity>
             </LinearGradient>

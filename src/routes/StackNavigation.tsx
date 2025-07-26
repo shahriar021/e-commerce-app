@@ -46,13 +46,16 @@ import Review from "src/screens/Review/Review";
 import Products from "src/screens/Products/Products";
 import AddProducts from "src/screens/Products/AddProducts";
 import AllProducts from "src/screens/Products/AllProducts";
+import SellerProfile from "src/screens/Profile/SellerProfile";
+import BrandProfile from "src/screens/Profile/BrandProfile";
 
 
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {
-  // const userType = useAppSelector((store)=>store.auth.userType)
-  const userType="rider"
+  const userType = useAppSelector((store)=>store.auth.userType)
+  // const userType="rider"
+  console.log(userType)
 
 
   if(!userType){
@@ -124,6 +127,8 @@ const StackNavigation = () => {
         <Stack.Screen name="Products" options={{headerShown:true}} component={Products}/>
         <Stack.Screen name="Add Products" options={{headerShown:true}} component={AddProducts}/>
         <Stack.Screen name="All Products" options={{headerShown:true}} component={AllProducts}/>
+         <Stack.Screen name="Seller Profile" options={{headerShown:true}} component={SellerProfile}/>
+        <Stack.Screen name="Brand Profile" options={{headerShown:true}} component={BrandProfile}/>
 
       </Stack.Navigator>
     // </NavigationContainer>

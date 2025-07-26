@@ -1,138 +1,101 @@
-import { View, Text, TextInput, TouchableOpacity, useWindowDimensions, Image } from 'react-native'
-import React, { useState } from 'react'
-import { ScrollView } from 'react-native'
-import { Entypo, EvilIcons, Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
-import { takePhotoAsync } from 'src/utils/takePhotoAsync'
-import { useNavigation } from '@react-navigation/native'
+import { AntDesign, Feather } from "@expo/vector-icons"
+import { useNavigation } from "@react-navigation/native"
+import { LinearGradient } from "expo-linear-gradient"
+import React, { useLayoutEffect, useState } from "react"
+import { Image, ScrollView, Text, TextInput, TextInputBase, TouchableOpacity, View } from "react-native"
+import { scale, verticalScale } from "react-native-size-matters"
+export const selectedCountry = {
+  flag: require('../../../assets/e-icon/bdFlag.jpg'),
+  dialCode: '+880',
+};
 
-const SignUpRider = ({ setIsSignIn, handleVerify, setRoleOff }: any) => {
-  const navigation = useNavigation()
-  const { height, width } = useWindowDimensions();
-  const [photo, setPhoto] = useState(null);
-  const [isVisible, setIsVisible] = useState(false)
-  const [password, setPassword] = useState("")
-  const [isChecked, setIsChecked] = useState(false)
+const SignUpRider = () => {
 
-  const handleTakePhoto = async () => {
-    const image = await takePhotoAsync();
-    if (image) {
-      setPhoto(image);
-    }
-  };
+  const navigatgion = useNavigation()
 
-  handleVerify = () => {
-    navigation.navigate("Verification Page")
-  }
+  const [isShowPassword, setIsShowPassword] = useState(false)
 
+  useLayoutEffect(() => {
+    navigatgion.setOptions({
+      headerStyle: {
+        backgroundColor: "#121212"
+      },
+      headerTintColor: "#FFFFFF",
+      headerTitle: '', // hides title in header center
+      headerBackTitleVisible: false, // hides back label
+      headerBackTitle: '', // extra safety for iOS
+    })
+  }, [navigatgion])
 
   return (
-    <ScrollView className="mt-4 flex-1 w-full " showsVerticalScrollIndicator={false}>
-      <Text className="font-robotoBold text-2xl text-left mb-2">Create New Account Rider</Text>
-      <Text className="mb-2">Please fill your detail information</Text>
+    <ScrollView className="flex-1 bg-[#121212] p-3" contentContainerStyle={{paddingBottom:150}}>
+      <View className="px-3">
+        <Text className="text-[#FFFFFF] text-2xl font-playFairDisplay mb-2" style={{ fontFamily: 'playFairDisplay' }}>Create Your Account</Text>
+        <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-playFairDisplay" style={{ fontFamily: 'playFairDisplay' }}>It is quick and easy to create you account</Text>
 
-      <Text className="mt-1 mb-1">Name</Text>
-      <TextInput className="border rounded-xl mt-1 border-gray-300 mb-1 p-3" />
-      <Text className="mt-1 mb-1">Email</Text>
-      <TextInput className="border rounded-xl mt-1 border-gray-300 mb-1 p-3" />
-      <Text className="mt-1 mb-1">Mobile Number</Text>
-      <TextInput className="border rounded-xl mt-1 border-gray-300 mb-1 p-3" />
+        <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+          <TextInput className="flex-1" placeholder="Enter Brand Name" placeholderTextColor={"#ADAEBC"} style={{color:"#ADAEBC"}}/>
+        </View>
 
-
-
-
-      <View>
-        <Text className="mt-1 mb-1">Upload Valid ID</Text>
-        <TouchableOpacity onPress={handleTakePhoto} className='border border-gray-200 border-dashed mt-3 items-center p-3 rounded-md'>
-          {photo ? (
-            <Image source={{ uri: photo.uri }} style={{ width: width * 0.9, height: 180 }}
-              className='rounded-xl' />
-          ) : (
-            <Image source={require("../../../assets/restroIcon/Download_light.png")} style={{ width: 62, height: 62 }} />
-          )}
+        <Text className='font-prostoOne text-xl text-[#fff]  w-full'>Brand Logo</Text>
+        <TouchableOpacity style={{ height: verticalScale(194) }} className='w-full items-center justify-center border border-dashed border-white  rounded-xl mt-3 bg-[#2C2C2C] mb-4'>
+          <Image source={require("../../../assets/e-icon/Frame (1).png")} style={{ width: scale(30), height: verticalScale(30) }} />
         </TouchableOpacity>
 
+        <View className="bg-[#2C2C2C] rounded-lg mt-2" style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 8, marginBottom: 5 }}>
 
-        <Text className="mt-1 mb-1">Upload Driving license <Text className='text-[#848484]'>(Optional)</Text></Text>
-        <TouchableOpacity onPress={handleTakePhoto} className='border border-gray-200 border-dashed mt-3 items-center p-3 rounded-md'>
-          {photo ? (
-            <Image source={{ uri: photo.uri }} style={{ width: "100%", height: 200 }} className='rounded-xl' />
-          ) : (
-            <Image source={require("../../../assets/restroIcon/Download_light.png")} style={{ width: 62, height: 62 }} />
-          )}
-        </TouchableOpacity>
+          {/* Dynamic Flag */}
+          <Image
+            source={selectedCountry.flag}
+            style={{ width: 24, height: 16, marginRight: 8 }}
+            resizeMode="contain"
+          />
 
-        <Text className="mt-1 mb-1">Upload Profile Photo</Text>
-        <TouchableOpacity onPress={handleTakePhoto} className='border border-gray-200 border-dashed mt-3 items-center p-3 rounded-md'>
-          {photo ? (
-            <Image source={{ uri: photo.uri }} style={{ width: "100%", height: 200 }} className='rounded-xl' />
-          ) : (
-            <Image source={require("../../../assets/restroIcon/Download_light.png")} style={{ width: 62, height: 62 }} />
-          )}
-        </TouchableOpacity>
+          {/* Dynamic Country Code */}
+          <Text style={{ fontSize: 16, color: 'white', marginRight: 8 }}>
+            {selectedCountry.dialCode}
+          </Text>
 
-        <Text className="mt-1 mb-1">Upload Proof of Address / Residence</Text>
-        <TouchableOpacity onPress={handleTakePhoto} className='border border-gray-200 border-dashed mt-3 items-center p-3 rounded-md'>
-          {photo ? (
-            <Image source={{ uri: photo.uri }} style={{ width: "100%", height: 200 }} className='rounded-xl' />
-          ) : (
-            <Image source={require("../../../assets/restroIcon/Download_light.png")} style={{ width: 62, height: 62 }} />
-          )}
-        </TouchableOpacity>
+          {/* Phone Input */}
+          <TextInput
+            placeholder="Phone number"
+            placeholderTextColor="#aaa"
+            keyboardType="phone-pad"
+            style={{ flex: 1, fontSize: 16, color: 'white' }}
+          />
+        </View>
+        <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+          <TextInput className="flex-1" placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"} style={{color:"#ADAEBC"}}/>
+        </View>
 
-        <Text className="mt-1 mb-1">Upload Certificate of Civil Liability Insurance</Text>
-        <TouchableOpacity onPress={handleTakePhoto} className='border border-gray-200 border-dashed mt-3 items-center p-3 rounded-md'>
-          {photo ? (
-            <Image source={{ uri: photo.uri }} style={{ width: "100%", height: 200 }} className='rounded-xl' />
-          ) : (
-            <Image source={require("../../../assets/restroIcon/Download_light.png")} style={{ width: 62, height: 62 }} />
-          )}
-        </TouchableOpacity>
-
-        <Text className="mt-1 mb-1">Password</Text>
-        <View className="flex-row border border-gray-300 rounded-xl items-center px-3">
-          <TextInput className="flex-1 py-3" value={password} onChangeText={setPassword} secureTextEntry={!isVisible} />
-          <TouchableOpacity onPress={() => setIsVisible(!isVisible)}
-          >
-            {isVisible ? <Feather name="eye-off" size={24} color="gray" /> : <Feather name="eye" size={24} color="gray" />}
+        <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{color:"#ADAEBC"}}/>
+          <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
+            {isShowPassword ? <Feather name="eye" size={24} color="gray" />
+              : <Feather name="eye-off" size={24} color="gray" />}
           </TouchableOpacity>
         </View>
 
-      </View>
-      <View className='mt-1 mb-1 flex-row items-center gap-2'>
-        <TouchableOpacity onPress={() => setIsChecked(!isChecked)}>
-          {isChecked ? (
-            <Image
-              source={require("../../../assets/restroIcon/Checkboxes.png")}
-              style={{ width: 36, height: 36, resizeMode: 'contain' }}
-            />
-          ) : (
-            <Image
-              source={require("../../../assets/restroIcon/checkbox-image-icon-10.jpg")}
-              style={{ width: 36, height: 36, resizeMode: 'contain' }}
-            />
-          )}
-        </TouchableOpacity>
-
-        <Text className='text-[#5C5C5C]'>
-          I agree to the <Text className='underline'>Terms & Conditions</Text> and{" "}
-          <Text className='underline'>Privacy Policy</Text>
-        </Text>
-      </View>
+        <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{color:"#ADAEBC"}}/>
+          <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
+            {isShowPassword ? <Feather name="eye" size={24} color="gray" />
+              : <Feather name="eye-off" size={24} color="gray" />}
+          </TouchableOpacity>
+        </View>
 
 
 
-      <View className="items-center">
-        <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden" style={{ width: width * 0.9 }} onPress={handleVerify}>
-          <LinearGradient colors={["#DD0F14", "#C21A1E"]} style={{ width, borderRadius: 999, alignItems: "center" }}>
-            <Text className="text-white p-3 ">Verify Email</Text>
+        <TouchableOpacity className="mt-1 mb-3 items-center bg-[#4A4A4A] rounded-lg overflow-hidden">
+          <LinearGradient
+            colors={["#9DC7E9", "#E6F6FF"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            className="w-full rounded-lg  overflow-hidden"
+            style={{ width: "100%", alignItems: "center", padding: 10 }}
+          >
+            <Text className="text-[#121212] text-xl font-prostoOne" style={{ fontFamily: 'prosto-One' }}>Create a Brand Account</Text>
           </LinearGradient>
-        </TouchableOpacity>
-      </View>
-      <View className="flex-row items-center mt-4 gap-2 justify-center"><Text className="text-center ">Already have an account?</Text>
-
-        <TouchableOpacity onPress={() => setIsSignIn(true)}><Text className="text-[#B42315]">Log In</Text>
-
         </TouchableOpacity>
       </View>
     </ScrollView>

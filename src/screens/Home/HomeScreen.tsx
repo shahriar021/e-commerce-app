@@ -109,7 +109,7 @@ const HomeScreen = () => {
             style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
             className="w-[90%] rounded-3xl p-4 items-center mt-3 border border-[#fff]"
           >
-            <Text className="font-playFairDisplay text-white">Explore Collections</Text>
+            <Text className="font-playFairDisplay text-white">The Movement</Text>
           </TouchableOpacity>
 
         </View>

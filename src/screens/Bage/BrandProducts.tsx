@@ -61,8 +61,8 @@ const BrandProducts = () => {
             <ScrollView contentContainerStyle={{paddingBottom:100 }} showsVerticalScrollIndicator={false}>
 
                 <View className='flex-row flex-wrap  justify-between gap-2'>
-                    {allProducts?.map(item =>
-                        <TouchableOpacity style={{ width: "48%" }} className='bg-[#1F2937] items-center rounded-lg relative  ' onPress={()=>navigation.navigate("Product Details")}>
+                    {allProducts?.map((item,index) =>
+                        <TouchableOpacity key={index} style={{ width: "48%" }} className='bg-[#1F2937] items-center rounded-lg relative  ' onPress={()=>navigation.navigate("Product Details")}>
                             <Image source={item.image} style={{ width: "100%", height: 160, borderRadius: 8 }} />
                             <View className='bg-[#000000] border-[#1F2937] border-8 absolute p-1 bottom-14 rounded-full items-center justify-center' style={{ width: 50, height: 50 }}>
                                 <Image source={require("../../../assets/e-icon/bag-2.png")} style={{ width: "100%", height: "100%" }} />

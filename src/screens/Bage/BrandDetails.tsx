@@ -48,8 +48,8 @@ const BrandDetails = () => {
 
             <ScrollView className='flex-1' horizontal>
 
-                {bageData?.map(item =>
-                    <TouchableOpacity className='relative gap-3 rounded-xl overflow-hidden mt-1 mb-1 mr-3' style={{ width: scale(150), height: verticalScale(150) }}>
+                {bageData?.map((item,index) =>
+                    <TouchableOpacity key={index} className='relative gap-3 rounded-xl overflow-hidden mt-1 mb-1 mr-3' style={{ width: scale(150), height: verticalScale(150) }}>
                         <Image source={item.image} style={{ width: "100%", height: "100%" }} />
                         <Text className='absolute  bottom-3 left-0 right-0 text-xl font-podKova text-white text-center'>{item.title}</Text>
                     </TouchableOpacity>)}

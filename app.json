@@ -6,6 +6,10 @@
     "orientation": "portrait",
     "icon": "./assets/ARKIVE.png",
     "userInterfaceStyle": "light",
+    "developmentClient": true,
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/ARKIVE.png",

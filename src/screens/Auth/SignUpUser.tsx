@@ -2,73 +2,97 @@ import { AntDesign, Feather } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import { LinearGradient } from "expo-linear-gradient"
 import React, { useLayoutEffect, useState } from "react"
-import { Text, TextInput, TextInputBase, TouchableOpacity, View } from "react-native"
+import { Image, ScrollView, Text, TextInput, TextInputBase, TouchableOpacity, View } from "react-native"
+export const selectedCountry = {
+    flag: require('../../../assets/e-icon/bdFlag.jpg'),
+    dialCode: '+880',
+};
 
-const SignUpUser =()=>{
-    
-    const navigatgion =useNavigation()
+const SignUpUser = () => {
 
-    const [isShowPassword,setIsShowPassword]=useState(false)
+    const navigatgion = useNavigation()
 
-    useLayoutEffect(()=>{
-       navigatgion.setOptions({
-         headerStyle:{
-            backgroundColor:"#121212"
-        },
-        headerTintColor: "#FFFFFF",
-    headerTitle: '', // hides title in header center
-    headerBackTitleVisible: false, // hides back label
-    headerBackTitle: '', // extra safety for iOS
-       })
-    },[navigatgion])
+    const [isShowPassword, setIsShowPassword] = useState(false)
+
+    useLayoutEffect(() => {
+        navigatgion.setOptions({
+            headerStyle: {
+                backgroundColor: "#121212"
+            },
+            headerTintColor: "#FFFFFF",
+            headerTitle: '', // hides title in header center
+            headerBackTitleVisible: false, // hides back label
+            headerBackTitle: '', // extra safety for iOS
+        })
+    }, [navigatgion])
 
     return (
-        <View className="flex-1 bg-[#121212] p-3">
+        <ScrollView className="flex-1 bg-[#121212] p-3" contentContainerStyle={{paddingBottom:150}}>
             <View className="px-3">
                 <Text className="text-[#FFFFFF] text-2xl font-playFairDisplay mb-2" style={{ fontFamily: 'playFairDisplay' }}>Create Your Account</Text>
-                <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-playFairDisplay"  style={{ fontFamily: 'playFairDisplay' }}>It is quick and easy to create you account</Text>
+                <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-playFairDisplay" style={{ fontFamily: 'playFairDisplay' }}>It is quick and easy to create you account</Text>
 
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1" placeholder="Enter First Name" placeholderTextColor={"#ADAEBC"}/>
+                    <TextInput className="flex-1" style={{color:"#ADAEBC"}} placeholder="Enter First Name" placeholderTextColor={"#ADAEBC"} />
                 </View>
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1" placeholder="Enter Last Name" placeholderTextColor={"#ADAEBC"}/>
+                    <TextInput className="flex-1" style={{color:"#ADAEBC"}} placeholder="Enter Last Name" placeholderTextColor={"#ADAEBC"} />
+                </View>
+                <View className="bg-[#2C2C2C] rounded-lg mt-2" style={{ flexDirection: 'row', alignItems: 'center',  paddingHorizontal: 10, paddingVertical: 8, marginBottom: 5 }}>
+
+                    {/* Dynamic Flag */}
+                    <Image
+                        source={selectedCountry.flag}
+                        style={{ width: 24, height: 16, marginRight: 8 }}
+                        resizeMode="contain"
+                    />
+
+                    {/* Dynamic Country Code */}
+                    <Text style={{ fontSize: 16, color: 'white', marginRight: 8 }}>
+                        {selectedCountry.dialCode}
+                    </Text>
+
+                    {/* Phone Input */}
+                    <TextInput
+                        placeholder="Phone number"
+                        placeholderTextColor="#aaa"
+                        keyboardType="phone-pad"
+                        style={{ flex: 1, fontSize: 16, color: 'white' }}
+                    />
                 </View>
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1" placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"}/>
+                    <TextInput className="flex-1" style={{color:"#ADAEBC"}} placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"} />
                 </View>
 
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword}/>
-                    <TouchableOpacity className="flex-row items-center" onPress={()=>setIsShowPassword(!isShowPassword)}>
-                      {isShowPassword?<Feather name="eye" size={24} color="gray" />
-                      :<Feather name="eye-off" size={24} color="gray" />}
+                    <TextInput className="flex-1 text-[#ADAEBC]" style={{color:"#ADAEBC"}} placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} />
+                    <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
+                        {isShowPassword ? <Feather name="eye" size={24} color="gray" />
+                            : <Feather name="eye-off" size={24} color="gray" />}
                     </TouchableOpacity>
                 </View>
 
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword}/>
-                    <TouchableOpacity className="flex-row items-center" onPress={()=>setIsShowPassword(!isShowPassword)}>
-                      {isShowPassword?<Feather name="eye" size={24} color="gray" />
-                      :<Feather name="eye-off" size={24} color="gray" />}
+                    <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{color:"#ADAEBC"}}/>
+                    <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
+                        {isShowPassword ? <Feather name="eye" size={24} color="gray" />
+                            : <Feather name="eye-off" size={24} color="gray" />}
                     </TouchableOpacity>
                 </View>
 
-               
-                 
                 <TouchableOpacity className="mt-1 mb-3 items-center bg-[#4A4A4A] rounded-lg overflow-hidden">
-                  <LinearGradient
-                                colors={["#9DC7E9", "#E6F6FF"]}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
-                                className="w-full rounded-lg  overflow-hidden"
-                                style={{width:"100%",alignItems:"center",padding:10}}
-                              >
-                    <Text className="text-[#979797] text-xl font-prostoOne" style={{fontFamily:'prosto-One'}}>Create Account</Text>
+                    <LinearGradient
+                        colors={["#9DC7E9", "#E6F6FF"]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        className="w-full rounded-lg  overflow-hidden"
+                        style={{ width: "100%", alignItems: "center", padding: 10 }}
+                    >
+                        <Text className="text-[#979797] text-xl font-prostoOne" style={{ fontFamily: 'prosto-One' }}>Create Account</Text>
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 

@@ -1,49 +1,113 @@
 import { AntDesign } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
-import React, { useLayoutEffect } from "react"
-import { Text, TextInput, TouchableOpacity, View } from "react-native"
+import React, { useLayoutEffect, useState } from "react"
+import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { useDispatch } from "react-redux"
+import { setToken, setUserType } from "src/redux/features/auth/authSlice";
 
-const LoginScreen =()=>{
-    
-    const navigatgion =useNavigation()
+const LoginScreen = () => {
 
-    useLayoutEffect(()=>{
-       navigatgion.setOptions({
-         headerStyle:{
-            backgroundColor:"#121212"
-        },
-        headerTintColor:"#FFFFFF",
-        headerTitle:()=>null
-       })
-    },[navigatgion])
+    const navigatgion = useNavigation()
+    const [isType, setIsType] = useState(false);
+    const [userTypes, setUserTypes] = useState("")
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    console.log(userTypes)
+    const dispatch = useDispatch();
+
+    useLayoutEffect(() => {
+        navigatgion.setOptions({
+            headerStyle: {
+                backgroundColor: "#121212"
+            },
+            headerTintColor: "#FFFFFF",
+            headerTitle: () => null
+        })
+    }, [navigatgion])
+
+    console.log(email,password,"credenttial.s")
+
+    const validateEmail = (email: any) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    };
+
+    const handleLogin = () => {
+        if (!userTypes) {
+            Alert.alert("Error", "Please select a user type");
+            return;
+        }
+
+        if (!email.trim()) {
+            Alert.alert("Error", "Please enter your email address");
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            Alert.alert("Error", "Please enter a valid email address");
+            return;
+        }
+
+        if (!password.trim()) {
+            Alert.alert("Error", "Please enter your password");
+            return;
+        }
+
+        if (password.length < 6) {
+            Alert.alert("Error", "Password must be at least 6 characters long");
+            return;
+        }
+        dispatch(setToken(true));
+        dispatch(setUserType(userTypes));
+    };
 
     return (
         <View className="flex-1 bg-[#121212] p-3">
-            <View className="px-3">
+            <View className="px-3 relative">
                 <Text className="text-[#FFFFFF] text-2xl font-playFairDisplay mb-2" style={{ fontFamily: 'playFairDisplay' }}>Login to Your Account</Text>
-                <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-playFairDisplay"  style={{ fontFamily: 'playFairDisplay' }}>It is quick and easy to log in. Enter your email and password below.</Text>
+                <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-playFairDisplay" style={{ fontFamily: 'playFairDisplay' }}>It is quick and easy to log in. Enter your email and password below.</Text>
 
-                <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1" placeholder="user" placeholderTextColor={"#ADAEBC"}/>
-                    <AntDesign name="downcircle" size={24} color="#626870" />
-                </View>
-                <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1" placeholder="Enter your email address" placeholderTextColor={"#ADAEBC"}/>
-                </View>
-                <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1" placeholder="Enter Password" placeholderTextColor={"#ADAEBC"}/>
+                <View className=" bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+                    <TextInput className="flex-1" placeholder={userTypes ? userTypes : "Select Types"} placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} />
+                    <TouchableOpacity onPress={() => setIsType(true)}>
+
+                        <AntDesign name="downcircle" size={24} color="#626870" />
+                    </TouchableOpacity>
+
                 </View>
 
-                <TouchableOpacity className="mt-1 mb-3" onPress={()=>navigatgion.navigate("Forget Password")}>
+                {isType && <View className="absolute bg-[#121212] top-44 z-10 right-3 rounded-lg p-2 gap-2 border border-white">
+                    <TouchableOpacity className="bg-[#2C2C2C] p-2 rounded-lg" onPress={() => {
+                        setUserTypes("user")
+                        setIsType(false)
+                    }}>
+                        <Text className="font-prostoOne text-white">User</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity className="bg-[#2C2C2C] p-2 rounded-lg" onPress={() => {
+                        setUserTypes("provider")
+                        setIsType(false)
+                    }}>
+                        <Text className="font-prostoOne text-white">Service Provider</Text>
+                    </TouchableOpacity>
+
+                </View>}
+                <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+                    <TextInput className="flex-1" placeholder="Enter your email address" onChangeText={setEmail} placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} />
+                </View>
+                <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+                    <TextInput className="flex-1" placeholder="Enter Password" onChangeText={setPassword} placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} />
+                </View>
+
+                <TouchableOpacity className="mt-1 mb-3" onPress={() => navigatgion.navigate("Forget Password")}>
                     <Text className="text-[#1E80DD]">Forgot Password?</Text>
                 </TouchableOpacity>
 
-                 <TouchableOpacity className="mt-1 mb-3 items-center">
+                <TouchableOpacity className="mt-1 mb-3 items-center" onPress={()=>navigatgion.navigate("Sign Up as User")}>
                     <Text className="text-[#979797] text-xl">I don’t have an account</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity className="mt-1 mb-3 items-center bg-[#4A4A4A] p-3 rounded-lg ">
-                    <Text className="text-[#979797] text-xl font-prostoOne" style={{fontFamily:'prosto-One'}}>login</Text>
+                <TouchableOpacity className="mt-1 mb-3 items-center bg-[#4A4A4A] p-3 rounded-lg " onPress={handleLogin}>
+                    <Text className="text-[#979797] text-xl font-prostoOne" style={{ fontFamily: 'prosto-One' }}>login</Text>
                 </TouchableOpacity>
             </View>
         </View>

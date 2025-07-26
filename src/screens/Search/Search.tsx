@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { AntDesign, Entypo } from '@expo/vector-icons';
@@ -7,11 +7,19 @@ import { demo } from './demo';
 
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
+import SearchModal from './SearchModal';
 
 const Search = () => {
     const [selectedImage, setSelectedImage] = useState(null);
+    const [isOpenModal, setIsOpenModal] = useState(false)
 
     const navigation = useNavigation();
+
+    console.log(selectedImage,"selectedImage")
+
+    useEffect(()=>{
+        setIsOpenModal(true)
+    },[selectedImage])
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -102,7 +110,7 @@ const Search = () => {
                         style={{ width: "100%", height: "100%" }}
                         resizeMode="cover"
                     />
-                ) }
+                )}
             </View>
 
             {/* click here to open camera and phoito */}
@@ -142,6 +150,7 @@ const Search = () => {
                 </View>
 
             </View>
+            <SearchModal visible={isOpenModal} onClose={() => setIsOpenModal(false)} />
         </ScrollView>
 
     )
