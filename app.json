@@ -24,9 +24,11 @@
       "versionCode": 139,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#121212"
+        "backgroundColor": "#000"
       },
-      "permissions": [],
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
       "useNextNotificationsApi": true,
       "package": "com.sparktech.sas",
       "config": {
@@ -64,7 +66,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "b201e9f7-b613-48e1-8105-5a13fc2da0d9"
+        "projectId": "3a9c2bc7-dac6-4dff-bf85-d913b1398ccb"
       }
     }
   }

@@ -82,7 +82,7 @@ const OnBoarding = () => {
 
     <SafeAreaView className="flex-1 bg-[#121212] ">
       <ImageBackground
-        source={require("../../../assets/e-icon/logBack.png")}
+        source={require("../../../assets/e-icon/ON.png")}
         style={{ flex: 1, width: "100%", height: "100%" }}
         resizeMode="cover"
       >

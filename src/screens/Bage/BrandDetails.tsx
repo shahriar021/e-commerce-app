@@ -39,17 +39,17 @@ const BrandDetails = () => {
 
             <View className='flex-row justify-between items-center mt-2 mb-2'>
                 <Text className='font-playFairDisplay text-2xl text-white'>Similar Brands</Text>
-                <View className='flex-row gap-3 items-center'>
+                <TouchableOpacity className='flex-row gap-3 items-center' onPress={()=>navigation.navigate("See all brands")}>
                     <Text className='font-prostoOne text-white'>See All</Text>
                     <AntDesign name="arrowright" size={24} color="#AD7720" />
-                </View>
+                </TouchableOpacity>
             </View>
 
 
             <ScrollView className='flex-1' horizontal>
 
                 {bageData?.map((item,index) =>
-                    <TouchableOpacity key={index} className='relative gap-3 rounded-xl overflow-hidden mt-1 mb-1 mr-3' style={{ width: scale(150), height: verticalScale(150) }}>
+                    <TouchableOpacity key={index}  className='relative gap-3 rounded-xl overflow-hidden mt-1 mb-1 mr-3' style={{ width: scale(150), height: verticalScale(150) }}>
                         <Image source={item.image} style={{ width: "100%", height: "100%" }} />
                         <Text className='absolute  bottom-3 left-0 right-0 text-xl font-podKova text-white text-center'>{item.title}</Text>
                     </TouchableOpacity>)}

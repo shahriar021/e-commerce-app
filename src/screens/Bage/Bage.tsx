@@ -31,12 +31,12 @@ const Bage = () => {
 
       <ScrollView className='flex-1'>
         <View className='flex-wrap flex-row gap-2 justify-between '>
-            {bageData?.map(item=><TouchableOpacity key={item.image} className='relative rounded-xl overflow-hidden mt-1 mb-1 ' style={{width:"48%",aspectRatio:1}}>
+            {bageData?.map(item=><TouchableOpacity key={item.image} className='relative rounded-xl overflow-hidden mt-1 mb-1 ' style={{width:"48%",aspectRatio:1}}  onPress={()=>navigation.navigate("Brand Details")}>
             <Image source={item.image} style={{width:"100%",height:"100%"}}/>
             <Text className='absolute  bottom-3 left-0 right-0 text-xl font-podKova text-white text-center'>{item.title}</Text>
         </TouchableOpacity>)}
         </View>
-        <TouchableOpacity className='bg-[#1F2937] p-2 items-center mt-4 mb-4 rounded-xl overflow-hidden' onPress={()=>navigation.navigate("Brand Details")}>
+        <TouchableOpacity className='bg-[#1F2937] p-2 items-center mt-4 mb-4 rounded-xl overflow-hidden'>
             <Text className='text-white font-prostoOne text-xl'>Load More</Text>
         </TouchableOpacity>
       </ScrollView>

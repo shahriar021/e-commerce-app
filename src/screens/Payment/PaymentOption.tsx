@@ -1,14 +1,16 @@
 import { View, Text, TouchableOpacity, Image, useWindowDimensions } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { AntDesign, Entypo } from '@expo/vector-icons'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { LinearGradient } from 'expo-linear-gradient'
+import PaymentAnimation from './PaymentAnimation'
 
 const PaymentOption = () => {
 
     const navigation = useNavigation()
     const { width } = useWindowDimensions()
+    const [showModal,setShowModal]=useState(false)
 
     navigation.setOptions({
         headerStyle: {
@@ -19,7 +21,7 @@ const PaymentOption = () => {
         },
         headerTitle: () => null,
         headerLeft: () => (
-            <TouchableOpacity className='flex-row gap-2 items-center mx-2' onPress={() => navigation.navigate("Cart Page")}>
+            <TouchableOpacity className='flex-row gap-2 items-center mx-2' onPress={() => navigation.goBack()}>
                 <AntDesign name="arrowleft" size={24} color="white" />
                 <View className=''>
                     <Text className='font-prostoOne text-white text-2xl'>Checkout</Text>
@@ -27,6 +29,11 @@ const PaymentOption = () => {
             </TouchableOpacity>
         )
     });
+
+    const handleModal=()=>{
+        setShowModal(true)
+    }
+
     return (
         <View className='bg-[#121212] justify-between p-2'>
 
@@ -71,7 +78,7 @@ const PaymentOption = () => {
 
 
                 <View className="items-center mt-3">
-                    <TouchableOpacity className=" items-center mt-3 rounded-lg  overflow-hidden bg-[#121212] border border-[#DCF3FF] w-full"  onPress={() => navigation.navigate("Payment Animation")}>
+                    <TouchableOpacity className=" items-center mt-3 rounded-lg  overflow-hidden bg-[#121212] border border-[#DCF3FF] w-full"  onPress={handleModal}>
 
                         <Text className="text-[#DCF3FF] p-3 " style={{ fontFamily: 'prosto-One' }}>Checkout</Text>
 
@@ -79,7 +86,7 @@ const PaymentOption = () => {
                 </View>
             </View>
 
-
+            <PaymentAnimation visible={showModal} onClose={()=>setShowModal(false)}/>
         </View>
     )
 }

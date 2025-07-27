@@ -115,6 +115,7 @@ export const ProviderBottomNavigation = () => {
           name="Products"
           component={Products}
           options={{
+            headerShown:false,
             tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: "center" }} className="">
 

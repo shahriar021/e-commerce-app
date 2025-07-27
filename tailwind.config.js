@@ -27,7 +27,8 @@ module.exports = {
         prostoOne:['prosto-One'],
         playFairDisplay:['PlayfairDisplay-Bold'],
         podKova:['Podkova-Bold'],
-        opansans:['OpenSans-Regular']
+        opansans:['OpenSans-Regular'],
+        poppins:['poppins']
       },
       colors:{
         darkYellow:'#FFC107',

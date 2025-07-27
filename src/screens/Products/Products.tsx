@@ -14,11 +14,12 @@ const Products = () => {
             headerStyle: {
                 backgroundColor: "#121212"
             },
-            headerTitle: ''
+            headerTitle: '',
+            
         })
     }, [navigation])
     return (
-        <View style={{ flex: 1, backgroundColor: "#121212", padding: 10 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#121212", padding: 10 }}>
 
             <ScrollView className='py-3 flex-1'>
                 <View className="flex-row justify-between items-center mb-2">
@@ -46,10 +47,11 @@ const Products = () => {
 
                 <View className='flex-row justify-between items-center mt-2 mb-2 py-1'>
                     <Text className='text-white font-prostoOne'>Order List</Text>
-                    <View className='flex-row items-center gap-2'>
+        
+                    <TouchableOpacity className='flex-row items-center gap-2' onPress={()=>navigation.navigate("Order List")}>
                         <Text className='text-white font-prostoOne'>See All</Text>
                         <AntDesign name="arrowright" size={24} color="white" />
-                    </View>
+                    </TouchableOpacity>
                 </View>
 
                 {/*  */}
@@ -57,7 +59,7 @@ const Products = () => {
                 <View className='flex-1 bg-[#121212] py-3'>
 
                     <ScrollView showsVerticalScrollIndicator={false}>
-                        {orderHist?.map(item => <TouchableOpacity key={item} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2' onPress={() => navigation.navigate("Order Details")}>
+                        {orderHist?.map(item => <View key={item} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2' >
                             <View className='flex-row justify-between items-center'>
                                 <Text className='text-[#fff] font-prostoOne'>#83473</Text>
                                 <Text className='text-[#FB923C] p-2 rounded-2xl' style={{ backgroundColor: 'rgba(249, 115, 22, 0.20)' }}>Processing</Text>
@@ -84,19 +86,19 @@ const Products = () => {
                                     <AntDesign name="check" size={24} color="white" />
                                     <Text className='text-white font-prostoOne'>Mark Ready</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity className='items-center bg-[#121212] p-2 rounded-md'>
+                                <TouchableOpacity className='items-center bg-[#121212] p-2 rounded-md' onPress={() => navigation.navigate("Order Details")}>
                                     <AntDesign name="eye" size={24} color="white" />
                                 </TouchableOpacity>
                             </View>
 
-                        </TouchableOpacity>)}
+                        </View>)}
                     </ScrollView>
 
                 </View>
 
 
             </ScrollView>
-        </View>
+        </SafeAreaView>
     )
 }
 

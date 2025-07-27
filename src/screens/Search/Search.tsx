@@ -15,11 +15,14 @@ const Search = () => {
 
     const navigation = useNavigation();
 
-    console.log(selectedImage,"selectedImage")
+    console.log(selectedImage, "selectedImage")
 
-    useEffect(()=>{
-        setIsOpenModal(true)
-    },[selectedImage])
+    useEffect(() => {
+        if (selectedImage) {
+            setIsOpenModal(true);
+        }
+    }, [selectedImage]);
+
 
     useLayoutEffect(() => {
         navigation.setOptions({

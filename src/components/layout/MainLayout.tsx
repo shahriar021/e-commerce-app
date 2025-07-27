@@ -18,7 +18,8 @@ const MainLayout = () => {
     'prosto-One':require("../../../assets/fonts/ProstoOne-Regular.ttf"),
     'playFairDisplay':require("../../../assets/fonts/PlayfairDisplay-Bold.ttf"),
     'podKova-bold':require("../../../assets/fonts/Podkova-Bold.ttf"),
-    'opansans':require("../../../assets/fonts/OpenSans-Regular.ttf")
+    'opansans':require("../../../assets/fonts/OpenSans-Regular.ttf"),
+    'poppins':require("../../../assets/fonts/Poppins-Bold.ttf"),
   });
 
   

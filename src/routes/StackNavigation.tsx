@@ -48,6 +48,10 @@ import AddProducts from "src/screens/Products/AddProducts";
 import AllProducts from "src/screens/Products/AllProducts";
 import SellerProfile from "src/screens/Profile/SellerProfile";
 import BrandProfile from "src/screens/Profile/BrandProfile";
+import SeeAllProducts from "src/screens/Bage/SeeAllProducts";
+import SeeAllBrands from "src/screens/Bage/SeeAllBrands";
+import OrderList from "src/screens/Orders/OrderList";
+import SearchResult from "src/screens/Search/SearchModal";
 
 
 const Stack = createStackNavigator();
@@ -98,6 +102,7 @@ const StackNavigation = () => {
         <Stack.Screen name="My Favourite" component={MyFavourite}/>
         <Stack.Screen name="Order History" component={OrderHistory}/>
         <Stack.Screen name="Order Details" component={OrderDetails}/>
+        <Stack.Screen name="Order List" options={{headerShown:true}} component={OrderList}/>
 
         <Stack.Screen name="Nearby Restaurants List" component={NearbyRestaurantList}/>
         <Stack.Screen name="Restaurant Profile" options={{headerShown:false}} component={RestaurantProfile}/>
@@ -112,6 +117,7 @@ const StackNavigation = () => {
 
         <Stack.Screen name="Delivery Request" component={DeliveryRequestView}/>
         <Stack.Screen name="Map" options={{headerShown:false}} component={MapScreen}/>
+        <Stack.Screen name="Search Result" options={{headerShown:false}} component={SearchResult}/>
         
         <Stack.Screen name="Withdraw" component={Withdraw}/>
         <Stack.Screen name="Withdraw Request" component={WithdrawRequest}/>
@@ -120,6 +126,8 @@ const StackNavigation = () => {
         <Stack.Screen name="History" component={History}/>
         <Stack.Screen name="Brand Details" options={{headerShown:true}} component={BrandDetails}/>
         <Stack.Screen name="Brand Products" options={{headerShown:true}} component={BrandProducts}/>
+        <Stack.Screen name="See all products" options={{headerShown:true}} component={SeeAllProducts}/>
+        <Stack.Screen name="See all brands" options={{headerShown:true}} component={SeeAllBrands}/>
         <Stack.Screen name="Product Details" options={{headerShown:true}} component={ProductDetails}/>
         <Stack.Screen name="Other/brand profile" options={{headerShown:true}} component={UsersORBrandProfile}/>
         <Stack.Screen name="Cart Page" options={{headerShown:true}} component={CartPage}/>

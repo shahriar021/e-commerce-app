@@ -101,11 +101,11 @@ const HomeScreen = () => {
           <Text className="text-white font-playFairDisplay text-3xl max-w-[90%] text-center">
             One Platform, A Thousand Brands
           </Text>
-          <TouchableOpacity className="bg-[#fff] w-[90%]  rounded-3xl p-4 items-center mt-3">
+          <TouchableOpacity className="bg-[#fff] w-[90%]  rounded-3xl p-4 items-center mt-3" onPress={() => navigation.navigate("Brand")}>
             <Text className="font-playFairDisplay text-[#111827]">Explore Collections</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
+          <TouchableOpacity onPress={() => navigation.navigate("Feed")}
             style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
             className="w-[90%] rounded-3xl p-4 items-center mt-3 border border-[#fff]"
           >
@@ -145,7 +145,7 @@ const HomeScreen = () => {
         <Text className="font-prostoOne text-3xl text-center text-[#fff] mt-5">Featured Brands</Text>
         <Text className="font-prostoOne text-lg text-center text-[#fff] mt-2 max-w-[90%]">Discover premium collections from top designers</Text>
 
-        {homeInfo?.map(item => <View key={item.name} className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }}>
+        {homeInfo?.map(item => <TouchableOpacity key={item.name} className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }} onPress={()=>navigation.navigate("Brand Products")}>
           <View className="rounded-3xl overflow-hidden" style={{ width: scale(80), height: verticalScale(80) }}>
             <Image source={item.image} style={{ width: "100%", height: "100%" }} className="rounded-3xl" />
           </View>
@@ -157,7 +157,7 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
           <AntDesign name="right" size={24} color="#9CA3AF" />
-        </View>)}
+        </TouchableOpacity>)}
 
         <TouchableOpacity className=" items-center border rounded-3xl border-[#fff] p-2 mt-3" style={{ width: "95%" }}>
           <Text className="font-prostoOne text-white text-xl">View All</Text>

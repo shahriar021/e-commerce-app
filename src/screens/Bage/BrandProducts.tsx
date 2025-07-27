@@ -52,10 +52,10 @@ const BrandProducts = () => {
 
             <View className='flex-row justify-between items-center mt-2 mb-2'>
                 <Text className='font-playFairDisplay text-2xl text-white'>All Products</Text>
-                <View className='flex-row gap-3 items-center'>
+                <TouchableOpacity className='flex-row gap-3 items-center' onPress={()=>navigation.navigate("See all products")}>
                     <Text className='font-prostoOne text-white'>See All</Text>
                     <AntDesign name="arrowright" size={24} color="#AD7720" />
-                </View>
+                </TouchableOpacity>
             </View>
 
             <ScrollView contentContainerStyle={{paddingBottom:100 }} showsVerticalScrollIndicator={false}>

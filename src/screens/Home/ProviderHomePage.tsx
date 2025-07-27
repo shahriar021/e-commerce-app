@@ -88,20 +88,20 @@ const ProviderHomePage = () => {
 
                 </View>
 
-                <View className='flex-row justify-between items-center mt-2 mb-2 p-3'>
+                <TouchableOpacity className='flex-row justify-between items-center mt-2 mb-2 p-3' onPress={()=>navigation.navigate("Order List")}>
                     <Text className='text-white font-prostoOne'>Order List</Text>
                     <View className='flex-row items-center gap-2'>
                         <Text className='text-white font-prostoOne'>See All</Text>
                         <AntDesign name="arrowright" size={24} color="white" />
                     </View>
-                </View>
+                </TouchableOpacity>
 
                 {/*  */}
 
                 <View className='flex-1 bg-[#121212] p-3'>
 
                     <ScrollView showsVerticalScrollIndicator={false}>
-                        {orderHist?.map(item => <TouchableOpacity key={item} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2' onPress={() => navigation.navigate("Order Details")}>
+                        {orderHist?.map(item => <View key={item} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2'>
                             <View className='flex-row justify-between items-center'>
                                 <Text className='text-[#fff] font-prostoOne'>#83473</Text>
                                 <Text className='text-[#FB923C] p-2 rounded-2xl' style={{ backgroundColor: 'rgba(249, 115, 22, 0.20)' }}>Processing</Text>
@@ -128,12 +128,12 @@ const ProviderHomePage = () => {
                                     <AntDesign name="check" size={24} color="white" />
                                     <Text className='text-white font-prostoOne'>Mark Ready</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity className='items-center bg-[#121212] p-2 rounded-md'>
+                                <TouchableOpacity className='items-center bg-[#121212] p-2 rounded-md'  onPress={() => navigation.navigate("Order Details")}>
                                     <AntDesign name="eye" size={24} color="white" />
                                 </TouchableOpacity>
                             </View>
 
-                        </TouchableOpacity>)}
+                        </View>)}
                     </ScrollView>
 
                 </View>

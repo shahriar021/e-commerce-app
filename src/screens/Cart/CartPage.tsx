@@ -19,7 +19,7 @@ const CartPage = () => {
         },
         headerTitle: () => null,
         headerLeft: () => (
-            <TouchableOpacity className='flex-row gap-2 items-center mx-2' onPress={() => navigation.navigate("Product Details")}>
+            <TouchableOpacity className='flex-row gap-2 items-center mx-2' onPress={() => navigation.goBack()}>
                 <AntDesign name="arrowleft" size={24} color="white" />
                 <View className=''>
                     <Text className='font-prostoOne text-white text-2xl'>Cart</Text>

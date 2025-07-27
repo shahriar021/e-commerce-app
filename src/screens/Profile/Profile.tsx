@@ -24,6 +24,7 @@ import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { useAppSelector } from "src/redux/hooks";
 import Posts from "../Feed/Posts";
 import Details from "../Feed/Details";
+import * as ImagePicker from 'expo-image-picker';
 
 const { width } = Dimensions.get("window");
 
@@ -46,6 +47,7 @@ type NavigationProp = StackNavigationProp<RootStackParamList>;
 const isTablet = width > 768;
 
 export default function YourComponent() {
+  const [selectedImage, setSelectedImage] = useState(null);
   const userType = useAppSelector((store) => store.auth.userType)
   const [isPosts, setIsPosts] = useState("Posts")
 
@@ -60,6 +62,24 @@ export default function YourComponent() {
       headerTintColor: "white"
     })
   }, [navigation])
+
+  const openCamera = async () => {
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera is required!");
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+    }
+  };
 
   return (
     <ScrollView
@@ -107,14 +127,22 @@ export default function YourComponent() {
             justifyContent: 'center',
           }}
         >
-          <Image
+
+          {selectedImage ? (
+            <Image
+              source={{ uri: selectedImage }}
+              style={{ width: "100%", height: "100%" }}
+              resizeMode="cover"
+            />
+          ) : <Image
             source={require("../../../assets/e-icon/img (1).png")}
             style={{ width: '100%', height: '100%' }}
             resizeMode="cover"
-          />
+          />}
+
 
         </View>
-        <TouchableOpacity className="absolute z-10 bg-[#2A2A2A] p-1 rounded-full" style={{
+        <TouchableOpacity onPress={openCamera} className="absolute z-10 bg-[#2A2A2A] p-1 rounded-full" style={{
           width: scale(24), height: scale(24), bottom: verticalScale(12), left: '50%',
           transform: [{ translateX: scale(60) / 2 }]
         }}>
