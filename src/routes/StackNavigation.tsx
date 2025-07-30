@@ -52,14 +52,14 @@ import SeeAllProducts from "src/screens/Bage/SeeAllProducts";
 import SeeAllBrands from "src/screens/Bage/SeeAllBrands";
 import OrderList from "src/screens/Orders/OrderList";
 import SearchResult from "src/screens/Search/SearchModal";
+import DetailsProduct from "src/screens/Products/DetailsProduct";
 
 
 const Stack = createStackNavigator();
 
 const StackNavigation = () => {
   const userType = useAppSelector((store)=>store.auth.userType)
-  // const userType="rider"
-  console.log(userType)
+  
 
 
   if(!userType){
@@ -77,6 +77,9 @@ const StackNavigation = () => {
             elevation: 0,
             shadowOpacity: 0,
             borderBottomWidth: 0,
+          },
+          headerTitleStyle: {
+            fontFamily: "HelveticaNeue-Black",
           },
           headerTintColor: "#006400",
           // headerRight: () => <NavRight routeName={routeNameRef.current} />,
@@ -129,6 +132,7 @@ const StackNavigation = () => {
         <Stack.Screen name="See all products" options={{headerShown:true}} component={SeeAllProducts}/>
         <Stack.Screen name="See all brands" options={{headerShown:true}} component={SeeAllBrands}/>
         <Stack.Screen name="Product Details" options={{headerShown:true}} component={ProductDetails}/>
+        <Stack.Screen name="Details Product" options={{headerShown:true}} component={DetailsProduct}/>
         <Stack.Screen name="Other/brand profile" options={{headerShown:true}} component={UsersORBrandProfile}/>
         <Stack.Screen name="Cart Page" options={{headerShown:true}} component={CartPage}/>
         <Stack.Screen name="Review" options={{headerShown:true}} component={Review}/>

@@ -45,10 +45,10 @@ const EditProfile = () => {
             </View>
 
 
-            <Text className='font-prostoOne text-xl text-[#fff]  w-full'>Full Name</Text>
+            <Text className='font-helvetica text-xl text-[#fff]  w-full'>Full Name</Text>
             <TextInput className=' p-3 text-white w-full rounded-md bg-[#252525] mt-1 mb-3' style={{ color: "#fff" }} placeholderTextColor={"#fff"} placeholder='Enter Your First Name' />
 
-            <Text className='font-prostoOne text-xl text-[#fff]  w-full'>Enter Mail</Text>
+            <Text className='font-helvetica text-xl text-[#fff]  w-full'>Enter Mail</Text>
             <TextInput className=' p-3 text-white w-full rounded-md bg-[#252525] mt-1 mb-3' style={{ color: "#fff" }} placeholderTextColor={"#fff"} placeholder='Enter E-Mail' />
 
             <View style={{ flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#ccc', borderRadius: 8, paddingHorizontal: 10, paddingVertical: 8, marginBottom: 10 }}>
@@ -101,9 +101,9 @@ const EditProfile = () => {
             </View>
 
             <View className="items-center">
-                <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden bg-[#DCF3FF]" style={{ width: width * 0.9 }} >
+                <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden bg-[#fff]" style={{ width: width * 0.9 }} >
 
-                    <Text className="text-[#121212] p-3 font-prostoOne">Save Changes</Text>
+                    <Text className="text-[#121212] p-3 font-helvetica">Save Changes</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

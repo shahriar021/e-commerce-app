@@ -37,10 +37,10 @@ const SearchModal = ({ visible, onClose }: any) => {
                     </View>
                     <View className='flex-row gap-3 mt-1 mb-2'>
                         <TouchableOpacity className={`${isClothType == "ALL Results" ? "bg-[#DCF3FF]" : "bg-[#1F2937]"} rounded-md items-center p-1 `} onPress={() => setIsClothType("ALL Results")}>
-                            <Text className={`font-prostoOne ${isClothType == "ALL Results" ? "text-[#121212]" : "text-white"}`}>ALL Results</Text>
+                            <Text className={`font-helvetica ${isClothType == "ALL Results" ? "text-[#121212]" : "text-white"}`}>ALL Results</Text>
                         </TouchableOpacity>
                         <TouchableOpacity className={`${isClothType == "In Stock" ? "bg-[#DCF3FF]" : "bg-[#1F2937]"} rounded-md items-center p-1`} onPress={() => setIsClothType("In Stock")}>
-                            <Text className={`font-prostoOne ${isClothType == "In Stock" ? "text-[#121212]" : "text-white"}`}>In Stock</Text>
+                            <Text className={`font-helvetica ${isClothType == "In Stock" ? "text-[#121212]" : "text-white"}`}>In Stock</Text>
                         </TouchableOpacity>
 
                     </View>

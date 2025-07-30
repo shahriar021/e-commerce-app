@@ -96,8 +96,8 @@ const UsersORBrandProfile = () => {
       </View>
 
       <View className='w-[92%] items-center'>
-        <Text className='text-white text-center font-prostoOne' style={{fontFamily:'prosto-One'}}>{type=="user"? "Jack Robo":"Coin Supply"}</Text>
-        <Text className='text-white font-prostoOne text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
+        <Text className='text-white text-center font-helvetica' style={{fontFamily:'prosto-One'}}>{type=="user"? "Jack Robo":"Coin Supply"}</Text>
+        <Text className='text-white font-helvetica text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
         <View className='mt-3 flex-row gap-3'>
           <View className='bg-[#252525] p-2 items-center rounded-xl'>
             <Text className='text-white'>142</Text>
@@ -114,23 +114,23 @@ const UsersORBrandProfile = () => {
         </View>
       </View>
      { type=="user"?<TouchableOpacity className='bg-[#3B82F6] p-2 rounded-xl mt-3'>
-        <Text className='text-white font-prostoOne' style={{fontFamily:'prosto-One'}}>Follow</Text>
+        <Text className='text-white font-helvetica' style={{fontFamily:'prosto-One'}}>Follow</Text>
       </TouchableOpacity>
       :<View className='flex-row items-center gap-2'>
         <TouchableOpacity className='bg-[#3B82F6] p-2 rounded-xl mt-3'>
-        <Text className='text-white font-prostoOne' style={{fontFamily:'prosto-One'}}>Follow</Text>
+        <Text className='text-white font-helvetica' style={{fontFamily:'prosto-One'}}>Follow</Text>
       </TouchableOpacity>
       <TouchableOpacity className='bg-[#1F2937] p-2 rounded-xl mt-3' onPress={()=>navigation.navigate("Brand Details")}>
-        <Text className='text-white font-prostoOne' style={{fontFamily:'prosto-One'}}>View Details</Text>
+        <Text className='text-white font-helvetica' style={{fontFamily:'prosto-One'}}>View Details</Text>
       </TouchableOpacity>
       </View>}
 
       <View className='w-[92%] flex-row gap-3 mt-2 mb-3'>
         <TouchableOpacity className={`${isPosts=="Posts"?"border-b border-b-white":""} py-1`} onPress={()=>setIsPosts("Posts")}>
-          <Text className='font-prostoOne text-white' style={{fontFamily:'prosto-One'}}>Posts</Text>
+          <Text className='font-helvetica text-white' style={{fontFamily:'prosto-One'}}>Posts</Text>
         </TouchableOpacity>
         <TouchableOpacity  className={`${isPosts=="Details"?"border-b border-b-white":""} py-1`} onPress={()=>setIsPosts("Details")}>
-          <Text className='font-prostoOne text-white' style={{fontFamily:'prosto-One'}}>Details</Text>
+          <Text className='font-helvetica text-white' style={{fontFamily:'prosto-One'}}>Details</Text>
         </TouchableOpacity>
       </View>
       {isPosts=="Posts"?<Posts/>:<Details/>}

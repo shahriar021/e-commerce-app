@@ -51,8 +51,8 @@ const OTPScreen = () => {
   return (
     <View className="flex-1 bg-[#121212] p-3">
       <View className="px-3">
-        <Text className="text-[#FFFFFF] text-2xl font-playFairDisplay mb-2" style={{ fontFamily: 'playFairDisplay' }}>OTP Verification</Text>
-        <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-playFairDisplay" style={{ fontFamily: 'playFairDisplay' }}>Enter 6-digit Code</Text>
+        <Text className="text-[#FFFFFF] text-2xl font-helvetica mb-2" style={{ fontFamily: 'playFairDisplay' }}>OTP Verification</Text>
+        <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-helvetica" style={{ fontFamily: 'playFairDisplay' }}>Enter 6-digit Code</Text>
         <Text className='text-[#FFFFFF]'>Your code was sent to +1111499350</Text>
 
 
@@ -72,7 +72,7 @@ const OTPScreen = () => {
         </View>
         <Text className='text-[#989898] mt-2 mb-3'>Resend code 59s</Text>
         <TouchableOpacity className="mt-2 mb-3 p-3 items-center bg-[#4A4A4A] rounded-lg overflow-hidden" onPress={() => navigation.navigate("Success page")}>
-            <Text className="text-[#979797] text-xl font-prostoOne" style={{ fontFamily: 'prosto-One' }}>Verify</Text>
+            <Text className="text-[#979797] text-xl font-helvetica" style={{ fontFamily: 'prosto-One' }}>Verify</Text>
         </TouchableOpacity>
       </View>
     </View>

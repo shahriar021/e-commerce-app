@@ -43,13 +43,13 @@ const BrandProfile = () => {
             </View>
 
 
-            <Text className='font-prostoOne text-xl text-[#fff]  w-full'>Full Name</Text>
+            <Text className='font-helvetica  text-[#fff]  w-full'>Full Name</Text>
             <TextInput className=' p-3 text-white w-full rounded-md bg-[#252525] mt-1 mb-3' style={{ color: "#fff" }} placeholderTextColor={"#fff"} placeholder='Enter Your First Name' />
 
-            <Text className='font-prostoOne text-xl text-[#fff]  w-full'>Enter Mail</Text>
+            <Text className='font-helvetica  text-[#fff]  w-full'>Enter Mail</Text>
             <TextInput className=' p-3 text-white w-full rounded-md bg-[#252525] mt-1 mb-3' style={{ color: "#fff" }} placeholderTextColor={"#fff"} placeholder='Enter E-Mail' />
 
-            <Text className='font-prostoOne text-xl text-[#fff]  w-full'>Brand Logo</Text>
+            <Text className='font-helvetica  text-[#fff]  w-full'>Phone Number</Text>
             
 
             <View style={{ flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#ccc', borderRadius: 8, paddingHorizontal: 10, paddingVertical: 8, marginBottom: 10 }}>
@@ -77,8 +77,9 @@ const BrandProfile = () => {
 
 
             <View className=''>
+                <Text className='text-white mb-3 font-helvetica' >Brand Story</Text>
                 <View className='bg-[#252525] p-2 rounded-xl'>
-                    <Text className='text-white mb-3' style={{ fontFamily: 'prosto-One' }}>Brand Story</Text>
+                    
                     <Text className='text-white' style={{ fontFamily: 'prosto-One' }}>
                         Born from late-night sketch sessions and city grit, COID Supply started in a cramped apartment in Brooklyn with just a screen printer and a dream. Tired of watered-down fashion, we built a brand that reps raw energy, underground culture, and the hustle mentality. Our first drop? Sold out of backpacks at a pop-up on Flatbush Ave. Today, COID is more than a label—it’s a movement for the unheard, the unseen, and the unfazed. We don’t follow trends. We set ‘em.
                     </Text>
@@ -88,9 +89,9 @@ const BrandProfile = () => {
             </View>
 
             <View className="items-center">
-                <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden bg-[#DCF3FF]" style={{ width: width * 0.9 }} >
+                <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden bg-[#FFF]" style={{ width: width * 0.9 }} >
 
-                    <Text className="text-[#121212] p-3 font-prostoOne">Save Changes</Text>
+                    <Text className="text-[#121212] p-3 font-helvetica">Save Changes</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import StackNavigation from "src/routes/StackNavigation";
@@ -10,20 +10,21 @@ import SplashScreen from "../ui/splashScreen/SplashScreen";
 
 const MainLayout = () => {
   // const token = useAppSelector((state) => state.auth.user?.access_token);
-  const token = useAppSelector((state)=>state.auth.token);
+  const token = useAppSelector((state) => state.auth.token);
   // const token = 0;
   const [isSplashVisible, setIsSplashVisible] = useState(true);
 
   const [fontsLoaded] = useFonts({
-    'prosto-One':require("../../../assets/fonts/ProstoOne-Regular.ttf"),
-    'playFairDisplay':require("../../../assets/fonts/PlayfairDisplay-Bold.ttf"),
-    'podKova-bold':require("../../../assets/fonts/Podkova-Bold.ttf"),
-    'opansans':require("../../../assets/fonts/OpenSans-Regular.ttf"),
-    'poppins':require("../../../assets/fonts/Poppins-Bold.ttf"),
+    'prosto-One': require("../../../assets/fonts/ProstoOne-Regular.ttf"),
+    'playFairDisplay': require("../../../assets/fonts/PlayfairDisplay-Bold.ttf"),
+    'podKova-bold': require("../../../assets/fonts/Podkova-Bold.ttf"),
+    'opansans': require("../../../assets/fonts/OpenSans-Regular.ttf"),
+    'poppins': require("../../../assets/fonts/Poppins-Bold.ttf"),
+    'HelveticaNeue-Black': require("../../../assets/fonts/HelveticaNeueBlack.otf"),
   });
 
-  
-    useLayoutEffect(() => {
+
+  useLayoutEffect(() => {
     const timer = setTimeout(() => {
       setIsSplashVisible(false);
     }, 5000);
@@ -37,12 +38,28 @@ const MainLayout = () => {
     return <SplashScreen />;
   }
 
+  const oldRender = Text.render;
+  Text.render = function (...args) {
+    const origin = oldRender.call(this, ...args);
+
+    // if icon font already set, don't override
+    const style = Array.isArray(origin.props.style) ? origin.props.style : [origin.props.style];
+    const hasCustomFont = style.some((s) => s && s.fontFamily);
+
+    return React.cloneElement(origin, {
+      style: hasCustomFont
+        ? origin.props.style // keep icon font
+        : [origin.props.style, { fontFamily: "HelveticaNeue-Black" }],
+    });
+  };
+
+
   return (
     <NavigationContainer>
       <View style={{ flex: 1 }}>
         <StatusBar style="light" />
         {token ? (
-          <StackNavigation  />
+          <StackNavigation />
         ) : (
           <AuthStack />
         )}

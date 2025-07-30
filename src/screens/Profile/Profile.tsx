@@ -13,7 +13,7 @@ import {
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Entypo } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { profileItems } from "../../constants/profileItems";
 
@@ -25,6 +25,7 @@ import { useAppSelector } from "src/redux/hooks";
 import Posts from "../Feed/Posts";
 import Details from "../Feed/Details";
 import * as ImagePicker from 'expo-image-picker';
+import CreatePostModal from "../Feed/CreatePostModal";
 
 const { width } = Dimensions.get("window");
 
@@ -50,6 +51,7 @@ export default function YourComponent() {
   const [selectedImage, setSelectedImage] = useState(null);
   const userType = useAppSelector((store) => store.auth.userType)
   const [isPosts, setIsPosts] = useState("Posts")
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<NavigationProp>();
@@ -81,7 +83,15 @@ export default function YourComponent() {
     }
   };
 
+  const handleModal = () => {
+        setIsModalOpen(true)
+    }
+
   return (
+    <View className="flex-1 relative">
+            <TouchableOpacity className='absolute right-10 bottom-4 z-10 bg-[#1B5FEE] p-3 rounded-full' onPress={handleModal}>
+                <AntDesign name="plus" size={24} color="white" />
+            </TouchableOpacity>
     <ScrollView
       contentContainerStyle={{
         paddingBottom: verticalScale(40),
@@ -89,6 +99,7 @@ export default function YourComponent() {
       }}
       style={{ flex: 1, backgroundColor: '#121212' }}
     >
+
       <View
         style={{
           width: '92%',
@@ -151,20 +162,20 @@ export default function YourComponent() {
       </View>
 
       <View className='w-[92%] items-center'>
-        <Text className='text-white text-center font-prostoOne' style={{ fontFamily: 'prosto-One' }}>Jack Robo</Text>
-        <Text className='text-white font-prostoOne text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
+        <Text className='text-white text-center font-helvetica mb-1' >Jack Robo</Text>
+        <Text className='text-white font-helvetica text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
         <View className='mt-3 flex-row gap-3'>
           <View className='bg-[#252525] p-2 items-center rounded-xl'>
             <Text className='text-white'>142</Text>
-            <Text className='text-[#9CA3AF]' style={{ fontFamily: 'prosto-One' }}>Posts</Text>
+            <Text className='text-[#9CA3AF]' >Posts</Text>
           </View>
           <View className='bg-[#252525] p-2 items-center rounded-xl'>
             <Text className='text-white'>2.1k</Text>
-            <Text className='text-[#9CA3AF]' style={{ fontFamily: 'prosto-One' }}>Likes</Text>
+            <Text className='text-[#9CA3AF]' >Likes</Text>
           </View>
           <View className='bg-[#252525] p-2 items-center rounded-xl'>
             <Text className='text-white'>89</Text>
-            <Text className='text-[#9CA3AF]' style={{ fontFamily: 'prosto-One' }}>Followings</Text>
+            <Text className='text-[#9CA3AF]' >Followings</Text>
           </View>
         </View>
       </View>
@@ -173,14 +184,18 @@ export default function YourComponent() {
 
       <View className='w-[92%] flex-row gap-3 mt-2 mb-3 justify-center items-center'>
         <TouchableOpacity className={`${isPosts == "Posts" ? "border-b border-b-white" : ""} py-1`} onPress={() => setIsPosts("Posts")}>
-          <Text className='font-prostoOne text-white' style={{ fontFamily: 'prosto-One' }}>Posts</Text>
+          <Text className='font-helvetica text-white' >Posts</Text>
         </TouchableOpacity>
         <TouchableOpacity className={`${isPosts == "Details" ? "border-b border-b-white" : ""} py-1`} onPress={() => setIsPosts("Details")}>
-          <Text className='font-prostoOne text-white' style={{ fontFamily: 'prosto-One' }}>My Lookbook</Text>
+          <Text className='font-helvetica text-white' >My Lookbook</Text>
         </TouchableOpacity>
       </View>
       {isPosts == "Posts" ? <Posts /> : <Posts />}
     </ScrollView>
+    <CreatePostModal visible={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
+    </View>
   );
 
 

@@ -35,14 +35,14 @@ const SuccessPage = () => {
         </View>
 
         <View className='items-center'>
-          <Text className='text-[#fff] font-playFairDisplay text-2xl mt-2 mb-2'>SUCCESS</Text>
+          <Text className='text-[#fff] font-helvetica text-2xl mt-2 mb-2'>SUCCESS</Text>
         </View>
 
         <View className='items-center'>
-          <Text className='text-[#fff] font-playFairDisplay text-xl mt-2 mb-2'>Your password has been successfully reset</Text>
+          <Text className='text-[#fff] font-helvetica text-xl mt-2 mb-2'>Your password has been successfully reset</Text>
         </View>
         <TouchableOpacity className="mt-2 mb-3 p-3 w-full items-center bg-[#04060F14] rounded-lg overflow-hidden border border-[#DCF3FF]" onPress={() => navigation.navigate("Login Screen")}>
-            <Text className="text-[#979797] text-xl font-prostoOne" style={{ fontFamily: 'prosto-One' }}>Back to Login</Text>
+            <Text className="text-[#979797] text-xl font-helvetica" style={{ fontFamily: 'prosto-One' }}>Back to Login</Text>
         </TouchableOpacity>
       </View>
     </View>

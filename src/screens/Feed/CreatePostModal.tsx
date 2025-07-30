@@ -14,7 +14,7 @@ const CreatePostModal = ({ visible, onClose }: any) => {
             <View className='justify-end flex-1 bg-black-50 '>
                 <View className='bg-black rounded-t-[32] overflow-hidden ' style={{ height: height * 0.6 }}>
                     <View className='mt-5 p-3 flex-row justify-between items-center mx-2'>
-                        <Text className='font-prostoOne text-white text-lg'>Create Post</Text>
+                        <Text className='font-helvetica text-white text-lg'>Create Post</Text>
                         <TouchableOpacity className='bg-[#2C2C2C] p-1 rounded-full' onPress={onClose}>
                             <Entypo name="cross" size={24} color="white" />
                         </TouchableOpacity>
@@ -30,7 +30,7 @@ const CreatePostModal = ({ visible, onClose }: any) => {
 
                              <TextInput className='bg-[#2C2C2C] flex-1 border w-full p-5 rounded-lg mt-4 mb-2' placeholderTextColor={"#ADAEBC"} placeholder='Add hashtag..' style={{color:"#ADAEBC"}}/>
 
-                                <Text className='font-prostoOne text-white w-full mt-2'>Select Brand</Text>
+                                <Text className='font-helvetica text-white w-full mt-2'>Select Brand</Text>
 
                                 <View className='flex-row items-center mt-4 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                                     <CreateModalSelecPicker/>
@@ -38,7 +38,7 @@ const CreatePostModal = ({ visible, onClose }: any) => {
                                 </View>
 
                                 <TouchableOpacity className='bg-[#5E6673] w-full p-4 items-center rounded-xl mt-5 mb-4'>
-                                    <Text className='text-[#CACACA] font-prostoOne text-xl'>Post</Text>
+                                    <Text className='text-[#CACACA] font-helvetica text-xl'>Post</Text>
                                 </TouchableOpacity>
                     </ScrollView>
                 </View>

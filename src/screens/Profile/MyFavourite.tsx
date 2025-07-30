@@ -43,8 +43,8 @@ const MyFavourite = () => {
                             <View className='bg-white p-2 rounded-full absolute top-2 right-2' >
                                 <Ionicons name="heart" size={14} color="red" />
                             </View>
-                            <Text className='font-prostoOne text-white mt-8 mb-1'>Regular Fit Slogan</Text>
-                            <Text className='font-prostoOne text-white mb-2'>$ 8900</Text>
+                            <Text className='font-helvetica text-white mt-8 mb-1'>Regular Fit Slogan</Text>
+                            <Text className='font-helvetica text-white mb-2'>$ 8900</Text>
                         </TouchableOpacity>
                     )}
                 </View>

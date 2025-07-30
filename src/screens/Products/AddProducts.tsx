@@ -23,7 +23,7 @@ const AddProducts = () => {
             headerTitleAlign: 'start',
             headerTintColor: "white",
             headerTitleStyle: {
-                fontFamily: "prosto-One",
+                fontFamily: "HelveticaNeue-Black",
                 fontSize: 20,
                 color: "white",
             },
@@ -36,7 +36,7 @@ const AddProducts = () => {
     }, [navigation])
     return (
         <ScrollView className='flex-1 bg-[#121212] p-5' contentContainerStyle={{paddingBottom:100}}>
-            <Text className='text-[#A0A0A0] font-prostoOne mt-2 mb-2'>Product Images</Text>
+            <Text className='text-[#A0A0A0] font-helvetica mt-2 mb-2'>Product Images</Text>
 
             <View className=' flex-row gap-2'>
                 <TouchableOpacity className='bg-[#252525]  p-2 rounded-xl items-center justify-center border-dashed border-white border-2' style={{ width: scale(90), height: verticalScale(90) }} >
@@ -61,92 +61,92 @@ const AddProducts = () => {
             </View>
 
             <TouchableOpacity className='bg-[#5E6673] mt-3 mb-2 items-center p-3 rounded-lg'>
-                <Text className='text-white font-prostoOne'>Upload Images</Text>
+                <Text className='text-white font-helvetica'>Upload Images</Text>
             </TouchableOpacity>
-            <Text className='text-[#A0A0A0] font-prostoOne mt-2 mb-2'>Basic Information</Text>
+            <Text className='text-[#A0A0A0] font-helvetica mt-2 mb-2'>Basic Information</Text>
             {/* now all input starts */}
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Product Name*</Text>
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Product Name*</Text>
             <TextInput className='mt-2 mb-2 bg-[#2C2C2C] p-3 rounded-lg' placeholder='e.g., Embroidered Red Kurti' style={{ color: "#ADAEBC" }} placeholderTextColor={"#ADAEBC"} />
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Short Description</Text>
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Short Description</Text>
             <TextInput className='mt-2 mb-2 bg-[#2C2C2C] p-3 rounded-lg' placeholder='Describe fabric, fit, style...' style={{ color: "#ADAEBC" }} placeholderTextColor={"#ADAEBC"} />
-             <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Category*</Text>               
+             <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Category*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                 <CreateProductSelecPicker />
                 <AntDesign name="down" size={24} color="white" />
             </View>
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Size Group for Small*</Text> 
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Bust/Chest*</Text>               
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Size Group for Small*</Text> 
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Bust/Chest*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                 <CreateProductSelecPicker />
                 <AntDesign name="down" size={24} color="white" />
             </View>  
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Waist*</Text>               
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Waist*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                 <CreateProductSelecPicker />
                 <AntDesign name="down" size={24} color="white" />
             </View>
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Hips*</Text>               
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Hips*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                 <CreateProductSelecPicker />
                 <AntDesign name="down" size={24} color="white" />
             </View>
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Height Range*</Text>               
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Height Range*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                 <CreateProductSelecPicker />
                 <AntDesign name="down" size={24} color="white" />
             </View>
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Size Group for Medium*</Text> 
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Bust/Chest*</Text>               
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Size Group for Medium*</Text> 
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Bust/Chest*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                 <CreateProductSelecPicker />
                 <AntDesign name="down" size={24} color="white" />
             </View>
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Waist*</Text>               
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Waist*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                 <CreateProductSelecPicker />
                 <AntDesign name="down" size={24} color="white" />
             </View>
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Hips*</Text>               
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Hips*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                 <CreateProductSelecPicker />
                 <AntDesign name="down" size={24} color="white" />
             </View>
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Height Range*</Text>               
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Height Range*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                 <CreateProductSelecPicker />
                 <AntDesign name="down" size={24} color="white" />
             </View>
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Size Group for Large*</Text> 
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Bust/Chest*</Text>               
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Size Group for Large*</Text> 
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Bust/Chest*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                 <CreateProductSelecPicker />
                 <AntDesign name="down" size={24} color="white" />
             </View>
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Waist*</Text>               
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Waist*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                 <CreateProductSelecPicker />
                 <AntDesign name="down" size={24} color="white" />
             </View>
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Hips*</Text>               
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Hips*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                 <CreateProductSelecPicker />
                 <AntDesign name="down" size={24} color="white" />
             </View>
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Height Range*</Text>               
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Height Range*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                 <CreateProductSelecPicker />
                 <AntDesign name="down" size={24} color="white" />
             </View>
 
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Total Quantity*</Text>
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Total Quantity*</Text>
             <TextInput className='mt-2 mb-2 bg-[#2C2C2C] p-3 rounded-lg' placeholder='e.g., Embroidered Red Kurti' style={{ color: "#ADAEBC" }} placeholderTextColor={"#ADAEBC"} />
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Price (৳)*</Text>
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Price (৳)*</Text>
             <TextInput className='mt-2 mb-2 bg-[#2C2C2C] p-3 rounded-lg' placeholder='e.g., Embroidered Red Kurti' style={{ color: "#ADAEBC" }} placeholderTextColor={"#ADAEBC"} />
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Discount Price (Optional)</Text>
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Discount Price (Optional)</Text>
             <TextInput className='mt-2 mb-2 bg-[#2C2C2C] p-3 rounded-lg' placeholder='e.g., Embroidered Red Kurti' style={{ color: "#ADAEBC" }} placeholderTextColor={"#ADAEBC"} />
             
             <View className='flex-row items-center justify-between'>
-                <Text className='text-white font-prostoOne mt-2 mb-2'>Sale Tag</Text>
+                <Text className='text-white font-helvetica mt-2 mb-2'>Sale Tag</Text>
                 <View className="flex-row items-center">
 
                         {isAvailble ? <TouchableOpacity onPress={() => setIsAvailable(false)}><MaterialCommunityIcons name="toggle-switch" size={54} color="white" /></TouchableOpacity>
@@ -154,11 +154,11 @@ const AddProducts = () => {
                     </View>
             </View>
             
-            <Text className='text-[#fff] font-prostoOne mt-2 mb-2'>Shipping Note</Text>
+            <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Shipping Note</Text>
             <TextInput className='mt-2 mb-2 bg-[#2C2C2C] p-3 rounded-lg' placeholder='e.g., Embroidered Red Kurti' style={{ color: "#ADAEBC" }} placeholderTextColor={"#ADAEBC"} />
                         
                         <TouchableOpacity className='bg-[#5E6673] mt-3 mb-2 items-center p-3 rounded-lg'>
-                <Text className='text-white font-prostoOne'>Save & Publish</Text>
+                <Text className='text-white font-helvetica'>Save & Publish</Text>
             </TouchableOpacity>
         </ScrollView>
     )

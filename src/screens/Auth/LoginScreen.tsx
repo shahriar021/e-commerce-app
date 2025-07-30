@@ -12,7 +12,7 @@ const LoginScreen = () => {
     const [userTypes, setUserTypes] = useState("")
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    console.log(userTypes)
+    
     const dispatch = useDispatch();
 
     useLayoutEffect(() => {
@@ -24,8 +24,6 @@ const LoginScreen = () => {
             headerTitle: () => null
         })
     }, [navigatgion])
-
-    console.log(email,password,"credenttial.s")
 
     const validateEmail = (email: any) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -64,8 +62,8 @@ const LoginScreen = () => {
     return (
         <View className="flex-1 bg-[#121212] p-3">
             <View className="px-3 relative">
-                <Text className="text-[#FFFFFF] text-2xl font-playFairDisplay mb-2" style={{ fontFamily: 'playFairDisplay' }}>Login to Your Account</Text>
-                <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-playFairDisplay" style={{ fontFamily: 'playFairDisplay' }}>It is quick and easy to log in. Enter your email and password below.</Text>
+                <Text className="text-[#FFFFFF] text-2xl font-helvetica mb-2" >Login to Your Account</Text>
+                <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-helvetica" >It is quick and easy to log in. Enter your email and password below.</Text>
 
                 <View className=" bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
                     <TextInput className="flex-1" placeholder={userTypes ? userTypes : "Select Types"} placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} />
@@ -81,13 +79,13 @@ const LoginScreen = () => {
                         setUserTypes("user")
                         setIsType(false)
                     }}>
-                        <Text className="font-prostoOne text-white">User</Text>
+                        <Text className="font-helvetica text-white">User</Text>
                     </TouchableOpacity>
                     <TouchableOpacity className="bg-[#2C2C2C] p-2 rounded-lg" onPress={() => {
                         setUserTypes("provider")
                         setIsType(false)
                     }}>
-                        <Text className="font-prostoOne text-white">Service Provider</Text>
+                        <Text className="font-helvetica text-white">Service Provider</Text>
                     </TouchableOpacity>
 
                 </View>}
@@ -99,15 +97,15 @@ const LoginScreen = () => {
                 </View>
 
                 <TouchableOpacity className="mt-1 mb-3" onPress={() => navigatgion.navigate("Forget Password")}>
-                    <Text className="text-[#1E80DD]">Forgot Password?</Text>
+                    <Text className="text-[#1E80DD] font-helvetica">Forgot Password?</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity className="mt-1 mb-3 items-center" onPress={()=>navigatgion.navigate("Sign Up as User")}>
-                    <Text className="text-[#979797] text-xl">I don’t have an account</Text>
+                    <Text className="text-[#979797] text-xl font-helvetica">I don’t have an account</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity className="mt-1 mb-3 items-center bg-[#4A4A4A] p-3 rounded-lg " onPress={handleLogin}>
-                    <Text className="text-[#979797] text-xl font-prostoOne" style={{ fontFamily: 'prosto-One' }}>login</Text>
+                <TouchableOpacity className="mt-1 mb-3 items-center bg-[#fff] p-3 rounded-lg " onPress={handleLogin}>
+                    <Text className="text-[#000] text-xl font-helvetica" >login</Text>
                 </TouchableOpacity>
             </View>
         </View>

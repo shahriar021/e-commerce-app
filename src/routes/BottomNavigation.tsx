@@ -71,6 +71,10 @@ export const BottomNavigation = () => {
             shadowOpacity: 0,
             borderBottomWidth: 0,
           },
+          headerTitleStyle: {
+            fontFamily: "HelveticaNeue-Black",
+            
+          },
           tabBarLabelPosition: "below-icon",
           headerTintColor: "#5b21b6",
         }}
@@ -136,7 +140,7 @@ export const BottomNavigation = () => {
           }}
         />
         <BottomTabs.Screen
-          name="Profile"
+          name="DrawerProfile"
           component={DrawerNavigation}
           options={{
             headerShown: false,

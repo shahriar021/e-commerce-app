@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import {
-  Image,
   StyleSheet,
   SafeAreaView,
   Animated,
+  Text,
+  ImageBackground,
+  Image,
 } from "react-native";
 
 export default function SplashScreen() {
@@ -19,11 +21,15 @@ export default function SplashScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Animated.Image
-        source={require("../../../../assets/e-icon/Onboarding.png")}
-        style={[styles.fullImage, { opacity: fadeAnim }]}
+      <ImageBackground
+        source={require("../../../../assets/e-icon/ON.png")}
+        style={styles.fullImage}
         resizeMode="cover"
-      />
+      >
+        <Animated.View style={[styles.overlay, { opacity: fadeAnim }]}>
+          <Image source={require("../../../../assets/e-icon/ark.png")}/>
+        </Animated.View>
+      </ImageBackground>
     </SafeAreaView>
   );
 }
@@ -33,7 +39,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   fullImage: {
-    width: "100%",
-    height: "100%",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  overlay: {
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

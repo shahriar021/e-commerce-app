@@ -30,14 +30,14 @@ const SignUpRider = () => {
   return (
     <ScrollView className="flex-1 bg-[#121212] p-3" contentContainerStyle={{paddingBottom:150}}>
       <View className="px-3">
-        <Text className="text-[#FFFFFF] text-2xl font-playFairDisplay mb-2" style={{ fontFamily: 'playFairDisplay' }}>Create Your Account</Text>
-        <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-playFairDisplay" style={{ fontFamily: 'playFairDisplay' }}>It is quick and easy to create you account</Text>
+        <Text className="text-[#FFFFFF] text-2xl font-helvetica mb-2">Create Your Account</Text>
+        <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-helvetica">It is quick and easy to create you account</Text>
 
-        <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+        <View className="bg-[#2C2C2C] mt-1 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
           <TextInput className="flex-1" placeholder="Enter Brand Name" placeholderTextColor={"#ADAEBC"} style={{color:"#ADAEBC"}}/>
         </View>
 
-        <Text className='font-prostoOne text-xl text-[#fff]  w-full'>Brand Logo</Text>
+        <Text className='font-helvetica text-xl text-[#fff]  w-full'>Brand Logo</Text>
         <TouchableOpacity style={{ height: verticalScale(194) }} className='w-full items-center justify-center border border-dashed border-white  rounded-xl mt-3 bg-[#2C2C2C] mb-4'>
           <Image source={require("../../../assets/e-icon/Frame (1).png")} style={{ width: scale(30), height: verticalScale(30) }} />
         </TouchableOpacity>
@@ -88,13 +88,13 @@ const SignUpRider = () => {
 
         <TouchableOpacity className="mt-1 mb-3 items-center bg-[#4A4A4A] rounded-lg overflow-hidden">
           <LinearGradient
-            colors={["#9DC7E9", "#E6F6FF"]}
+            colors={["#fff", "#fff"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             className="w-full rounded-lg  overflow-hidden"
             style={{ width: "100%", alignItems: "center", padding: 10 }}
           >
-            <Text className="text-[#121212] text-xl font-prostoOne" style={{ fontFamily: 'prosto-One' }}>Create a Brand Account</Text>
+            <Text className="text-[#121212] text-xl font-helvetica" >Create a Brand Account</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>

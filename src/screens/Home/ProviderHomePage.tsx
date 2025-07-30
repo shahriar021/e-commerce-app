@@ -30,10 +30,10 @@ const ProviderHomePage = () => {
             <ScrollView className='p-3 flex-1'>
                 <View className="flex-row justify-between items-center mb-2">
                     <View className='flex-col'>
-                        <Text className=" text-white font-prostoOne text-xl" >
+                        <Text className=" text-white font-helvetica text-xl" >
                             Good Morning, Sarah
                         </Text>
-                        <Text className='font-prostoOne text-[#9CA3AF]'>Tuesday, December 26</Text>
+                        <Text className='font-helvetica text-[#9CA3AF]'>Tuesday, December 26</Text>
                     </View>
                     <View className="flex-row items-center">
                         <TouchableOpacity ><Ionicons name="notifications" size={24} color="white" /></TouchableOpacity>
@@ -46,9 +46,9 @@ const ProviderHomePage = () => {
                             <View key={item.name} className='bg-[#2D2D2D] p-3 rounded-lg mb-1 mt-1 ' style={{
                                 width: width * 0.45
                             }}>
-                                <Text className='text-[#9CA3AF] font-prostoOne mb-2'>{item.name}</Text>
+                                <Text className='text-[#9CA3AF] font-helvetica mb-2'>{item.name}</Text>
                                 <View className='flex-row justify-between'>
-                                    <Text className='flex-row text-white font-prostoOne text-xl'>{item.info}</Text>
+                                    <Text className='flex-row text-white font-helvetica text-xl'>{item.info}</Text>
                                     <Image source={item.image} />
                                 </View>
                             </View>)}
@@ -59,8 +59,8 @@ const ProviderHomePage = () => {
                 <View className='bg-[#2D2D2D] p-3 rounded-lg mt-2 mb-2'>
                     <View className='flex-row justify-between mt-1 mb-2'>
                         <View className='flex-1'>
-                            <Text className='text-white font-prostoOne'>Monthly Orders Trend</Text>
-                            <Text className='text-[#ADAEBC] font-prostoOne'>Track your sales performance over time</Text>
+                            <Text className='text-white font-helvetica'>Monthly Orders Trend</Text>
+                            <Text className='text-[#ADAEBC] font-helvetica'>Track your sales performance over time</Text>
                         </View>
                         <TouchableOpacity className='flex-row items-center bg-[#464747]  p-2 rounded-xl gap-2'>
                             <Text className='text-white'>2025</Text>
@@ -89,9 +89,9 @@ const ProviderHomePage = () => {
                 </View>
 
                 <TouchableOpacity className='flex-row justify-between items-center mt-2 mb-2 p-3' onPress={()=>navigation.navigate("Order List")}>
-                    <Text className='text-white font-prostoOne'>Order List</Text>
+                    <Text className='text-white font-helvetica'>Order List</Text>
                     <View className='flex-row items-center gap-2'>
-                        <Text className='text-white font-prostoOne'>See All</Text>
+                        <Text className='text-white font-helvetica'>See All</Text>
                         <AntDesign name="arrowright" size={24} color="white" />
                     </View>
                 </TouchableOpacity>
@@ -103,7 +103,7 @@ const ProviderHomePage = () => {
                     <ScrollView showsVerticalScrollIndicator={false}>
                         {orderHist?.map(item => <View key={item} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2'>
                             <View className='flex-row justify-between items-center'>
-                                <Text className='text-[#fff] font-prostoOne'>#83473</Text>
+                                <Text className='text-[#fff] font-helvetica'>#83473</Text>
                                 <Text className='text-[#FB923C] p-2 rounded-2xl' style={{ backgroundColor: 'rgba(249, 115, 22, 0.20)' }}>Processing</Text>
                             </View>
                             <View className='flex-row b items-center gap-2 mt-2 mb-1'>
@@ -112,21 +112,21 @@ const ProviderHomePage = () => {
                                 </View>
                                 <View className='flex-row justify-between flex-1 items-center'>
                                     <View className='flex-col'>
-                                        <Text className='font-prostoOne text-white'>Black Formal Dress</Text>
-                                        <Text className='font-prostoOne text-[#9CA3AF]'>Qty: 2 | Size: M</Text>
+                                        <Text className='font-helvetica text-white'>Black Formal Dress</Text>
+                                        <Text className='font-helvetica text-[#9CA3AF]'>Qty: 2 | Size: M</Text>
                                     </View>
-                                    <View><Text className='font-prostoOne text-white'>৳4,400</Text></View>
+                                    <View><Text className='font-helvetica text-white'>৳4,400</Text></View>
                                 </View>
                             </View>
                             <View className=''>
-                                <Text className='font-prostoOne text-[#9CA3AF]'>Placed: June 24</Text>
+                                <Text className='font-helvetica text-[#9CA3AF]'>Placed: June 24</Text>
 
                             </View>
 
                             <View className='flex-row items-center gap-2 mt-2 mb-1'>
                                 <TouchableOpacity className='flex-row items-center justify-center gap-2 bg-[#16A34A] p-2 rounded-md flex-1'>
                                     <AntDesign name="check" size={24} color="white" />
-                                    <Text className='text-white font-prostoOne'>Mark Ready</Text>
+                                    <Text className='text-white font-helvetica'>Mark Ready</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity className='items-center bg-[#121212] p-2 rounded-md'  onPress={() => navigation.navigate("Order Details")}>
                                     <AntDesign name="eye" size={24} color="white" />

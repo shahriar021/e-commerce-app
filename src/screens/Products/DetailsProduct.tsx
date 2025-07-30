@@ -5,7 +5,7 @@ import { AntDesign, FontAwesome, Ionicons, SimpleLineIcons } from '@expo/vector-
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import { scale, verticalScale } from 'react-native-size-matters';
 
-const ProductDetails = () => {
+const DetailsProduct = () => {
 
     const navigation = useNavigation()
     const { width, height } = useWindowDimensions()
@@ -43,9 +43,7 @@ const ProductDetails = () => {
                         <TouchableOpacity className='bg-[#252525] p-3 rounded-full'>
                             <Ionicons name="chevron-back-sharp" size={24} color="white" />
                         </TouchableOpacity>
-                        <TouchableOpacity className='bg-[#252525] p-3 rounded-full' onPress={() => setIsHeart(!isHeart)}>
-                            {isHeart ? <Ionicons name="heart" size={24} color="red" /> : <Ionicons name="heart" size={24} color="white" />}
-                        </TouchableOpacity>
+                        <Text className='text-[#86EFAC] p-2 rounded-2xl bg-[#14532D]' >In Stock</Text>
                     </View>
                 </View>
                 <View className='w-full  mt-4 mb-3 p-3 flex-row justify-between items-center'>
@@ -98,42 +96,14 @@ const ProductDetails = () => {
                         ))}
                     </View>
 
-                    <View className='mt-2 flex-row justify-between mb-5'>
-                        <Text className='font-helvetica text-white'>Review(86)</Text>
-                        <TouchableOpacity onPress={()=>navigation.navigate("Review")}><Text className='font-helvetica text-[#ADAEBC]'>See All</Text></TouchableOpacity>
-                    </View>
-                    {/* review */}
-                    <View className='flex-row justify-between mt-2 mb-1'>
-                        <View className='flex-row gap-2 items-center'>
-                            <View style={{ width: scale(30), height: scale(30) }}>
-                                <Image source={require("../../../assets/e-icon/Ellipse 1.png")} style={{ width: "100%", height: "100%" }} />
-                            </View>
-                            <View className='flex-col  gap-2'>
-                                <View className='flex-row gap-2 items-center'>
-                                    <Text className='text-white'>Jack Robo</Text>
-                                    <View className="bg-transparent">
-                                        <Rating
-                                            type="custom"
-                                            ratingColor="#FFBA49"
-                                            ratingBackgroundColor="#333"
-                                            tintColor="#1A1A1A"
 
-                                            imageSize={24}
-                                            startingValue={4}
-                                            style={{ backgroundColor: 'transparent' }}
-                                        />
-                                    </View>
-                                </View>
-                                <Text className='text-[#ADAEBC] font-helvetica'>15 min ago</Text>
-                            </View>
-
-                        </View>
-
-                        <SimpleLineIcons name="options-vertical" size={24} color="white" />
-                    </View>
-                    <Text className='font-helvetica text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
-                    <View className='mt-2 rounded-xl overflow-hidden' style={{ width: scale(111), height: verticalScale(111) }}>
-                        <Image source={require("../../../assets/e-icon/review1.png")} style={{ width: "100%", height: "100%" }} />
+                    <View className='flex-row justify-start gap-2 w-full mt-4'>
+                        <TouchableOpacity className='bg-[#60A5FA] p-2 rounded-lg flex-1 items-center'>
+                            <Text className='text-white font-helvetica'>Edit</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity className='bg-[#EF4444] p-2 rounded-lg flex-1 items-center'>
+                            <Text className='text-white font-helvetica'>Delete</Text>
+                        </TouchableOpacity>
                     </View>
 
                     <TouchableOpacity className='bg-[#1F2937] flex-row items-center justify-center gap-2 mt-3 p-3 rounded-xl' onPress={() => navigation.navigate("Cart Page")}>
@@ -147,4 +117,4 @@ const ProductDetails = () => {
     )
 }
 
-export default ProductDetails
+export default DetailsProduct

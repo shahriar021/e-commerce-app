@@ -23,7 +23,7 @@ const Review = () => {
             <TouchableOpacity className='flex-row gap-2 items-center mr-4' onPress={() => navigation.goBack()}>
                 <AntDesign name="arrowleft" size={24} color="white" />
                 <View className=''>
-                    <Text className='font-prostoOne text-white text-2xl'>Reviews</Text>
+                    <Text className='font-helvetica text-white text-2xl'>Reviews</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -63,14 +63,14 @@ const Review = () => {
                                             />
                                         </View>
                                     </View>
-                                    <Text className='text-[#ADAEBC] font-prostoOne'>15 min ago</Text>
+                                    <Text className='text-[#ADAEBC] font-helvetica'>15 min ago</Text>
                                 </View>
 
                             </View>
 
                             <SimpleLineIcons name="options-vertical" size={24} color="white" />
                         </View>
-                        <Text className='font-prostoOne text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
+                        <Text className='font-helvetica text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
                         <View className='mt-2 rounded-xl overflow-hidden' style={{ width: scale(111), height: verticalScale(111) }}>
                             <Image source={require("../../../assets/e-icon/review1.png")} style={{ width: "100%", height: "100%" }} />
                         </View>
@@ -100,14 +100,14 @@ const Review = () => {
                                             />
                                         </View>
                                     </View>
-                                    <Text className='text-[#ADAEBC] font-prostoOne'>15 min ago</Text>
+                                    <Text className='text-[#ADAEBC] font-helvetica'>15 min ago</Text>
                                 </View>
 
                             </View>
 
                             <SimpleLineIcons name="options-vertical" size={24} color="white" />
                         </View>
-                        <Text className='font-prostoOne text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
+                        <Text className='font-helvetica text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
 
                     </View>
 
@@ -136,14 +136,14 @@ const Review = () => {
                                             />
                                         </View>
                                     </View>
-                                    <Text className='text-[#ADAEBC] font-prostoOne'>15 min ago</Text>
+                                    <Text className='text-[#ADAEBC] font-helvetica'>15 min ago</Text>
                                 </View>
 
                             </View>
 
                             <SimpleLineIcons name="options-vertical" size={24} color="white" />
                         </View>
-                        <Text className='font-prostoOne text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
+                        <Text className='font-helvetica text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
 
                     </View>
                 </View>

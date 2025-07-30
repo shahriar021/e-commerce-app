@@ -21,7 +21,7 @@ export const DrawerNavigation = () => {
         >
 
             <Drawer.Screen
-                name="Profile screen"
+                name="Profile"
                 component={Profile}
                 options={{
                     headerShown: true,

@@ -29,7 +29,7 @@ const OrderList = () => {
             <ScrollView showsVerticalScrollIndicator={false}>
                 {orderHist?.map(item => <View key={item} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2' >
                     <View className='flex-row justify-between items-center'>
-                        <Text className='text-[#fff] font-prostoOne'>#83473</Text>
+                        <Text className='text-[#fff] font-helvetica'>#83473</Text>
                         <Text className='text-[#FB923C] p-2 rounded-2xl' style={{ backgroundColor: 'rgba(249, 115, 22, 0.20)' }}>Processing</Text>
                     </View>
                     <View className='flex-row b items-center gap-2 mt-2 mb-1'>
@@ -38,21 +38,21 @@ const OrderList = () => {
                         </View>
                         <View className='flex-row justify-between flex-1 items-center'>
                             <View className='flex-col'>
-                                <Text className='font-prostoOne text-white'>Black Formal Dress</Text>
-                                <Text className='font-prostoOne text-[#9CA3AF]'>Qty: 2 | Size: M</Text>
+                                <Text className='font-helvetica text-white'>Black Formal Dress</Text>
+                                <Text className='font-helvetica text-[#9CA3AF]'>Qty: 2 | Size: M</Text>
                             </View>
-                            <View><Text className='font-prostoOne text-white'>৳4,400</Text></View>
+                            <View><Text className='font-helvetica text-white'>৳4,400</Text></View>
                         </View>
                     </View>
                     <View className=''>
-                        <Text className='font-prostoOne text-[#9CA3AF]'>Placed: June 24</Text>
+                        <Text className='font-helvetica text-[#9CA3AF]'>Placed: June 24</Text>
 
                     </View>
 
                     <View className='flex-1 items-center  mt-2 mb-1'>
                         <TouchableOpacity className='w-full flex-row items-center justify-center gap-2 bg-[#16A34A] p-2 rounded-md flex-1'>
                             <AntDesign name="check" size={24} color="white" />
-                            <Text className='text-white font-prostoOne'>Mark Ready</Text>
+                            <Text className='text-white font-helvetica'>Mark Ready</Text>
                         </TouchableOpacity>
 
                     </View>

@@ -58,7 +58,7 @@ const CreateProductSelecPicker = ({
             setInputBoxHeight(Math.ceil(height + 7));
           }}
         >
-          <Text className="text-[#fff] font-prostoOne">
+          <Text className="text-[#fff] font-helvetica">
             {selectedState?.name || "Select...."}
           </Text>
         </View>

@@ -48,19 +48,19 @@ const Withdraw = () => {
                 </LinearGradient>
             </View>
             <View className='w-full mt-2 mb-2'>
-                <Text className='text-[#fff] font-prostoOne'>Amounts</Text>
+                <Text className='text-[#fff] font-helvetica'>Amounts</Text>
                 <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='$100' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} />
             </View>
             <View className='w-full mt-2 mb-2'>
-                <Text className='text-[#fff] font-prostoOne'>Card Holde Name</Text>
+                <Text className='text-[#fff] font-helvetica'>Card Holde Name</Text>
                 <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='Tan' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} />
             </View>
             <View className='w-full mt-2 mb-2'>
-                <Text className='text-[#fff] font-prostoOne'>Card Number</Text>
+                <Text className='text-[#fff] font-helvetica'>Card Number</Text>
                 <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='3536 3532 1235 0987' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} />
             </View>
-            <TouchableOpacity className='bg-[#DCF3FF] p-2 items-center rounded-lg mt-4 w-full' >
-                <Text className='text-black font-prostoOne text-center text-xl'>Withdraw</Text>
+            <TouchableOpacity className='bg-[#FFF] p-2 items-center rounded-lg mt-4 w-full' >
+                <Text className='text-black font-helvetica text-center text-xl'>Withdraw</Text>
             </TouchableOpacity>
         </View>
     )

@@ -28,7 +28,8 @@ module.exports = {
         playFairDisplay:['PlayfairDisplay-Bold'],
         podKova:['Podkova-Bold'],
         opansans:['OpenSans-Regular'],
-        poppins:['poppins']
+        poppins:['poppins'],
+        helvetica:['HelveticaNeue-Black']
       },
       colors:{
         darkYellow:'#FFC107',

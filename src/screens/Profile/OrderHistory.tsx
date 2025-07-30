@@ -33,7 +33,7 @@ const OrderHistory = () => {
             <ScrollView showsVerticalScrollIndicator={false}>
                {orderHist.map(item=> <TouchableOpacity key={item} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2' onPress={()=>navigation.navigate("Order Details")}>
                     <View className='flex-row justify-between items-center'>
-                        <Text className='text-[#fff] font-prostoOne'>#83473</Text>
+                        <Text className='text-[#fff] font-helvetica'>#83473</Text>
                         <Text className='text-[#FB923C] p-2 rounded-2xl' style={{ backgroundColor: 'rgba(249, 115, 22, 0.20)' }}>Processing</Text>
                     </View>
                     <View className='flex-row b items-center gap-2 mt-2 mb-1'>
@@ -42,15 +42,15 @@ const OrderHistory = () => {
                         </View>
                         <View className='flex-row justify-between flex-1 items-center'>
                             <View className='flex-col'>
-                                <Text className='font-prostoOne text-white'>Black Formal Dress</Text>
-                                <Text className='font-prostoOne text-[#9CA3AF]'>Qty: 2 | Size: M</Text>
+                                <Text className='font-helvetica text-white'>Black Formal Dress</Text>
+                                <Text className='font-helvetica text-[#9CA3AF]'>Qty: 2 | Size: M</Text>
                             </View>
-                            <View><Text className='font-prostoOne text-white'>৳4,400</Text></View>
+                            <View><Text className='font-helvetica text-white'>৳4,400</Text></View>
                         </View>
                     </View>
                     <View className='flex-row justify-between  items-center'>
-                            <Text className='font-prostoOne text-[#9CA3AF]'>Placed: June 24</Text>
-                        <TouchableOpacity><Text className='font-prostoOne text-[#9CA3AF]'>View -></Text></TouchableOpacity>
+                            <Text className='font-helvetica text-[#9CA3AF]'>Placed: June 24</Text>
+                        <TouchableOpacity><Text className='font-helvetica text-[#9CA3AF]'>View -></Text></TouchableOpacity>
                     </View>
                 </TouchableOpacity>)}
             </ScrollView>

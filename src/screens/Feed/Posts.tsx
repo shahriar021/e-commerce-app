@@ -15,12 +15,12 @@ const Posts = () => {
 
                         <Text className='text-white'>Jack Robo</Text>
 
-                        <Text className='text-[#ADAEBC] font-prostoOne'>15 min ago</Text>
+                        <Text className='text-[#ADAEBC] font-helvetica'>15 min ago</Text>
                     </View>
 
                 </View>
                 <Image source={require("../../../assets/e-icon/postphoto.png")} style={{ width: '92%', height: verticalScale(250), borderRadius: 24 }} />
-                <Text className='text-white mt-3 mx-2' style={{ fontFamily: 'prosto-One' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </Text>
+                <Text className='text-white mt-3 mx-2' >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </Text>
             </View>
 
 

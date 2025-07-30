@@ -14,6 +14,8 @@ const categories = [
     { label: 'Casual', value: 'Casual' },
     { label: 'Party', value: 'Party' },
     { label: 'Oversized', value: 'Oversized' },
+    { label: 'User Posts', value: 'User Posts' },
+    { label: 'Brand Posts', value: 'Brand Posts' },
 ];
 
 const Feed = () => {
@@ -35,7 +37,7 @@ const Feed = () => {
             headerTitleAlign: "start",
             headerTitleStyle: {
                 color: "white",
-                fontFamily: 'Prosto One',
+                fontFamily: 'HelveticaNeue-Black',
                 fontSize: 20
             }
         })
@@ -56,7 +58,7 @@ const Feed = () => {
                         className={`${selectedItem == item.label ? "bg-[#DCF3FF]" : "bg-[#1F2937]"} rounded-full items-center justify-center px-4 mr-2`}
                         onPress={() => setSelectedItem(item.label)}
                     >
-                        <Text className={`font-prostoOne ${selectedItem == item.label ? "text-[#121212]" : "text-white"}`}>{item.label}</Text>
+                        <Text className={`font-helvetica ${selectedItem == item.label ? "text-[#121212]" : "text-white"}`}>{item.label}</Text>
                     </TouchableOpacity>)}
                 </ScrollView>
             </View>
@@ -71,7 +73,7 @@ const Feed = () => {
 
                             <Text className='text-white'>Jack Robo</Text>
 
-                            <Text className='text-[#ADAEBC] font-prostoOne'>15 min ago</Text>
+                            <Text className='text-[#ADAEBC] font-helvetica'>15 min ago</Text>
                         </View>
 
                     </TouchableOpacity>
@@ -79,7 +81,7 @@ const Feed = () => {
                     <SimpleLineIcons name="options-vertical" size={24} color="white" />
                 </View>
 
-                <Text className='font-prostoOne text-white mt-2'>Perfect autumn vibes with this cozy yet chic look ✨</Text>
+                <Text className='font-helvetica text-white mt-2'>Perfect autumn vibes with this cozy yet chic look ✨</Text>
 
                 <View className='flex-row gap-2 mt-3'>
                     <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#autum</Text>
@@ -96,7 +98,7 @@ const Feed = () => {
 
                         <Image source={require("../../../assets/e-icon/Vector.png")} style={{ width: 18, height: 18 }} className='mt-10' />
                         <Image source={require("../../../assets/e-icon/Vector (1).png")} style={{ width: 18, height: 18 }} className='mt-4' />
-                        <Text className='text-white font-prostoOne mt-2'>273</Text>
+                        <Text className='text-white font-helvetica mt-2'>273</Text>
                         <View className='bg-[#FF4B4B] mt-5 p-1 items-center rounded-xl'>
                             <Ionicons name="heart" size={24} color="white" />
                             <Text className='text-white'>4.3k</Text>
@@ -113,12 +115,12 @@ const Feed = () => {
                         />
                         <TextInput
                             placeholder='Add a comment'
-                            className='font-prostoOne text-white flex-1'
+                            className='font-helvetica text-white flex-1'
                             placeholderTextColor="white"
                         />
                     </View>
 
-                    <Text className='text-white font-prostoOne ml-2'>(273 comments)</Text>
+                    <Text className='text-white font-helvetica ml-2'>(273 comments)</Text>
                 </View>
 
                 {/* brand */}
@@ -132,7 +134,7 @@ const Feed = () => {
 
                             <Text className='text-white'>Brand Name</Text>
 
-                            <Text className='text-[#ADAEBC] font-prostoOne'>15 min ago</Text>
+                            <Text className='text-[#ADAEBC] font-helvetica'>15 min ago</Text>
                         </View>
 
                     </TouchableOpacity>
@@ -142,7 +144,7 @@ const Feed = () => {
                 </View>
 
                 <View className='flex-row  items-center justify-between w-full'>
-                    <Text className='font-prostoOne text-white mt-2 flex-1'>Perfect autumn vibes with this cozy yet chic look ✨</Text>
+                    <Text className='font-helvetica text-white mt-2 flex-1'>Perfect autumn vibes with this cozy yet chic look ✨</Text>
                     <SimpleLineIcons name="options-vertical" size={24} color="white" />
                 </View>
 
@@ -161,7 +163,7 @@ const Feed = () => {
 
                         <Image source={require("../../../assets/e-icon/Vector.png")} style={{ width: 18, height: 18 }} className='mt-10' />
                         <Image source={require("../../../assets/e-icon/Vector (1).png")} style={{ width: 18, height: 18 }} className='mt-4' />
-                        <Text className='text-white font-prostoOne mt-2'>273</Text>
+                        <Text className='text-white font-helvetica mt-2'>273</Text>
                         <View className='bg-[#FF4B4B] mt-5 p-1 items-center rounded-xl'>
                             <Ionicons name="heart" size={24} color="white" />
                             <Text className='text-white'>4.3k</Text>
@@ -178,12 +180,12 @@ const Feed = () => {
                         />
                         <TextInput
                             placeholder='Add a comment'
-                            className='font-prostoOne text-white flex-1'
+                            className='font-helvetica text-white flex-1'
                             placeholderTextColor="white"
                         />
                     </View>
 
-                    <Text className='text-white font-prostoOne ml-2'>(273 comments)</Text>
+                    <Text className='text-white font-helvetica ml-2'>(273 comments)</Text>
                 </View>
 
             </ScrollView>

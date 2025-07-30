@@ -50,9 +50,9 @@ const Earning = () => {
                     <LinearGradient colors={item == 1 ? ["#10B981", "#16A34A"] : ["#3B82F6", "#2563EB"]} style={{ padding: 10 }} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}>
                         <View className='flex-row justify-between items-center'>
                             <Image source={require("../../../assets/e-icon/Wallet.png")} />
-                            <Text className='text-[#DCF3FF]'>Total</Text>
+                            <Text className='text-[#DCF3FF]'>{`${item == 1 ? "Total" : "Month"}`}</Text>
                         </View>
-                        <Text className='text-white text-xl mt-2'>৳120,000</Text>
+                        <Text className='text-white text-xl mt-2 '>৳120,000</Text>
                         <Text className='text-white'>{`${item == 1 ? "Total Earnings" : "Total Earnings"}`}</Text>
                     </LinearGradient>
                 </View>)}
@@ -71,18 +71,18 @@ const Earning = () => {
             </View>
 
             <View className='bg-[#212121] p-3 rounded-lg'>
-                <Text className='text-white font-prostoOne text-xl'>Quick Withdraw</Text>
+                <Text className='text-white font-helvetica text-xl'>Quick Withdraw</Text>
 
-                <TouchableOpacity className='bg-[#DCF3FF] p-2 items-center rounded-lg mt-4' onPress={() => navigation.navigate("Withdraw")}>
-                    <Text className='text-black font-prostoOne text-center text-xl'>Withdraw</Text>
+                <TouchableOpacity className='bg-[#FFF] p-2 items-center rounded-lg mt-4' onPress={() => navigation.navigate("Withdraw")}>
+                    <Text className='text-black font-helvetica text-center text-xl'>Withdraw</Text>
                 </TouchableOpacity>
             </View>
 
             <View className='bg-[#2D2D2D] p-3 rounded-lg mt-2 mb-2'>
                 <View className='flex-row justify-between mt-1 mb-2'>
                     <View className='flex-1'>
-                        <Text className='text-white font-prostoOne'>Monthly Orders Trend</Text>
-                        <Text className='text-[#ADAEBC] font-prostoOne'>Track your sales performance over time</Text>
+                        <Text className='text-white font-helvetica'>Monthly Orders Trend</Text>
+                        <Text className='text-[#ADAEBC] font-helvetica'>Track your sales performance over time</Text>
                     </View>
                     <TouchableOpacity className='flex-row items-center bg-[#464747]  p-2 rounded-xl gap-2'>
                         <Text className='text-white'>2025</Text>
@@ -114,9 +114,9 @@ const Earning = () => {
 
             <View className='bg-[#212121] p-3 rounded-lg'>
                 <View className='flex-row justify-between items-center'>
-                    <Text className='text-white text-xl font-prostoOne'>Transaction </Text>
+                    <Text className='text-white text-xl font-helvetica'>Transaction </Text>
                     <View className='flex-row gap-2 items-center'>
-                        <Text className='text-white text-xl font-prostoOne'>See All</Text>
+                        <Text className='text-white text-xl font-helvetica'>See All</Text>
                         <AntDesign name="arrowright" size={24} color="white" />
                     </View>
                 </View>
