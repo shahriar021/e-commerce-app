@@ -19,7 +19,7 @@ const OrderList = () => {
             headerTintColor:"white",
             headerLeft: () => {
                 return <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
-                    <AntDesign name="arrowleft" size={24} color="#FFFFFF" />
+                    <Feather name="arrow-left-circle" size={24} color="white" />
                 </TouchableOpacity>
             }
         })

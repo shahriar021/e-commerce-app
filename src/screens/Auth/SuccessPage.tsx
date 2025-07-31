@@ -22,6 +22,14 @@ const SuccessPage = () => {
       headerTitle: '', // hides title in header center
       headerBackTitleVisible: false, // hides back label
       headerBackTitle: '', // extra safety for iOS
+       headerLeft: () => (
+                  <TouchableOpacity className='flex-row gap-2 items-center' onPress={()=>navigation.goBack()}>
+                                      <Feather name="arrow-left-circle" size={24} color="white" />
+                      <View className='flex-col'>
+                          <Text className='font-helvetica text-white text-xl'>ARKIVE</Text>
+                      </View>
+                  </TouchableOpacity>
+              )
     })
   }, [navigation])
     const circleSize=scale(82)

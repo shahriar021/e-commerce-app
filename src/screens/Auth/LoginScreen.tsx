@@ -1,4 +1,4 @@
-import { AntDesign } from "@expo/vector-icons"
+import { AntDesign, Feather } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import React, { useLayoutEffect, useState } from "react"
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native"
@@ -7,7 +7,7 @@ import { setToken, setUserType } from "src/redux/features/auth/authSlice";
 
 const LoginScreen = () => {
 
-    const navigatgion = useNavigation()
+    const navigation = useNavigation()
     const [isType, setIsType] = useState(false);
     const [userTypes, setUserTypes] = useState("")
     const [email, setEmail] = useState("");
@@ -16,14 +16,22 @@ const LoginScreen = () => {
     const dispatch = useDispatch();
 
     useLayoutEffect(() => {
-        navigatgion.setOptions({
+        navigation.setOptions({
             headerStyle: {
                 backgroundColor: "#121212"
             },
             headerTintColor: "#FFFFFF",
-            headerTitle: () => null
+            headerTitle: () => null,
+             headerLeft: () => (
+            <TouchableOpacity className='flex-row gap-2 items-center' onPress={()=>navigation.goBack()}>
+                                <Feather name="arrow-left-circle" size={24} color="white" />
+                <View className='flex-col'>
+                    <Text className='font-helvetica text-white text-xl'>ARKIVE</Text>
+                </View>
+            </TouchableOpacity>
+        )
         })
-    }, [navigatgion])
+    }, [navigation])
 
     const validateEmail = (email: any) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -96,11 +104,11 @@ const LoginScreen = () => {
                     <TextInput className="flex-1" placeholder="Enter Password" onChangeText={setPassword} placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} />
                 </View>
 
-                <TouchableOpacity className="mt-1 mb-3" onPress={() => navigatgion.navigate("Forget Password")}>
+                <TouchableOpacity className="mt-1 mb-3" onPress={() => navigation.navigate("Forget Password")}>
                     <Text className="text-[#1E80DD] font-helvetica">Forgot Password?</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity className="mt-1 mb-3 items-center" onPress={()=>navigatgion.navigate("Sign Up as User")}>
+                <TouchableOpacity className="mt-1 mb-3 items-center" onPress={()=>navigation.navigate("Sign Up as User")}>
                     <Text className="text-[#979797] text-xl font-helvetica">I don’t have an account</Text>
                 </TouchableOpacity>
 

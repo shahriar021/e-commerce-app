@@ -37,7 +37,7 @@ const CreatePostModal = ({ visible, onClose }: any) => {
                                     <AntDesign name="down" size={24} color="white" />
                                 </View>
 
-                                <TouchableOpacity className='bg-[#5E6673] w-full p-4 items-center rounded-xl mt-5 mb-4'>
+                                <TouchableOpacity className='bg-[#1D3725] w-full p-4 items-center rounded-xl mt-5 mb-4'>
                                     <Text className='text-[#CACACA] font-helvetica text-xl'>Post</Text>
                                 </TouchableOpacity>
                     </ScrollView>

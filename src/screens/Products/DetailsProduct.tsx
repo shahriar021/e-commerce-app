@@ -106,7 +106,7 @@ const DetailsProduct = () => {
                         </TouchableOpacity>
                     </View>
 
-                    <TouchableOpacity className='bg-[#1F2937] flex-row items-center justify-center gap-2 mt-3 p-3 rounded-xl' onPress={() => navigation.navigate("Cart Page")}>
+                    <TouchableOpacity className='bg-[#1D3725] flex-row items-center justify-center gap-2 mt-3 p-3 rounded-xl' onPress={() => navigation.navigate("Cart Page")}>
                         <Image source={require("../../../assets/e-icon/Main Icon.png")} />
                         <Text className='text-[#DCF3FF] font-helvetica'>Add to Cart | $80 $110</Text>
                     </TouchableOpacity>

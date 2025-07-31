@@ -17,7 +17,7 @@ const Bage = () => {
         borderBottomWidth: 0
       },
       headerTitle: () => (
-        <View className='flex-col'><Text className='text-[#ffffff] justify-center text-xl font-helvetica'>ARKIVE</Text><Text className='text-[#ffffff] font-helvetica'>All Brands</Text></View>
+        <View className='flex-col'><Text className='text-[#ffffff] justify-center text-xl font-helvetica'>ARKIVE</Text><Text className='text-[#ffffff] font-helvetica'>A-Z Brands</Text></View>
       )
     });
   }, [navigation]);
@@ -36,7 +36,7 @@ const Bage = () => {
             <Text className='absolute  bottom-3 left-0 right-0 text-xl font-helvetica text-white text-center'>{item.title}</Text>
           </TouchableOpacity>)}
         </View>
-        <TouchableOpacity className='bg-[#1F2937] p-2 items-center mt-4 mb-4 rounded-xl overflow-hidden'>
+        <TouchableOpacity className='bg-[#1D3725] p-2 items-center mt-4 mb-4 rounded-xl overflow-hidden'>
           <Text className='text-white font-helvetica text-xl'>Load More</Text>
         </TouchableOpacity>
       </ScrollView>

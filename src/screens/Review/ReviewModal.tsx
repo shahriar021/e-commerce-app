@@ -42,7 +42,7 @@ const ReviewModal = ({ visible, onClose }: any) => {
 
                         <TextInput className='bg-[#2C2C2C] flex-1 border w-full p-5 rounded-lg mt-4 ' placeholderTextColor={"#ADAEBC"} placeholder='Amazing quality and style! The fabric feels premium andthe fit is perfect. Definitely worth the price...' style={{ color: "#ADAEBC" }} multiline />
 
-                        <TouchableOpacity className='bg-[#5E6673] w-full p-4 items-center rounded-xl mt-5 mb-4'>
+                        <TouchableOpacity className='bg-[#1D3725] w-full p-4 items-center rounded-xl mt-5 mb-4'>
                             <Text className='text-[#CACACA] font-helvetica text-xl'>Post</Text>
                         </TouchableOpacity>
                     </ScrollView>

@@ -93,7 +93,7 @@ const OnBoarding = () => {
             </View>
           </View>
           <View className=" w-full items-start mt-5">
-            <Text className="text-[#fff] font-helvetica text-4xl  ">Define yourself in your unique way.</Text>
+            <Text className="text-[#fff] font-helvetica text-4xl  ">One Platform, A Thousand Brands!</Text>
           </View>
 
 

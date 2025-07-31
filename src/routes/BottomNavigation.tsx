@@ -32,7 +32,7 @@ const CustomTabBarButton = ({ children, onPress, accessibilityState }: any) => {
         justifyContent: 'center',
         alignItems: 'center',
         borderTopWidth: 5,
-        borderTopColor: focused ? '#DCF3FF' : 'transparent',
+        borderTopColor: focused ? '#1D3725' : 'transparent',
       }}
     >
       {children}
@@ -89,8 +89,8 @@ export const BottomNavigation = () => {
             headerTitle: () => null,
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }} className="">
-                <Image source={require("../../assets/e-icon/home-2.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#DCF3FF", fontSize: 10 }}>Home</Text>}
+                <Image source={require("../../assets/e-icon/home-olive.png")} style={{ width: 24, height: 24 }} />
+                {focused && <Text className="text-center w-[50]" style={{ color: "#1D3725", fontSize: 10 }}>Home</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -104,8 +104,8 @@ export const BottomNavigation = () => {
           options={{
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }}>
-                <Image source={require("../../assets/e-icon/image 2.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#DCF3FF", fontSize: 10 }}>Feed</Text>}
+                <Image source={require("../../assets/e-icon/feed-olive.png")} style={{ width: 24, height: 24 }} />
+                {focused && <Text className="text-center w-[50]" style={{ color: "#1D3725", fontSize: 10 }}>Feed</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -118,8 +118,8 @@ export const BottomNavigation = () => {
           options={{
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }}>
-                <Image source={require("../../assets/e-icon/search-zoom-out.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "white", fontSize: 10 }}>Search</Text>}
+                <Image source={require("../../assets/e-icon/search-olive.png")} style={{ width: 24, height: 24 }} />
+                {focused && <Text className="text-center w-[50]" style={{ color: "#1D3725", fontSize: 10 }}>Search</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -132,8 +132,8 @@ export const BottomNavigation = () => {
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }}>
 
-                <Image source={require("../../assets/e-icon/medal-star.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#DCF3FF", fontSize: 10 }}>Brand</Text>}
+                <Image source={require("../../assets/e-icon/brand-olive.png")} style={{ width: 24, height: 24 }} />
+                {focused && <Text className="text-center w-[50]" style={{ color: "#1D3725", fontSize: 10 }}>Brand</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -147,8 +147,8 @@ export const BottomNavigation = () => {
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }} className="">
 
-                <Image source={require("../../assets/e-icon/profile.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#DCF3FF", fontSize: 10 }}>Profile</Text>}
+                <Image source={require("../../assets/e-icon/profile-olive.png")} style={{ width: 24, height: 24 }} />
+                {focused && <Text className="text-center w-[50]" style={{ color: "#1D3725", fontSize: 10 }}>Profile</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,

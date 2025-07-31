@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, TouchableOpacity, Image, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { AntDesign, FontAwesome, Ionicons, SimpleLineIcons } from '@expo/vector-icons';
+import { AntDesign, Feather, FontAwesome, Ionicons, SimpleLineIcons } from '@expo/vector-icons';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import { scale, verticalScale } from 'react-native-size-matters';
 
@@ -25,7 +25,7 @@ const ProductDetails = () => {
         headerTitle: () => null,
         headerLeft: () => (
             <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
-                <AntDesign name="arrowleft" size={24} color="white" />
+                <Feather name="arrow-left-circle" size={24} color="white" />
                 <View className=''>
                     <Text className='font-helvetica text-white text-2xl'>Product Details</Text>
                 </View>
@@ -136,7 +136,7 @@ const ProductDetails = () => {
                         <Image source={require("../../../assets/e-icon/review1.png")} style={{ width: "100%", height: "100%" }} />
                     </View>
 
-                    <TouchableOpacity className='bg-[#1F2937] flex-row items-center justify-center gap-2 mt-3 p-3 rounded-xl' onPress={() => navigation.navigate("Cart Page")}>
+                    <TouchableOpacity className='bg-[#1D3725] flex-row items-center justify-center gap-2 mt-3 p-3 rounded-xl' onPress={() => navigation.navigate("Cart Page")}>
                         <Image source={require("../../../assets/e-icon/Main Icon.png")} />
                         <Text className='text-[#DCF3FF] font-helvetica'>Add to Cart | $80 $110</Text>
                     </TouchableOpacity>

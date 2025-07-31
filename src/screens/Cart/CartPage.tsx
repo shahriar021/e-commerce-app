@@ -1,7 +1,7 @@
 import { View, Text, Image, Dimensions, useWindowDimensions, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign, Feather } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 
 const CartPage = () => {
@@ -20,7 +20,7 @@ const CartPage = () => {
         headerTitle: () => null,
         headerLeft: () => (
             <TouchableOpacity className='flex-row gap-2 items-center mx-2' onPress={() => navigation.goBack()}>
-                <AntDesign name="arrowleft" size={24} color="white" />
+                                <Feather name="arrow-left-circle" size={24} color="white" />
                 <View className=''>
                     <Text className='font-helvetica text-white text-2xl'>Cart</Text>
                 </View>
@@ -80,7 +80,7 @@ const CartPage = () => {
 
 
             <View className="items-center mt-3">
-                <TouchableOpacity className=" items-center mt-3 rounded-lg  overflow-hidden bg-[#121212] border border-[#DCF3FF]" style={{ width: width * 0.9 }} onPress={() => navigation.navigate("Payment Options")}>
+                <TouchableOpacity className=" items-center mt-3 rounded-lg  overflow-hidden bg-[#1D3725] border border-[#DCF3FF]" style={{ width: width * 0.9 }} onPress={() => navigation.navigate("Payment Options")}>
 
                     <Text className="text-[#DCF3FF] p-3 " >Checkout</Text>
 

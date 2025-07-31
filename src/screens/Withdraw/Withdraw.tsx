@@ -29,7 +29,7 @@ const Withdraw = () => {
             },
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
-                    <AntDesign name="arrowleft" size={24} color="#FFFFFF" />
+                    <Feather name="arrow-left-circle" size={24} color="white" />
                 </TouchableOpacity>
             )
         })
@@ -59,8 +59,8 @@ const Withdraw = () => {
                 <Text className='text-[#fff] font-helvetica'>Card Number</Text>
                 <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='3536 3532 1235 0987' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} />
             </View>
-            <TouchableOpacity className='bg-[#FFF] p-2 items-center rounded-lg mt-4 w-full' >
-                <Text className='text-black font-helvetica text-center text-xl'>Withdraw</Text>
+            <TouchableOpacity className='bg-[#1D3725] p-2 items-center rounded-lg mt-4 w-full' >
+                <Text className='text-white font-helvetica text-center text-xl'>Withdraw</Text>
             </TouchableOpacity>
         </View>
     )

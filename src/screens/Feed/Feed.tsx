@@ -5,6 +5,7 @@ import { scale, verticalScale } from 'react-native-size-matters';
 import { Rating } from 'react-native-ratings';
 import { AntDesign, Ionicons, SimpleLineIcons } from '@expo/vector-icons';
 import CreatePostModal from './CreatePostModal';
+import { useAppSelector } from 'src/redux/hooks';
 const categories = [
     { label: 'Trending', value: 'ALL' },
     { label: 'New', value: 'T-Shirts' },
@@ -24,6 +25,8 @@ const Feed = () => {
     const [isClothType, setIsClothType] = useState("ALL")
     const [selectedItem, setSelectedItem] = useState()
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const userType = useAppSelector(store=>store.auth.userType)
+    console.log(userType)
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -49,13 +52,13 @@ const Feed = () => {
 
     return (
         <View className='flex-1 bg-[#121212] p-5 relative'>
-            <TouchableOpacity className='absolute right-10 bottom-4 z-10 bg-[#1B5FEE] p-3 rounded-full' onPress={handleModal}>
+            <TouchableOpacity className='absolute right-10 bottom-4 z-10 bg-[#1D3725] p-3 rounded-full' onPress={handleModal}>
                 <AntDesign name="plus" size={24} color="white" />
             </TouchableOpacity>
             <View className="mt-1 mb-2">
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 10 }} style={{ height: 40 }}>
                     {categories.map(item => <TouchableOpacity key={item.label}
-                        className={`${selectedItem == item.label ? "bg-[#DCF3FF]" : "bg-[#1F2937]"} rounded-full items-center justify-center px-4 mr-2`}
+                        className={`${selectedItem == item.label ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-full items-center justify-center px-4 mr-2`}
                         onPress={() => setSelectedItem(item.label)}
                     >
                         <Text className={`font-helvetica ${selectedItem == item.label ? "text-[#121212]" : "text-white"}`}>{item.label}</Text>
@@ -125,7 +128,9 @@ const Feed = () => {
 
                 {/* brand */}
 
-                <View className='flex-row justify-between mt-4 mb-1 items-center'>
+               {userType=="user" && 
+               <>
+               <View className='flex-row justify-between mt-4 mb-1 items-center'>
                     <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile",{type:"brand"})}>
                         <View style={{ width: scale(30), height: scale(30) }}>
                             <Image source={require("../../../assets/e-icon/brandLogo.png")} style={{ width: "100%", height: "100%" }} />
@@ -187,6 +192,7 @@ const Feed = () => {
 
                     <Text className='text-white font-helvetica ml-2'>(273 comments)</Text>
                 </View>
+                </>}
 
             </ScrollView>
             <CreatePostModal visible={isModalOpen}

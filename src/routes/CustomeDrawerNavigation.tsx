@@ -27,6 +27,11 @@ export const CustomDrawerContent = (props) => {
       icon: require("../../assets/e-icon/b.png"),
       screen: 'My Favourite',
     },
+        {
+      label: 'Reward',
+      icon: require("../../assets/e-icon/b.png"),
+      screen: 'Reward',
+    },
   ];
 
   // Items for provider only
@@ -82,7 +87,7 @@ export const CustomDrawerContent = (props) => {
         {/* Header Section */}
         <View style={{ padding: 16, backgroundColor: '#252525' }}>
           <TouchableOpacity onPress={() => props.navigation.dispatch(DrawerActions.closeDrawer())}>
-            <AntDesign name="arrowleft" size={24} color="#FFFFFF" />
+            <Feather name="arrow-left-circle" size={24} color="white" />
           </TouchableOpacity>
 
           <View style={{ marginTop: 16, alignItems: 'center' }}>

@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image, useWindowDimensions } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { AntDesign, Entypo } from '@expo/vector-icons'
+import { AntDesign, Entypo, Feather } from '@expo/vector-icons'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { LinearGradient } from 'expo-linear-gradient'
 import PaymentAnimation from './PaymentAnimation'
@@ -24,7 +24,7 @@ const PaymentOption = () => {
         headerTitle: () => null,
         headerLeft: () => (
             <TouchableOpacity className='flex-row gap-2 items-center mx-2' onPress={() => navigation.goBack()}>
-                <AntDesign name="arrowleft" size={24} color="white" />
+                                <Feather name="arrow-left-circle" size={24} color="white" />
                 <View className=''>
                     <Text className='font-helvetica text-white text-2xl'>Checkout</Text>
                 </View>
@@ -65,12 +65,12 @@ const PaymentOption = () => {
             <TouchableOpacity className='m-2' onPress={handleModal2}>
                 <Text className=' text-xl text-[#ADAEBC]' >Add Payment Card</Text>
 
-                <View className='flex-row mt-2 items-center justify-between border  border-[#375DF8] rounded-lg p-4 bg-[#fff]'>
+                <View className='flex-row mt-2 items-center justify-between border  border-[#375DF8] rounded-lg p-4 bg-[#1D3725]'>
                     <View className='flex-row gap-2'>
                         <Image source={require("../../../assets/restroIcon/logos_visa.png")} style={{ width: 20, height: 20 }} resizeMode='contain' />
 
                     </View>
-                    <AntDesign name="pluscircle" size={24} color="blue" />
+                    <AntDesign name="pluscircle" size={24} color="white" />
                 </View>
 
             </TouchableOpacity>
@@ -97,7 +97,7 @@ const PaymentOption = () => {
 
 
                 <View className="items-center mt-3">
-                    <TouchableOpacity className=" items-center mt-3 rounded-lg  overflow-hidden bg-[#121212] border border-[#DCF3FF] w-full" onPress={handleModal}>
+                    <TouchableOpacity className=" items-center mt-3 rounded-lg  overflow-hidden bg-[#1D3725] border border-[#DCF3FF] w-full" onPress={handleModal}>
 
                         <Text className="text-[#DCF3FF] p-3 " >Checkout</Text>
 

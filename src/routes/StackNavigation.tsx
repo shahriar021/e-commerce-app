@@ -53,6 +53,7 @@ import SeeAllBrands from "src/screens/Bage/SeeAllBrands";
 import OrderList from "src/screens/Orders/OrderList";
 import SearchResult from "src/screens/Search/SearchModal";
 import DetailsProduct from "src/screens/Products/DetailsProduct";
+import Reward from "src/screens/Profile/Reward";
 
 
 const Stack = createStackNavigator();
@@ -141,6 +142,7 @@ const StackNavigation = () => {
         <Stack.Screen name="All Products" options={{headerShown:true}} component={AllProducts}/>
          <Stack.Screen name="Seller Profile" options={{headerShown:true}} component={SellerProfile}/>
         <Stack.Screen name="Brand Profile" options={{headerShown:true}} component={BrandProfile}/>
+        <Stack.Screen name="Reward" options={{headerShown:true}} component={Reward}/>
 
       </Stack.Navigator>
     // </NavigationContainer>

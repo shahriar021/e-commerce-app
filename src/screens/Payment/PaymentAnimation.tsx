@@ -21,9 +21,9 @@ const PaymentAnimation = ({ visible, onClose }: any) => {
                     duration={3000}
                     easing="ease-in-quad"
                 >
-                    <View className='' style={{ width: scale(300), height: verticalScale(250), borderRadius: 20, overflow: "hidden" }} >
-                        <Image source={require("../../../assets/e-icon/paymentSuccess.png")} style={{ width: "100%", height: "100%" }} />
-
+                    <View className='bg-[#1D3725] items-center justify-center' style={{ width: scale(300), height: verticalScale(250), borderRadius: 20, overflow: "hidden" }} >
+                        <AntDesign name="checkcircle" size={scale(100)} color="white" />
+                        <Text className='mt-3 text-xl text-white'>Payment Done Successfully.</Text>
                     </View>
 
                     <TouchableOpacity className='absolute right-0 top-0' onPress={onClose}>

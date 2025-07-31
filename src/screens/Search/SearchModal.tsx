@@ -1,7 +1,7 @@
 import { View, Text, Modal, ScrollView, Image, TouchableOpacity, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { scale, verticalScale } from 'react-native-size-matters'
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign, Feather } from '@expo/vector-icons'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const SearchModal = ({ visible, onClose }: any) => {
@@ -20,7 +20,7 @@ const SearchModal = ({ visible, onClose }: any) => {
                     onPress={onClose}
                     style={{ marginTop: 3 }}  // <-- no extra iOS gap now
                 >
-                    <AntDesign name="arrowleft" size={24} color="white" />
+                                   <Feather name="arrow-left-circle" size={24} color="white" />
                     <Text className='text-white text-xl'>Exact Matches</Text>
                 </TouchableOpacity>
 
@@ -36,10 +36,10 @@ const SearchModal = ({ visible, onClose }: any) => {
                         </View>
                     </View>
                     <View className='flex-row gap-3 mt-1 mb-2'>
-                        <TouchableOpacity className={`${isClothType == "ALL Results" ? "bg-[#DCF3FF]" : "bg-[#1F2937]"} rounded-md items-center p-1 `} onPress={() => setIsClothType("ALL Results")}>
+                        <TouchableOpacity className={`${isClothType == "ALL Results" ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1 `} onPress={() => setIsClothType("ALL Results")}>
                             <Text className={`font-helvetica ${isClothType == "ALL Results" ? "text-[#121212]" : "text-white"}`}>ALL Results</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity className={`${isClothType == "In Stock" ? "bg-[#DCF3FF]" : "bg-[#1F2937]"} rounded-md items-center p-1`} onPress={() => setIsClothType("In Stock")}>
+                        <TouchableOpacity className={`${isClothType == "In Stock" ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1`} onPress={() => setIsClothType("In Stock")}>
                             <Text className={`font-helvetica ${isClothType == "In Stock" ? "text-[#121212]" : "text-white"}`}>In Stock</Text>
                         </TouchableOpacity>
 
@@ -83,7 +83,7 @@ const SearchModal = ({ visible, onClose }: any) => {
                                     </View>
 
                                 </View>
-                                <TouchableOpacity className='flex-row items-center gap-2 bg-[#374151] p-3 rounded-lg mt-3 mb-1 justify-center'>
+                                <TouchableOpacity className='flex-row items-center gap-2 bg-[#1D3725] p-3 rounded-lg mt-3 mb-1 justify-center'>
                                     <Text className='text-white'>View on Amazon</Text>
                                     <Image source={require("../../../assets/e-icon/link.png")} style={{ width: 12, height: 12 }} />
                                 </TouchableOpacity>

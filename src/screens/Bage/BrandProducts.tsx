@@ -1,7 +1,7 @@
 import { View, Text, Image, TextInput, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
 import { allProducts } from './demoBage';
 
 const BrandProducts = () => {
@@ -20,7 +20,7 @@ const BrandProducts = () => {
         headerTitle: () => null,
         headerLeft: () => (
             <TouchableOpacity className='flex-row gap-2 items-center' onPress={()=>navigation.goBack()}>
-                <AntDesign name="arrowleft" size={24} color="white" />
+                                <Feather name="arrow-left-circle" size={24} color="white" />
                 <View className='flex-col'>
                     <Text className='font-helvetica text-white text-xl'>ARKIVE</Text>
                     <Text className='font-helvetica text-white'>All Products</Text>
@@ -39,13 +39,13 @@ const BrandProducts = () => {
             </View>
 
             <View className='flex-row gap-3 mt-1 mb-2'>
-                <TouchableOpacity className={`${isClothType == "ALL" ? "bg-[#DCF3FF]" : "bg-[#1F2937]"} rounded-md items-center p-1 `} onPress={() => setIsClothType("ALL")}>
+                <TouchableOpacity className={`${isClothType == "ALL" ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1 `} onPress={() => setIsClothType("ALL")}>
                     <Text className={`font-helvetica ${isClothType == "ALL" ? "text-[#121212]" : "text-white"}`}>ALL</Text>
                 </TouchableOpacity>
-                <TouchableOpacity className={`${isClothType == "T-Shirts" ? "bg-[#DCF3FF]" : "bg-[#1F2937]"} rounded-md items-center p-1`} onPress={() => setIsClothType("T-Shirts")}>
+                <TouchableOpacity className={`${isClothType == "T-Shirts" ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1`} onPress={() => setIsClothType("T-Shirts")}>
                     <Text className={`font-helvetica ${isClothType == "T-Shirts" ? "text-[#121212]" : "text-white"}`}>T-Shirts</Text>
                 </TouchableOpacity>
-                <TouchableOpacity className={`${isClothType == "Jeans" ? "bg-[#DCF3FF]" : "bg-[#1F2937]"} rounded-md items-center p-1`} onPress={() => setIsClothType("Jeans")}>
+                <TouchableOpacity className={`${isClothType == "Jeans" ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1`} onPress={() => setIsClothType("Jeans")}>
                     <Text className={`font-helvetica ${isClothType == "Jeans" ? "text-[#121212]" : "text-white"}`}>Jeans</Text>
                 </TouchableOpacity>
             </View>

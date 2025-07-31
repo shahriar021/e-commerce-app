@@ -73,8 +73,8 @@ const Earning = () => {
             <View className='bg-[#212121] p-3 rounded-lg'>
                 <Text className='text-white font-helvetica text-xl'>Quick Withdraw</Text>
 
-                <TouchableOpacity className='bg-[#FFF] p-2 items-center rounded-lg mt-4' onPress={() => navigation.navigate("Withdraw")}>
-                    <Text className='text-black font-helvetica text-center text-xl'>Withdraw</Text>
+                <TouchableOpacity className='bg-[#1D3725] p-2 items-center rounded-lg mt-4' onPress={() => navigation.navigate("Withdraw")}>
+                    <Text className='text-white font-helvetica text-center text-xl'>Withdraw</Text>
                 </TouchableOpacity>
             </View>
 

@@ -1,4 +1,4 @@
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useLayoutEffect, useRef, useState } from 'react';
@@ -45,6 +45,14 @@ const OTPScreen = () => {
       headerTitle: '', // hides title in header center
       headerBackTitleVisible: false, // hides back label
       headerBackTitle: '', // extra safety for iOS
+       headerLeft: () => (
+            <TouchableOpacity className='flex-row gap-2 items-center' onPress={()=>navigation.goBack()}>
+                                <Feather name="arrow-left-circle" size={24} color="white" />
+                <View className='flex-col'>
+                    <Text className='font-helvetica text-white text-xl'>ARKIVE</Text>
+                </View>
+            </TouchableOpacity>
+        )
     })
   }, [navigation])
 

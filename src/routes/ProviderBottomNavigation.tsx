@@ -34,7 +34,7 @@ const CustomTabBarButton = ({ children, onPress, accessibilityState }: any) => {
         justifyContent: 'center',
         alignItems: 'center',
         borderTopWidth: 5,
-        borderTopColor: focused ? '#DCF3FF' : 'transparent',
+        borderTopColor: focused ? '#1D3725' : 'transparent',
       }}
     >
       {children}
@@ -87,8 +87,8 @@ export const ProviderBottomNavigation = () => {
             headerTitle: () => null,
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }} className="">
-                <Image source={require("../../assets/e-icon/home-2.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#DCF3FF", fontSize: 10 }}>Home</Text>}
+                <Image source={require("../../assets/e-icon/home-olive.png")} style={{ width: 24, height: 24 }} />
+                {focused && <Text className="text-center w-[50]" style={{ color: "#1D3725", fontSize: 10 }}>Home</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -102,8 +102,22 @@ export const ProviderBottomNavigation = () => {
           options={{
             tabBarIcon: ({ focused}) => (
                <View style={{ alignItems: "center" }} className="">
-              <Image source={require("../../assets/e-icon/dollar-circle.png")} style={{ width: 24, height: 24 }} />
-              {focused && <Text className="text-center w-[50]" style={{ color: "#DCF3FF", fontSize: 10 }}>Earning</Text>}
+              <Image source={require("../../assets/e-icon/earning-olive.png")} style={{ width: 24, height: 24 }} />
+              {focused && <Text className="text-center w-[50]" style={{ color: "#1D3725", fontSize: 10 }}>Earning</Text>}
+              </View>
+            ),
+            tabBarButton: (props) => <CustomTabBarButton {...props} />,
+          }}
+        />
+
+         <BottomTabs.Screen
+          name="Feed"
+          component={Feed}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <View style={{ alignItems: "center" }}>
+                <Image source={require("../../assets/e-icon/feed-olive.png")} style={{ width: 24, height: 24 }} />
+                {focused && <Text className="text-center w-[50]" style={{ color: "#1D3725", fontSize: 10 }}>Feed</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -119,8 +133,8 @@ export const ProviderBottomNavigation = () => {
             tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: "center" }} className="">
 
-                <Image source={require("../../assets/e-icon/products.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#DCF3FF", fontSize: 10 }}>Products</Text>}
+                <Image source={require("../../assets/e-icon/product-olive.png")} style={{ width: 24, height: 24 }} />
+                {focused && <Text className="text-center w-[50]" style={{ color: "#1D3725", fontSize: 10 }}>Products</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -134,8 +148,8 @@ export const ProviderBottomNavigation = () => {
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }} className="">
 
-                <Image source={require("../../assets/e-icon/profile.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#DCF3FF", fontSize: 10 }}>Products</Text>}
+                <Image source={require("../../assets/e-icon/profile-olive.png")} style={{ width: 24, height: 24 }} />
+                {focused && <Text className="text-center w-[50]" style={{ color: "#1D3725", fontSize: 10 }}>Products</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,

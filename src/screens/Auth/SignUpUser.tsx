@@ -10,12 +10,12 @@ export const selectedCountry = {
 
 const SignUpUser = () => {
 
-    const navigatgion = useNavigation()
+    const navigation = useNavigation()
 
     const [isShowPassword, setIsShowPassword] = useState(false)
 
     useLayoutEffect(() => {
-        navigatgion.setOptions({
+        navigation.setOptions({
             headerStyle: {
                 backgroundColor: "#121212"
             },
@@ -23,22 +23,30 @@ const SignUpUser = () => {
             headerTitle: '', // hides title in header center
             headerBackTitleVisible: false, // hides back label
             headerBackTitle: '', // extra safety for iOS
+            headerLeft: () => (
+                <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
+                    <Feather name="arrow-left-circle" size={24} color="white" />
+                    <View className='flex-col'>
+                        <Text className='font-helvetica text-white text-xl'>ARKIVE</Text>
+                    </View>
+                </TouchableOpacity>
+            )
         })
-    }, [navigatgion])
+    }, [navigation])
 
     return (
-        <ScrollView className="flex-1 bg-[#121212] p-3" contentContainerStyle={{paddingBottom:150}}>
+        <ScrollView className="flex-1 bg-[#121212] p-3" contentContainerStyle={{ paddingBottom: 150 }}>
             <View className="px-3">
                 <Text className="text-[#FFFFFF] text-2xl font-helvetica mb-2">Create Your Account</Text>
                 <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-helvetica" >It is quick and easy to create you account</Text>
 
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1" style={{color:"#ADAEBC"}} placeholder="Enter First Name" placeholderTextColor={"#ADAEBC"} />
+                    <TextInput className="flex-1" style={{ color: "#ADAEBC" }} placeholder="Enter First Name" placeholderTextColor={"#ADAEBC"} />
                 </View>
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1" style={{color:"#ADAEBC"}} placeholder="Enter Last Name" placeholderTextColor={"#ADAEBC"} />
+                    <TextInput className="flex-1" style={{ color: "#ADAEBC" }} placeholder="Enter Last Name" placeholderTextColor={"#ADAEBC"} />
                 </View>
-                <View className="bg-[#2C2C2C] rounded-lg mt-2" style={{ flexDirection: 'row', alignItems: 'center',  paddingHorizontal: 10, paddingVertical: 8, marginBottom: 5 }}>
+                <View className="bg-[#2C2C2C] rounded-lg mt-2" style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 8, marginBottom: 5 }}>
 
                     {/* Dynamic Flag */}
                     <Image
@@ -61,11 +69,11 @@ const SignUpUser = () => {
                     />
                 </View>
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1" style={{color:"#ADAEBC"}} placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"} />
+                    <TextInput className="flex-1" style={{ color: "#ADAEBC" }} placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"} />
                 </View>
 
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1 text-[#ADAEBC]" style={{color:"#ADAEBC"}} placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} />
+                    <TextInput className="flex-1 text-[#ADAEBC]" style={{ color: "#ADAEBC" }} placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} />
                     <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
                         {isShowPassword ? <Feather name="eye" size={24} color="gray" />
                             : <Feather name="eye-off" size={24} color="gray" />}
@@ -73,7 +81,7 @@ const SignUpUser = () => {
                 </View>
 
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{color:"#ADAEBC"}}/>
+                    <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{ color: "#ADAEBC" }} />
                     <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
                         {isShowPassword ? <Feather name="eye" size={24} color="gray" />
                             : <Feather name="eye-off" size={24} color="gray" />}

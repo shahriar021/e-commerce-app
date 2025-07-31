@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, ScrollView, Image, useWindowDimensions } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 import Posts from './Posts';
 import Details from './Details';
@@ -31,7 +31,7 @@ const UsersORBrandProfile = () => {
       headerTitleAlign: "center",
       headerLeft: () => {
         return <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Entypo name="chevron-left" size={24} color="white" />
+          <Feather name="arrow-left-circle" size={24} color="white" />
         </TouchableOpacity>
       }
     })
@@ -113,14 +113,14 @@ const UsersORBrandProfile = () => {
           </View>
         </View>
       </View>
-     { type=="user"?<TouchableOpacity className='bg-[#3B82F6] p-2 rounded-xl mt-3'>
-        <Text className='text-white font-helvetica' style={{fontFamily:'prosto-One'}}>Follow</Text>
+     { type=="user"?<TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3'>
+        <Text className='text-black font-helvetica' style={{fontFamily:'prosto-One'}}>Follow</Text>
       </TouchableOpacity>
       :<View className='flex-row items-center gap-2'>
-        <TouchableOpacity className='bg-[#3B82F6] p-2 rounded-xl mt-3'>
-        <Text className='text-white font-helvetica' style={{fontFamily:'prosto-One'}}>Follow</Text>
+        <TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3'>
+        <Text className='text-black font-helvetica' style={{fontFamily:'prosto-One'}}>Follow</Text>
       </TouchableOpacity>
-      <TouchableOpacity className='bg-[#1F2937] p-2 rounded-xl mt-3' onPress={()=>navigation.navigate("Brand Details")}>
+      <TouchableOpacity className='bg-[#1D3725] p-2 rounded-xl mt-3' onPress={()=>navigation.navigate("Brand Details")}>
         <Text className='text-white font-helvetica' style={{fontFamily:'prosto-One'}}>View Details</Text>
       </TouchableOpacity>
       </View>}

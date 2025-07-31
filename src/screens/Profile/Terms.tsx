@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
 
 const Terms = () => {
 
@@ -20,7 +20,7 @@ const Terms = () => {
             headerTitleAlign: "start",
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
-                   <AntDesign name="arrowleft" size={24} color="#FFFFFF" />
+                   <Feather name="arrow-left-circle" size={24} color="white" />
                 </TouchableOpacity>
             )
         })

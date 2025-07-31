@@ -89,7 +89,7 @@ export default function YourComponent() {
 
   return (
     <View className="flex-1 relative">
-            <TouchableOpacity className='absolute right-10 bottom-4 z-10 bg-[#1B5FEE] p-3 rounded-full' onPress={handleModal}>
+            <TouchableOpacity className='absolute right-10 bottom-4 z-10 bg-[#1D3725] p-3 rounded-full' onPress={handleModal}>
                 <AntDesign name="plus" size={24} color="white" />
             </TouchableOpacity>
     <ScrollView

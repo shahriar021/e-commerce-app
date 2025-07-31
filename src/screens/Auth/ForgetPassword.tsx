@@ -6,12 +6,12 @@ import { Text, TextInput, TextInputBase, TouchableOpacity, View } from "react-na
 
 const ForgetPassword = () => {
 
-  const navigatgion = useNavigation()
+  const navigation = useNavigation()
 
   const [isShowPassword, setIsShowPassword] = useState(false)
 
   useLayoutEffect(() => {
-    navigatgion.setOptions({
+    navigation.setOptions({
       headerStyle: {
         backgroundColor: "#121212"
       },
@@ -19,8 +19,16 @@ const ForgetPassword = () => {
       headerTitle: '', // hides title in header center
       headerBackTitleVisible: false, // hides back label
       headerBackTitle: '', // extra safety for iOS
+      headerLeft: () => (
+        <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
+          <Feather name="arrow-left-circle" size={24} color="white" />
+          <View className='flex-col'>
+            <Text className='font-helvetica text-white text-xl'>ARKIVE</Text>
+          </View>
+        </TouchableOpacity>
+      )
     })
-  }, [navigatgion])
+  }, [navigation])
 
   return (
     <View className="flex-1 bg-[#121212] p-3">
@@ -31,7 +39,7 @@ const ForgetPassword = () => {
         <View className="bg-[#2C2C2C] mt-3 mb-5 rounded-lg overflow-hidden flex-row items-center p-2">
           <TextInput className="flex-1" placeholder="Enter E-Mail Address" placeholderTextColor={"#ADAEBC"} />
         </View>
-        <TouchableOpacity className="mt-2 mb-3 items-center  rounded-lg overflow-hidden" onPress={() => navigatgion.navigate("OTP Screen")}>
+        <TouchableOpacity className="mt-2 mb-3 items-center  rounded-lg overflow-hidden" onPress={() => navigation.navigate("OTP Screen")}>
           <LinearGradient
             colors={["#fff", "#FFF"]}
             start={{ x: 0, y: 0 }}

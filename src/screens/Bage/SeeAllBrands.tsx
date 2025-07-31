@@ -1,7 +1,7 @@
 import { View, Text, Image, TextInput, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
 import { allProducts, bageData } from './demoBage';
 import { scale, verticalScale } from 'react-native-size-matters';
 
@@ -21,7 +21,7 @@ const SeeAllBrands = () => {
         headerTitle: () => null,
         headerLeft: () => (
             <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
-                <AntDesign name="arrowleft" size={24} color="white" />
+                                <Feather name="arrow-left-circle" size={24} color="white" />
 
                 <Text className='font-helvetica text-white text-xl'>All Brands</Text>
 

@@ -29,7 +29,7 @@ const CardInfoModal = ({ visible, onClose }: any) => {
                              <TextInput className='bg-[#2C2C2C] flex-1 border w-full p-5 rounded-lg mt-4 mb-2' placeholderTextColor={"#ADAEBC"} placeholder='exp_month' style={{color:"#ADAEBC"}}/>
                              <TextInput className='bg-[#2C2C2C] flex-1 border w-full p-5 rounded-lg mt-4 mb-2' placeholderTextColor={"#ADAEBC"} placeholder='exp_year' style={{color:"#ADAEBC"}}/>
                              <TextInput className='bg-[#2C2C2C] flex-1 border w-full p-5 rounded-lg mt-4 mb-2' placeholderTextColor={"#ADAEBC"} placeholder='cvv' style={{color:"#ADAEBC"}}/>
-                                <TouchableOpacity className='bg-[#5E6673] w-full p-4 items-center rounded-xl mt-5 mb-4'>
+                                <TouchableOpacity className='bg-[#1D3725] w-full p-4 items-center rounded-xl mt-5 mb-4'>
                                     <Text className='text-[#CACACA] font-helvetica text-xl'>Save</Text>
                                 </TouchableOpacity>
                     </ScrollView>

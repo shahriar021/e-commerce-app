@@ -11,12 +11,12 @@ export const selectedCountry = {
 
 const SignUpRider = () => {
 
-  const navigatgion = useNavigation()
+  const navigation = useNavigation()
 
   const [isShowPassword, setIsShowPassword] = useState(false)
 
   useLayoutEffect(() => {
-    navigatgion.setOptions({
+    navigation.setOptions({
       headerStyle: {
         backgroundColor: "#121212"
       },
@@ -24,8 +24,16 @@ const SignUpRider = () => {
       headerTitle: '', // hides title in header center
       headerBackTitleVisible: false, // hides back label
       headerBackTitle: '', // extra safety for iOS
+      headerLeft: () => (
+                        <TouchableOpacity className='flex-row gap-2 items-center' onPress={()=>navigation.goBack()}>
+                                            <Feather name="arrow-left-circle" size={24} color="white" />
+                            <View className='flex-col'>
+                                <Text className='font-helvetica text-white text-xl'>ARKIVE</Text>
+                            </View>
+                        </TouchableOpacity>
+                    )
     })
-  }, [navigatgion])
+  }, [navigation])
 
   return (
     <ScrollView className="flex-1 bg-[#121212] p-3" contentContainerStyle={{paddingBottom:150}}>

@@ -27,7 +27,7 @@ const EditProfile = () => {
             headerTitleAlign: "start",
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
-                    <AntDesign name="arrowleft" size={24} color="#FFFFFF" />
+                    <Feather name="arrow-left-circle" size={24} color="white" />
                 </TouchableOpacity>
             )
         })
@@ -101,9 +101,9 @@ const EditProfile = () => {
             </View>
 
             <View className="items-center">
-                <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden bg-[#fff]" style={{ width: width * 0.9 }} >
+                <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden bg-[#1D3725]" style={{ width: width * 0.9 }} >
 
-                    <Text className="text-[#121212] p-3 font-helvetica">Save Changes</Text>
+                    <Text className="text-white p-3 font-helvetica">Save Changes</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

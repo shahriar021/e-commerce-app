@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { ScrollView } from 'react-native'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { Rating } from 'react-native-ratings'
-import { AntDesign, SimpleLineIcons } from '@expo/vector-icons'
+import { AntDesign, Feather, SimpleLineIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import ReviewModal from './ReviewModal'
 
@@ -21,7 +21,7 @@ const Review = () => {
         headerTitle: () => null,
         headerLeft: () => (
             <TouchableOpacity className='flex-row gap-2 items-center mr-4' onPress={() => navigation.goBack()}>
-                <AntDesign name="arrowleft" size={24} color="white" />
+                <Feather name="arrow-left-circle" size={24} color="white" />
                 <View className=''>
                     <Text className='font-helvetica text-white text-2xl'>Reviews</Text>
                 </View>
@@ -35,7 +35,7 @@ const Review = () => {
 
     return (
         <View className='relative flex-1'>
-            <TouchableOpacity className='absolute right-10 bottom-10 z-10 bg-[#1B5FEE] p-3 rounded-full' onPress={handleModal}>
+            <TouchableOpacity className='absolute right-10 bottom-10 z-10 bg-[#1D3725] p-3 rounded-full' onPress={handleModal}>
                 <AntDesign name="plus" size={24} color="white" />
             </TouchableOpacity>
             <ScrollView >

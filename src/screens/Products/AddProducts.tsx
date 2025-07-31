@@ -29,7 +29,7 @@ const AddProducts = () => {
             },
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
-                    <AntDesign name="arrowleft" size={24} color="#FFFFFF" />
+                    <Feather name="arrow-left-circle" size={24} color="white" />
                 </TouchableOpacity>
             )
         })
@@ -60,7 +60,7 @@ const AddProducts = () => {
 
             </View>
 
-            <TouchableOpacity className='bg-[#5E6673] mt-3 mb-2 items-center p-3 rounded-lg'>
+            <TouchableOpacity className='bg-[#1D3725] mt-3 mb-2 items-center p-3 rounded-lg'>
                 <Text className='text-white font-helvetica'>Upload Images</Text>
             </TouchableOpacity>
             <Text className='text-[#A0A0A0] font-helvetica mt-2 mb-2'>Basic Information</Text>
@@ -157,7 +157,7 @@ const AddProducts = () => {
             <Text className='text-[#fff] font-helvetica mt-2 mb-2'>Shipping Note</Text>
             <TextInput className='mt-2 mb-2 bg-[#2C2C2C] p-3 rounded-lg' placeholder='e.g., Embroidered Red Kurti' style={{ color: "#ADAEBC" }} placeholderTextColor={"#ADAEBC"} />
                         
-                        <TouchableOpacity className='bg-[#5E6673] mt-3 mb-2 items-center p-3 rounded-lg'>
+                        <TouchableOpacity className='bg-[#1D3725] mt-3 mb-2 items-center p-3 rounded-lg'>
                 <Text className='text-white font-helvetica'>Save & Publish</Text>
             </TouchableOpacity>
         </ScrollView>
