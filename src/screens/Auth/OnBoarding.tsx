@@ -93,12 +93,12 @@ const OnBoarding = () => {
             </View>
           </View>
           <View className=" w-full items-start mt-5">
-            <Text className="text-[#fff] font-helvetica text-4xl  ">One Platform, A Thousand Brands!</Text>
+            <Text className="text-[#fff] font-instrumentSansBold text-5xl  ">One Platform, A Thousand Brands!</Text>
           </View>
 
 
           <TouchableOpacity className="mt-20 mb-2 border border-[#FFFFFF] w-full items-center p-3 rounded-lg" onPress={() => navigation.navigate("Login Screen")}>
-            <Text className="text-white text-lg font-helvetica">Log In</Text>
+            <Text className="text-white text-lg font-instrumentSansBold">Log In</Text>
           </TouchableOpacity>
 
           <View className="w-full mt-2 rounded-lg overflow-hidden mb-2">
@@ -109,13 +109,13 @@ const OnBoarding = () => {
               className="w-full rounded-lg mt-2 overflow-hidden"
             >
               <TouchableOpacity className="w-full items-center p-3 rounded-lg bg-transparent overflow-hidden" onPress={() => navigation.navigate("Sign Up as Rider")}>
-                <Text className="text-black font-semibold font-helvetica">Create Brand Account</Text>
+                <Text className="text-black font-semibold font-instrumentSansBold">Create Brand Account</Text>
               </TouchableOpacity>
             </LinearGradient>
           </View>
 
           <TouchableOpacity className="mt-2 mb-2 border border-[#FFFFFF] w-full items-center p-3 rounded-lg" onPress={() => navigation.navigate("Sign Up as User")}>
-            <Text className="text-white font-helvetica">Sign Up as User</Text>
+            <Text className="text-white font-instrumentSansBold">Sign Up as User</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>

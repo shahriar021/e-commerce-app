@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { scale } from 'react-native-size-matters';
 
@@ -21,7 +21,7 @@ const AllProducts = () => {
             headerTitleAlign: 'start',
             headerTintColor: "white",
             headerTitleStyle: {
-                fontFamily: "HelveticaNeue-Black",
+                fontFamily: "instruementSans-Bold",
                 fontSize: 20,
                 color: "white",
             },
@@ -37,7 +37,7 @@ const AllProducts = () => {
         <View className='flex-1 bg-[#121212] p-5'>
             <View className='border p-2 mb-2 rounded-xl bg-[#252525] flex-row gap-3'>
                 <Image source={require("../../../assets/e-icon/search-normal.png")} style={{ width: 24, height: 24 }} />
-                <TextInput className='flex-1 font-helvetica' placeholder='Search Brands...' placeholderTextColor={"#ADAEBC"} />
+                <TextInput className='flex-1 font-instrumentSansSemiBold' placeholder='Search Brands...' placeholderTextColor={"#ADAEBC"} />
                 <Image source={require("../../../assets/e-icon/proicons_filter.png")} style={{ width: 24, height: 24 }} />
             </View>
 
@@ -51,11 +51,11 @@ const AllProducts = () => {
                             </View>
 
                             <View className='flex-col flex-1 justify-center gap-1'>
-                                <Text className='text-white font-helvetica text-xl'>Black Formal Dress</Text>
-                                <Text className='text-white font-helvetica text-xl'>৳4,400</Text>
+                                <Text className='text-white font-instrumentSansSemiBold text-xl'>Black Formal Dress</Text>
+                                <Text className='text-white font-instrumentRegular text-xl'>৳4,400</Text>
                                
                             </View>
-                             <Text className='text-[#86EFAC] p-2 rounded-2xl bg-[#14532D]' >In Stock</Text>
+                             <Text className='text-[#86EFAC] p-2 rounded-2xl bg-[#14532D] font-instrumentRegular' >In Stock</Text>
 
                     </TouchableOpacity>)}
                 </ScrollView>

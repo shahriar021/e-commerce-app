@@ -25,27 +25,27 @@ const SignUpRider = () => {
       headerBackTitleVisible: false, // hides back label
       headerBackTitle: '', // extra safety for iOS
       headerLeft: () => (
-                        <TouchableOpacity className='flex-row gap-2 items-center' onPress={()=>navigation.goBack()}>
-                                            <Feather name="arrow-left-circle" size={24} color="white" />
-                            <View className='flex-col'>
-                                <Text className='font-helvetica text-white text-xl'>ARKIVE</Text>
-                            </View>
-                        </TouchableOpacity>
-                    )
+        <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
+          <Feather name="arrow-left-circle" size={24} color="white" />
+          <View className='flex-col'>
+            <Text className='font-instrumentSansBold text-white text-xl'>ARKIVE</Text>
+          </View>
+        </TouchableOpacity>
+      )
     })
   }, [navigation])
 
   return (
-    <ScrollView className="flex-1 bg-[#121212] p-3" contentContainerStyle={{paddingBottom:150}}>
+    <ScrollView className="flex-1 bg-[#121212] p-3" contentContainerStyle={{ paddingBottom: 150 }}>
       <View className="px-3">
-        <Text className="text-[#FFFFFF] text-2xl font-helvetica mb-2">Create Your Account</Text>
-        <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-helvetica">It is quick and easy to create you account</Text>
+        <Text className="text-[#FFFFFF] text-2xl font-instrumentSansBold mb-2">Create Your Account</Text>
+        <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-instrumentSansSemiBold">It is quick and easy to create you account</Text>
 
         <View className="bg-[#2C2C2C] mt-1 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-          <TextInput className="flex-1" placeholder="Enter Brand Name" placeholderTextColor={"#ADAEBC"} style={{color:"#ADAEBC"}}/>
+          <TextInput className="flex-1" placeholder="Enter Brand Name" placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} />
         </View>
 
-        <Text className='font-helvetica text-xl text-[#fff]  w-full'>Brand Logo</Text>
+        <Text className='font-instrumentSansSemiBold text-xl text-[#fff]  w-full'>Brand Logo</Text>
         <TouchableOpacity style={{ height: verticalScale(194) }} className='w-full items-center justify-center border border-dashed border-white  rounded-xl mt-3 bg-[#2C2C2C] mb-4'>
           <Image source={require("../../../assets/e-icon/Frame (1).png")} style={{ width: scale(30), height: verticalScale(30) }} />
         </TouchableOpacity>
@@ -73,11 +73,11 @@ const SignUpRider = () => {
           />
         </View>
         <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-          <TextInput className="flex-1" placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"} style={{color:"#ADAEBC"}}/>
+          <TextInput className="flex-1" placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} />
         </View>
 
         <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{color:"#ADAEBC"}}/>
+          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{ color: "#ADAEBC" }} />
           <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
             {isShowPassword ? <Feather name="eye" size={24} color="gray" />
               : <Feather name="eye-off" size={24} color="gray" />}
@@ -85,7 +85,7 @@ const SignUpRider = () => {
         </View>
 
         <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{color:"#ADAEBC"}}/>
+          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{ color: "#ADAEBC" }} />
           <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
             {isShowPassword ? <Feather name="eye" size={24} color="gray" />
               : <Feather name="eye-off" size={24} color="gray" />}
@@ -102,7 +102,7 @@ const SignUpRider = () => {
             className="w-full rounded-lg  overflow-hidden"
             style={{ width: "100%", alignItems: "center", padding: 10 }}
           >
-            <Text className="text-[#121212] text-xl font-helvetica" >Create a Brand Account</Text>
+            <Text className="text-[#121212] text-xl font-instrumentSansBold" >Create a Brand Account</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>

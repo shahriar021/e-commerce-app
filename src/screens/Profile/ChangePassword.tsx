@@ -20,6 +20,7 @@ const ChangePassword = () => {
             },
             headerTintColor: "white",
             headerTitleAlign: "start",
+            headerTitleStyle:'instrumentSans-Bold',
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
                     <Feather name="arrow-left-circle" size={24} color="white" />
@@ -34,13 +35,13 @@ const ChangePassword = () => {
                 <Image source={require("../../../assets/e-icon/cnhPass.png")} style={{ width: "100%", height: "100%" }} />
             </View>
 
-            <Text className='font-helvetica text-xl text-[#fff]  w-full'>Password</Text>
+            <Text className='font-instrumentSansSemiBold text-xl text-[#fff]  w-full'>Password</Text>
             <View className='flex-row items-center border rounded-xl border-gray-400 mt-2 mb-2 p-1 bg-[#252525]'>
                 <TextInput className=' flex-1' placeholderTextColor={"#75838D"} style={{ color: "#75838D" }} />
                 <Feather name="eye-off" size={24} color="gray" />
             </View>
 
-            <Text className='font-helvetica text-xl text-[#fff] w-full'>Confirm Password</Text>
+            <Text className='font-instrumentSansSemiBold text-xl text-[#fff] w-full'>Confirm Password</Text>
             <View className='flex-row items-center border rounded-xl border-gray-400 mt-2 mb-2 p-1 bg-[#252525]'>
                 <TextInput className=' flex-1 ' placeholderTextColor={"#75838D"} style={{ color: "#75838D" }} />
                 <Feather name="eye-off" size={24} color="gray" />
@@ -48,7 +49,7 @@ const ChangePassword = () => {
 
             <View className="items-center">
                 <TouchableOpacity className=" items-center mt-3 rounded-xl  overflow-hidden bg-[#1D3725]" style={{ width: width * 0.92 }} >
-                    <Text className="text-white p-3 font-helvetica">Save Changes</Text>
+                    <Text className="text-white p-3 font-instrumentSansBold">Save Changes</Text>
                 </TouchableOpacity>
             </View>
 

@@ -14,22 +14,22 @@ export const CustomDrawerContent = (props) => {
   const userItems = [
     {
       label: 'Edit Profile',
-      icon: require("../../assets/e-icon/profile.png"),
+      icon: require("../../assets/e-icon/editOlive.png"),
       screen: 'Edit Profile',
     },
     {
       label: 'Order History',
-      icon: require("../../assets/e-icon/b.png"),
+      icon: require("../../assets/e-icon/favOlive.png"),
       screen: 'Order History',
     },
     {
       label: 'My Favourite',
-      icon: require("../../assets/e-icon/b.png"),
+      icon: require("../../assets/e-icon/favOlive.png"),
       screen: 'My Favourite',
     },
         {
       label: 'Reward',
-      icon: require("../../assets/e-icon/b.png"),
+      icon: require("../../assets/e-icon/reward.png"),
       screen: 'Reward',
     },
   ];
@@ -38,12 +38,12 @@ export const CustomDrawerContent = (props) => {
   const providerItems = [
     {
       label: 'Seller Profile',
-      icon: require("../../assets/e-icon/medal-star.png"),
+      icon: require("../../assets/e-icon/reward.png"),
       screen: 'Seller Profile',
     },
     {
       label: 'Brand Profile',
-      icon: require("../../assets/e-icon/profile.png"),
+      icon: require("../../assets/e-icon/editOlive.png"),
       screen: 'Brand Profile',
     },
   ];
@@ -52,17 +52,17 @@ export const CustomDrawerContent = (props) => {
   const commonItems = [
     {
       label: 'Change Password',
-      icon: require("../../assets/e-icon/Password.png"),
+      icon: require("../../assets/e-icon/PasswordOlive.png"),
       screen: 'Change Password',
     },
     {
       label: 'Terms and conditions',
-      icon: require("../../assets/e-icon/termsC.png"),
+      icon: require("../../assets/e-icon/terms-live.png"),
       screen: 'Terms',
     },
     {
       label: 'Privacy and Policy',
-      icon: require("../../assets/e-icon/privac.png"),
+      icon: require("../../assets/e-icon/privacyolive.png"),
       screen: 'Privacy',
     },
    
@@ -103,7 +103,7 @@ export const CustomDrawerContent = (props) => {
                 
               }}
             />
-            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>{userType=="user"?"Jack Robo":"Coid Supply"}</Text>
+            <Text className='font-instrumentSansSemiBold' style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>{userType=="user"?"Jack Robo":"Coid Supply"}</Text>
             <View className='w-full border border-[#707070] mt-4'/>
           </View>
         </View>

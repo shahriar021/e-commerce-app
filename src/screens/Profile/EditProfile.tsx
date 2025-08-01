@@ -22,9 +22,11 @@ const EditProfile = () => {
                 elevation: 0, // for Android
                 shadowOpacity: 0, // for iOS
                 borderBottomWidth: 0, // for iOS
+                
             },
             headerTintColor: "white",
             headerTitleAlign: "start",
+            headerTitleStyle:"instrumentSans-Bold",
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
                     <Feather name="arrow-left-circle" size={24} color="white" />
@@ -45,10 +47,10 @@ const EditProfile = () => {
             </View>
 
 
-            <Text className='font-helvetica text-xl text-[#fff]  w-full'>Full Name</Text>
+            <Text className='font-instrumentSansSemiBold text-xl text-[#fff]  w-full'>Full Name</Text>
             <TextInput className=' p-3 text-white w-full rounded-md bg-[#252525] mt-1 mb-3' style={{ color: "#fff" }} placeholderTextColor={"#fff"} placeholder='Enter Your First Name' />
 
-            <Text className='font-helvetica text-xl text-[#fff]  w-full'>Enter Mail</Text>
+            <Text className='font-instrumentSansSemiBold text-xl text-[#fff]  w-full'>Enter Mail</Text>
             <TextInput className=' p-3 text-white w-full rounded-md bg-[#252525] mt-1 mb-3' style={{ color: "#fff" }} placeholderTextColor={"#fff"} placeholder='Enter E-Mail' />
 
             <View style={{ flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#ccc', borderRadius: 8, paddingHorizontal: 10, paddingVertical: 8, marginBottom: 10 }}>
@@ -75,27 +77,27 @@ const EditProfile = () => {
             </View>
 
 
-            <View className=''>
+            <View className='w-full'>
                 <View className='bg-[#252525] p-2 rounded-xl'>
-                    <Text className='text-white mb-3' style={{ fontFamily: 'prosto-One' }}>About</Text>
-                    <Text className='text-white' style={{ fontFamily: 'prosto-One' }}>
+                    <Text className='text-white mb-3 font-instrumentSansSemiBold' >About</Text>
+                    <Text className='text-white font-instrumentRegular' >
                         Passionate about urban fashion, curating looks since2020. I believe style is a form of self-expression that transcends boundaries. Always on the hunt for unique pieces that tell a story.
                     </Text>
                 </View>
 
                 <View className='bg-[#252525] p-2 rounded-xl mt-3'>
-                    <Text className='text-white mb-3' style={{ fontFamily: 'prosto-One' }}>HomeTown</Text>
-                    <Text className='text-white' style={{ fontFamily: 'prosto-One' }}>
+                    <Text className='text-white mb-3 font-instrumentSansSemiBold' >HomeTown</Text>
+                    <Text className='text-white font-instrumentRegular'>
                         Latos,Nigeria
                     </Text>
                 </View>
 
                 <View className='bg-[#252525] p-2 rounded-xl mt-3'>
-                    <Text className='text-white mb-3' style={{ fontFamily: 'prosto-One' }}>Favorite Style</Text>
+                    <Text className='text-white mb-3 font-instrumentSansSemiBold' >Favorite Style</Text>
                     <View className='flex-row justify-between items-center'>
-                        <Text className='bg-[#374151] text-white p-2 rounded-full'>#StreetWare</Text>
-                        <Text className='bg-[#374151] text-white p-2 rounded-full'>#Heritage</Text>
-                        <Text className='bg-[#374151] text-white p-2 rounded-full'>#Minimalists</Text>
+                        <Text className='bg-[#374151] text-white p-2 rounded-full font-instrumentRegular'>#StreetWare</Text>
+                        <Text className='bg-[#374151] text-white p-2 rounded-full font-instrumentRegular'>#Heritage</Text>
+                        <Text className='bg-[#374151] text-white p-2 rounded-full font-instrumentRegular'>#Minimalists</Text>
                     </View>
                 </View>
             </View>
@@ -103,7 +105,7 @@ const EditProfile = () => {
             <View className="items-center">
                 <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden bg-[#1D3725]" style={{ width: width * 0.9 }} >
 
-                    <Text className="text-white p-3 font-helvetica">Save Changes</Text>
+                    <Text className="text-white p-3 font-instrumentSansBold">Save Changes</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

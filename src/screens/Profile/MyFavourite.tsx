@@ -20,6 +20,7 @@ const MyFavourite = () => {
             },
             headerTintColor: "white",
             headerTitleAlign: "start",
+            headerTitleStyle:'instrumentSans-Bold',
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
                     <Feather name="arrow-left-circle" size={24} color="white" />
@@ -43,8 +44,8 @@ const MyFavourite = () => {
                             <View className='bg-white p-2 rounded-full absolute top-2 right-2' >
                                 <Ionicons name="heart" size={14} color="red" />
                             </View>
-                            <Text className='font-helvetica text-white mt-8 mb-1'>Regular Fit Slogan</Text>
-                            <Text className='font-helvetica text-white mb-2'>$ 8900</Text>
+                            <Text className='font-instrumentSansBold text-white mt-8 mb-1'>Regular Fit Slogan</Text>
+                            <Text className='font-instrumentSansSemiBold text-white mb-2'>$ 8900</Text>
                         </TouchableOpacity>
                     )}
                 </View>

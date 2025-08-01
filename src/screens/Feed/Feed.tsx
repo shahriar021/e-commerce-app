@@ -40,7 +40,7 @@ const Feed = () => {
             headerTitleAlign: "start",
             headerTitleStyle: {
                 color: "white",
-                fontFamily: 'HelveticaNeue-Black',
+                fontFamily:'instrumentSans-Bold',
                 fontSize: 20
             }
         })
@@ -61,7 +61,7 @@ const Feed = () => {
                         className={`${selectedItem == item.label ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-full items-center justify-center px-4 mr-2`}
                         onPress={() => setSelectedItem(item.label)}
                     >
-                        <Text className={`font-helvetica ${selectedItem == item.label ? "text-[#121212]" : "text-white"}`}>{item.label}</Text>
+                        <Text className={`font-instrumentSansSemiBold ${selectedItem == item.label ? "text-[#121212]" : "text-white"}`}>{item.label}</Text>
                     </TouchableOpacity>)}
                 </ScrollView>
             </View>
@@ -74,9 +74,9 @@ const Feed = () => {
                         </View>
                         <View className='flex-col  gap-2'>
 
-                            <Text className='text-white'>Jack Robo</Text>
+                            <Text className='text-white font-instrumentSansSemiBold'>Jack Robo</Text>
 
-                            <Text className='text-[#ADAEBC] font-helvetica'>15 min ago</Text>
+                            <Text className='text-[#ADAEBC] font-instrumentRegular'>15 min ago</Text>
                         </View>
 
                     </TouchableOpacity>
@@ -84,12 +84,12 @@ const Feed = () => {
                     <SimpleLineIcons name="options-vertical" size={24} color="white" />
                 </View>
 
-                <Text className='font-helvetica text-white mt-2'>Perfect autumn vibes with this cozy yet chic look ✨</Text>
+                <Text className='font-instrumentSansBold text-white mt-2'>Perfect autumn vibes with this cozy yet chic look ✨</Text>
 
                 <View className='flex-row gap-2 mt-3'>
-                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#autum</Text>
-                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#cozy</Text>
-                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#zara</Text>
+                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#autum</Text>
+                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#cozy</Text>
+                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#zara</Text>
                 </View>
 
                 <View className='relative mt-4 rounded-xl overflow-hidden' style={{ width: scale(320), height: verticalScale(300) }}>
@@ -101,10 +101,10 @@ const Feed = () => {
 
                         <Image source={require("../../../assets/e-icon/Vector.png")} style={{ width: 18, height: 18 }} className='mt-10' />
                         <Image source={require("../../../assets/e-icon/Vector (1).png")} style={{ width: 18, height: 18 }} className='mt-4' />
-                        <Text className='text-white font-helvetica mt-2'>273</Text>
+                        <Text className='text-white font-instrumentRegular mt-2'>273</Text>
                         <View className='bg-[#FF4B4B] mt-5 p-1 items-center rounded-xl'>
                             <Ionicons name="heart" size={24} color="white" />
-                            <Text className='text-white'>4.3k</Text>
+                            <Text className='text-white font-instrumentRegular'>4.3k</Text>
                         </View>
                     </View>
                 </View>
@@ -118,12 +118,12 @@ const Feed = () => {
                         />
                         <TextInput
                             placeholder='Add a comment'
-                            className='font-helvetica text-white flex-1'
+                            className=' text-white flex-1 font-instrumentRegular'
                             placeholderTextColor="white"
                         />
                     </View>
 
-                    <Text className='text-white font-helvetica ml-2'>(273 comments)</Text>
+                    <Text className='text-white font-instrumentRegular ml-2'>(273 comments)</Text>
                 </View>
 
                 {/* brand */}
@@ -137,9 +137,9 @@ const Feed = () => {
                         </View>
                         <View className='flex-col  gap-2'>
 
-                            <Text className='text-white'>Brand Name</Text>
+                            <Text className='text-white font-instrumentSansBold'>Brand Name</Text>
 
-                            <Text className='text-[#ADAEBC] font-helvetica'>15 min ago</Text>
+                            <Text className='text-[#ADAEBC] font-instrumentRegular'>15 min ago</Text>
                         </View>
 
                     </TouchableOpacity>
@@ -149,14 +149,14 @@ const Feed = () => {
                 </View>
 
                 <View className='flex-row  items-center justify-between w-full'>
-                    <Text className='font-helvetica text-white mt-2 flex-1'>Perfect autumn vibes with this cozy yet chic look ✨</Text>
+                    <Text className='font-instrumentSansSemiBold text-white mt-2 flex-1'>Perfect autumn vibes with this cozy yet chic look ✨</Text>
                     <SimpleLineIcons name="options-vertical" size={24} color="white" />
                 </View>
 
                 <View className='flex-row gap-2 mt-3'>
-                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#autum</Text>
-                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#cozy</Text>
-                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#zara</Text>
+                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#autum</Text>
+                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#cozy</Text>
+                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#zara</Text>
                 </View>
 
                 <View className='relative mt-4 rounded-xl overflow-hidden' style={{ width: scale(320), height: verticalScale(300) }}>
@@ -168,10 +168,10 @@ const Feed = () => {
 
                         <Image source={require("../../../assets/e-icon/Vector.png")} style={{ width: 18, height: 18 }} className='mt-10' />
                         <Image source={require("../../../assets/e-icon/Vector (1).png")} style={{ width: 18, height: 18 }} className='mt-4' />
-                        <Text className='text-white font-helvetica mt-2'>273</Text>
+                        <Text className='text-white font-instrumentRegular mt-2'>273</Text>
                         <View className='bg-[#FF4B4B] mt-5 p-1 items-center rounded-xl'>
                             <Ionicons name="heart" size={24} color="white" />
-                            <Text className='text-white'>4.3k</Text>
+                            <Text className='text-white font-instrumentRegular'>4.3k</Text>
                         </View>
                     </View>
                 </View>
@@ -185,12 +185,12 @@ const Feed = () => {
                         />
                         <TextInput
                             placeholder='Add a comment'
-                            className='font-helvetica text-white flex-1'
+                            className='font-instrumentRegular text-white flex-1'
                             placeholderTextColor="white"
                         />
                     </View>
 
-                    <Text className='text-white font-helvetica ml-2'>(273 comments)</Text>
+                    <Text className='text-white font-instrumentRegular ml-2'>(273 comments)</Text>
                 </View>
                 </>}
 

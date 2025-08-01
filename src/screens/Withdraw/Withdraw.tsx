@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, useWindowDimensions, Image, ScrollView, TextInput } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -23,7 +23,7 @@ const Withdraw = () => {
             headerTitleAlign: 'start',
             headerTintColor: "white",
             headerTitleStyle: {
-                fontFamily: "prosto-One",
+                fontFamily: "instrumentSans-Bold",
                 fontSize: 20,
                 color: "white",
             },
@@ -41,26 +41,26 @@ const Withdraw = () => {
                 <LinearGradient colors={["#212121", "#212121"]} style={{ padding: 10 }} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}>
                     <View className='flex-row justify-between items-center'>
                         <Image source={require("../../../assets/e-icon/Wallet.png")} />
-                        <Text className={"text-[#4ADE80]"}>"Availebe"</Text>
+                        <Text className="text-[#4ADE80] font-instrumentRegular">Available</Text>
                     </View>
-                    <Text className='text-white text-xl mt-2'>৳120,000</Text>
-                    <Text className='text-[#DCF3FF]'>For Withdrawal</Text>
+                    <Text className='text-white text-xl mt-2 font-instrumentSansSemiBold'>৳120,000</Text>
+                    <Text className='text-[#DCF3FF] font-instrumentRegular'>For Withdrawal</Text>
                 </LinearGradient>
             </View>
             <View className='w-full mt-2 mb-2'>
-                <Text className='text-[#fff] font-helvetica'>Amounts</Text>
+                <Text className='text-[#fff] font-instrumentSansSemiBold'>Amounts</Text>
                 <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='$100' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} />
             </View>
             <View className='w-full mt-2 mb-2'>
-                <Text className='text-[#fff] font-helvetica'>Card Holde Name</Text>
+                <Text className='text-[#fff] font-instrumentSansSemiBold'>Card Holde Name</Text>
                 <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='Tan' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} />
             </View>
             <View className='w-full mt-2 mb-2'>
-                <Text className='text-[#fff] font-helvetica'>Card Number</Text>
+                <Text className='text-[#fff] font-instrumentSansSemiBold'>Card Number</Text>
                 <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='3536 3532 1235 0987' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} />
             </View>
             <TouchableOpacity className='bg-[#1D3725] p-2 items-center rounded-lg mt-4 w-full' >
-                <Text className='text-white font-helvetica text-center text-xl'>Withdraw</Text>
+                <Text className='text-white font-instrumentSansSemiBold text-center text-xl'>Withdraw</Text>
             </TouchableOpacity>
         </View>
     )

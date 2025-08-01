@@ -41,8 +41,8 @@ const SeeAllProducts = () => {
                             <View className='bg-[#000000] border-[#1F2937] border-8 absolute p-1 bottom-14 rounded-full items-center justify-center' style={{ width: 50, height: 50 }}>
                                 <Image source={require("../../../assets/e-icon/bag-2.png")} style={{ width: "100%", height: "100%" }} />
                             </View>
-                            <Text className='font-helvetica text-white mt-8 mb-1'>Regular Fit Slogan</Text>
-                            <Text className='font-helvetica text-white mb-2'>$ 8900</Text>
+                            <Text className='font-instrumentSansSemiBold text-white mt-8 mb-1'>Regular Fit Slogan</Text>
+                            <Text className='font-instrumentSansSemiBold text-white mb-2'>$ 8900</Text>
                         </TouchableOpacity>
                     )}
                 </View>

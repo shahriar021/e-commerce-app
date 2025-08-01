@@ -20,10 +20,10 @@ const SeeAllBrands = () => {
         },
         headerTitle: () => null,
         headerLeft: () => (
-            <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
-                                <Feather name="arrow-left-circle" size={24} color="white" />
+            <TouchableOpacity className='flex-row gap-2 items-center ' onPress={() => navigation.goBack()}>
+                <Feather name="arrow-left-circle" size={24} color="white" />
 
-                <Text className='font-helvetica text-white text-xl'>All Brands</Text>
+                <Text className='font-instrumentSansBold text-white text-xl'>All Brands</Text>
 
             </TouchableOpacity>
         )
@@ -32,7 +32,7 @@ const SeeAllBrands = () => {
 
     return (
         <ScrollView
-            contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" ,paddingBottom:100,padding:10}}
+            contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", paddingBottom: 100, padding: 10 }}
             showsVerticalScrollIndicator={false}
 
         >
@@ -43,7 +43,7 @@ const SeeAllBrands = () => {
                     style={{ width: "48%", height: verticalScale(150) }}
                 >
                     <Image source={item.image} style={{ width: "100%", height: "100%" }} />
-                    <Text className="absolute bottom-3 left-0 right-0 text-xl font-helvetica text-white text-center">
+                    <Text className="absolute bottom-3 left-0 right-0 text-xl font-instrumentSansBold text-white text-center">
                         {item.title}
                     </Text>
                 </TouchableOpacity>

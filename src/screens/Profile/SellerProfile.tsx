@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, Dimensions } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign, Feather } from '@expo/vector-icons'
 import { scale, verticalScale } from 'react-native-size-matters';
 export const selectedCountry = {
     flag: require('../../../assets/e-icon/bdFlag.jpg'),
@@ -23,6 +23,7 @@ const SellerProfile = () => {
             },
             headerTintColor: "white",
             headerTitleAlign: "start",
+            headerTitleStyle:"instrumentSans-Bold",
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
                     <Feather name="arrow-left-circle" size={24} color="white" />
@@ -43,16 +44,16 @@ const SellerProfile = () => {
             </View>
 
 
-            <Text className='font-helvetica text-[#fff]  w-full'>Full Name</Text>
+            <Text className='font-instrumentSansSemiBold text-[#fff]  w-full'>Full Name</Text>
             <TextInput className=' p-3 text-white w-full rounded-md bg-[#252525] mt-1 mb-3' style={{ color: "#fff" }} placeholderTextColor={"#fff"} placeholder='Enter Your First Name' />
 
-            <Text className='font-helvetica  text-[#fff]  w-full'>Enter Mail</Text>
+            <Text className='font-instrumentSansSemiBold  text-[#fff]  w-full'>Enter Mail</Text>
             <TextInput className=' p-3 text-white w-full rounded-md bg-[#252525] mt-1 mb-3' style={{ color: "#fff" }} placeholderTextColor={"#fff"} placeholder='Enter E-Mail' />
 
-            <Text className='font-helvetica  text-[#fff]  w-full'>Brand Name</Text>
+            <Text className='font-instrumentSansSemiBold  text-[#fff]  w-full'>Brand Name</Text>
             <TextInput className=' p-3 text-white w-full rounded-md bg-[#252525] mt-1 mb-3' style={{ color: "#fff" }} placeholderTextColor={"#fff"} placeholder='Enter Brand' />
 
-            <Text className='font-helvetica  text-[#fff]  w-full'>Brand Logo</Text>
+            <Text className='font-instrumentSansSemiBold  text-[#fff]  w-full'>Brand Logo</Text>
             <TouchableOpacity style={{ height: verticalScale(194) }} className='w-full items-center justify-center border border-dashed border-white  rounded-xl mt-3 bg-[#2C2C2C] mb-4'>
                 <Image source={require("../../../assets/e-icon/Frame (1).png")} style={{ width: scale(30), height: verticalScale(30) }} />
             </TouchableOpacity>
@@ -83,21 +84,21 @@ const SellerProfile = () => {
 
             <View className=''>
                 <View className='bg-[#252525] p-2 rounded-xl'>
-                    <Text className='text-white mb-3 font-helvetica' >About</Text>
-                    <Text className='text-white' style={{ fontFamily: 'prosto-One' }}>
+                    <Text className='text-white mb-3 font-instrumentSansSemiBold' >About</Text>
+                    <Text className='text-white' >
                         Passionate about urban fashion, curating looks since2020. I believe style is a form of self-expression that transcends boundaries. Always on the hunt for unique pieces that tell a story.
                     </Text>
                 </View>
 
                 <View className='bg-[#252525] p-2 rounded-xl mt-3'>
-                    <Text className='text-white mb-3 font-helvetica' >HomeTown</Text>
-                    <Text className='text-white font-helvetica' >
+                    <Text className='text-white mb-3 font-instrumentSansSemiBold' >HomeTown</Text>
+                    <Text className='text-white font-instrumentRegular' >
                         Latos,Nigeria
                     </Text>
                 </View>
 
                 <View className='bg-[#252525] p-2 rounded-xl mt-3'>
-                    <Text className='text-white mb-3 font-helvetica' >Favorite Style</Text>
+                    <Text className='text-white mb-3 font-instrumentSansSemiBold' >Favorite Style</Text>
                     <View className='flex-row justify-between items-center'>
                         <Text className='bg-[#374151] text-white p-2 rounded-full'>#StreetWare</Text>
                         <Text className='bg-[#374151] text-white p-2 rounded-full'>#Heritage</Text>
@@ -109,7 +110,7 @@ const SellerProfile = () => {
             <View className="items-center">
                 <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden bg-[#1D3725]" style={{ width: width * 0.9 }} >
 
-                    <Text className="text-white p-3 font-helvetica">Save Changes</Text>
+                    <Text className="text-white p-3 font-instrumentSansBold">Save Changes</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

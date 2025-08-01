@@ -36,7 +36,7 @@ const Search = () => {
             headerTitleAlign: "start",
             headerTitleStyle: {
                 color: "white",
-                fontFamily: 'HelveticaNeue-Black',
+                fontFamily: 'instrumentSans-Bold',
                 fontSize: 20
             }
         })
@@ -82,7 +82,7 @@ const Search = () => {
 
     return (
         <ScrollView contentContainerStyle={{ alignItems: "center", padding: 12, backgroundColor: '#121212' }}>
-            <Text className='text-white mt-2 mb-3' >
+            <Text className='text-white mt-2 mb-3 font-instrumentRegular' >
                 Upload a photo and we’ll find the exact match
             </Text>
 
@@ -125,7 +125,7 @@ const Search = () => {
                 <View className='bg-black mt-2 rounded-xl flex-1 p-3' >
                     <View className='flex-row gap-2 mt-3 '>
                         <AntDesign name="caretup" size={24} color="white" />
-                        <Text className='text-white ' >Upload from Album</Text>
+                        <Text className='text-white font-instrumentRegular' >Upload from Album</Text>
                     </View>
                     <View className=' flex-row gap-2'>
                         <TouchableOpacity className='bg-[#252525]  p-2 rounded-xl items-center justify-center ' style={{ width: scale(90), height: verticalScale(90) }} >

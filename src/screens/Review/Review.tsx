@@ -49,7 +49,7 @@ const Review = () => {
                                 </View>
                                 <View className='flex-col  gap-2'>
                                     <View className='flex-row gap-2 items-center'>
-                                        <Text className='text-white'>Jack Robo</Text>
+                                        <Text className='text-white font-instrumentSansSemiBold'>Jack Robo</Text>
                                         <View className="bg-transparent">
                                             <Rating
                                                 type="custom"
@@ -63,14 +63,14 @@ const Review = () => {
                                             />
                                         </View>
                                     </View>
-                                    <Text className='text-[#ADAEBC] font-helvetica'>15 min ago</Text>
+                                    <Text className='text-[#ADAEBC] font-instrumentRegular'>15 min ago</Text>
                                 </View>
 
                             </View>
 
                             <SimpleLineIcons name="options-vertical" size={24} color="white" />
                         </View>
-                        <Text className='font-helvetica text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
+                        <Text className='font-instrumentRegular text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
                         <View className='mt-2 rounded-xl overflow-hidden' style={{ width: scale(111), height: verticalScale(111) }}>
                             <Image source={require("../../../assets/e-icon/review1.png")} style={{ width: "100%", height: "100%" }} />
                         </View>
@@ -86,7 +86,7 @@ const Review = () => {
                                 </View>
                                 <View className='flex-col  gap-2'>
                                     <View className='flex-row gap-2 items-center'>
-                                        <Text className='text-white'>Jack Robo</Text>
+                                        <Text className='text-white font-instrumentSansSemiBold'>Jack Robo</Text>
                                         <View className="bg-transparent">
                                             <Rating
                                                 type="custom"
@@ -100,14 +100,14 @@ const Review = () => {
                                             />
                                         </View>
                                     </View>
-                                    <Text className='text-[#ADAEBC] font-helvetica'>15 min ago</Text>
+                                    <Text className='text-[#ADAEBC] font-instrumentRegular'>15 min ago</Text>
                                 </View>
 
                             </View>
 
                             <SimpleLineIcons name="options-vertical" size={24} color="white" />
                         </View>
-                        <Text className='font-helvetica text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
+                        <Text className='font-instrumentRegular text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
 
                     </View>
 
@@ -122,7 +122,7 @@ const Review = () => {
                                 </View>
                                 <View className='flex-col  gap-2'>
                                     <View className='flex-row gap-2 items-center'>
-                                        <Text className='text-white'>Jack Robo</Text>
+                                        <Text className='text-white font-instrumentSansSemiBold'>Jack Robo</Text>
                                         <View className="bg-transparent">
                                             <Rating
                                                 type="custom"
@@ -136,14 +136,14 @@ const Review = () => {
                                             />
                                         </View>
                                     </View>
-                                    <Text className='text-[#ADAEBC] font-helvetica'>15 min ago</Text>
+                                    <Text className='text-[#ADAEBC] font-instrumentRegular'>15 min ago</Text>
                                 </View>
 
                             </View>
 
                             <SimpleLineIcons name="options-vertical" size={24} color="white" />
                         </View>
-                        <Text className='font-helvetica text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
+                        <Text className='font-instrumentRegular text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
 
                     </View>
                 </View>

@@ -15,6 +15,7 @@ const Reward = () => {
             },
             headerTintColor: "white",
             headerTitleAlign: "start",
+            headerTitleStyle:'instrumentSans-Bold',
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
                     <Feather name="arrow-left-circle" size={24} color="white" />
@@ -24,13 +25,13 @@ const Reward = () => {
     }, [navigation])
 
     return (
-        <View className='flex-1 items-center justify-center'>
-            <Text className='text-white text-3xl mt-4'>15600 pts</Text>
-            <Text className='text-[#252525] text-xl mt-1'>your points worth $15.6</Text>
+        <View className='flex-1 items-center '>
+            <Text className='text-white text-3xl mt-4 font-instrumentSansBold'>15600 pts</Text>
+            <Text className='text-[#6d6363] text-xl mt-1 font-instrumentSansSemiBold'>your points worth $15.6</Text>
 
             <View
                 className="border border-white mt-5 rounded-lg overflow-hidden p-1"
-                style={{ width: scale(250), height: verticalScale(350) }}
+                style={{ width: scale(300), height: verticalScale(450) }}
             >
                 <View className="flex-row">
                     <TouchableOpacity
@@ -40,7 +41,7 @@ const Reward = () => {
                         }}
                         onPress={() => setActiveTab('Pending')}
                     >
-                        <Text style={{ color: activeTab === 'Pending' ? '#000' : '#fff' }}>
+                        <Text className='font-instrumentSansSemiBold' style={{ color: activeTab === 'Pending' ? '#000' : '#fff' }}>
                             Pending
                         </Text>
                     </TouchableOpacity>
@@ -52,14 +53,14 @@ const Reward = () => {
                         }}
                         onPress={() => setActiveTab('Activity')}
                     >
-                        <Text style={{ color: activeTab === 'Activity' ? '#000' : '#fff' }}>
+                        <Text className='font-instrumentSansSemiBold' style={{ color: activeTab === 'Activity' ? '#000' : '#fff' }}>
                             Activity
                         </Text>
                     </TouchableOpacity>
                 </View>
 
                 <View className="flex-1 items-center justify-center">
-                    <Text className="text-white">
+                    <Text className="text-white font-instrumentSansSemiBold">
                         {activeTab === 'Pending'
                             ? 'no pending activity'
                             : 'no recent activity'}

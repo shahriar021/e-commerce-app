@@ -14,7 +14,7 @@ const PaymentAnimation = ({ visible, onClose }: any) => {
 
 
     return (
-        <Modal transparent visible={visible} onRequestClose={onClose}>
+        <Modal  visible={visible} onRequestClose={onClose} >
             <SafeAreaView className='flex-1 items-center justify-center relative'>
                 <Animatable.View
                     animation="bounceInUp"
@@ -23,7 +23,7 @@ const PaymentAnimation = ({ visible, onClose }: any) => {
                 >
                     <View className='bg-[#1D3725] items-center justify-center' style={{ width: scale(300), height: verticalScale(250), borderRadius: 20, overflow: "hidden" }} >
                         <AntDesign name="checkcircle" size={scale(100)} color="white" />
-                        <Text className='mt-3 text-xl text-white'>Payment Done Successfully.</Text>
+                        <Text className='mt-3 text-xl text-white font-instrumentSansBold'>Payment Done Successfully.</Text>
                     </View>
 
                     <TouchableOpacity className='absolute right-0 top-0' onPress={onClose}>

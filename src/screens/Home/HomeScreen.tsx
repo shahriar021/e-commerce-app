@@ -125,18 +125,18 @@ const HomeScreen = () => {
         </View>
 
         <View className="absolute bottom-0 right-0 left-0 top-0 items-center justify-center ">
-          <Text className="text-white font-helvetica text-3xl max-w-[90%] text-center ">
+          <Text className="text-white font-instrumentSansBold text-3xl max-w-[90%] text-center ">
             One Platform, A Thousand Brands
           </Text>
           <TouchableOpacity className="bg-[#1D3725] w-[90%]  rounded-3xl p-4 items-center mt-3" onPress={() => navigation.navigate("Brand")}>
-            <Text className="font-helvetica text-white">Explore Collections</Text>
+            <Text className="font-instrumentSansSemiBold text-white">Explore Collections</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigation.navigate("Feed")}
             style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
             className="w-[90%] rounded-3xl p-4 items-center mt-3 border border-[#fff]"
           >
-            <Text className="font-helvetica text-white">The Movement</Text>
+            <Text className="font-instrumentSansSemiBold text-white">The Movement</Text>
           </TouchableOpacity>
 
         </View>
@@ -169,31 +169,32 @@ const HomeScreen = () => {
       </View>
 
       <View className=" items-center p-3 ">
-        <Text className="font-helvetica text-3xl text-center text-[#fff] mt-5">Featured Brands</Text>
-        <Text className="font-helvetica text-lg text-center text-[#fff] mt-2 max-w-[90%]">Discover premium collections from top designers</Text>
+        <Text className="font-instrumentSansBold text-3xl text-center text-[#fff] mt-5">Featured Brands</Text>
+        <Text className="font-instrumentSansSemiBold text-lg text-center text-[#fff] mt-2 max-w-[90%]">Discover premium collections from top designers</Text>
 
         {homeInfo?.map(item => <TouchableOpacity key={item.name} className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }} onPress={() => navigation.navigate("Brand Products")}>
           <View className="rounded-3xl overflow-hidden" style={{ width: scale(80), height: verticalScale(80) }}>
             <Image source={item.image} style={{ width: "100%", height: "100%" }} className="rounded-3xl" />
           </View>
           <View className="flex-1">
-            <Text className="text-[#E5E7EB] font-helvetica text-xl">{item.name}</Text>
-            <Text className="text-[#E5E7EB] font-helvetica text-base mb-2">{item.info}</Text>
+            <Text className="text-[#E5E7EB] font-instrumentSansSemiBold text-xl">{item.name}</Text>
+            <Text className="text-[#E5E7EB] font-instrumentRegular text-base mb-2">{item.info}</Text>
             <TouchableOpacity className="bg-[#1D3725] p-1 items-center rounded-2xl w-[80%]">
-              <Text className="font-helvetica text-white">View Collection</Text>
+              <Text className="font-instrumentSansSemiBold text-white">View Collection</Text>
             </TouchableOpacity>
           </View>
           <AntDesign name="right" size={24} color="#9CA3AF" />
         </TouchableOpacity>)}
 
         <TouchableOpacity className=" items-center border rounded-3xl border-[#fff] p-2 mt-3" style={{ width: "95%" }}>
-          <Text className="font-helvetica text-white text-xl">View All</Text>
+          <Text className="font-instrumentSansSemiBold text-white text-xl">View All</Text>
         </TouchableOpacity>
 
-        <View className="flex-1 border mt-5 border-white rounded-lg overflow-hidden">
-          <Text className="text-3xl text-center text-[#fff] mt-5 mb-3">
+          <Text className="text-3xl text-center text-[#fff] mt-5 mb-2 font-instrumentSansSemiBold">
             Brand of the week....
           </Text>
+        <View className="flex-1 border mt-5 border-white rounded-lg overflow-hidden">
+          
           <ScrollView
             ref={scrollRef2}
             horizontal

@@ -20,9 +20,9 @@ const CartPage = () => {
         headerTitle: () => null,
         headerLeft: () => (
             <TouchableOpacity className='flex-row gap-2 items-center mx-2' onPress={() => navigation.goBack()}>
-                                <Feather name="arrow-left-circle" size={24} color="white" />
+                <Feather name="arrow-left-circle" size={24} color="white" />
                 <View className=''>
-                    <Text className='font-helvetica text-white text-2xl'>Cart</Text>
+                    <Text className='font-instrumentSansBold text-white text-2xl'>Cart</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -39,8 +39,8 @@ const CartPage = () => {
                 </View>
                 <View className='p-2  flex-1'>
                     <View>
-                        <Text className='text-xl text-white'>Bomber Jackets</Text>
-                        <Text className=' text-md text-white mt-1' >$49.99</Text>
+                        <Text className='text-xl text-white font-instrumentSansSemiBold'>Bomber Jackets</Text>
+                        <Text className=' text-md text-white mt-1 font-instrumentRegular' >$49.99</Text>
                     </View>
                     <View className='flex-row flex-1 items-center justify-between'>
 
@@ -60,11 +60,11 @@ const CartPage = () => {
             </View>))}
 
             <View className='flex-row justify-between p-2 mx-2 mt-2 mb-2'>
-                <Text className=' text-sm text-[#ADAEBC]' >Subtotal</Text>
+                <Text className=' text-sm text-[#ADAEBC] font-instrumentSansSemiBold' >Subtotal</Text>
                 <Text className=' mx-2 text-sm text-white' >$27.36</Text>
             </View>
             <View className='flex-row justify-between p-2 mx-2 mt-2 mb-2'>
-                <Text className=' text-sm text-[#ADAEBC]' >Shipping</Text>
+                <Text className=' text-sm text-[#ADAEBC] font-instrumentSansSemiBold' >Shipping</Text>
                 <Text className=' mx-2 text-sm text-white'>$27.36</Text>
             </View>
 
@@ -74,7 +74,7 @@ const CartPage = () => {
             />
 
             <View className='flex-row justify-between p-2 mx-2 mt-2 mb-2'>
-                <Text className=' text-sm text-[#ADAEBC]' >Total</Text>
+                <Text className=' text-sm text-[#ADAEBC] font-instrumentSansSemiBold' >Total</Text>
                 <Text className=' mx-2 text-sm text-white'>$27.36</Text>
             </View>
 
@@ -82,7 +82,7 @@ const CartPage = () => {
             <View className="items-center mt-3">
                 <TouchableOpacity className=" items-center mt-3 rounded-lg  overflow-hidden bg-[#1D3725] border border-[#DCF3FF]" style={{ width: width * 0.9 }} onPress={() => navigation.navigate("Payment Options")}>
 
-                    <Text className="text-[#DCF3FF] p-3 " >Checkout</Text>
+                    <Text className="text-[#DCF3FF] p-3 font-instrumentSansBold" >Checkout</Text>
 
                 </TouchableOpacity>
             </View>

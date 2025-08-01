@@ -84,117 +84,117 @@ export default function YourComponent() {
   };
 
   const handleModal = () => {
-        setIsModalOpen(true)
-    }
+    setIsModalOpen(true)
+  }
 
   return (
     <View className="flex-1 relative">
-            <TouchableOpacity className='absolute right-10 bottom-4 z-10 bg-[#1D3725] p-3 rounded-full' onPress={handleModal}>
-                <AntDesign name="plus" size={24} color="white" />
-            </TouchableOpacity>
-    <ScrollView
-      contentContainerStyle={{
-        paddingBottom: verticalScale(40),
-        alignItems: 'center',
-      }}
-      style={{ flex: 1, backgroundColor: '#121212' }}
-    >
-
-      <View
-        style={{
-          width: '92%',
-          height: verticalScale(300),
-          borderRadius: moderateScale(24),
-          overflow: 'hidden',
-          marginTop: verticalScale(16),
-
+      <TouchableOpacity className='absolute right-10 bottom-4 z-10 bg-[#1D3725] p-3 rounded-full' onPress={handleModal}>
+        <AntDesign name="plus" size={24} color="white" />
+      </TouchableOpacity>
+      <ScrollView
+        contentContainerStyle={{
+          paddingBottom: verticalScale(40),
+          alignItems: 'center',
         }}
+        style={{ flex: 1, backgroundColor: '#121212' }}
       >
-        <Image
-          source={require("../../../assets/e-icon/othersProfile.jpg")}
-          style={{
-            width: '100%',
-            height: verticalScale(250),
-            borderRadius: moderateScale(24),
-          }}
-          resizeMode="cover"
-        />
 
-        {/* Profile Image (centered bottom) */}
         <View
           style={{
-            width: scale(102),
-            height: scale(102),
-            position: 'absolute',
-            bottom: verticalScale(12),
-            left: '50%',
-            transform: [{ translateX: -scale(102) / 2 }],
-            borderRadius: scale(102) / 2,
+            width: '92%',
+            height: verticalScale(300),
+            borderRadius: moderateScale(24),
             overflow: 'hidden',
-            borderWidth: 4,
-            borderColor: 'white',
-            zIndex: 10,
-            alignItems: 'center',
-            justifyContent: 'center',
+            marginTop: verticalScale(16),
+
           }}
         >
-
-          {selectedImage ? (
-            <Image
-              source={{ uri: selectedImage }}
-              style={{ width: "100%", height: "100%" }}
-              resizeMode="cover"
-            />
-          ) : <Image
-            source={require("../../../assets/e-icon/img (1).png")}
-            style={{ width: '100%', height: '100%' }}
+          <Image
+            source={require("../../../assets/e-icon/othersProfile.jpg")}
+            style={{
+              width: '100%',
+              height: verticalScale(250),
+              borderRadius: moderateScale(24),
+            }}
             resizeMode="cover"
-          />}
+          />
+
+          {/* Profile Image (centered bottom) */}
+          <View
+            style={{
+              width: scale(102),
+              height: scale(102),
+              position: 'absolute',
+              bottom: verticalScale(12),
+              left: '50%',
+              transform: [{ translateX: -scale(102) / 2 }],
+              borderRadius: scale(102) / 2,
+              overflow: 'hidden',
+              borderWidth: 4,
+              borderColor: 'white',
+              zIndex: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+
+            {selectedImage ? (
+              <Image
+                source={{ uri: selectedImage }}
+                style={{ width: "100%", height: "100%" }}
+                resizeMode="cover"
+              />
+            ) : <Image
+              source={require("../../../assets/e-icon/img (1).png")}
+              style={{ width: '100%', height: '100%' }}
+              resizeMode="cover"
+            />}
 
 
+          </View>
+          <TouchableOpacity onPress={openCamera} className="absolute z-10 bg-[#2A2A2A] p-1 rounded-full" style={{
+            width: scale(24), height: scale(24), bottom: verticalScale(12), left: '50%',
+            transform: [{ translateX: scale(60) / 2 }]
+          }}>
+            <Image source={require("../../../assets/e-icon/Button.png")} style={{ width: '100%', height: '100%' }} />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={openCamera} className="absolute z-10 bg-[#2A2A2A] p-1 rounded-full" style={{
-          width: scale(24), height: scale(24), bottom: verticalScale(12), left: '50%',
-          transform: [{ translateX: scale(60) / 2 }]
-        }}>
-          <Image source={require("../../../assets/e-icon/Button.png")} style={{ width: '100%', height: '100%' }} />
-        </TouchableOpacity>
-      </View>
 
-      <View className='w-[92%] items-center'>
-        <Text className='text-white text-center font-helvetica mb-1' >Jack Robo</Text>
-        <Text className='text-white font-helvetica text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
-        <View className='mt-3 flex-row gap-3'>
-          <View className='bg-[#252525] p-2 items-center rounded-xl'>
-            <Text className='text-white'>142</Text>
-            <Text className='text-[#9CA3AF]' >Posts</Text>
-          </View>
-          <View className='bg-[#252525] p-2 items-center rounded-xl'>
-            <Text className='text-white'>2.1k</Text>
-            <Text className='text-[#9CA3AF]' >Likes</Text>
-          </View>
-          <View className='bg-[#252525] p-2 items-center rounded-xl'>
-            <Text className='text-white'>89</Text>
-            <Text className='text-[#9CA3AF]' >Followings</Text>
+        <View className='w-[92%] items-center'>
+          <Text className='text-white text-center font-instrumentSansBold mb-1' >Jack Robo</Text>
+          <Text className='text-white font-instrumentSansSemiBold text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
+          <View className='mt-3 flex-row gap-3'>
+            <View className='bg-[#252525] p-2 items-center rounded-xl'>
+              <Text className='text-white font-instrumentRegular'>142</Text>
+              <Text className='text-[#9CA3AF] font-instrumentRegular' >Posts</Text>
+            </View>
+            <View className='bg-[#252525] p-2 items-center rounded-xl'>
+              <Text className='text-white font-instrumentRegular'>2.1k</Text>
+              <Text className='text-[#9CA3AF] font-instrumentRegular' >Likes</Text>
+            </View>
+            <View className='bg-[#252525] p-2 items-center rounded-xl'>
+              <Text className='text-white font-instrumentRegular'>89</Text>
+              <Text className='text-[#9CA3AF] font-instrumentRegular' >Followings</Text>
+            </View>
           </View>
         </View>
-      </View>
 
 
 
-      <View className='w-[92%] flex-row gap-3 mt-2 mb-3 justify-center items-center'>
-        <TouchableOpacity className={`${isPosts == "Posts" ? "border-b border-b-white" : ""} py-1`} onPress={() => setIsPosts("Posts")}>
-          <Text className='font-helvetica text-white' >Posts</Text>
-        </TouchableOpacity>
-        <TouchableOpacity className={`${isPosts == "Details" ? "border-b border-b-white" : ""} py-1`} onPress={() => setIsPosts("Details")}>
-          <Text className='font-helvetica text-white' >My Lookbook</Text>
-        </TouchableOpacity>
-      </View>
-      {isPosts == "Posts" ? <Posts /> : <Posts />}
-    </ScrollView>
-    <CreatePostModal visible={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-            />
+        <View className='w-[92%] flex-row gap-3 mt-2 mb-3 justify-center items-center'>
+          <TouchableOpacity className={`${isPosts == "Posts" ? "border-b border-b-white" : ""} py-1`} onPress={() => setIsPosts("Posts")}>
+            <Text className='font-instrumentSansBold text-white' >Posts</Text>
+          </TouchableOpacity>
+          <TouchableOpacity className={`${isPosts == "Details" ? "border-b border-b-white" : ""} py-1`} onPress={() => setIsPosts("Details")}>
+            <Text className='font-instrumentSansBold text-white' >My Lookbook</Text>
+          </TouchableOpacity>
+        </View>
+        {isPosts == "Posts" ? <Posts /> : <Posts />}
+      </ScrollView>
+      <CreatePostModal visible={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </View>
   );
 

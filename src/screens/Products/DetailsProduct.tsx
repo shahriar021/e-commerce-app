@@ -27,7 +27,7 @@ const DetailsProduct = () => {
             <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
                 <AntDesign name="arrowleft" size={24} color="white" />
                 <View className=''>
-                    <Text className='font-helvetica text-white text-2xl'>Product Details</Text>
+                    <Text className='font-instrumentSansBold text-white text-2xl'>Product Details</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -47,7 +47,7 @@ const DetailsProduct = () => {
                     </View>
                 </View>
                 <View className='w-full  mt-4 mb-3 p-3 flex-row justify-between items-center'>
-                    <View className='flex-col'><Text className='text-white font-helvetica'>Super Basic Black Tee</Text><Text className='text-white font-helvetica'>$70</Text></View>
+                    <View className='flex-col'><Text className='text-white font-instrumentSansSemiBold'>Super Basic Black Tee</Text><Text className='text-white font-helvetica'>$70</Text></View>
                     <View className='flex-row items-center gap-2'>
                         <TouchableOpacity className='bg-[#252525] p-1 rounded-full' >
                             <AntDesign name="minus" size={24} color="white" />
@@ -60,7 +60,7 @@ const DetailsProduct = () => {
                 </View>
 
                 <View className='p-3'>
-                    <Text numberOfLines={isReadMore ? 2 : undefined} className='font-helvetica text-white'>
+                    <Text numberOfLines={isReadMore ? 2 : undefined} className='font-instrumentRegular text-white'>
                         Its simple and elegant shape makes it perfect for those of you who like you who want minimalist clothes
 
                     </Text>
@@ -68,7 +68,7 @@ const DetailsProduct = () => {
 
                 </View>
                 <View className='w-full p-3 '>
-                    <Text className='text-[#ADAEBC] font-helvetica mb-2'>Color</Text>
+                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold mb-2'>Color</Text>
                     <View className='flex-row gap-2 mt-1 mb-1'>
                         <TouchableOpacity onPress={() => setIsColor("#787676")} className={`rounded-full ${isColor == "#787676" ? "border-white" : "border-transparent"} border-2`}>
                             <FontAwesome name="circle" size={24} color="#787676" />
@@ -77,7 +77,7 @@ const DetailsProduct = () => {
                             <FontAwesome name="circle" size={24} color="#433F40" />
                         </TouchableOpacity>
                     </View>
-                    <Text className='text-[#ADAEBC] font-helvetica mt-2'>Custome Size</Text>
+                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold mt-2'>Custome Size</Text>
                     <View className="flex-row gap-2 mt-2">
                         {isClothSize.map((item, index) => (
                             <TouchableOpacity
@@ -99,16 +99,16 @@ const DetailsProduct = () => {
 
                     <View className='flex-row justify-start gap-2 w-full mt-4'>
                         <TouchableOpacity className='bg-[#60A5FA] p-2 rounded-lg flex-1 items-center'>
-                            <Text className='text-white font-helvetica'>Edit</Text>
+                            <Text className='text-white font-instrumentSansSemiBold'>Edit</Text>
                         </TouchableOpacity>
                         <TouchableOpacity className='bg-[#EF4444] p-2 rounded-lg flex-1 items-center'>
-                            <Text className='text-white font-helvetica'>Delete</Text>
+                            <Text className='text-white font-instrumentSansSemiBold'>Delete</Text>
                         </TouchableOpacity>
                     </View>
 
                     <TouchableOpacity className='bg-[#1D3725] flex-row items-center justify-center gap-2 mt-3 p-3 rounded-xl' onPress={() => navigation.navigate("Cart Page")}>
                         <Image source={require("../../../assets/e-icon/Main Icon.png")} />
-                        <Text className='text-[#DCF3FF] font-helvetica'>Add to Cart | $80 $110</Text>
+                        <Text className='text-[#DCF3FF] font-instrumentSansBold'>Add to Cart | $80 $110</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, Dimensions } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign, Feather } from '@expo/vector-icons'
 import { scale, verticalScale } from 'react-native-size-matters';
 export const selectedCountry = {
     flag: require('../../../assets/e-icon/bdFlag.jpg'),
@@ -23,6 +23,7 @@ const BrandProfile = () => {
             },
             headerTintColor: "white",
             headerTitleAlign: "start",
+            headerTitleStyle:"instrumentSans-Bold",
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
                     <Feather name="arrow-left-circle" size={24} color="white" />
@@ -43,13 +44,13 @@ const BrandProfile = () => {
             </View>
 
 
-            <Text className='font-helvetica  text-[#fff]  w-full'>Full Name</Text>
+            <Text className='font-instrumentSansSemiBold  text-[#fff]  w-full'>Full Name</Text>
             <TextInput className=' p-3 text-white w-full rounded-md bg-[#252525] mt-1 mb-3' style={{ color: "#fff" }} placeholderTextColor={"#fff"} placeholder='Enter Your First Name' />
 
-            <Text className='font-helvetica  text-[#fff]  w-full'>Enter Mail</Text>
+            <Text className='font-instrumentSansSemiBold  text-[#fff]  w-full'>Enter Mail</Text>
             <TextInput className=' p-3 text-white w-full rounded-md bg-[#252525] mt-1 mb-3' style={{ color: "#fff" }} placeholderTextColor={"#fff"} placeholder='Enter E-Mail' />
 
-            <Text className='font-helvetica  text-[#fff]  w-full'>Phone Number</Text>
+            <Text className='font-instrumentSansSemiBold  text-[#fff]  w-full'>Phone Number</Text>
             
 
             <View style={{ flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#ccc', borderRadius: 8, paddingHorizontal: 10, paddingVertical: 8, marginBottom: 10 }}>
@@ -77,10 +78,10 @@ const BrandProfile = () => {
 
 
             <View className=''>
-                <Text className='text-white mb-3 font-helvetica' >Brand Story</Text>
+                <Text className='text-white mb-3 font-instrumentSansSemiBold' >Brand Story</Text>
                 <View className='bg-[#252525] p-2 rounded-xl'>
                     
-                    <Text className='text-white' style={{ fontFamily: 'prosto-One' }}>
+                    <Text className='text-white font-instrumentRegular' >
                         Born from late-night sketch sessions and city grit, COID Supply started in a cramped apartment in Brooklyn with just a screen printer and a dream. Tired of watered-down fashion, we built a brand that reps raw energy, underground culture, and the hustle mentality. Our first drop? Sold out of backpacks at a pop-up on Flatbush Ave. Today, COID is more than a label—it’s a movement for the unheard, the unseen, and the unfazed. We don’t follow trends. We set ‘em.
                     </Text>
                 </View>
@@ -91,7 +92,7 @@ const BrandProfile = () => {
             <View className="items-center">
                 <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden bg-[#FFF]" style={{ width: width * 0.9 }} >
 
-                    <Text className="text-[#121212] p-3 font-helvetica">Save Changes</Text>
+                    <Text className="text-[#121212] p-3 font-instrumentSansBold">Save Changes</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

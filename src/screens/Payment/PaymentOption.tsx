@@ -24,9 +24,9 @@ const PaymentOption = () => {
         headerTitle: () => null,
         headerLeft: () => (
             <TouchableOpacity className='flex-row gap-2 items-center mx-2' onPress={() => navigation.goBack()}>
-                                <Feather name="arrow-left-circle" size={24} color="white" />
+                <Feather name="arrow-left-circle" size={24} color="white" />
                 <View className=''>
-                    <Text className='font-helvetica text-white text-2xl'>Checkout</Text>
+                    <Text className='font-instrumentSansBold text-white text-2xl'>Checkout</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -44,12 +44,12 @@ const PaymentOption = () => {
         <View className='bg-[#121212] justify-between p-2 '>
 
             <View className='flex-row justify-between p-2 mx-2 mt-2 mb-2'>
-                <Text className=' text-sm text-[#ADAEBC]'>Subtotal</Text>
-                <Text className=' mx-2 text-sm text-white'>$27.36</Text>
+                <Text className=' text-sm text-[#ADAEBC] font-instrumentSansSemiBold'>Subtotal</Text>
+                <Text className=' mx-2 text-sm text-white font-instrumentRegular'>$27.36</Text>
             </View>
             <View className='flex-row justify-between p-2 mx-2 mt-2 mb-2'>
-                <Text className=' text-sm text-[#ADAEBC]' >Shipping</Text>
-                <Text className=' mx-2 text-sm text-white' >$27.36</Text>
+                <Text className=' text-sm text-[#ADAEBC] font-instrumentSansSemiBold' >Shipping</Text>
+                <Text className=' mx-2 text-sm text-white font-instrumentRegular' >$27.36</Text>
             </View>
 
             <View
@@ -58,12 +58,12 @@ const PaymentOption = () => {
             />
 
             <View className='flex-row justify-between p-2 mx-2 mt-2 mb-2'>
-                <Text className=' text-sm text-[#ADAEBC]' >Total</Text>
-                <Text className=' mx-2 text-sm text-white' >$27.36</Text>
+                <Text className=' text-sm text-[#ADAEBC] font-instrumentSansSemiBold' >Total</Text>
+                <Text className=' mx-2 text-sm text-white font-instrumentRegular' >$27.36</Text>
             </View>
 
             <TouchableOpacity className='m-2' onPress={handleModal2}>
-                <Text className=' text-xl text-[#ADAEBC]' >Add Payment Card</Text>
+                <Text className=' text-xl text-[#ADAEBC] font-instrumentSansBold' >Add Payment Card</Text>
 
                 <View className='flex-row mt-2 items-center justify-between border  border-[#375DF8] rounded-lg p-4 bg-[#1D3725]'>
                     <View className='flex-row gap-2'>
@@ -77,7 +77,7 @@ const PaymentOption = () => {
 
             {/* card */}
             <View className='m-2'>
-                <Text className=' text-xl text-[#ADAEBC]' >Payment</Text>
+                <Text className=' text-xl text-[#ADAEBC] font-instrumentSansBold' >Payment</Text>
 
                 <View className='flex-row mt-2 items-center justify-between border  border-[#375DF8] rounded-lg p-4 bg-[#2C2C2C]'>
                     <View className='flex-row gap-2'>
@@ -99,7 +99,7 @@ const PaymentOption = () => {
                 <View className="items-center mt-3">
                     <TouchableOpacity className=" items-center mt-3 rounded-lg  overflow-hidden bg-[#1D3725] border border-[#DCF3FF] w-full" onPress={handleModal}>
 
-                        <Text className="text-[#DCF3FF] p-3 " >Checkout</Text>
+                        <Text className="text-[#DCF3FF] p-3 font-instrumentSansBold" >Checkout</Text>
 
                     </TouchableOpacity>
                 </View>

@@ -29,7 +29,10 @@ module.exports = {
         podKova:['Podkova-Bold'],
         opansans:['OpenSans-Regular'],
         poppins:['poppins'],
-        helvetica:['HelveticaNeue-Black']
+        helvetica:['HelveticaNeue-Black'],
+        instrumentSansBold:['instrumentSans-Bold'],
+        instrumentRegular:['instrumentSans-Regular'],
+        instrumentSansSemiBold:['instrumentSans-SemiBold'],
       },
       colors:{
         darkYellow:'#FFC107',

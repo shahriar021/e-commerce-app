@@ -25,7 +25,7 @@ const UsersORBrandProfile = () => {
       headerTitle: "Jack Robo",
       headerTitleStyle: {
         color: "white",
-        fontFamily: 'Prosto One',
+        fontFamily: 'instrumentSans-Bold',
         fontSize: 20
       },
       headerTitleAlign: "center",
@@ -96,41 +96,41 @@ const UsersORBrandProfile = () => {
       </View>
 
       <View className='w-[92%] items-center'>
-        <Text className='text-white text-center font-helvetica' style={{fontFamily:'prosto-One'}}>{type=="user"? "Jack Robo":"Coin Supply"}</Text>
-        <Text className='text-white font-helvetica text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
+        <Text className='text-white text-center font-instrumentSansBold' >{type=="user"? "Jack Robo":"Coin Supply"}</Text>
+        <Text className='text-white font-instrumentSansSemiBold text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
         <View className='mt-3 flex-row gap-3'>
           <View className='bg-[#252525] p-2 items-center rounded-xl'>
-            <Text className='text-white'>142</Text>
-            <Text className='text-[#9CA3AF]' style={{fontFamily:'prosto-One'}}>Posts</Text>
+            <Text className='text-white font-instrumentRegular'>142</Text>
+            <Text className='text-[#9CA3AF] font-instrumentRegular' >Posts</Text>
           </View>
           <View className='bg-[#252525] p-2 items-center rounded-xl'>
-            <Text className='text-white'>2.1k</Text>
-            <Text className='text-[#9CA3AF]' style={{fontFamily:'prosto-One'}}>Likes</Text>
+            <Text className='text-white font-instrumentRegular'>2.1k</Text>
+            <Text className='text-[#9CA3AF] font-instrumentRegular' >Likes</Text>
           </View>
           <View className='bg-[#252525] p-2 items-center rounded-xl'>
-            <Text className='text-white'>89</Text>
-            <Text className='text-[#9CA3AF]' style={{fontFamily:'prosto-One'}}>Followings</Text>
+            <Text className='text-white font-instrumentRegular'>89</Text>
+            <Text className='text-[#9CA3AF] font-instrumentRegular' >Followings</Text>
           </View>
         </View>
       </View>
      { type=="user"?<TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3'>
-        <Text className='text-black font-helvetica' style={{fontFamily:'prosto-One'}}>Follow</Text>
+        <Text className='text-black font-instrumentSansSemiBold' >Follow</Text>
       </TouchableOpacity>
       :<View className='flex-row items-center gap-2'>
         <TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3'>
-        <Text className='text-black font-helvetica' style={{fontFamily:'prosto-One'}}>Follow</Text>
+        <Text className='text-black font-instrumentSansSemiBold ' >Follow</Text>
       </TouchableOpacity>
       <TouchableOpacity className='bg-[#1D3725] p-2 rounded-xl mt-3' onPress={()=>navigation.navigate("Brand Details")}>
-        <Text className='text-white font-helvetica' style={{fontFamily:'prosto-One'}}>View Details</Text>
+        <Text className='text-white font-instrumentSansSemiBold' >View Details</Text>
       </TouchableOpacity>
       </View>}
 
       <View className='w-[92%] flex-row gap-3 mt-2 mb-3'>
         <TouchableOpacity className={`${isPosts=="Posts"?"border-b border-b-white":""} py-1`} onPress={()=>setIsPosts("Posts")}>
-          <Text className='font-helvetica text-white' style={{fontFamily:'prosto-One'}}>Posts</Text>
+          <Text className='font-instrumentSansSemiBold text-white' >Posts</Text>
         </TouchableOpacity>
         <TouchableOpacity  className={`${isPosts=="Details"?"border-b border-b-white":""} py-1`} onPress={()=>setIsPosts("Details")}>
-          <Text className='font-helvetica text-white' style={{fontFamily:'prosto-One'}}>Details</Text>
+          <Text className='font-instrumentSansSemiBold text-white' >Details</Text>
         </TouchableOpacity>
       </View>
       {isPosts=="Posts"?<Posts/>:<Details/>}
