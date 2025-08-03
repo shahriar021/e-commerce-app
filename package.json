@@ -1,5 +1,5 @@
 {
-  "name": "ARKIVE",
+  "name": "s-Ecommerece",
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
@@ -31,6 +31,7 @@
     "expo-image-picker": "~16.0.3",
     "expo-linear-gradient": "^14.0.2",
     "expo-media-library": "^17.0.6",
+    "expo-modules-core": "~2.2.3",
     "expo-notifications": "~0.29.13",
     "expo-print": "^14.0.3",
     "expo-sharing": "^13.0.1",

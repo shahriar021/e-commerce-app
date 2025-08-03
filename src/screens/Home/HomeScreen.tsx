@@ -1,4 +1,4 @@
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
@@ -8,31 +8,27 @@ import {
   Dimensions,
   Text,
   TouchableOpacity,
+  Animated,
 } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
-import { homeInfo } from "./demo";
+import { homeInfo, images, images2 } from "./demo";
+import { LinearGradient } from "expo-linear-gradient";
+import BrandWeek from "src/components/ui/homepage/BrandWeek";
+import SearchModal from "./SearchModal";
 
 const { width } = Dimensions.get("screen");
 
-const images2 = [
-  require("../../../assets/e-icon/tera.png"),
-  require("../../../assets/e-icon/tera.png"),
-  require("../../../assets/e-icon/tera.png"),
-];
 
-const images = [
-  require("../../../assets/e-icon/homeSwipe.png"),
-  require("../../../assets/e-icon/homeSwipe.png"),
-  require("../../../assets/e-icon/homeSwipe.png"),
-];
 
 const HomeScreen = () => {
+  const scrollX = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<ScrollView>(null);
   const scrollRef2 = useRef<ScrollView>(null);
   const indexRef = useRef(0);
   const indexRef2 = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentIndex2, setCurrentIndex2] = useState(0);
+  const [searchModal,setSearchModal]=useState(false)
 
   const navigation = useNavigation();
 
@@ -78,8 +74,22 @@ const HomeScreen = () => {
     setCurrentIndex(index);
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      let nextIndex = (currentIndex + 1) % images2.length;
+      scrollRef2.current?.scrollTo({ x: nextIndex * width, animated: true });
+      setCurrentIndex(nextIndex);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [currentIndex]);
+
+  const handleSearch=()=>{
+    setSearchModal(true)
+  }
+
 
   return (
+    <>
     <ScrollView className="bg-[#121212] flex-1" contentContainerStyle={{ paddingBottom: 200 }}>
       {/* Image Slider Wrapper */}
       <View style={{ position: "relative" }} >
@@ -123,6 +133,14 @@ const HomeScreen = () => {
             <Text className="text-white text-[10px] font-bold">3</Text>
           </View>
         </View>
+        <TouchableOpacity
+          className="absolute right-20 top-16"
+          style={{ width: scale(30), height: verticalScale(30) }}
+          onPress={handleSearch}
+        >
+          <FontAwesome name="search" size={scale(34)} color="white" />
+          
+        </TouchableOpacity>
 
         <View className="absolute bottom-0 right-0 left-0 top-0 items-center justify-center ">
           <Text className="text-white font-instrumentSansBold text-3xl max-w-[90%] text-center ">
@@ -190,49 +208,14 @@ const HomeScreen = () => {
           <Text className="font-instrumentSansSemiBold text-white text-xl">View All</Text>
         </TouchableOpacity>
 
-          <Text className="text-3xl text-center text-[#fff] mt-5 mb-2 font-instrumentSansSemiBold">
-            Brand of the week....
-          </Text>
-        <View className="flex-1 border mt-5 border-white rounded-lg overflow-hidden">
-          
-          <ScrollView
-            ref={scrollRef2}
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            onScroll={handleScroll2}
-            scrollEventThrottle={16}
-          >
-            {images2.map((image, index) => (
-              <View key={index} style={{ width, height: verticalScale(150) }}>
-                <Image
-                  source={image}
-                  style={{ width: '100%', height: '100%' }}
-                  resizeMode="contain"
-                />
-                <Text
-                  style={{
-                    position: 'absolute',
-                    bottom: 10,
-                    left: 0,
-                    right: 0,
-                    textAlign: 'center',
-                    color: '#fff',
-                    fontSize: 18,
-                    fontWeight: 'bold',
-                    backgroundColor: 'rgba(0,0,0,0.4)', // optional background
-                    paddingVertical: 4
-                  }}
-                >
-                  Brand Name {index + 1}
-                </Text>
-              </View>
-            ))}
-          </ScrollView>
-        </View>
+        <BrandWeek />
 
       </View>
+
+
     </ScrollView>
+    <SearchModal visible={searchModal} onClose={()=>setSearchModal(false)}/>
+    </>
   );
 };
 

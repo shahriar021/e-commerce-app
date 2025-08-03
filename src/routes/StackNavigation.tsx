@@ -54,6 +54,8 @@ import OrderList from "src/screens/Orders/OrderList";
 import SearchResult from "src/screens/Search/SearchModal";
 import DetailsProduct from "src/screens/Products/DetailsProduct";
 import Reward from "src/screens/Profile/Reward";
+import EditProducts from "src/screens/Products/EditProducts";
+import SearchPage from "src/screens/Search/SearchPage";
 
 
 const Stack = createStackNavigator();
@@ -122,6 +124,7 @@ const StackNavigation = () => {
         <Stack.Screen name="Delivery Request" component={DeliveryRequestView}/>
         <Stack.Screen name="Map" options={{headerShown:false}} component={MapScreen}/>
         <Stack.Screen name="Search Result" options={{headerShown:false}} component={SearchResult}/>
+        <Stack.Screen name="Search Page" options={{headerShown:false}} component={SearchPage}/>
         
         <Stack.Screen name="Withdraw" component={Withdraw}/>
         <Stack.Screen name="Withdraw Request" component={WithdrawRequest}/>
@@ -139,6 +142,7 @@ const StackNavigation = () => {
         <Stack.Screen name="Review" options={{headerShown:true}} component={Review}/>
         <Stack.Screen name="Products" options={{headerShown:true}} component={Products}/>
         <Stack.Screen name="Add Products" options={{headerShown:true}} component={AddProducts}/>
+        <Stack.Screen name="Edit Products" options={{headerShown:true}} component={EditProducts}/>
         <Stack.Screen name="All Products" options={{headerShown:true}} component={AllProducts}/>
          <Stack.Screen name="Seller Profile" options={{headerShown:true}} component={SellerProfile}/>
         <Stack.Screen name="Brand Profile" options={{headerShown:true}} component={BrandProfile}/>

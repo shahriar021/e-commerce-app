@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Image, useWindowDimensions } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Image, useWindowDimensions, Animated, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, FontAwesome, Ionicons, SimpleLineIcons } from '@expo/vector-icons';
@@ -14,6 +14,8 @@ const DetailsProduct = () => {
     const [isColor, setIsColor] = useState("#787676")
     const [isClothSize] = useState(["S", "L", "X", "XL"])
     const [selectedSize, setSelectedSize] = useState(null);
+    const [deleted, setDeleted] = useState(false);
+    const opacity = new Animated.Value(1);
 
     navigation.setOptions({
         headerStyle: {
@@ -32,6 +34,27 @@ const DetailsProduct = () => {
             </TouchableOpacity>
         )
     });
+
+    const handleDelete = () => {
+            Alert.alert(
+                "Confirm Delete",
+                "Are you sure you want to delete?",
+                [
+                    {
+                        text: "Cancel",
+                        style: "cancel"
+                    },
+                    {
+                        text: "Yes, Delete",
+                        style: "destructive",
+                        onPress: () => {
+                            // Your actual delete logic here
+                            setDeleted(true);
+                        }
+                    }
+                ]
+            );
+    };
 
 
     return (
@@ -98,18 +121,33 @@ const DetailsProduct = () => {
 
 
                     <View className='flex-row justify-start gap-2 w-full mt-4'>
-                        <TouchableOpacity className='bg-[#60A5FA] p-2 rounded-lg flex-1 items-center'>
+                        <TouchableOpacity className='bg-[#60A5FA] p-2 rounded-lg flex-1 items-center justify-center' onPress={() => navigation.navigate("Edit Products")}>
                             <Text className='text-white font-instrumentSansSemiBold'>Edit</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity className='bg-[#EF4444] p-2 rounded-lg flex-1 items-center'>
-                            <Text className='text-white font-instrumentSansSemiBold'>Delete</Text>
+                        <TouchableOpacity
+                            onPress={handleDelete}
+                            style={{
+                                backgroundColor: deleted ? "#22c55e" : "#EF4444",
+                                padding: 12,
+                                borderRadius: 8,
+                                alignItems: "center",
+                            }}
+                            className='flex-1'
+                        >
+                            <Animated.Text
+                                style={{
+                                    color: "white",
+                                    fontSize: 16,
+                                    fontWeight: "600",
+                                    opacity,
+                                }}
+                            >
+                                {deleted ? "Deleted" : "Delete"}
+                            </Animated.Text>
                         </TouchableOpacity>
                     </View>
 
-                    <TouchableOpacity className='bg-[#1D3725] flex-row items-center justify-center gap-2 mt-3 p-3 rounded-xl' onPress={() => navigation.navigate("Cart Page")}>
-                        <Image source={require("../../../assets/e-icon/Main Icon.png")} />
-                        <Text className='text-[#DCF3FF] font-instrumentSansBold'>Add to Cart | $80 $110</Text>
-                    </TouchableOpacity>
+
                 </View>
             </ScrollView>
         </View>

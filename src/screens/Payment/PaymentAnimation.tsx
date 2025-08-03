@@ -1,40 +1,53 @@
-import { View, Text, Image, Modal, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { AntDesign, Entypo } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
-import { useNavigation } from '@react-navigation/native'
-import * as Animatable from 'react-native-animatable';
-import { scale, verticalScale } from 'react-native-size-matters'
+import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import { AntDesign, Entypo } from '@expo/vector-icons';
+import { scale, verticalScale } from 'react-native-size-matters';
 
 const PaymentAnimation = ({ visible, onClose }: any) => {
+  return (
+    <Modal visible={visible} transparent animationType="fade">
+      <View style={styles.overlay}>
+        <View style={styles.container}>
+          <AntDesign name="checkcircle" size={scale(100)} color="white" />
+          <Text style={styles.successText}>Payment Done Successfully.</Text>
 
-    const navigation = useNavigation()
+          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+            <Entypo name="circle-with-cross" size={34} color="white" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+  );
+};
 
+export default PaymentAnimation;
 
-
-    return (
-        <Modal  visible={visible} onRequestClose={onClose} >
-            <SafeAreaView className='flex-1 items-center justify-center relative'>
-                <Animatable.View
-                    animation="bounceInUp"
-                    duration={3000}
-                    easing="ease-in-quad"
-                >
-                    <View className='bg-[#1D3725] items-center justify-center' style={{ width: scale(300), height: verticalScale(250), borderRadius: 20, overflow: "hidden" }} >
-                        <AntDesign name="checkcircle" size={scale(100)} color="white" />
-                        <Text className='mt-3 text-xl text-white font-instrumentSansBold'>Payment Done Successfully.</Text>
-                    </View>
-
-                    <TouchableOpacity className='absolute right-0 top-0' onPress={onClose}>
-                    <Entypo name="circle-with-cross" size={34} color="white" />
-                </TouchableOpacity>
-                </Animatable.View>
-                
-
-            </SafeAreaView>
-        </Modal>
-    )
-}
-
-export default PaymentAnimation
+const styles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.9)', // gives a fake blur/dark overlay
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  container: {
+    backgroundColor: '#1D3725',
+    width: scale(300),
+    height: verticalScale(250),
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  successText: {
+    marginTop: 15,
+    fontSize: 18,
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+});
