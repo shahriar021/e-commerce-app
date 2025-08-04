@@ -23,7 +23,7 @@ export default function SplashScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
-        source={require("../../../../assets/e-icon/ON.png")}
+        source={require("../../../../assets/e-icon/splashBack.jpeg")}
         style={styles.fullImage}
         resizeMode="cover"
       >

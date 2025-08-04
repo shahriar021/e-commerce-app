@@ -90,7 +90,7 @@ export const BottomNavigation = () => {
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }} className="">
                 <Image source={require("../../assets/e-icon/home-olive.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "white", fontSize: 10 }}>Home</Text>}
+                {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Home</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
