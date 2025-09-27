@@ -4,6 +4,7 @@ import React, { useLayoutEffect, useState } from "react"
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useDispatch } from "react-redux"
 import { setToken, setUserType } from "src/redux/features/auth/authSlice";
+import { useLoginMutation } from "src/redux/features/auth/authApi"
 
 const LoginScreen = () => {
 
@@ -12,7 +13,9 @@ const LoginScreen = () => {
     const [userTypes, setUserTypes] = useState("")
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    
+
+    const [loginData] = useLoginMutation()
+
     const dispatch = useDispatch();
 
     useLayoutEffect(() => {
@@ -22,14 +25,14 @@ const LoginScreen = () => {
             },
             headerTintColor: "#FFFFFF",
             headerTitle: () => null,
-             headerLeft: () => (
-            <TouchableOpacity className='flex-row gap-2 items-center' onPress={()=>navigation.goBack()}>
-                                <Feather name="arrow-left-circle" size={24} color="white" />
-                <View className='flex-col'>
-                    <Text className='font-instrumentSansBold text-white text-xl'>ARKIVE</Text>
-                </View>
-            </TouchableOpacity>
-        )
+            headerLeft: () => (
+                <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
+                    <Feather name="arrow-left-circle" size={24} color="white" />
+                    <View className='flex-col'>
+                        <Text className='font-instrumentSansBold text-white text-xl'>ARKIVE</Text>
+                    </View>
+                </TouchableOpacity>
+            )
         })
     }, [navigation])
 
@@ -38,7 +41,7 @@ const LoginScreen = () => {
         return regex.test(email);
     };
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if (!userTypes) {
             Alert.alert("Error", "Please select a user type");
             return;
@@ -63,8 +66,24 @@ const LoginScreen = () => {
             Alert.alert("Error", "Password must be at least 6 characters long");
             return;
         }
-        dispatch(setToken(true));
-        dispatch(setUserType(userTypes));
+        const ldata = {
+            data: {
+                email: email,
+                password: password
+            }
+
+        }
+        try {
+            const res = await loginData(ldata).unwrap(); // Send form-data instead of JSON
+            Alert.alert(res.message)
+            dispatch(setToken(res.data.accessToken));
+            dispatch(setUserType(userTypes));
+        } catch (err: any) {
+            const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
+            Alert.alert("Error", errorMessage);
+        }
+        console.log(ldata, "login ")
+
     };
 
     return (
@@ -108,7 +127,7 @@ const LoginScreen = () => {
                     <Text className="text-[#1E80DD] font-instrumentSansBold">Forgot Password?</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity className="mt-1 mb-3 items-center" onPress={()=>navigation.navigate("Sign Up as User")}>
+                <TouchableOpacity className="mt-1 mb-3 items-center" onPress={() => navigation.navigate("Sign Up as User")}>
                     <Text className="text-[#979797] text-xl font-instrumentSansBold">I don’t have an account</Text>
                 </TouchableOpacity>
 

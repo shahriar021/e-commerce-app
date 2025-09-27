@@ -2,13 +2,15 @@ import { AntDesign, Feather } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import { LinearGradient } from "expo-linear-gradient"
 import React, { useLayoutEffect, useState } from "react"
-import { Text, TextInput, TextInputBase, TouchableOpacity, View } from "react-native"
+import { Alert, Text, TextInput, TextInputBase, TouchableOpacity, View } from "react-native"
+import { useForgetPasswordMutation } from "src/redux/features/auth/authApi"
 
 const ForgetPassword = () => {
 
   const navigation = useNavigation()
-
+  const [forgetPass] = useForgetPasswordMutation()
   const [isShowPassword, setIsShowPassword] = useState(false)
+  const [email, setEmail] = useState();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -16,9 +18,9 @@ const ForgetPassword = () => {
         backgroundColor: "#121212"
       },
       headerTintColor: "#FFFFFF",
-      headerTitle: '', // hides title in header center
-      headerBackTitleVisible: false, // hides back label
-      headerBackTitle: '', // extra safety for iOS
+      headerTitle: '',
+      headerBackTitleVisible: false,
+      headerBackTitle: '',
       headerLeft: () => (
         <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
           <Feather name="arrow-left-circle" size={24} color="white" />
@@ -30,6 +32,36 @@ const ForgetPassword = () => {
     })
   }, [navigation])
 
+  const handleForgetPassword = async () => {
+
+    if (!email) {
+      Alert.alert("Put Your E-mail")
+      return;
+    }
+    const forget = {
+      data: {
+        email: email
+      }
+    }
+    try {
+      const res = await forgetPass(forget).unwrap();
+
+      if (res.success === true) {
+        const otp=res.data.otp
+        const email =res.data.email
+        console.log(otp,email,"otpppp")
+        navigation.navigate("OTP Screen",{Otp:otp,Email:email});
+      } else {
+        Alert.alert(res.message || "Something went wrong");
+      }
+    } catch (err: any) {
+      const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
+      Alert.alert("Error", errorMessage);
+    }
+
+
+  }
+
   return (
     <View className="flex-1 bg-[#121212] p-3">
       <View className="px-3">
@@ -37,9 +69,9 @@ const ForgetPassword = () => {
         <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-instrumentSansSemiBold" >We’ll send a verification code to your mail </Text>
 
         <View className="bg-[#2C2C2C] mt-3 mb-5 rounded-lg overflow-hidden flex-row items-center p-2">
-          <TextInput className="flex-1" placeholder="Enter E-Mail Address" placeholderTextColor={"#ADAEBC"} />
+          <TextInput className="flex-1" placeholder="Enter E-Mail Address" placeholderTextColor={"#ADAEBC"} style={{ color: "white" }} onChangeText={setEmail} />
         </View>
-        <TouchableOpacity className="mt-2 mb-3 items-center  rounded-lg overflow-hidden" onPress={() => navigation.navigate("OTP Screen")}>
+        <TouchableOpacity className="mt-2 mb-3 items-center  rounded-lg overflow-hidden" onPress={handleForgetPassword}>
           <LinearGradient
             colors={["#fff", "#FFF"]}
             start={{ x: 0, y: 0 }}

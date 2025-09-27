@@ -2,17 +2,27 @@ import { AntDesign, Feather } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import { LinearGradient } from "expo-linear-gradient"
 import React, { useLayoutEffect, useState } from "react"
-import { Image, ScrollView, Text, TextInput, TextInputBase, TouchableOpacity, View } from "react-native"
+import { Alert, Image, ScrollView, Text, TextInput, TextInputBase, TouchableOpacity, View } from "react-native"
+import { useSignUpUserMutation } from "src/redux/features/auth/authApi"
 export const selectedCountry = {
     flag: require('../../../assets/e-icon/bdFlag.jpg'),
     dialCode: '+880',
 };
 
 const SignUpUser = () => {
+    const [postBody] = useSignUpUserMutation()
 
     const navigation = useNavigation()
 
     const [isShowPassword, setIsShowPassword] = useState(false)
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -33,6 +43,45 @@ const SignUpUser = () => {
             )
         })
     }, [navigation])
+    const type = "User"
+    const code = "+880"
+    const handleSignUpUser = async () => {
+        if (!email || !password || !firstName || !lastName || !phoneNumber) {
+            Alert.alert("Please fill up the fields!")
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            Alert.alert("Password doesn't match")
+            return;
+        }
+        const userData = {
+            email: email,
+            password: password,
+            confirmedPassword: confirmPassword,
+            role: "User",
+            firstName: firstName,
+            lastName: lastName,
+            mobile: phoneNumber,
+            countryCode: "+880",
+        };
+
+
+        const formData = new FormData();
+
+        formData.append("data", JSON.stringify(userData));
+
+        try {
+            const res = await postBody(formData).unwrap();
+            Alert.alert(res.message);
+        } catch (err: any) {
+            const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
+            Alert.alert("Error", errorMessage);
+        }
+
+    };
+
+
 
     return (
         <ScrollView className="flex-1 bg-[#121212] p-3" contentContainerStyle={{ paddingBottom: 150 }}>
@@ -41,10 +90,10 @@ const SignUpUser = () => {
                 <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-instrumentSansSemiBold" >It is quick and easy to create you account</Text>
 
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1" style={{ color: "#ADAEBC" }} placeholder="Enter First Name" placeholderTextColor={"#ADAEBC"} />
+                    <TextInput className="flex-1" style={{ color: "#ADAEBC" }} placeholder="Enter First Name" placeholderTextColor={"#ADAEBC"} onChangeText={setFirstName} />
                 </View>
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1" style={{ color: "#ADAEBC" }} placeholder="Enter Last Name" placeholderTextColor={"#ADAEBC"} />
+                    <TextInput className="flex-1" style={{ color: "#ADAEBC" }} placeholder="Enter Last Name" placeholderTextColor={"#ADAEBC"} onChangeText={setLastName} />
                 </View>
                 <View className="bg-[#2C2C2C] rounded-lg mt-2" style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 8, marginBottom: 5 }}>
 
@@ -66,14 +115,15 @@ const SignUpUser = () => {
                         placeholderTextColor="#aaa"
                         keyboardType="phone-pad"
                         style={{ flex: 1, fontSize: 16, color: 'white' }}
+                        onChangeText={setPhoneNumber}
                     />
                 </View>
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1" style={{ color: "#ADAEBC" }} placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"} />
+                    <TextInput className="flex-1" style={{ color: "#ADAEBC" }} placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"} onChangeText={setEmail} />
                 </View>
 
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1 text-[#ADAEBC]" style={{ color: "#ADAEBC" }} placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} />
+                    <TextInput className="flex-1 text-[#ADAEBC]" style={{ color: "#ADAEBC" }} placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} onChangeText={setPassword} />
                     <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
                         {isShowPassword ? <Feather name="eye" size={24} color="gray" />
                             : <Feather name="eye-off" size={24} color="gray" />}
@@ -81,14 +131,14 @@ const SignUpUser = () => {
                 </View>
 
                 <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-                    <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{ color: "#ADAEBC" }} />
+                    <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{ color: "#ADAEBC" }} onChangeText={setConfirmPassword} />
                     <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
                         {isShowPassword ? <Feather name="eye" size={24} color="gray" />
                             : <Feather name="eye-off" size={24} color="gray" />}
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity className="mt-1 mb-3 items-center bg-[#4A4A4A] rounded-lg overflow-hidden">
+                <TouchableOpacity className="mt-1 mb-3 items-center bg-[#4A4A4A] rounded-lg overflow-hidden" onPress={handleSignUpUser}>
                     <LinearGradient
                         colors={["#fff", "#fff"]}
                         start={{ x: 0, y: 0 }}
