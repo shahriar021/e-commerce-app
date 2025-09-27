@@ -1,19 +1,27 @@
-import { AntDesign, Feather } from "@expo/vector-icons"
+import {  Feather } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import { LinearGradient } from "expo-linear-gradient"
 import React, { useLayoutEffect, useState } from "react"
-import { Image, ScrollView, Text, TextInput, TextInputBase, TouchableOpacity, View } from "react-native"
+import { Alert, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { scale, verticalScale } from "react-native-size-matters"
+import * as ImagePicker from 'expo-image-picker';
+import { useSignUpBrandMutation } from "src/redux/features/auth/authApi"
 export const selectedCountry = {
   flag: require('../../../assets/e-icon/bdFlag.jpg'),
   dialCode: '+880',
 };
 
-const SignUpRider = () => {
+const SignUpBrand = () => {
 
   const navigation = useNavigation()
-
+  const [selectedImage, setSelectedImage] = useState(null);
   const [isShowPassword, setIsShowPassword] = useState(false)
+  const [postBody] = useSignUpBrandMutation()
+  const [brandName,setBrandName]=useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -21,9 +29,9 @@ const SignUpRider = () => {
         backgroundColor: "#121212"
       },
       headerTintColor: "#FFFFFF",
-      headerTitle: '', // hides title in header center
-      headerBackTitleVisible: false, // hides back label
-      headerBackTitle: '', // extra safety for iOS
+      headerTitle: '',
+      headerBackTitleVisible: false, 
+      headerBackTitle: '', 
       headerLeft: () => (
         <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
           <Feather name="arrow-left-circle" size={24} color="white" />
@@ -35,6 +43,61 @@ const SignUpRider = () => {
     })
   }, [navigation])
 
+  const openCamera = async () => {
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera is required!");
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+    }
+  };
+
+  const handleSignUpBrand = async () => {
+    if (!email || !password || !phoneNumber) {
+      Alert.alert("Please fill up the fields!")
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert("Password doesn't match")
+      return;
+    }
+    const userData = {
+      brandName: brandName,
+      brandLogo: selectedImage,
+      email: email,
+      password: password,
+      confirmedPassword: confirmPassword,
+      role: "Brand",
+      mobile: phoneNumber,
+      countryCode: "+880",
+    };
+
+    console.log(userData,"user data")
+
+    const formData = new FormData();
+
+    formData.append("data", JSON.stringify(userData));
+
+    try {
+      const res = await postBody(formData).unwrap();
+      Alert.alert(res.message);
+    } catch (err: any) {
+      const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
+      Alert.alert("Error", errorMessage);
+    }
+
+  };
+
   return (
     <ScrollView className="flex-1 bg-[#121212] p-3" contentContainerStyle={{ paddingBottom: 150 }}>
       <View className="px-3">
@@ -42,12 +105,20 @@ const SignUpRider = () => {
         <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-instrumentSansSemiBold">It is quick and easy to create you account</Text>
 
         <View className="bg-[#2C2C2C] mt-1 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-          <TextInput className="flex-1" placeholder="Enter Brand Name" placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} />
+          <TextInput className="flex-1" placeholder="Enter Brand Name" placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} onChangeText={setBrandName}/>
         </View>
 
         <Text className='font-instrumentSansSemiBold text-xl text-[#fff]  w-full'>Brand Logo</Text>
-        <TouchableOpacity style={{ height: verticalScale(194) }} className='w-full items-center justify-center border border-dashed border-white  rounded-xl mt-3 bg-[#2C2C2C] mb-4'>
-          <Image source={require("../../../assets/e-icon/Frame (1).png")} style={{ width: scale(30), height: verticalScale(30) }} />
+        <TouchableOpacity style={{ height: verticalScale(194) }} className='w-full items-center justify-center border border-dashed border-white  rounded-xl mt-3 bg-[#2C2C2C] mb-4 overflow-hidden' onPress={openCamera}>
+          {selectedImage ?
+            <Image
+              source={{ uri: selectedImage }}
+              style={{ width: "100%", height: "100%" }}
+              resizeMode="cover"
+            />
+
+            : <Image source={require("../../../assets/e-icon/Frame (1).png")} style={{ width: scale(30), height: verticalScale(30) }} />
+          }
         </TouchableOpacity>
 
         <View className="bg-[#2C2C2C] rounded-lg mt-2" style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 8, marginBottom: 5 }}>
@@ -70,14 +141,15 @@ const SignUpRider = () => {
             placeholderTextColor="#aaa"
             keyboardType="phone-pad"
             style={{ flex: 1, fontSize: 16, color: 'white' }}
+            onChangeText={setPhoneNumber}
           />
         </View>
         <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-          <TextInput className="flex-1" placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} />
+          <TextInput className="flex-1" placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} onChangeText={setEmail}/>
         </View>
 
         <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{ color: "#ADAEBC" }} />
+          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{ color: "#ADAEBC" }} onChangeText={setPassword}/>
           <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
             {isShowPassword ? <Feather name="eye" size={24} color="gray" />
               : <Feather name="eye-off" size={24} color="gray" />}
@@ -85,7 +157,7 @@ const SignUpRider = () => {
         </View>
 
         <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{ color: "#ADAEBC" }} />
+          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{ color: "#ADAEBC" }} onChangeText={setConfirmPassword}/>
           <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
             {isShowPassword ? <Feather name="eye" size={24} color="gray" />
               : <Feather name="eye-off" size={24} color="gray" />}
@@ -94,7 +166,7 @@ const SignUpRider = () => {
 
 
 
-        <TouchableOpacity className="mt-1 mb-3 items-center bg-[#4A4A4A] rounded-lg overflow-hidden">
+        <TouchableOpacity className="mt-1 mb-3 items-center bg-[#4A4A4A] rounded-lg overflow-hidden" onPress={handleSignUpBrand}>
           <LinearGradient
             colors={["#fff", "#fff"]}
             start={{ x: 0, y: 0 }}
@@ -110,4 +182,4 @@ const SignUpRider = () => {
   )
 }
 
-export default SignUpRider
+export default SignUpBrand

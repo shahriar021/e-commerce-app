@@ -4,7 +4,6 @@ const authApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (loginData) => {
-                console.log(loginData,"api login data")
                 return {
                 url: "/auth/login",
                 method: "POST",
@@ -15,6 +14,19 @@ const authApi = baseApi.injectEndpoints({
 
         // sign up as user
         signUpUser: builder.mutation({
+            query: (userBody) => {
+                
+                return {
+                    url: "/auth/signup",
+                    method: "POST",
+                    body: userBody
+                }
+
+            }
+        }),
+
+        // sign up as brand
+        signUpBrand: builder.mutation({
             query: (userBody) => {
                 
                 return {
@@ -49,8 +61,6 @@ const authApi = baseApi.injectEndpoints({
 
         resetPassword:builder.mutation({
             query:({info,atoken})=>{
-                console.log(info,"data")
-                console.log(atoken,"token")
                 return {
                     url:"/auth/reset_password",
                     method:"PUT",
@@ -66,4 +76,4 @@ const authApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useLoginMutation, useSignUpUserMutation,useForgetPasswordMutation,useOtpVerifyMutation,useResetPasswordMutation } = authApi
+export const { useLoginMutation, useSignUpUserMutation,useForgetPasswordMutation,useOtpVerifyMutation,useResetPasswordMutation,useSignUpBrandMutation } = authApi

@@ -1,16 +1,16 @@
-import { AntDesign, Feather } from "@expo/vector-icons"
+import {  Feather } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import { LinearGradient } from "expo-linear-gradient"
 import React, { useLayoutEffect, useState } from "react"
-import { Alert, Text, TextInput, TextInputBase, TouchableOpacity, View } from "react-native"
+import { Alert, Text, TextInput,  TouchableOpacity, View } from "react-native"
 import { useForgetPasswordMutation } from "src/redux/features/auth/authApi"
+import { NavigationProp } from "src/types/auth"
 
 const ForgetPassword = () => {
 
-  const navigation = useNavigation()
+  const navigation = useNavigation<NavigationProp>()
   const [forgetPass] = useForgetPasswordMutation()
-  const [isShowPassword, setIsShowPassword] = useState(false)
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState<string>('');
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -19,7 +19,6 @@ const ForgetPassword = () => {
       },
       headerTintColor: "#FFFFFF",
       headerTitle: '',
-      headerBackTitleVisible: false,
       headerBackTitle: '',
       headerLeft: () => (
         <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
@@ -49,7 +48,6 @@ const ForgetPassword = () => {
       if (res.success === true) {
         const otp=res.data.otp
         const email =res.data.email
-        console.log(otp,email,"otpppp")
         navigation.navigate("OTP Screen",{Otp:otp,Email:email});
       } else {
         Alert.alert(res.message || "Something went wrong");

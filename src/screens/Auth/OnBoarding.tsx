@@ -1,82 +1,32 @@
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   Image,
-  useWindowDimensions,
-  Alert,
-  ScrollView,
   ImageBackground,
 } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
-import { Entypo, Feather } from "@expo/vector-icons";
+import React, { useLayoutEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { useDispatch } from "react-redux";
-import { setToken, setUser, setUserType } from "src/redux/features/auth/authSlice";
-import { useLoginMutation } from "src/redux/features/auth/authApi";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
-import SignUpRider from "./SignUpRider";
-import SignUpUser from "./SignUpUser";
 import { scale, verticalScale } from "react-native-size-matters";
+import { NavigationProp } from "src/types/auth";
 
 const OnBoarding = () => {
-  const { height, width } = useWindowDimensions();
-  const [isSignIn, setIsSignIn] = useState(true)
-  const [isUser, setIsUser] = useState("user")
-  const [roleOff, setRoleOff] = useState(true)
-  const [postLogin] = useLoginMutation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const navigation = useNavigation()
-
-  const dispatch = useDispatch();
+  const navigation = useNavigation<NavigationProp>()
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: '', // or any title you want
+      title: '',
     });
   }, [navigation]);
 
-
-  const handleLogin = async () => {
-    // if (email !== "" && password !== "") {
-    //   try {
-    //     const output = { email, password };
-    //     const result = await postLogin(output).unwrap();
-    //     if (result?.status) {
-    //       const { data } = result;
-    //       dispatch(setUser({ user: data, Credential: output }));
-    //     }
-    //     if (!result?.status) {
-    //       Alert.alert(result.message);
-    //     }
-    //   } catch (err: any) {
-    //     Alert.alert("Something went wrong!", err);
-    //   }
-    // } else {
-    //   Alert.alert("Please Enter a valid Email or password.");
-    // }
-    console.log(email, "email.")
-    const normalizedEmail = email.trim().toLowerCase();
-    const type = normalizedEmail === "user@gmail.com" ? "user" : "rider";
-    console.log(type, "type")
-    dispatch(setToken(true))
-    dispatch(setUserType(type))
-  };
   const [fontsLoaded] = useFonts({
     'Roboto-Bold': require('../../../assets/fonts/Roboto-Bold.ttf'),
   });
 
   if (!fontsLoaded) return null;
-
-  const handleVerify = () => {
-    navigation.navigate("VerifyEmail" as never)
-  }
-
 
   return (
 
@@ -88,7 +38,7 @@ const OnBoarding = () => {
       >
         <View className="flex-1 items-center justify-end px-4 mb-5 p-3 ">
           <View className="w-full">
-            <View style={{width:scale(250),height:verticalScale(50)}} >
+            <View style={{ width: scale(250), height: verticalScale(50) }} >
               <Image source={require("../../../assets/e-icon/ark.png")} style={{ width: "100%", height: "100%" }} />
             </View>
           </View>
@@ -114,7 +64,7 @@ const OnBoarding = () => {
             </LinearGradient>
           </View>
 
-          <TouchableOpacity className="mt-2 mb-2 border border-[#FFFFFF] w-full items-center p-3 rounded-lg" onPress={() => navigation.navigate("Sign Up as User")}>
+          <TouchableOpacity className="mt-2 mb-2 border border-[#FFFFFF] w-full items-center p-3 rounded-lg" onPress={() => navigation.navigate("Sign Up as Brand")}>
             <Text className="text-white font-instrumentSansBold">Sign Up as User</Text>
           </TouchableOpacity>
         </View>

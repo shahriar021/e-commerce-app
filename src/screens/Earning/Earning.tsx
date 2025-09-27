@@ -40,8 +40,6 @@ const Earning = () => {
         })
     }, [navigation])
 
-    console.log(firstTwoView.map(item => item))
-
     return (
         <ScrollView className='flex-1 bg-[#121212] p-5' contentContainerStyle={{ paddingBottom: 100 }}>
 

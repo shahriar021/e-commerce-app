@@ -15,8 +15,6 @@ const Search = () => {
 
     const navigation = useNavigation();
 
-    console.log(selectedImage, "selectedImage")
-
     useEffect(() => {
         if (selectedImage) {
             setIsOpenModal(true);

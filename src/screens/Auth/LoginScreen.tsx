@@ -5,17 +5,15 @@ import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useDispatch } from "react-redux"
 import { setToken, setUserType } from "src/redux/features/auth/authSlice";
 import { useLoginMutation } from "src/redux/features/auth/authApi"
+import { NavigationProp } from "src/types/auth"
 
 const LoginScreen = () => {
-
-    const navigation = useNavigation()
-    const [isType, setIsType] = useState(false);
-    const [userTypes, setUserTypes] = useState("")
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
+    const navigation = useNavigation<NavigationProp>()
+    const [isType, setIsType] = useState<boolean>(false);
+    const [userTypes, setUserTypes] = useState<string>("")
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
     const [loginData] = useLoginMutation()
-
     const dispatch = useDispatch();
 
     useLayoutEffect(() => {
@@ -71,10 +69,9 @@ const LoginScreen = () => {
                 email: email,
                 password: password
             }
-
         }
         try {
-            const res = await loginData(ldata).unwrap(); // Send form-data instead of JSON
+            const res = await loginData(ldata).unwrap(); 
             Alert.alert(res.message)
             dispatch(setToken(res.data.accessToken));
             dispatch(setUserType(userTypes));
@@ -82,8 +79,6 @@ const LoginScreen = () => {
             const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
             Alert.alert("Error", errorMessage);
         }
-        console.log(ldata, "login ")
-
     };
 
     return (
@@ -123,11 +118,11 @@ const LoginScreen = () => {
                     <TextInput className="flex-1" placeholder="Enter Password" onChangeText={setPassword} placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} />
                 </View>
 
-                <TouchableOpacity className="mt-1 mb-3" onPress={() => navigation.navigate("Forget Password")}>
+                <TouchableOpacity className="mt-1 mb-3" onPress={() => navigation.navigate("Forget Password" as never)}>
                     <Text className="text-[#1E80DD] font-instrumentSansBold">Forgot Password?</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity className="mt-1 mb-3 items-center" onPress={() => navigation.navigate("Sign Up as User")}>
+                <TouchableOpacity className="mt-1 mb-3 items-center" onPress={() => navigation.navigate("Sign Up as User" )}>
                     <Text className="text-[#979797] text-xl font-instrumentSansBold">I don’t have an account</Text>
                 </TouchableOpacity>
 

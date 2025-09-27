@@ -26,7 +26,6 @@ const Feed = () => {
     const [selectedItem, setSelectedItem] = useState()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const userType = useAppSelector(store=>store.auth.userType)
-    console.log(userType)
 
     useLayoutEffect(() => {
         navigation.setOptions({

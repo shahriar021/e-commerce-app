@@ -12,7 +12,6 @@ const UsersORBrandProfile = () => {
   const {width,height}=useWindowDimensions()
   const [isPosts,setIsPosts]=useState("Posts")
   const {type}=useRoute().params
-  console.log(type)
 
   useLayoutEffect(() => {
     navigation.setOptions({

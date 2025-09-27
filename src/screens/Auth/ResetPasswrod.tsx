@@ -48,21 +48,17 @@ const ResetPassword = () => {
     const handleVerify = async () => {
         const info = {
             data: {
-                newPassword: confirmPassword, 
+                newPassword: confirmPassword,
             }
         };
-
-
-        console.log("Data being sent:", info);  
-        console.log("Token being sent:", atoken);  
+        
 
         if (newPassword === confirmPassword) {
             try {
                 const res = await resetPassword({ info, atoken }).unwrap();
-                console.log("API Response:", res);
                 Alert.alert(res.message);
+                navigation.navigate("Success page")
             } catch (err: any) {
-                console.error("Error in API call:", err);
                 Alert.alert("Error", err?.message || "An error occurred.");
             }
         } else {

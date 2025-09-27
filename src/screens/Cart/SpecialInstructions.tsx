@@ -8,7 +8,6 @@ const SpecialInstructions = () => {
     const { indicator } = useRoute().params
     const navigation = useNavigation()
     const [text, setText] = useState('');
-    console.log(indicator, "in page")
     const { width, height } = useWindowDimensions()
 
     useLayoutEffect(()=>{

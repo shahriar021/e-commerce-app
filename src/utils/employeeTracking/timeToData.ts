@@ -1,6 +1,5 @@
 export const timeToDate = (timeStr?: string) => {
   if (!timeStr || typeof timeStr !== "string") {
-    console.error("Invalid timeStr:", timeStr);
     return new Date(); // Default to current time instead of null
   }
 

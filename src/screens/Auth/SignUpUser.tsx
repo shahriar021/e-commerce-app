@@ -1,8 +1,8 @@
-import { AntDesign, Feather } from "@expo/vector-icons"
+import {  Feather } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import { LinearGradient } from "expo-linear-gradient"
 import React, { useLayoutEffect, useState } from "react"
-import { Alert, Image, ScrollView, Text, TextInput, TextInputBase, TouchableOpacity, View } from "react-native"
+import { Alert, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useSignUpUserMutation } from "src/redux/features/auth/authApi"
 export const selectedCountry = {
     flag: require('../../../assets/e-icon/bdFlag.jpg'),
@@ -14,15 +14,13 @@ const SignUpUser = () => {
 
     const navigation = useNavigation()
 
-    const [isShowPassword, setIsShowPassword] = useState(false)
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-
-
+    const [isShowPassword, setIsShowPassword] = useState<boolean>(false)
+    const [firstName, setFirstName] = useState<string>('');
+    const [lastName, setLastName] = useState<string>('');
+    const [phoneNumber, setPhoneNumber] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [confirmPassword, setConfirmPassword] = useState<string>('');
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -43,8 +41,7 @@ const SignUpUser = () => {
             )
         })
     }, [navigation])
-    const type = "User"
-    const code = "+880"
+    
     const handleSignUpUser = async () => {
         if (!email || !password || !firstName || !lastName || !phoneNumber) {
             Alert.alert("Please fill up the fields!")
@@ -80,8 +77,6 @@ const SignUpUser = () => {
         }
 
     };
-
-
 
     return (
         <ScrollView className="flex-1 bg-[#121212] p-3" contentContainerStyle={{ paddingBottom: 150 }}>
