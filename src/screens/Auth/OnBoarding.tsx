@@ -58,13 +58,13 @@ const OnBoarding = () => {
               end={{ x: 1, y: 0 }}
               className="w-full rounded-lg mt-2 overflow-hidden"
             >
-              <TouchableOpacity className="w-full items-center p-3 rounded-lg bg-transparent overflow-hidden" onPress={() => navigation.navigate("Sign Up as Rider")}>
+              <TouchableOpacity className="w-full items-center p-3 rounded-lg bg-transparent overflow-hidden" onPress={() => navigation.navigate("Sign Up as Brand")}>
                 <Text className="text-black font-semibold font-instrumentSansBold">Create Brand Account</Text>
               </TouchableOpacity>
             </LinearGradient>
           </View>
 
-          <TouchableOpacity className="mt-2 mb-2 border border-[#FFFFFF] w-full items-center p-3 rounded-lg" onPress={() => navigation.navigate("Sign Up as Brand")}>
+          <TouchableOpacity className="mt-2 mb-2 border border-[#FFFFFF] w-full items-center p-3 rounded-lg" onPress={() => navigation.navigate("Sign Up as User")}>
             <Text className="text-white font-instrumentSansBold">Sign Up as User</Text>
           </TouchableOpacity>
         </View>

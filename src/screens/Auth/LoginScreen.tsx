@@ -75,9 +75,11 @@ const LoginScreen = () => {
             Alert.alert(res.message)
             dispatch(setToken(res.data.accessToken));
             dispatch(setUserType(userTypes));
+            console.log(res)
         } catch (err: any) {
-            const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
-            Alert.alert("Error", errorMessage);
+            // const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
+            // Alert.alert("Error", errorMessage);
+            console.log(err,"eroor")
         }
     };
 

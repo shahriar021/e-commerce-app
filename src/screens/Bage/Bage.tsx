@@ -1,12 +1,20 @@
 import { View, Text, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { bageData } from './demoBage'
+import { useAppSelector } from 'src/redux/hooks'
+import { useFeatureBrandsQuery } from 'src/redux/features/brand/brandApi'
 
 const Bage = () => {
 
   const navigation = useNavigation()
+  const [loadMore,setLoadMore]=useState(6)
+  const token = useAppSelector((state) => state.auth.token);
+  const { data } = useFeatureBrandsQuery({token,limit:loadMore})
+  console.log(data, "in brand")
+  console.log(loadMore,"load more.")
+  
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -29,14 +37,14 @@ const Bage = () => {
         <TextInput className='flex-1 font-instrumentSansSemiBold' placeholder='Search Brands...' placeholderTextColor={"#ADAEBC"} />
       </View>
 
-      <ScrollView className='flex-1'>
-        <View className='flex-wrap flex-row gap-2 justify-between '>
-          {bageData?.map(item => <TouchableOpacity key={item.image} className='relative rounded-xl overflow-hidden mt-1 mb-1 ' style={{ width: "48%", aspectRatio: 1 }} onPress={() => navigation.navigate("Brand Details")}>
-            <Image source={item.image} style={{ width: "100%", height: "100%" }} />
-            <Text className='absolute  bottom-3 left-0 right-0 text-xl font-instrumentSansBold text-white text-center'>{item.title}</Text>
+      <ScrollView className='flex-1 0 w-full'>
+        <View className='  flex-wrap flex-row gap-2 justify-between '>
+          {data?.data?.data?.map((item: any) => <TouchableOpacity className='relative rounded-xl overflow-hidden mt-1 mb-1 ' style={{ width: "48%", aspectRatio: 1 }} onPress={() => navigation.navigate("Brand Details")}>
+            <Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%" }} />
+            <Text className='absolute  bottom-3 left-0 right-0 text-xl font-instrumentSansBold text-white text-center'>{item?.brandName}</Text>
           </TouchableOpacity>)}
         </View>
-        <TouchableOpacity className='bg-[#1D3725] p-2 items-center mt-4 mb-4 rounded-xl overflow-hidden'>
+        <TouchableOpacity className='bg-[#1D3725] p-2 items-center mt-4 mb-4 rounded-xl overflow-hidden w-full' onPress={()=>setLoadMore(loadMore+2)}>
           <Text className='text-white font-instrumentSansBold text-xl'>Load More</Text>
         </TouchableOpacity>
       </ScrollView>

@@ -2,9 +2,7 @@ import React, { useRef, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { BottomNavigation } from "./BottomNavigation";
 import { 
-  LoginScreen,
   Profile,
-  NearbyRestaurantList,
   AboutUs,
   Privacy,
   Terms,
@@ -12,9 +10,6 @@ import {
   Setting,
   ChangePassword,
   EditProfile,
-  RestaurantProfile,
-  PopularItems,
-  PopularItemDetails,
   PaymentAnimation,
   PaymentInfo,
   TrackOrder,
@@ -22,7 +17,6 @@ import {
   PaymentOption,
   SpecialInstructions,
   DeliveryRequestView,
-  MapScreen,
   Withdraw,
   WithdrawRequest,
   Bank,
@@ -36,7 +30,6 @@ import { useAppSelector } from "src/redux/hooks";
 import BrandDetails from "src/screens/Bage/BrandDetails";
 import BrandProducts from "src/screens/Bage/BrandProducts";
 import ProductDetails from "src/screens/Bage/ProductDetails";
-import Feed from "src/screens/Feed/Feed";
 import UsersORBrandProfile from "src/screens/Feed/UsersORBrandProfile";
 import MyFavourite from "src/screens/Profile/MyFavourite";
 import OrderHistory from "src/screens/Profile/OrderHistory";
@@ -110,10 +103,6 @@ const StackNavigation = () => {
         <Stack.Screen name="Order Details" component={OrderDetails}/>
         <Stack.Screen name="Order List" options={{headerShown:true}} component={OrderList}/>
 
-        <Stack.Screen name="Nearby Restaurants List" component={NearbyRestaurantList}/>
-        <Stack.Screen name="Restaurant Profile" options={{headerShown:false}} component={RestaurantProfile}/>
-        <Stack.Screen name="Popular Items"  component={PopularItems}/>
-        <Stack.Screen name="Popular Items Details" options={{headerShown:false}} component={PopularItemDetails}/>
         <Stack.Screen name="Payment Animation" options={{headerShown:false}} component={PaymentAnimation}/>
         <Stack.Screen name="Payment Info" options={{headerShown:false}} component={PaymentInfo}/>
         <Stack.Screen name="Track Order" component={TrackOrder}/>
@@ -122,7 +111,6 @@ const StackNavigation = () => {
         <Stack.Screen name="Special Instructions" component={SpecialInstructions}/>
 
         <Stack.Screen name="Delivery Request" component={DeliveryRequestView}/>
-        <Stack.Screen name="Map" options={{headerShown:false}} component={MapScreen}/>
         <Stack.Screen name="Search Result" options={{headerShown:false}} component={SearchResult}/>
         <Stack.Screen name="Search Page" options={{headerShown:false}} component={SearchPage}/>
         

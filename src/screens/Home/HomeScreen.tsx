@@ -15,10 +15,10 @@ import { homeInfo, images, images2 } from "./demo";
 import { LinearGradient } from "expo-linear-gradient";
 import BrandWeek from "src/components/ui/homepage/BrandWeek";
 import SearchModal from "./SearchModal";
+import { useFeatureBrandsQuery } from "src/redux/features/brand/brandApi";
+import { useAppSelector } from "src/redux/hooks";
 
 const { width } = Dimensions.get("screen");
-
-
 
 const HomeScreen = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -31,6 +31,8 @@ const HomeScreen = () => {
   const [searchModal,setSearchModal]=useState(false)
 
   const navigation = useNavigation();
+  const token = useAppSelector((state) => state.auth.token);
+  const {data}=useFeatureBrandsQuery(token)
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -190,13 +192,13 @@ const HomeScreen = () => {
         <Text className="font-instrumentSansBold text-3xl text-center text-[#fff] mt-5">Featured Brands</Text>
         <Text className="font-instrumentSansSemiBold text-lg text-center text-[#fff] mt-2 max-w-[90%]">Discover premium collections from top designers</Text>
 
-        {homeInfo?.map(item => <TouchableOpacity key={item.name} className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }} onPress={() => navigation.navigate("Brand Products")}>
+        {data?.data?.brand?.map((item:any) => <TouchableOpacity key={item.name} className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }} onPress={() => navigation.navigate("Brand Products")}>
           <View className="rounded-3xl overflow-hidden" style={{ width: scale(80), height: verticalScale(80) }}>
-            <Image source={item.image} style={{ width: "100%", height: "100%" }} className="rounded-3xl" />
+            <Image source={{uri:item.brandLogo[0]}} style={{ width: "100%", height: "100%" }} className="rounded-3xl" />
           </View>
           <View className="flex-1">
-            <Text className="text-[#E5E7EB] font-instrumentSansSemiBold text-xl">{item.name}</Text>
-            <Text className="text-[#E5E7EB] font-instrumentRegular text-base mb-2">{item.info}</Text>
+            <Text className="text-[#E5E7EB] font-instrumentSansSemiBold text-xl">{item.brandName}</Text>
+            <Text className="text-[#E5E7EB] font-instrumentRegular text-base mb-2">{item.theme}</Text>
             <TouchableOpacity className="bg-[#1D3725] p-1 items-center rounded-2xl w-[80%]">
               <Text className="font-instrumentSansSemiBold text-white">View Collection</Text>
             </TouchableOpacity>
