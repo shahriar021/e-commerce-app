@@ -39,7 +39,7 @@ const Bage = () => {
 
       <ScrollView className='flex-1 0 w-full'>
         <View className='  flex-wrap flex-row gap-2 justify-between '>
-          {data?.data?.data?.map((item: any) => <TouchableOpacity className='relative rounded-xl overflow-hidden mt-1 mb-1 ' style={{ width: "48%", aspectRatio: 1 }} onPress={() => navigation.navigate("Brand Details")}>
+          {data?.data?.data?.map((item: any) => <TouchableOpacity key={item._id} className='relative rounded-xl overflow-hidden mt-1 mb-1 ' style={{ width: "48%", aspectRatio: 1 }} onPress={() => navigation.navigate("Brand Details",{id:item._id})}>
             <Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%" }} />
             <Text className='absolute  bottom-3 left-0 right-0 text-xl font-instrumentSansBold text-white text-center'>{item?.brandName}</Text>
           </TouchableOpacity>)}

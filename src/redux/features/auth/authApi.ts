@@ -7,9 +7,7 @@ const authApi = baseApi.injectEndpoints({
                 console.log(loginData,"in redux")
                 return {
                 url: "/auth/login",
-                headers: {
-        'Content-Type': 'application/json',
-    },
+                
                 method: "POST",
                 body: loginData
                 }

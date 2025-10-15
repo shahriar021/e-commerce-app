@@ -1,14 +1,24 @@
 import { View, Text, Image, TextInput, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { allProducts } from './demoBage';
+import { useProductListBrandIdWiseQuery } from 'src/redux/features/product/productApi';
+import { useAppSelector } from 'src/redux/hooks';
 
 const BrandProducts = () => {
-
-    const {width, height } = useWindowDimensions()
+    const [loadMore, setLoadMore] = useState(3)
+    const route = useRoute();
+    const { ID } = route.params
+    const token = useAppSelector((state) => state.auth.token)
+    console.log(ID, "d..")
+    const { width, height } = useWindowDimensions()
     const navigation = useNavigation()
     const [isClothType, setIsClothType] = useState("ALL")
+    const { data } = useProductListBrandIdWiseQuery({ token, id: ID, limit: loadMore })
+    console.log(data?.data?.product?.filter((item) => item.category == isClothType), "products..")
+
+
 
     navigation.setOptions({
         headerStyle: {
@@ -19,8 +29,8 @@ const BrandProducts = () => {
         },
         headerTitle: () => null,
         headerLeft: () => (
-            <TouchableOpacity className='flex-row gap-2 items-center' onPress={()=>navigation.goBack()}>
-                                <Feather name="arrow-left-circle" size={24} color="white" />
+            <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
+                <Feather name="arrow-left-circle" size={24} color="white" />
                 <View className='flex-col'>
                     <Text className='font-instrumentSansBold text-white text-xl'>ARKIVE</Text>
                     <Text className='font-instrumentSansSemiBold text-white'>All Products</Text>
@@ -42,35 +52,47 @@ const BrandProducts = () => {
                 <TouchableOpacity className={`${isClothType == "ALL" ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1 `} onPress={() => setIsClothType("ALL")}>
                     <Text className={`font-instrumentSansBold ${isClothType == "ALL" ? "text-[#121212]" : "text-white"}`}>ALL</Text>
                 </TouchableOpacity>
-                <TouchableOpacity className={`${isClothType == "T-Shirts" ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1`} onPress={() => setIsClothType("T-Shirts")}>
+                <TouchableOpacity className={`${isClothType == "T-Shirts" ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1`} onPress={() => setIsClothType("tshirt")}>
                     <Text className={`font-instrumentSansBold ${isClothType == "T-Shirts" ? "text-[#121212]" : "text-white"}`}>T-Shirts</Text>
                 </TouchableOpacity>
-                <TouchableOpacity className={`${isClothType == "Jeans" ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1`} onPress={() => setIsClothType("Jeans")}>
+                <TouchableOpacity className={`${isClothType == "Jeans" ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1`} onPress={() => setIsClothType("jeans")}>
                     <Text className={`font-instrumentSansBold ${isClothType == "Jeans" ? "text-[#121212]" : "text-white"}`}>Jeans</Text>
                 </TouchableOpacity>
             </View>
 
             <View className='flex-row justify-between items-center mt-2 mb-2'>
                 <Text className='font-instrumentSansBold text-2xl text-white'>All Products</Text>
-                <TouchableOpacity className='flex-row gap-3 items-center' onPress={()=>navigation.navigate("See all products")}>
+                <TouchableOpacity className='flex-row gap-3 items-center' onPress={() => navigation.navigate("See all products", { id: ID })}>
                     <Text className='font-instrumentSansBold text-white'>See All</Text>
                     <AntDesign name="arrowright" size={24} color="#AD7720" />
                 </TouchableOpacity>
             </View>
 
-            <ScrollView contentContainerStyle={{paddingBottom:100 }} showsVerticalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
 
                 <View className='flex-row flex-wrap  justify-between gap-2'>
-                    {allProducts?.map((item,index) =>
-                        <TouchableOpacity key={index} style={{ width: "48%" }} className='bg-[#1D3725] items-center rounded-lg relative  ' onPress={()=>navigation.navigate("Product Details")}>
-                            <Image source={item.image} style={{ width: "100%", height: 160, borderRadius: 8 }} />
+                    {isClothType == "ALL" ? (data?.data?.product?.map((item, index) =>
+                        <TouchableOpacity key={index} style={{ width: "48%" }} className='bg-[#1D3725] items-center rounded-lg relative  ' onPress={() => navigation.navigate("Product Details")}>
+                            <Image source={{ uri: item.productImages[0] }} style={{ width: "100%", height: 160, borderRadius: 8 }} />
                             <View className='bg-[#000000] border-[#1D3725] border-8 absolute p-1 bottom-14 rounded-full items-center justify-center' style={{ width: 50, height: 50 }}>
                                 <Image source={require("../../../assets/e-icon/bag-2.png")} style={{ width: "100%", height: "100%" }} />
                             </View>
-                            <Text className='font-instrumentSansBold text-white mt-8 mb-1'>Regular Fit Slogan</Text>
-                            <Text className='font-instrumentSansSemiBold text-white mb-2'>$ 8900</Text>
+                            <Text className='font-instrumentSansBold text-white mt-8 mb-1'>{item.productName}</Text>
+                            <Text className='font-instrumentSansSemiBold text-white mb-2'>{item.price}</Text>
                         </TouchableOpacity>
-                    )}
+                    )) : (data?.data?.product?.filter((item) => item.category == isClothType)?.map((item, index) =>
+                        <TouchableOpacity key={index} style={{ width: "48%" }} className='bg-[#1D3725] items-center rounded-lg relative  ' onPress={() => navigation.navigate("Product Details",{ID:item._id})}>
+                            <Image source={{ uri: item.productImages[0] }} style={{ width: "100%", height: 160, borderRadius: 8 }} />
+                            <View className='bg-[#000000] border-[#1D3725] border-8 absolute p-1 bottom-14 rounded-full items-center justify-center' style={{ width: 50, height: 50 }}>
+                                <Image source={require("../../../assets/e-icon/bag-2.png")} style={{ width: "100%", height: "100%" }} />
+                            </View>
+                            <Text className='font-instrumentSansBold text-white mt-8 mb-1'>{item.productName}</Text>
+                            <Text className='font-instrumentSansSemiBold text-white mb-2'>{item.price}</Text>
+                        </TouchableOpacity>
+                    ))}
+                    <TouchableOpacity className=" items-center border rounded-3xl border-[#fff] p-2 mt-3" style={{ width: "95%" }} onPress={() => setLoadMore(loadMore + 2)}>
+                        <Text className="font-instrumentSansSemiBold text-white text-xl">View All</Text>
+                    </TouchableOpacity>
                 </View>
 
 

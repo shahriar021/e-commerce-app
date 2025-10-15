@@ -4,12 +4,17 @@ import { useNavigation } from '@react-navigation/native';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { allProducts, bageData } from './demoBage';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { useAppSelector } from 'src/redux/hooks';
+import { useFeatureBrandsQuery } from 'src/redux/features/brand/brandApi';
 
 const SeeAllBrands = () => {
 
     const { width, height } = useWindowDimensions()
     const navigation = useNavigation()
     const [isClothType, setIsClothType] = useState("ALL")
+    const token = useAppSelector((state) => state.auth.token);
+    const [loadMore, setLoadMore] = useState(6)
+    const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
 
     navigation.setOptions({
         headerStyle: {
@@ -36,18 +41,22 @@ const SeeAllBrands = () => {
             showsVerticalScrollIndicator={false}
 
         >
-            {bageData?.map((item, index) => (
+            {data?.data?.data?.map((item, index) => (
                 <TouchableOpacity
                     key={index}
                     className="relative gap-3 rounded-xl overflow-hidden mt-1 mb-1"
                     style={{ width: "48%", height: verticalScale(150) }}
+                    onPress={() => navigation.navigate("Brand Details",{id:item._id})}
                 >
-                    <Image source={item.image} style={{ width: "100%", height: "100%" }} />
+                    <Image source={{uri:item.brandLogo[0]}} style={{ width: "100%", height: "100%" }} />
                     <Text className="absolute bottom-3 left-0 right-0 text-xl font-instrumentSansBold text-white text-center">
-                        {item.title}
+                        {item.brandName}
                     </Text>
                 </TouchableOpacity>
             ))}
+             <TouchableOpacity className=" items-center border rounded-3xl border-[#fff] p-2 mt-3" style={{ width: "95%" }} onPress={() => setLoadMore(loadMore + 2)}>
+                        <Text className="font-instrumentSansSemiBold text-white text-xl">View All</Text>
+                      </TouchableOpacity>
         </ScrollView>
 
     )

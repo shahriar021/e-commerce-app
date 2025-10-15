@@ -1,12 +1,20 @@
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native'
-import React, { useLayoutEffect } from 'react'
-import { useNavigation } from '@react-navigation/native'
-import { AntDesign, Feather } from '@expo/vector-icons'
+import React, { useLayoutEffect, useState } from 'react'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { AntDesign, Feather, Ionicons } from '@expo/vector-icons'
 import { bageData } from './demoBage'
 import { scale, verticalScale } from 'react-native-size-matters'
+import { useAppSelector } from 'src/redux/hooks'
+import { useFeatureBrandsQuery, useGetBrandWithIdQuery } from 'src/redux/features/brand/brandApi'
 
 const BrandDetails = () => {
+    const route=useRoute();
+    const {id}=route.params
     const navigation = useNavigation()
+    const [loadMore, setLoadMore] = useState(3)
+      const token = useAppSelector((state) => state.auth.token);
+      const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
+      const {data:getData}=useGetBrandWithIdQuery({token,id:id})
 
     navigation.setOptions({
         headerStyle: {
@@ -30,10 +38,10 @@ const BrandDetails = () => {
 
     return (
         <View className='flex-1 bg-[#121212] p-3'>
-            <Text className='font-instrumentSansBold text-white text-5xl mt-5 mb-3'>COID SUPPLY</Text>
-            <Text className='font-instrumentRegular text-white mt-1 mb-3'>Born from late-night sketch sessions and city grit, COID Supply started in a cramped apartment in Brooklyn with just a screen printer and a dream. Tired of watered-down fashion, we built a brand that reps raw energy, underground culture, and the hustle mentality. Our first drop? Sold out of backpacks at a pop-up on Flatbush Ave. Today, COID is more than a label—it’s a movement for the unheard, the unseen, and the unfazed. We don’t follow trends. We set ‘em.</Text>
+            <Text className='font-instrumentSansBold text-white text-5xl mt-5 mb-3'>{getData?.data?.brand[0]?.brandName}</Text>
+            <Text className='font-instrumentRegular text-white mt-1 mb-3'>{getData?.data?.brand[0]?.brandStory}</Text>
 
-            <TouchableOpacity className='bg-[#1D3725] p-2 rounded-lg w-[40%]' onPress={() => navigation.navigate("Brand Products" as never)}>
+            <TouchableOpacity className='bg-[#1D3725] p-2 rounded-lg w-[40%]' onPress={() => navigation.navigate("Brand Products" as never,{ID:getData?.data?.brand[0]?.id})}>
                 <Text className='text-white text-center font-instrumentSansSemiBold'>Visit Our Shop</Text>
             </TouchableOpacity>
 
@@ -46,15 +54,20 @@ const BrandDetails = () => {
             </View>
 
 
-            <ScrollView className='flex-1' horizontal>
+            <ScrollView className='flex-1 ' horizontal>
 
-                {bageData?.map((item, index) =>
+                {data?.data?.data?.map((item, index) =>
+              
                     <TouchableOpacity key={index} className='relative gap-3 rounded-xl overflow-hidden mt-1 mb-1 mr-3' style={{ width: scale(150), height: verticalScale(150) }}>
-                        <Image source={item.image} style={{ width: "100%", height: "100%" }} />
-                        <Text className='absolute  bottom-3 left-0 right-0 text-xl font-instrumentSansSemiBold text-white text-center'>{item.title}</Text>
-                    </TouchableOpacity>)}
+                        <Image source={{uri:item.brandLogo[0]}} style={{ width: "100%", height: "100%" }} />
+                        <Text className='absolute  bottom-3 left-0 right-0 text-xl font-instrumentSansSemiBold text-white text-center'>{item.brandName}</Text>
+                    </TouchableOpacity>
+                
+                )}
 
-
+                    <TouchableOpacity className='items-center justify-center p-20' style={{ width: scale(150), height: verticalScale(150) }} onPress={()=>setLoadMore(loadMore+3)}>
+                        <Ionicons name="reload-sharp" size={24} color="white" />
+                    </TouchableOpacity>
             </ScrollView>
         </View>
     )

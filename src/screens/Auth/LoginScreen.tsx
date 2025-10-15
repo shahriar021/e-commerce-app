@@ -77,8 +77,8 @@ const LoginScreen = () => {
             dispatch(setUserType(userTypes));
             console.log(res)
         } catch (err: any) {
-            // const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
-            // Alert.alert("Error", errorMessage);
+            const errorMessage = err?.data?.message || err?.message || "Something went wrong!";
+            Alert.alert("Error", errorMessage);
             console.log(err,"eroor")
         }
     };

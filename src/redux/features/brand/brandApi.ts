@@ -14,8 +14,22 @@ const brandApi = baseApi.injectEndpoints({
                     limit:limit
                 }
             }
+        }),
+
+        getBrandWithId:builder.query({
+           query:({token,id})=>{
+
+            return {
+                url:`/brand?_id=${id}`,
+                method:"GET",
+                headers:{
+                    Authorization:`Bearer ${token}`
+                },
+                id:id
+            }
+           }
         })
     })
 })
 
-export const {useFeatureBrandsQuery}=brandApi;
+export const {useFeatureBrandsQuery,useGetBrandWithIdQuery}=brandApi;

@@ -1,12 +1,14 @@
 import { View, Text, ScrollView, TouchableOpacity, Image, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { AntDesign, Feather, FontAwesome, Ionicons, SimpleLineIcons } from '@expo/vector-icons';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import { scale, verticalScale } from 'react-native-size-matters';
 
 const ProductDetails = () => {
 
+    const route=useRoute()
+    const {ID}=route.params
     const navigation = useNavigation()
     const { width, height } = useWindowDimensions()
     const [isHeart, setIsHeart] = useState(false)
