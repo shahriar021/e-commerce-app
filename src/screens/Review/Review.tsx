@@ -1,15 +1,23 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import { ScrollView } from 'react-native'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { Rating } from 'react-native-ratings'
 import { AntDesign, Feather, SimpleLineIcons } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import ReviewModal from './ReviewModal'
+import { useGetALlReviewBasedOnIdQuery } from 'src/redux/features/review/reviewApi'
+import { useAppSelector } from 'src/redux/hooks'
+import { getTime } from 'src/components/shared/timeHistory'
 
 const Review = () => {
+    const route = useRoute()
+    const { id } = route.params
     const navigation = useNavigation()
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const token = useAppSelector((state) => state.auth.token)
+    const [limit, setLimit] = useState(5)
+    const { data: getReview ,isLoading} = useGetALlReviewBasedOnIdQuery({ token, id: id, limit: limit })
 
     navigation.setOptions({
         headerStyle: {
@@ -33,6 +41,12 @@ const Review = () => {
         setIsModalOpen(true)
     }
 
+    console.log(isLoading,"loading")
+
+    if(isLoading){
+        <ActivityIndicator size={"small"} color={"white"}/>
+    }
+
     return (
         <View className='relative flex-1'>
             <TouchableOpacity className='absolute right-10 bottom-10 z-10 bg-[#1D3725] p-3 rounded-full' onPress={handleModal}>
@@ -41,15 +55,17 @@ const Review = () => {
             <ScrollView >
 
                 <View className='flex-1 bg-[#121212] p-4 '>
-                    <View className='bg-[#2C2C2C] rounded-lg overflow-hidden p-2 mt-2 mb-3'>
+                    {isLoading&&<ActivityIndicator size={"large"}/>}
+
+                    {getReview?.data?.data?.map((item: any) => <View className='bg-[#2C2C2C] rounded-lg overflow-hidden p-2 mt-2 mb-3'>
                         <View className='flex-row justify-between mt-2 mb-1'>
                             <View className='flex-row gap-2 items-center'>
                                 <View style={{ width: scale(30), height: scale(30) }}>
-                                    <Image source={require("../../../assets/e-icon/Ellipse 1.png")} style={{ width: "100%", height: "100%" }} />
+                                    <Image source={{ uri: item.userInfo?.profile[0] }} style={{ width: "100%", height: "100%" }} />
                                 </View>
                                 <View className='flex-col  gap-2'>
                                     <View className='flex-row gap-2 items-center'>
-                                        <Text className='text-white font-instrumentSansSemiBold'>Jack Robo</Text>
+                                        <Text className='text-white font-instrumentSansSemiBold'>{item?.userInfo?.userName}</Text>
                                         <View className="bg-transparent">
                                             <Rating
                                                 type="custom"
@@ -58,94 +74,33 @@ const Review = () => {
                                                 tintColor="#1A1A1A"
 
                                                 imageSize={24}
-                                                startingValue={4}
+                                                startingValue={item.ratings}
                                                 style={{ backgroundColor: 'transparent' }}
                                             />
                                         </View>
                                     </View>
-                                    <Text className='text-[#ADAEBC] font-instrumentRegular'>15 min ago</Text>
+                                    <Text className='text-[#ADAEBC] font-instrumentRegular'>{getTime(item.createdAt)}</Text>
                                 </View>
 
                             </View>
 
                             <SimpleLineIcons name="options-vertical" size={24} color="white" />
                         </View>
-                        <Text className='font-instrumentRegular text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
+                        <Text className='font-instrumentRegular text-[#fff] mt-2'>{item?.comments}</Text>
                         <View className='mt-2 rounded-xl overflow-hidden' style={{ width: scale(111), height: verticalScale(111) }}>
-                            <Image source={require("../../../assets/e-icon/review1.png")} style={{ width: "100%", height: "100%" }} />
+
+                           
+                            {item.attachment.map((imageUrl: string, index: number) => (
+                                <Image
+                                    key={index}
+                                    source={{ uri: imageUrl }}
+                                    style={{ width: 100, height: 100 }}
+                                />
+                            ))}
                         </View>
-                    </View>
-
-                    {/* two */}
-
-                    <View className='bg-[#2C2C2C] rounded-lg overflow-hidden p-2  mt-2 mb-3'>
-                        <View className='flex-row justify-between mt-2 mb-1'>
-                            <View className='flex-row gap-2 items-center'>
-                                <View style={{ width: scale(30), height: scale(30) }}>
-                                    <Image source={require("../../../assets/e-icon/Ellipse 1.png")} style={{ width: "100%", height: "100%" }} />
-                                </View>
-                                <View className='flex-col  gap-2'>
-                                    <View className='flex-row gap-2 items-center'>
-                                        <Text className='text-white font-instrumentSansSemiBold'>Jack Robo</Text>
-                                        <View className="bg-transparent">
-                                            <Rating
-                                                type="custom"
-                                                ratingColor="#FFBA49"
-                                                ratingBackgroundColor="#333"
-                                                tintColor="#1A1A1A"
-
-                                                imageSize={24}
-                                                startingValue={4}
-                                                style={{ backgroundColor: 'transparent' }}
-                                            />
-                                        </View>
-                                    </View>
-                                    <Text className='text-[#ADAEBC] font-instrumentRegular'>15 min ago</Text>
-                                </View>
-
-                            </View>
-
-                            <SimpleLineIcons name="options-vertical" size={24} color="white" />
-                        </View>
-                        <Text className='font-instrumentRegular text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
-
-                    </View>
+                    </View>)}
 
 
-                    {/*  */}
-
-                    <View className='bg-[#2C2C2C] rounded-lg overflow-hidden p-2  mt-2 mb-3'>
-                        <View className='flex-row justify-between mt-2 mb-1'>
-                            <View className='flex-row gap-2 items-center'>
-                                <View style={{ width: scale(30), height: scale(30) }}>
-                                    <Image source={require("../../../assets/e-icon/Ellipse 1.png")} style={{ width: "100%", height: "100%" }} />
-                                </View>
-                                <View className='flex-col  gap-2'>
-                                    <View className='flex-row gap-2 items-center'>
-                                        <Text className='text-white font-instrumentSansSemiBold'>Jack Robo</Text>
-                                        <View className="bg-transparent">
-                                            <Rating
-                                                type="custom"
-                                                ratingColor="#FFBA49"
-                                                ratingBackgroundColor="#333"
-                                                tintColor="#1A1A1A"
-
-                                                imageSize={24}
-                                                startingValue={4}
-                                                style={{ backgroundColor: 'transparent' }}
-                                            />
-                                        </View>
-                                    </View>
-                                    <Text className='text-[#ADAEBC] font-instrumentRegular'>15 min ago</Text>
-                                </View>
-
-                            </View>
-
-                            <SimpleLineIcons name="options-vertical" size={24} color="white" />
-                        </View>
-                        <Text className='font-instrumentRegular text-[#fff] mt-2'>I loved this dress so much as soon as I tried it on I knew I had to buy it in another color. I am 5'3 about 155lbs and I carry all my weight in my upper body. When I put it on I felt like it thinned me put and I got so many compliments.</Text>
-
-                    </View>
                 </View>
             </ScrollView>
             <ReviewModal visible={isModalOpen}

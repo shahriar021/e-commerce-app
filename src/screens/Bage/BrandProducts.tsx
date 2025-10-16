@@ -11,13 +11,10 @@ const BrandProducts = () => {
     const route = useRoute();
     const { ID } = route.params
     const token = useAppSelector((state) => state.auth.token)
-    console.log(ID, "d..")
     const { width, height } = useWindowDimensions()
     const navigation = useNavigation()
     const [isClothType, setIsClothType] = useState("ALL")
     const { data } = useProductListBrandIdWiseQuery({ token, id: ID, limit: loadMore })
-    console.log(data?.data?.product?.filter((item) => item.category == isClothType), "products..")
-
 
 
     navigation.setOptions({
@@ -39,6 +36,7 @@ const BrandProducts = () => {
         )
     });
 
+    console.log(data?.data?.product?.map(item=>item._id),"id,..")
 
     return (
         <View className='flex-1 bg-[#121212] p-3'>
@@ -72,7 +70,7 @@ const BrandProducts = () => {
 
                 <View className='flex-row flex-wrap  justify-between gap-2'>
                     {isClothType == "ALL" ? (data?.data?.product?.map((item, index) =>
-                        <TouchableOpacity key={index} style={{ width: "48%" }} className='bg-[#1D3725] items-center rounded-lg relative  ' onPress={() => navigation.navigate("Product Details")}>
+                        <TouchableOpacity key={index} style={{ width: "48%" }} className='bg-[#1D3725] items-center rounded-lg relative  ' onPress={() => navigation.navigate("Product Details",{ID:item._id})}>
                             <Image source={{ uri: item.productImages[0] }} style={{ width: "100%", height: 160, borderRadius: 8 }} />
                             <View className='bg-[#000000] border-[#1D3725] border-8 absolute p-1 bottom-14 rounded-full items-center justify-center' style={{ width: 50, height: 50 }}>
                                 <Image source={require("../../../assets/e-icon/bag-2.png")} style={{ width: "100%", height: "100%" }} />

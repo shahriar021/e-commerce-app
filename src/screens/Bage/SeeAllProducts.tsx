@@ -16,7 +16,6 @@ const SeeAllProducts = () => {
     const token = useAppSelector((state) => state.auth.token)
 
     const { data } = useProductListBrandIdWiseQuery({ token, id: id,limit:loadMore })
-    console.log(data, "in see all")
 
     navigation.setOptions({
         headerStyle: {

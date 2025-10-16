@@ -34,11 +34,6 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const token = useAppSelector((state) => state.auth.token);
   const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
-  useEffect(() => {
-    if (data) {
-      console.log(data, "in home");
-    }
-  }, [data]);
 
   useLayoutEffect(() => {
     navigation.setOptions({

@@ -12,8 +12,6 @@ const Bage = () => {
   const [loadMore,setLoadMore]=useState(6)
   const token = useAppSelector((state) => state.auth.token);
   const { data } = useFeatureBrandsQuery({token,limit:loadMore})
-  console.log(data, "in brand")
-  console.log(loadMore,"load more.")
   
 
   useLayoutEffect(() => {

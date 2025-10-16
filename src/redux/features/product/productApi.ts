@@ -5,7 +5,7 @@ const productApi=baseApi.injectEndpoints({
         productListBrandIdWise:builder.query({
 
             query:({token,id,limit})=>{
-                    console.log(id,"in redux.")
+                   
                 return{
                     url:`/product?brandId=${id}&limit=${limit}`,
                     method:"GET",
@@ -28,8 +28,22 @@ const productApi=baseApi.injectEndpoints({
                     }
                 }
             }
+        }),
+
+        getSpecificProductBasedOnId:builder.query({
+
+            query:({token,id})=>{
+
+                return {
+                    url:`/product?_id=${id}`,
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    },
+                    method:"GET"
+                }
+            }
         })
     })
 })
 
-export const {useProductListBrandIdWiseQuery,useGetProductIdWiseQuery}=productApi
+export const {useProductListBrandIdWiseQuery,useGetProductIdWiseQuery,useGetSpecificProductBasedOnIdQuery}=productApi
