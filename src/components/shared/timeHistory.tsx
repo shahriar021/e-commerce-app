@@ -1,22 +1,22 @@
- 
- const formatTimeAgo = (ms)=>{
-    console.log(ms,"format time")
-    const second = Math.floor(ms/1000);
 
-    const min =60;
-    const hr = min*60;
-    const dy=hr*24;
-    const wk=dy*7;
-    const mt=dy*30;
-    const yr= mt*12;
+const formatTimeAgo = (ms) => {
 
-    if(second<5){
+    const second = Math.floor(ms / 1000);
+
+    const min = 60;
+    const hr = min * 60;
+    const dy = hr * 24;
+    const wk = dy * 7;
+    const mt = dy * 30;
+    const yr = mt * 12;
+
+    if (second < 5) {
         return "just now"
     }
 
-    if(second>=yr){
-        const value=Math.floor(second/yr);
-        return `${value} year${value>1?'s':''} ago`;
+    if (second >= yr) {
+        const value = Math.floor(second / yr);
+        return `${value} year${value > 1 ? 's' : ''} ago`;
     }
     if (second >= mt) {
         const value = Math.floor(second / mt);
@@ -51,15 +51,15 @@
 
     // second
     return `${second} second${second > 1 ? 's' : ''} ago`;
- }
- 
- 
- export const getTime = (value) => {
-    console.log(value,"get time")
-        const newValue = new Date();
-        const targetDate = new Date(value);
+}
 
-        const differenceInMs = newValue.getTime() - targetDate.getTime();
 
-        return formatTimeAgo(differenceInMs)
-    };
+export const getTime = (value) => {
+
+    const newValue = new Date();
+    const targetDate = new Date(value);
+
+    const differenceInMs = newValue.getTime() - targetDate.getTime();
+
+    return formatTimeAgo(differenceInMs)
+};

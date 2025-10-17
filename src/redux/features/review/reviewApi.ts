@@ -16,8 +16,23 @@ const reviewApi = baseApi.injectEndpoints({
                     },
                 }
             }
+        }),
+
+        postReviewBasedOnId:builder.mutation({
+
+            query:({token,id,formData})=>{
+
+                return {
+                    url:`/review/${id}`,
+                    method:"POST",
+                    headers:{
+                        Authorization: `Bearer ${token}`
+                    },
+                    body:formData
+                }
+            }
         })
     })
 })
 
-export const { useGetALlReviewBasedOnIdQuery } = reviewApi
+export const { useGetALlReviewBasedOnIdQuery , usePostReviewBasedOnIdMutation} = reviewApi

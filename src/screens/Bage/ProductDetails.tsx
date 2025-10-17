@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Image, useWindowDimensions } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Image, useWindowDimensions, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { AntDesign, Feather, FontAwesome, Ionicons, SimpleLineIcons } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import { useAppSelector } from 'src/redux/hooks';
 import { useGetSpecificProductBasedOnIdQuery } from 'src/redux/features/product/productApi';
 import { useGetALlReviewBasedOnIdQuery } from 'src/redux/features/review/reviewApi';
 import { getTime } from 'src/components/shared/timeHistory';
+import { usePostAddToCartMutation } from 'src/redux/features/cart/cartApi';
 
 const ProductDetails = () => {
 
@@ -19,13 +20,13 @@ const ProductDetails = () => {
     const [isHeart, setIsHeart] = useState(false)
     const [isReadMore, setIsReadMore] = useState(true)
     const [isColor, setIsColor] = useState()
-    const [isClothSize] = useState(["S", "L", "X", "XL"])
     const [selectedSize, setSelectedSize] = useState(null);
     const [quantity, setQuanity] = useState(1);
     const [limit] = useState(2)
 
     const { data } = useGetSpecificProductBasedOnIdQuery({ token, id: ID })
     const { data: getReview } = useGetALlReviewBasedOnIdQuery({ token, id: ID, limit: limit })
+    const [postCart] = usePostAddToCartMutation()
 
     navigation.setOptions({
         headerStyle: {
@@ -54,10 +55,32 @@ const ProductDetails = () => {
             }
         }
     }
-    const handleAddToCart=()=>{
 
-        // console.log(quantity,"quantity",selectedSize,"size",isColor,"color")
-        // navigation.navigate("Cart Page" as never)
+    const handleAddToCart = async () => {
+        if(!isColor || !selectedSize || !quantity){
+            Alert.alert("Please select quantity,size and color properly.");
+            return;
+        }
+        const body = {
+            data: {
+                productId: ID,
+                color: isColor,
+                size: selectedSize.size,
+                quantity: quantity
+            }
+        }
+        console.log(body)
+        try {
+            const res = await postCart({ token, data: body }).unwrap()
+            console.log(res, "res....")
+            if (res.success == true) {
+                Alert.alert(res.message)
+                navigation.navigate("Cart Page" as never)
+            }
+        } catch (err) {
+            Alert.alert("Something went wrong!")
+        }
+        
     }
 
     return (
@@ -104,10 +127,10 @@ const ProductDetails = () => {
                     </View>
                     <Text className='text-[#ADAEBC] font-instrumentSansSemiBold mt-2'>Custome Size</Text>
                     <View className="flex-row gap-2 mt-2">
-                        {data?.data?.product[0]?.measurement.map((item:any, index:any) => (
+                        {data?.data?.product[0]?.measurement.map((item: any, index: any) => (
                             <TouchableOpacity
                                 key={index}
-                                onPress={() => setSelectedSize(item.size)}
+                                onPress={() => setSelectedSize(item)}
                                 className={`w-[26px] h-[26px] rounded-full items-center justify-center border-2 ${selectedSize === item ? "bg-white" : "bg-[#252525]"
                                     } ${selectedSize === item ? "border-[#252525]" : "border-transparent"}`}
                             >
@@ -123,7 +146,7 @@ const ProductDetails = () => {
 
                     <View className='mt-2 flex-row justify-between mb-5'>
                         <Text className='font-instrumentSansSemiBold text-white mt-4'>Review({getReview?.data?.meta?.total})</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate("Review" as never,{id:ID})}><Text className='font-instrumentSansSemiBold text-[#ADAEBC]'>See All</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("Review" as never, { id: ID })}><Text className='font-instrumentSansSemiBold text-[#ADAEBC]'>See All</Text></TouchableOpacity>
                     </View>
                     {/* review */}
                     <View className='flex-row justify-between mt-2 mb-1'>

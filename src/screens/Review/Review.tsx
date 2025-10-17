@@ -16,8 +16,11 @@ const Review = () => {
     const navigation = useNavigation()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const token = useAppSelector((state) => state.auth.token)
-    const [limit, setLimit] = useState(5)
-    const { data: getReview ,isLoading} = useGetALlReviewBasedOnIdQuery({ token, id: id, limit: limit })
+    console.log(token)
+    const [limit, setLimit] = useState(20)
+    const [userId]=useState(id)
+    const [loadMore,setLoadMore]=useState(10)
+    const { data: getReview ,isLoading} = useGetALlReviewBasedOnIdQuery({ token, id: id, limit: loadMore })
 
     navigation.setOptions({
         headerStyle: {
@@ -41,8 +44,6 @@ const Review = () => {
         setIsModalOpen(true)
     }
 
-    console.log(isLoading,"loading")
-
     if(isLoading){
         <ActivityIndicator size={"small"} color={"white"}/>
     }
@@ -52,7 +53,7 @@ const Review = () => {
             <TouchableOpacity className='absolute right-10 bottom-10 z-10 bg-[#1D3725] p-3 rounded-full' onPress={handleModal}>
                 <AntDesign name="plus" size={24} color="white" />
             </TouchableOpacity>
-            <ScrollView >
+            <ScrollView contentContainerStyle={{alignItems:"center",paddingBottom:100}}>
 
                 <View className='flex-1 bg-[#121212] p-4 '>
                     {isLoading&&<ActivityIndicator size={"large"}/>}
@@ -98,12 +99,15 @@ const Review = () => {
                                 />
                             ))}
                         </View>
-                    </View>)}
+                    </View>).sort()}
 
 
                 </View>
+                <TouchableOpacity className=" items-center border rounded-3xl border-[#fff] p-2 mt-3" style={{ width: "95%" }} onPress={() => setLoadMore(loadMore + 2)}>
+                                    <Text className="font-instrumentSansSemiBold text-white text-xl">View All</Text>
+                                </TouchableOpacity>
             </ScrollView>
-            <ReviewModal visible={isModalOpen}
+            <ReviewModal visible={isModalOpen} ID={userId}
                 onClose={() => setIsModalOpen(false)}
             />
         </View>

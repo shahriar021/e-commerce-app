@@ -3,12 +3,16 @@ import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { AntDesign, Feather } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
+import { useGetAddToCartQuery } from 'src/redux/features/cart/cartApi'
+import { useAppSelector } from 'src/redux/hooks'
 
 const CartPage = () => {
     const { width, height } = useWindowDimensions()
-
+    const token = useAppSelector((state) => state.auth.token);
     const navigation = useNavigation()
     const [cartList] = useState(Array.from({ length: 2 }, (_, c) => c + 1))
+    const { data } = useGetAddToCartQuery(token)
+    const [prQuantity, setPrQuantity] = useState<{ [key: string]: number }>({})
 
     navigation.setOptions({
         headerStyle: {
@@ -28,44 +32,110 @@ const CartPage = () => {
         )
     });
 
+    const handleQuantity = (type: string, productId: string) => {
+
+        const currentChange = prQuantity[productId] || 0
+
+        setPrQuantity(prev => {
+            if (type == "add") {
+                return {
+                    ...prev,
+                    [productId]: currentChange + 1
+                };
+            } else {
+                const originalQuantity = data?.data?.cart?.products.find((p: any) => p._id === productId)?.quantity || 1;
+
+                if (originalQuantity + currentChange > 1) {
+                    return {
+                        ...prev,
+                        [productId]: currentChange - 1
+                    }
+                }
+            }
+            return prev
+        })
+    }
+
+
+    const calculateSubtotal = () => {
+
+        const products = data?.data?.cart?.products;
+
+        if (!products || products.length === 0) {
+            return 0;
+        }
+
+        const total = products.reduce((acc, x) => {
+
+            const currentChange = prQuantity[x._id] || 0;
+
+
+            const finalQuantity = x.quantity + currentChange;
+
+
+            const linePrice = x.productPrice * finalQuantity;
+
+
+            return acc + linePrice;
+
+        }, 0);
+
+        return total.toFixed(2);
+    };
+
+    const updatedSubtotal = calculateSubtotal();
+    const shiping = data?.data?.cart?.shippingCharge
+
+    const handleDelete=()=>{
+        
+    }
 
     return (
         <ScrollView className='flex-1 bg-[#121212] p-2 ' contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
-            {cartList.map(x =>
-            (<View key={x} className='mt-2 mb-2 relative flex-row p-2 bg-[#2C2C2C]  shadow-slate-400 rounded-2xl   mx-3' >
+            {data?.data?.cart?.products?.map((x: any) => {
 
-                <View style={{ width: width * 0.22, height: height * 0.11 }} className=' rounded-2xl overflow-hidden '>
-                    <Image source={require("../../../assets/e-icon/Rectangle 98.png")} style={{ width: "100%", height: "100%" }} />
-                </View>
-                <View className='p-2  flex-1'>
-                    <View>
-                        <Text className='text-xl text-white font-instrumentSansSemiBold'>Bomber Jackets</Text>
-                        <Text className=' text-md text-white mt-1 font-instrumentRegular' >$49.99</Text>
-                    </View>
-                    <View className='flex-row flex-1 items-center justify-between'>
+                const currentChange = prQuantity[x._id] || 0;
+                const finalQuantity = x.quantity + currentChange;
 
-                        <View className='flex-row items-center mx-2 gap-2'>
-                            <TouchableOpacity>
-                                <AntDesign name="minuscircleo" size={24} color="white" />
-                            </TouchableOpacity>
-                            <Text className='text-white'>02</Text>
-                            <TouchableOpacity>
-                                <AntDesign name="pluscircleo" size={24} color="white" />
-                            </TouchableOpacity>
+                return (
+
+                    <View key={x._id} className='mt-2 mb-2 relative flex-row p-2 bg-[#2C2C2C]  shadow-slate-400 rounded-2xl   mx-3' >
+
+                        <View style={{ width: width * 0.22, height: height * 0.11 }} className=' rounded-2xl overflow-hidden '>
+                            <Image source={{ uri: x.productImage }} style={{ width: "100%", height: "100%" }} />
                         </View>
-                        <AntDesign name="delete" size={24} color="red" />
-                    </View>
-                </View>
+                        <View className='p-2  flex-1'>
+                            <View>
+                                <Text className='text-xl text-white font-instrumentSansSemiBold'>{x.productInfo}</Text>
+                                <Text className=' text-md text-white mt-1 font-instrumentRegular' >{(x.productPrice * finalQuantity)?.toFixed(2)} $</Text>
+                            </View>
+                            <View className='flex-row flex-1 items-center justify-between'>
 
-            </View>))}
+                                <View className='flex-row items-center mx-2 gap-2'>
+                                    <TouchableOpacity onPress={() => handleQuantity("minus", x._id)}>
+                                        <AntDesign name="minuscircleo" size={24} color="white" />
+                                    </TouchableOpacity>
+                                    <Text className='text-white'>{finalQuantity}</Text>
+                                    <TouchableOpacity onPress={() => handleQuantity("add", x._id)}>
+                                        <AntDesign name="pluscircleo" size={24} color="white" />
+                                    </TouchableOpacity>
+                                </View>
+                                <TouchableOpacity onPress={handleDelete}><AntDesign name="delete" size={24} color="red" /></TouchableOpacity>
+                                
+                            </View>
+                        </View>
+
+                    </View>
+                )
+            })}
 
             <View className='flex-row justify-between p-2 mx-2 mt-2 mb-2'>
                 <Text className=' text-sm text-[#ADAEBC] font-instrumentSansSemiBold' >Subtotal</Text>
-                <Text className=' mx-2 text-sm text-white' >$27.36</Text>
+                <Text className=' mx-2 text-sm text-white' >$ {updatedSubtotal}</Text>
             </View>
             <View className='flex-row justify-between p-2 mx-2 mt-2 mb-2'>
                 <Text className=' text-sm text-[#ADAEBC] font-instrumentSansSemiBold' >Shipping</Text>
-                <Text className=' mx-2 text-sm text-white'>$27.36</Text>
+                <Text className=' mx-2 text-sm text-white'>$ {shiping?.toFixed(2)}</Text>
             </View>
 
             <View
@@ -75,12 +145,12 @@ const CartPage = () => {
 
             <View className='flex-row justify-between p-2 mx-2 mt-2 mb-2'>
                 <Text className=' text-sm text-[#ADAEBC] font-instrumentSansSemiBold' >Total</Text>
-                <Text className=' mx-2 text-sm text-white'>$27.36</Text>
+                <Text className=' mx-2 text-sm text-white'>$ {(parseFloat(updatedSubtotal) + shiping).toFixed(2)}</Text>
             </View>
 
 
             <View className="items-center mt-3">
-                <TouchableOpacity className=" items-center mt-3 rounded-lg  overflow-hidden bg-[#1D3725] border border-[#DCF3FF]" style={{ width: width * 0.9 }} onPress={() => navigation.navigate("Payment Options")}>
+                <TouchableOpacity className=" items-center mt-3 rounded-lg  overflow-hidden bg-[#1D3725] border border-[#DCF3FF]" style={{ width: width * 0.9 }} onPress={() => navigation.navigate("Payment Options" as never)}>
 
                     <Text className="text-[#DCF3FF] p-3 font-instrumentSansBold" >Checkout</Text>
 
