@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView, Image, ScrollViewBase, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, Image, ScrollViewBase, TextInput, ActivityIndicator, Alert } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { scale, verticalScale } from 'react-native-size-matters';
@@ -6,6 +6,8 @@ import { Rating } from 'react-native-ratings';
 import { AntDesign, Ionicons, SimpleLineIcons } from '@expo/vector-icons';
 import CreatePostModal from './CreatePostModal';
 import { useAppSelector } from 'src/redux/hooks';
+import { useGetAllPostQuery, usePostCommentBasedOnIdMutation } from 'src/redux/features/feedApi/feedApi';
+import { getTime } from 'src/components/shared/timeHistory';
 const categories = [
     { label: 'Trending', value: 'ALL' },
     { label: 'New', value: 'T-Shirts' },
@@ -21,11 +23,17 @@ const categories = [
 
 const Feed = () => {
 
+    const token = useAppSelector((state) => state.auth.token)
     const navigation = useNavigation();
     const [isClothType, setIsClothType] = useState("ALL")
     const [selectedItem, setSelectedItem] = useState()
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const userType = useAppSelector(store=>store.auth.userType)
+    const [loadMore, setLoadMore] = useState(20)
+    const [comment, setComments] = useState('');
+    const [loading,setLoading]=useState(false);
+    const userType = useAppSelector(store => store.auth.userType)
+    const { data: getPostData, isLoading, error } = useGetAllPostQuery({ token, limit: loadMore })
+    const [postComment] = usePostCommentBasedOnIdMutation()
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -39,7 +47,7 @@ const Feed = () => {
             headerTitleAlign: "start",
             headerTitleStyle: {
                 color: "white",
-                fontFamily:'instrumentSans-Bold',
+                fontFamily: 'instrumentSans-Bold',
                 fontSize: 20
             }
         })
@@ -48,6 +56,29 @@ const Feed = () => {
     const handleModal = () => {
         setIsModalOpen(true)
     }
+
+    const handleComment = async (id: any) => {
+        if(!comment){
+            Alert.alert("put some comment..");
+            return;
+        }
+        setLoading(true)
+        const info = {
+            data: {
+                comments: comment
+            }
+        }
+        try {
+           
+            const res = await postComment({ token, pId: id, info }).unwrap()
+             setLoading(false)
+            setComments('')
+        } catch (err) {
+            setLoading(false)
+            console.log(err)
+        }
+    }
+
 
     return (
         <View className='flex-1 bg-[#121212] p-5 relative'>
@@ -64,134 +95,78 @@ const Feed = () => {
                     </TouchableOpacity>)}
                 </ScrollView>
             </View>
+            {error && <Text className='text-center m-5 text-white'>Something went wrong,Please Try again sometimes later.</Text>}
+            {isLoading && <ActivityIndicator size={"large"} color={"blue"} />}
 
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View className='flex-row justify-between mt-4 mb-1 '>
-                    <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile",{type:"user"})}>
-                        <View style={{ width: scale(30), height: scale(30) }}>
-                            <Image source={require("../../../assets/e-icon/Ellipse 1.png")} style={{ width: "100%", height: "100%" }} />
-                        </View>
-                        <View className='flex-col  gap-2'>
+                {getPostData?.data?.data?.map((item, index) =>
+                    <View key={index}>
+                        <View className='flex-row justify-between mt-4 mb-1 '>
+                            <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile", { type: "user" })}>
+                                <View style={{ width: scale(30), height: scale(30) }}>
+                                   {item.uploaderType=="Brand" ?<Image source={{ uri: item.uploaderDetails.brandLogo[0] }} style={{ width: "100%", height: "100%" }} /> :<Image source={{ uri: item.uploaderDetails.profile[0] }} style={{ width: "100%", height: "100%" }} />}
+                                </View>
+                                <View className='flex-col  gap-2'>
 
-                            <Text className='text-white font-instrumentSansSemiBold'>Jack Robo</Text>
+                                    <Text className='text-white font-instrumentSansSemiBold'>{item.brandName}</Text>
 
-                            <Text className='text-[#ADAEBC] font-instrumentRegular'>15 min ago</Text>
-                        </View>
+                                    <Text className='text-[#ADAEBC] font-instrumentRegular'>{getTime(item.createdAt)}</Text>
+                                </View>
 
-                    </TouchableOpacity>
+                            </TouchableOpacity>
 
-                    <SimpleLineIcons name="options-vertical" size={24} color="white" />
-                </View>
-
-                <Text className='font-instrumentSansBold text-white mt-2'>Perfect autumn vibes with this cozy yet chic look ✨</Text>
-
-                <View className='flex-row gap-2 mt-3'>
-                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#autum</Text>
-                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#cozy</Text>
-                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#zara</Text>
-                </View>
-
-                <View className='relative mt-4 rounded-xl overflow-hidden' style={{ width: scale(320), height: verticalScale(300) }}>
-                    <Image source={require("../../../assets/e-icon/img (1).png")} style={{ width: "100%", height: "100%" }} />
-                    <View className='absolute right-3 top-2  items-center'>
-                        <View className='bg-[#212121] p-4 rounded-full ' style={{ width: scale(57), height: verticalScale(57), backgroundColor: 'rgba(33,33,33,0.10)' }}>
-                            <Image source={require("../../../assets/e-icon/gb.png")} style={{ width: "100%", height: "100%" }} resizeMode='contain' />
+                            {/* <SimpleLineIcons name="options-vertical" size={24} color="white" /> */}
+                            {item.uploaderType=="Brand" &&<View className='bg-[#54EF8D] p-1 items-center rounded-2xl justify-center' style={{ backgroundColor: 'rgba(78, 242, 138, 0.32)', borderColor: '#4ADE80' }}><Text className='text-[#54EF8D]'>Brand</Text></View>}
                         </View>
 
-                        <Image source={require("../../../assets/e-icon/Vector.png")} style={{ width: 18, height: 18 }} className='mt-10' />
-                        <Image source={require("../../../assets/e-icon/Vector (1).png")} style={{ width: 18, height: 18 }} className='mt-4' />
-                        <Text className='text-white font-instrumentRegular mt-2'>273</Text>
-                        <View className='bg-[#FF4B4B] mt-5 p-1 items-center rounded-xl'>
-                            <Ionicons name="heart" size={24} color="white" />
-                            <Text className='text-white font-instrumentRegular'>4.3k</Text>
-                        </View>
-                    </View>
-                </View>
+                        <Text className='font-instrumentSansBold text-white mt-2'>{item.caption}✨</Text>
 
-
-                <View className='bg-[#313030] flex-row justify-between items-center p-2 mt-4 rounded-lg'>
-                    <View className='flex-row gap-2 items-center flex-1'>
-                        <Image
-                            source={require("../../../assets/e-icon/Rectangle 41869.png")}
-                            style={{ width: scale(27), height: verticalScale(26) }}
-                        />
-                        <TextInput
-                            placeholder='Add a comment'
-                            className=' text-white flex-1 font-instrumentRegular'
-                            placeholderTextColor="white"
-                        />
-                    </View>
-
-                    <Text className='text-white font-instrumentRegular ml-2'>(273 comments)</Text>
-                </View>
-
-                {/* brand */}
-
-               {userType=="user" && 
-               <>
-               <View className='flex-row justify-between mt-4 mb-1 items-center'>
-                    <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile",{type:"brand"})}>
-                        <View style={{ width: scale(30), height: scale(30) }}>
-                            <Image source={require("../../../assets/e-icon/brandLogo.png")} style={{ width: "100%", height: "100%" }} />
-                        </View>
-                        <View className='flex-col  gap-2'>
-
-                            <Text className='text-white font-instrumentSansBold'>Brand Name</Text>
-
-                            <Text className='text-[#ADAEBC] font-instrumentRegular'>15 min ago</Text>
+                        <View className='flex-row gap-2 mt-3 '>
+                            {item.tags.map(item => <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#{item}</Text>)}
                         </View>
 
-                    </TouchableOpacity>
+                        <View className='relative mt-4 rounded-xl overflow-hidden' style={{ width: scale(320), height: verticalScale(300) }}>
+                            <Image source={{ uri: item.attachment[0] }} style={{ width: "100%", height: "100%" }} />
+                            <View className='absolute right-3 top-2  items-center'>
+                                <View className='bg-[#212121] p-4 rounded-full ' style={{ width: scale(57), height: verticalScale(57), backgroundColor: 'rgba(33,33,33,0.10)' }}>
+                                    <Image source={require("../../../assets/e-icon/gb.png")} style={{ width: "100%", height: "100%" }} resizeMode='contain' />
+                                </View>
 
-
-                    <View className='bg-[#54EF8D] p-1 items-center rounded-2xl' style={{ backgroundColor: 'rgba(78, 242, 138, 0.32)', borderColor: '#4ADE80' }}><Text className='text-[#54EF8D]'>Brand</Text></View>
-                </View>
-
-                <View className='flex-row  items-center justify-between w-full'>
-                    <Text className='font-instrumentSansSemiBold text-white mt-2 flex-1'>Perfect autumn vibes with this cozy yet chic look ✨</Text>
-                    <SimpleLineIcons name="options-vertical" size={24} color="white" />
-                </View>
-
-                <View className='flex-row gap-2 mt-3'>
-                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#autum</Text>
-                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#cozy</Text>
-                    <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#zara</Text>
-                </View>
-
-                <View className='relative mt-4 rounded-xl overflow-hidden' style={{ width: scale(320), height: verticalScale(300) }}>
-                    <Image source={require("../../../assets/e-icon/brand.jpg")} style={{ width: "100%", height: "100%" }} />
-                    <View className='absolute right-3 top-2  items-center'>
-                        <View className='bg-[#212121] p-4 rounded-full ' style={{ width: scale(57), height: verticalScale(57), backgroundColor: 'rgba(33,33,33,0.10)' }}>
-                            <Image source={require("../../../assets/e-icon/gb.png")} style={{ width: "100%", height: "100%" }} resizeMode='contain' />
+                                <Image source={require("../../../assets/e-icon/Vector.png")} style={{ width: 18, height: 18 }} className='mt-10' />
+                                <Image source={require("../../../assets/e-icon/Vector (1).png")} style={{ width: 18, height: 18 }} className='mt-4' />
+                                <Text className='text-white font-instrumentRegular mt-2'>{item.totalComments}</Text>
+                                <TouchableOpacity className='bg-[#FF4B4B] mt-5 p-1 items-center rounded-xl'>
+                                    <Ionicons name="heart" size={24} color="white" />
+                                    <Text className='text-white font-instrumentRegular'>{item.totalReacts}</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
 
-                        <Image source={require("../../../assets/e-icon/Vector.png")} style={{ width: 18, height: 18 }} className='mt-10' />
-                        <Image source={require("../../../assets/e-icon/Vector (1).png")} style={{ width: 18, height: 18 }} className='mt-4' />
-                        <Text className='text-white font-instrumentRegular mt-2'>273</Text>
-                        <View className='bg-[#FF4B4B] mt-5 p-1 items-center rounded-xl'>
-                            <Ionicons name="heart" size={24} color="white" />
-                            <Text className='text-white font-instrumentRegular'>4.3k</Text>
+
+                        <View className='bg-[#313030] flex-row justify-between items-center p-2 mt-4 rounded-lg'>
+                            {loading && <ActivityIndicator size={"small"} color={"blue"}/>}
+                            <View className='flex-row gap-2 items-center flex-1'>
+                                <Image
+                                    source={require("../../../assets/e-icon/Rectangle 41869.png")}
+                                    style={{ width: scale(27), height: verticalScale(26) }}
+                                />
+                                <TextInput
+                                    placeholder='Add a comment'
+                                    className=' text-white flex-1 font-instrumentRegular'
+                                    placeholderTextColor="white"
+                                    value={comment}
+                                    onChangeText={setComments}
+                                />
+                            </View>
+
+                            <TouchableOpacity className='bg-emerald-800 p-2 rounded-md items-center justify-center' onPress={() => handleComment(item._id)}><Text className='text-white font-instrumentRegular font-bold '>Comment</Text></TouchableOpacity>
                         </View>
-                    </View>
-                </View>
-
-
-                <View className='bg-[#313030] flex-row justify-between items-center p-2 mt-4 rounded-lg'>
-                    <View className='flex-row gap-2 items-center flex-1'>
-                        <Image
-                            source={require("../../../assets/e-icon/Rectangle 41869.png")}
-                            style={{ width: scale(27), height: verticalScale(26) }}
-                        />
-                        <TextInput
-                            placeholder='Add a comment'
-                            className='font-instrumentRegular text-white flex-1'
-                            placeholderTextColor="white"
-                        />
-                    </View>
-
-                    <Text className='text-white font-instrumentRegular ml-2'>(273 comments)</Text>
-                </View>
-                </>}
+                    </View>)
+                }
+                
+                <TouchableOpacity className='bg-[#1D3725] p-2 items-center mt-4 mb-4 rounded-xl overflow-hidden w-full' onPress={() => setLoadMore(loadMore + 2)}>
+                    <Text className='text-white font-instrumentSansBold text-xl'>Load More</Text>
+                </TouchableOpacity>
 
             </ScrollView>
             <CreatePostModal visible={isModalOpen}

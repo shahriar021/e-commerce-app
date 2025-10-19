@@ -83,7 +83,7 @@ const StackNavigation = () => {
       >
         {<Stack.Screen
           name="BottomScreen"
-          component={userType=="user"?BottomNavigation:ProviderBottomNavigation}
+          component={userType=="User"?BottomNavigation:ProviderBottomNavigation}
           options={{
             headerShown: false,
           }}

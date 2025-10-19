@@ -72,14 +72,16 @@ const LoginScreen = () => {
         }
         try {
             const res = await loginData(ldata).unwrap(); 
-            Alert.alert(res.message)
-            dispatch(setToken(res.data.accessToken));
-            dispatch(setUserType(userTypes));
-            console.log(res)
+            if(userTypes===res?.data?.role){
+                dispatch(setToken(res.data.accessToken));
+                dispatch(setUserType(userTypes));
+                Alert.alert(res.message)
+            }else{
+                Alert.alert("There is a mismatch in user types,Please select your type carefully!")
+            }
         } catch (err: any) {
             const errorMessage = err?.data?.message || err?.message || "Something went wrong!";
             Alert.alert("Error", errorMessage);
-            console.log(err,"eroor")
         }
     };
 
@@ -100,13 +102,13 @@ const LoginScreen = () => {
 
                 {isType && <View className="absolute bg-[#121212] top-44 z-10 right-3 rounded-lg p-2 gap-2 border border-white">
                     <TouchableOpacity className="bg-[#2C2C2C] p-2 rounded-lg" onPress={() => {
-                        setUserTypes("user")
+                        setUserTypes("User")
                         setIsType(false)
                     }}>
                         <Text className="font-instrumentRegular text-white">User</Text>
                     </TouchableOpacity>
                     <TouchableOpacity className="bg-[#2C2C2C] p-2 rounded-lg" onPress={() => {
-                        setUserTypes("provider")
+                        setUserTypes("Brand")
                         setIsType(false)
                     }}>
                         <Text className="font-instrumentRegular text-white">Service Provider</Text>
