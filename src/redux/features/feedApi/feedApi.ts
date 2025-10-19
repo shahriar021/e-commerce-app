@@ -18,34 +18,36 @@ const feedApi=baseApi.injectEndpoints({
             providesTags:['feedPost']
         }),
 
+        getUploaderProfile:builder.query({
+
+            query:({token,id})=>{
+                return{
+
+                    url:`profile/${id}`,
+                    method:"GET",
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
+            },
+            
+        }),
+
         postFeedPost:builder.mutation({
 
-            query:(token)=>{
+            query:({token,formData})=>{
 
                 return{
                     url:`/post`,
                     method:"POST",
                     headers:{
                         Authorization:`Bearer ${token}`
-                    }
+                    },
+                    body:formData
                 }
-            }
+            },
+            invalidatesTags:['feedPost']
         }),
-
-        // getAllComments:builder.query({
-
-        //     query:({token,pId})=>{
-
-        //         return {
-
-        //             url:`/comments?postId=${pId}`,
-        //             method:"GET",
-        //             headers:{
-        //                 Authorization:`Bearer ${token}`
-        //             }
-        //         }
-        //     }
-        // }) may b for later
 
         postCommentBasedOnId:builder.mutation({
 
@@ -62,8 +64,37 @@ const feedApi=baseApi.injectEndpoints({
                 }
             },
             invalidatesTags:['feedPost']
+        }),
+
+        postLike:builder.mutation({
+
+            query:({token,id})=>{
+
+                return{
+                    url:`/react/${id}`,
+                    method:"POST",
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
+            },
+            invalidatesTags:['feedPost']
+        }),
+
+        postSave:builder.mutation({
+
+            query:({token,id})=>{
+
+                return{
+                    url:`/savepost/${id}`,
+                    method:"POST",
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
+            },
         })
     })
 })
 
-export const{useGetAllPostQuery,usePostCommentBasedOnIdMutation,usePostFeedPostMutation}=feedApi;
+export const{useGetAllPostQuery,usePostCommentBasedOnIdMutation,usePostFeedPostMutation,usePostLikeMutation,usePostSaveMutation,useGetUploaderProfileQuery}=feedApi;

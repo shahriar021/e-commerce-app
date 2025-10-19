@@ -6,8 +6,9 @@ import { Rating } from 'react-native-ratings';
 import { AntDesign, Ionicons, SimpleLineIcons } from '@expo/vector-icons';
 import CreatePostModal from './CreatePostModal';
 import { useAppSelector } from 'src/redux/hooks';
-import { useGetAllPostQuery, usePostCommentBasedOnIdMutation } from 'src/redux/features/feedApi/feedApi';
+import { useGetAllPostQuery, usePostCommentBasedOnIdMutation, usePostLikeMutation, usePostSaveMutation } from 'src/redux/features/feedApi/feedApi';
 import { getTime } from 'src/components/shared/timeHistory';
+import { Toast } from 'toastify-react-native';
 const categories = [
     { label: 'Trending', value: 'ALL' },
     { label: 'New', value: 'T-Shirts' },
@@ -24,6 +25,7 @@ const categories = [
 const Feed = () => {
 
     const token = useAppSelector((state) => state.auth.token)
+    console.log(token)
     const navigation = useNavigation();
     const [isClothType, setIsClothType] = useState("ALL")
     const [selectedItem, setSelectedItem] = useState()
@@ -34,6 +36,8 @@ const Feed = () => {
     const userType = useAppSelector(store => store.auth.userType)
     const { data: getPostData, isLoading, error } = useGetAllPostQuery({ token, limit: loadMore })
     const [postComment] = usePostCommentBasedOnIdMutation()
+    const [postLike]=usePostLikeMutation()
+    const [postSave]=usePostSaveMutation()
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -79,6 +83,29 @@ const Feed = () => {
         }
     }
 
+    const handleLike=async(id:string)=>{
+        try{
+            const res =await postLike({token,id}).unwrap()
+        }catch(err){
+            if(err){
+                Toast.error("Something went wrong!")
+            }
+        }
+    }
+
+    const handleSave=async(id:string)=>{
+         try{
+            const res =await postSave({token,id}).unwrap()
+            console.log(res)
+            if(res.success){
+                Toast.success("saved.")
+            }
+        }catch(err){
+            if(err){
+                Toast.error("Something went wrong!")
+            }
+        }
+    }
 
     return (
         <View className='flex-1 bg-[#121212] p-5 relative'>
@@ -102,7 +129,7 @@ const Feed = () => {
                 {getPostData?.data?.data?.map((item, index) =>
                     <View key={index}>
                         <View className='flex-row justify-between mt-4 mb-1 '>
-                            <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile", { type: "user" })}>
+                            <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile", { upID: item.uploaderId })}>
                                 <View style={{ width: scale(30), height: scale(30) }}>
                                    {item.uploaderType=="Brand" ?<Image source={{ uri: item.uploaderDetails.brandLogo[0] }} style={{ width: "100%", height: "100%" }} /> :<Image source={{ uri: item.uploaderDetails.profile[0] }} style={{ width: "100%", height: "100%" }} />}
                                 </View>
@@ -128,14 +155,14 @@ const Feed = () => {
                         <View className='relative mt-4 rounded-xl overflow-hidden' style={{ width: scale(320), height: verticalScale(300) }}>
                             <Image source={{ uri: item.attachment[0] }} style={{ width: "100%", height: "100%" }} />
                             <View className='absolute right-3 top-2  items-center'>
-                                <View className='bg-[#212121] p-4 rounded-full ' style={{ width: scale(57), height: verticalScale(57), backgroundColor: 'rgba(33,33,33,0.10)' }}>
+                                <TouchableOpacity className=' p-4 rounded-full ' style={{ width: scale(57), height: verticalScale(57), backgroundColor: 'rgba(255, 255, 255, 0.7)' }} onPress={()=>handleSave(item._id)}>
                                     <Image source={require("../../../assets/e-icon/gb.png")} style={{ width: "100%", height: "100%" }} resizeMode='contain' />
-                                </View>
+                                </TouchableOpacity>
 
                                 <Image source={require("../../../assets/e-icon/Vector.png")} style={{ width: 18, height: 18 }} className='mt-10' />
                                 <Image source={require("../../../assets/e-icon/Vector (1).png")} style={{ width: 18, height: 18 }} className='mt-4' />
                                 <Text className='text-white font-instrumentRegular mt-2'>{item.totalComments}</Text>
-                                <TouchableOpacity className='bg-[#FF4B4B] mt-5 p-1 items-center rounded-xl'>
+                                <TouchableOpacity className={`${item.isReacted==true?"bg-[#FF4B4B]":""} mt-5 p-1 items-center rounded-xl`} onPress={()=>handleLike(item._id)}>
                                     <Ionicons name="heart" size={24} color="white" />
                                     <Text className='text-white font-instrumentRegular'>{item.totalReacts}</Text>
                                 </TouchableOpacity>

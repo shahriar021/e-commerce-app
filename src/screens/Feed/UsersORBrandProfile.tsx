@@ -5,13 +5,16 @@ import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 import Posts from './Posts';
 import Details from './Details';
+import { useGetUploaderProfileQuery } from 'src/redux/features/feedApi/feedApi';
+import { useAppSelector } from 'src/redux/hooks';
 
 const UsersORBrandProfile = () => {
-
+  const token=useAppSelector((state)=>state.auth.token)
   const navigation = useNavigation();
   const {width,height}=useWindowDimensions()
   const [isPosts,setIsPosts]=useState("Posts")
-  const {type}=useRoute().params
+  const {upID}=useRoute().params
+  const {data:getSpecificUserData}=useGetUploaderProfileQuery({token,id:upID})
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -81,21 +84,17 @@ const UsersORBrandProfile = () => {
             justifyContent: 'center',
           }}
         >
-          {type=="user"?<Image
-            source={require("../../../assets/e-icon/img (1).png")}
-            style={{ width: '100%', height: '100%' }}
-            resizeMode="cover"
-          />
-          :<Image
+          
+          <Image
             source={require("../../../assets/e-icon/brandLogo.png")}
             style={{ width: '100%', height: '100%' }}
             resizeMode="cover"
-          />}
+          />
         </View>
       </View>
 
       <View className='w-[92%] items-center'>
-        <Text className='text-white text-center font-instrumentSansBold' >{type=="user"? "Jack Robo":"Coin Supply"}</Text>
+        {/* <Text className='text-white text-center font-instrumentSansBold' >{type=="user"? "Jack Robo":"Coin Supply"}</Text> */}
         <Text className='text-white font-instrumentSansSemiBold text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
         <View className='mt-3 flex-row gap-3'>
           <View className='bg-[#252525] p-2 items-center rounded-xl'>
@@ -112,7 +111,7 @@ const UsersORBrandProfile = () => {
           </View>
         </View>
       </View>
-     { type=="user"?<TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3'>
+     {/* { type=="user"?<TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3'>
         <Text className='text-black font-instrumentSansSemiBold' >Follow</Text>
       </TouchableOpacity>
       :<View className='flex-row items-center gap-2'>
@@ -122,7 +121,7 @@ const UsersORBrandProfile = () => {
       <TouchableOpacity className='bg-[#1D3725] p-2 rounded-xl mt-3' onPress={()=>navigation.navigate("Brand Details")}>
         <Text className='text-white font-instrumentSansSemiBold' >View Details</Text>
       </TouchableOpacity>
-      </View>}
+      </View>} */}
 
       <View className='w-[92%] flex-row gap-3 mt-2 mb-3'>
         <TouchableOpacity className={`${isPosts=="Posts"?"border-b border-b-white":""} py-1`} onPress={()=>setIsPosts("Posts")}>

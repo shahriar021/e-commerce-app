@@ -1,36 +1,73 @@
-import { View, Text, Modal, useWindowDimensions, TouchableOpacity, ScrollView, Image, TextInput, Alert, Linking } from 'react-native'
+import { View, Text, Modal, useWindowDimensions, TouchableOpacity, ScrollView, Image, TextInput, Alert, Linking, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import { AntDesign, Entypo } from '@expo/vector-icons'
 import { scale, verticalScale } from 'react-native-size-matters'
-import InputSelectPicker from 'src/components/shared/InputSelectPicker'
 import CreateModalSelecPicker from 'src/components/ui/feed/CreateModalSelecPicker'
 import { usePostFeedPostMutation } from 'src/redux/features/feedApi/feedApi'
 import * as ImagePicker from 'expo-image-picker';
 import { useAppSelector } from 'src/redux/hooks'
 import { useFeatureBrandsQuery } from 'src/redux/features/brand/brandApi'
+import ToastManager, { Toast } from 'toastify-react-native'
 
 const CreatePostModal = ({ visible, onClose }: any) => {
 
     const { width, height } = useWindowDimensions()
     const token = useAppSelector((state) => state.auth.token);
     const [loadMore, setLoadMore] = useState(100)
-      const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
-      console.log(data,"modal")
-
+    const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
+    const [loading,setLoading]=useState(false)
     const [postFeed] = usePostFeedPostMutation()
     const [hashtag, setHashtag] = useState<string[]>([])
     const [comment, setComments] = useState("");
     const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedBrand, setSelectedBrand] = useState("");
 
     const handleHashTag = (text: string) => {
         const hashTagArray = text.split(" ").filter(Boolean);
         setHashtag([...new Set(hashTagArray)]);
     }
-
     const handlePost = async () => {
-        // console.log(hashtag, comment, "post feed")
+        if(!selectedImage || !hashtag || !comment ||!selectedBrand){
+            Alert.alert("Fill all the fields to post!")
+            return ;
+        }
+        setLoading(true);
+        const formData = new FormData()
 
+        const data = {
+            tags: hashtag, caption: comment, brandName: selectedBrand?.brandName, brandId: selectedBrand?._id
+        }
+        if (selectedImage) {
+            const imageFile = {
+                uri: selectedImage?.uri,
+                name: selectedImage?.fileName,
+                type: selectedImage?.mimeType
+            }
+            formData.append("attachment", imageFile)
+        }
+        formData.append("data", JSON.stringify(data))
+        try {
+            
+            const res = await postFeed({ token, formData }).unwrap()
+            if(res.success){
+                setComments("")
+                setHashtag([''])
+                Toast.success('Posted')
+                onClose()
+            }else{
+                Toast.warn('Something went wrong!!')
+                onClose()
+            }
+        } catch (err) {
+            Toast.error("Something went wrong!!")
+            setLoading(false)
+            console.log(err)
+        }finally{
+            setLoading(false)
+        }
     }
+
+
 
     const openCamera = async () => {
         // 1. Check current status, which gives us both status and canAskAgain
@@ -116,12 +153,12 @@ const CreatePostModal = ({ visible, onClose }: any) => {
                         <Text className='font-instrumentSansSemiBold text-white w-full mt-2'>Select Brand</Text>
 
                         <View className='flex-row items-center mt-4 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                            <CreateModalSelecPicker />
+                            <CreateModalSelecPicker data={data?.data} selectedState={selectedBrand} setSelectedState={setSelectedBrand} />
                             <AntDesign name="down" size={24} color="white" />
                         </View>
 
                         <TouchableOpacity className='bg-[#1D3725] w-full p-4 items-center rounded-xl mt-5 mb-4' onPress={handlePost}>
-                            <Text className='text-[#CACACA] font-instrumentSansBold text-xl'>Post</Text>
+                            <Text className='text-[#CACACA] font-instrumentSansBold text-xl'>{loading?<ActivityIndicator size={"small"} color={"blue"}/>:"Post"}</Text>
                         </TouchableOpacity>
                     </ScrollView>
                 </View>

@@ -7,6 +7,7 @@ import AuthStack from "src/routes/AuthStack";
 import { useFonts } from "expo-font";
 import { useAppSelector } from "src/redux/hooks";
 import SplashScreen from "../ui/splashScreen/SplashScreen";
+import ToastManager from 'toastify-react-native';
 
 const MainLayout = () => {
   // const token = useAppSelector((state) => state.auth.user?.access_token);
@@ -59,16 +60,20 @@ const MainLayout = () => {
 
 
   return (
-    <NavigationContainer>
-      <View style={{ flex: 1 }}>
-        <StatusBar style="light" />
-        {token ? (
-          <StackNavigation />
-        ) : (
-          <AuthStack />
-        )}
-      </View>
-    </NavigationContainer>
+    <>
+      <ToastManager position={'bottom'} duration={1000}
+      />
+      <NavigationContainer>
+        <View style={{ flex: 1 }}>
+          <StatusBar style="light" />
+          {token ? (
+            <StackNavigation />
+          ) : (
+            <AuthStack />
+          )}
+        </View>
+      </NavigationContainer>
+    </>
   );
 };
 

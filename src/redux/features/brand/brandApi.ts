@@ -4,7 +4,6 @@ const brandApi = baseApi.injectEndpoints({
     endpoints:(builder)=>({
         featureBrands:builder.query({
             query:({token,limit})=>{
-                    console.log(limit,"in redux.")
                 return {
                     url:`/stats/brandlist?limit=${limit}`,
                     method:"GET",

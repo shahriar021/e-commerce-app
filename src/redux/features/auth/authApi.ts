@@ -4,7 +4,6 @@ const authApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (loginData) => {
-                console.log(loginData,"in redux")
                 return {
                 url: "/auth/login",
                 

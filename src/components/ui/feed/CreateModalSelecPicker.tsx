@@ -47,6 +47,7 @@ const CreateModalSelecPicker = ({
     dispatch(alterOverlay(null));
   };
 
+
   return (
     <View className="flex-1 relative">
       <Pressable onPress={handlePress} disabled={disabled}>
@@ -59,7 +60,7 @@ const CreateModalSelecPicker = ({
           }}
         >
           <Text className="text-[#fff] font-helvetica">
-            {selectedState?.name || "Choose a brand"}
+            {selectedState?.brandName || "Choose a brand"}
           </Text>
         </View>
       </Pressable>
@@ -69,14 +70,14 @@ const CreateModalSelecPicker = ({
           style={{ top: inputBoxHeight }}
         >
           <ScrollView>
-            {data?.map((item: any) => {
+            {data?.data?.map((item: any) => {
               return (
                 <TouchableOpacity
                   key={item?.id}
                   onPress={() => handleItemPick(item)}
                 >
                   <Text className="p-2 border-b border-gray-200 rounded-md">
-                    {item?.name}
+                    {item?.brandName}
                   </Text>
                 </TouchableOpacity>
               );
