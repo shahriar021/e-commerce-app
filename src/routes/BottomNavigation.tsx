@@ -1,24 +1,13 @@
 import React from "react"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  Feather,
-  Ionicons,
-  FontAwesome,
-  MaterialIcons,
-} from "@expo/vector-icons";
-import NavRight from "src/components/shared/NavRight";
 import { Image, Platform, Text, useWindowDimensions, View } from "react-native";
-import { useAppSelector } from "src/redux/hooks";
-
 const BottomTabs = createBottomTabNavigator();
-
 import { TouchableOpacity } from 'react-native';
 import { HomeScreen } from "src/screens";
 import Bage from "src/screens/Bage/Bage";
 import Feed from "src/screens/Feed/Feed";
 import { DrawerNavigation } from "./DrawerNavigation";
 import Search from "src/screens/Search/Search";
-import { moderateScale } from "react-native-size-matters";
 
 const CustomTabBarButton = ({ children, onPress, accessibilityState }: any) => {
   const focused = accessibilityState.selected;
@@ -40,9 +29,7 @@ const CustomTabBarButton = ({ children, onPress, accessibilityState }: any) => {
   );
 };
 
-
 export const BottomNavigation = () => {
-
 
   const { width } = useWindowDimensions();
 
@@ -79,8 +66,6 @@ export const BottomNavigation = () => {
           headerTintColor: "#5b21b6",
         }}
       >
-
-
         <BottomTabs.Screen
           name="Home"
           component={HomeScreen}
@@ -96,8 +81,6 @@ export const BottomNavigation = () => {
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
           }}
         />
-
-
         <BottomTabs.Screen
           name="Feed"
           component={Feed}
@@ -154,8 +137,6 @@ export const BottomNavigation = () => {
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
           }}
         />
-
-
       </BottomTabs.Navigator>
     </View>
   );

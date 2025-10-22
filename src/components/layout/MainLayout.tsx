@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import StackNavigation from "src/routes/StackNavigation";
@@ -12,13 +12,9 @@ import { useGetProfileQuery } from "src/redux/features/profile/profile/profileAp
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MainLayout = () => {
-  // const token = useAppSelector((state) => state.auth.user?.access_token);
   const token = useAppSelector((state) => state.auth.token);
-  // const token = 0;
   const [isSplashVisible, setIsSplashVisible] = useState(true);
-
   const {data:getProfile,isSuccess}=useGetProfileQuery(token)
-  console.log(token)
 
   useEffect(() => {
     if (isSuccess && getProfile) {
@@ -26,11 +22,7 @@ const MainLayout = () => {
         try {
           const jsonValue = JSON.stringify(getProfile);
           await AsyncStorage.setItem('user_profile', jsonValue);
-          
-          console.log('AsyncStorage Updated (Success):', getProfile);
-          
           setIsSplashVisible(false);
-          
         } catch (e) {
           console.error("Failed to save profile to AsyncStorage", e);
         }
@@ -53,7 +45,6 @@ const MainLayout = () => {
     'instrumentSans-Regular': require("../../../assets/fonts/InstrumentSans-Regular.ttf"),
     'instrumentSans-SemiBold': require("../../../assets/fonts/InstrumentSans-SemiBold.ttf"),
   });
-
 
   useLayoutEffect(() => {
     const timer = setTimeout(() => {

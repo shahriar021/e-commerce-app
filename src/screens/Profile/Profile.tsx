@@ -3,25 +3,20 @@ import {
   View,
   Text,
   Image,
-  Dimensions,
   ScrollView,
   TouchableOpacity,
   ImageSourcePropType,
-  useWindowDimensions,
 } from "react-native";
-import {  useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AntDesign } from "@expo/vector-icons";
-
-// ✅ SVG imports as components
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { useAppSelector } from "src/redux/hooks";
 import Posts from "../Feed/Posts";
-import * as ImagePicker from 'expo-image-picker';
 import CreatePostModal from "../Feed/CreatePostModal";
-import { useGetProfileQuery } from "src/redux/features/profile/profile/profileApi";
+import { useGetIndividualPostQuery, useGetLookbookQuery, useGetProfileQuery } from "src/redux/features/profile/profile/profileApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Lookbook from "./Lookbook";
 
 type ProfileItemsProp = {
   icon: ImageSourcePropType;
@@ -40,23 +35,16 @@ type RootStackParamList = {
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 export default function YourComponent() {
-  const token=useAppSelector((state)=>state.auth.token)
-  const [selectedImage, setSelectedImage] = useState(null);
-  const userType = useAppSelector((store) => store.auth.userType)
+  const token = useAppSelector((state) => state.auth.token)
   const [isPosts, setIsPosts] = useState("Posts")
   const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const insets = useSafeAreaInsets();
   const navigation = useNavigation<NavigationProp>();
-
-  const {data:getProfile}=useGetProfileQuery(token)
-
-  const { width, height } = useWindowDimensions()
-
-  // console.log(getProfile,"profile")
-
   const [profile, setProfile] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [postLoadlimit, setPostLoadlimit] = useState(10);
+  const [saveLoadlimit, setSaveLoadlimit] = useState(10);
+  const { data: getLookbook } = useGetLookbookQuery({ token, limit: saveLoadlimit });
+  const { data: getPostData } = useGetIndividualPostQuery({ token, uid: profile?.data?.data?._id, limit: postLoadlimit })
+  console.log(saveLoadlimit, "lookbook")
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -64,7 +52,7 @@ export default function YourComponent() {
         const jsonValue = await AsyncStorage.getItem('user_profile');
         if (jsonValue != null) {
           setProfile(JSON.parse(jsonValue));
-        } 
+        }
       } catch (e) {
         console.error("Failed to load profile from AsyncStorage", e);
       }
@@ -74,28 +62,22 @@ export default function YourComponent() {
   }, []);
   useFocusEffect(
     useCallback(() => {
-        const loadProfile = async () => {
-            try {
-                const jsonValue = await AsyncStorage.getItem('user_profile');
-                if (jsonValue != null) {
-                    // Update state, which triggers a re-render
-                    setProfile(JSON.parse(jsonValue));
-                } 
-            } catch (e) {
-                console.error("Failed to load profile from AsyncStorage", e);
-            }
-        };
+      const loadProfile = async () => {
+        try {
+          const jsonValue = await AsyncStorage.getItem('user_profile');
+          if (jsonValue != null) {
+            setProfile(JSON.parse(jsonValue));
+          }
+        } catch (e) {
+          console.error("Failed to load profile from AsyncStorage", e);
+        }
+      };
+      loadProfile();
+      return () => {
+      };
 
-        loadProfile();
-
-        // Optional cleanup function
-        return () => {
-          // You can add logic to clean up any listeners here if needed
-        };
-        
-    }, []) // Empty array here ensures the function is stable across re-renders
-);
-  console.log(profile?.data?.data?.userName,"in profile")
+    }, [])
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -104,23 +86,6 @@ export default function YourComponent() {
     })
   }, [navigation])
 
-  const openCamera = async () => {
-    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera is required!");
-      return;
-    }
-
-    const result = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setSelectedImage(result.assets[0].uri);
-    }
-  };
 
   const handleModal = () => {
     setIsModalOpen(true)
@@ -177,10 +142,9 @@ export default function YourComponent() {
               justifyContent: 'center',
             }}
           >
-
-            {selectedImage ? (
+            {profile?.data?.data?.profile[0] ? (
               <Image
-                source={{ uri: selectedImage }}
+                source={{ uri: profile?.data?.data?.profile[0] }}
                 style={{ width: "100%", height: "100%" }}
                 resizeMode="cover"
               />
@@ -189,15 +153,7 @@ export default function YourComponent() {
               style={{ width: '100%', height: '100%' }}
               resizeMode="cover"
             />}
-
-
           </View>
-          <TouchableOpacity onPress={openCamera} className="absolute z-10 bg-[#2A2A2A] p-1 rounded-full" style={{
-            width: scale(24), height: scale(24), bottom: verticalScale(12), left: '50%',
-            transform: [{ translateX: scale(60) / 2 }]
-          }}>
-            <Image source={require("../../../assets/e-icon/Button.png")} style={{ width: '100%', height: '100%' }} />
-          </TouchableOpacity>
         </View>
 
         <View className='w-[92%] items-center'>
@@ -219,8 +175,6 @@ export default function YourComponent() {
           </View>
         </View>
 
-
-
         <View className='w-[92%] flex-row gap-3 mt-2 mb-3 justify-center items-center'>
           <TouchableOpacity className={`${isPosts == "Posts" ? "border-b border-b-white" : ""} py-1`} onPress={() => setIsPosts("Posts")}>
             <Text className='font-instrumentSansBold text-white' >Posts</Text>
@@ -229,7 +183,7 @@ export default function YourComponent() {
             <Text className='font-instrumentSansBold text-white' >My Lookbook</Text>
           </TouchableOpacity>
         </View>
-        {isPosts == "Posts" ? <Posts /> : <Posts />}
+        {isPosts == "Posts" ? <Posts data={getPostData?.data} setPostLoad={setPostLoadlimit} currentLimit={postLoadlimit} /> : <Lookbook data={getLookbook?.data} setFavLimit={setSaveLoadlimit} currentSave={saveLoadlimit} />}
       </ScrollView>
       <CreatePostModal visible={isModalOpen}
         onClose={() => setIsModalOpen(false)}

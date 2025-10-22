@@ -35,8 +35,36 @@ const profileApi = baseApi.injectEndpoints({
                 }
             },
             invalidatesTags:['profile']
+        }),
+
+        getLookbook:builder.query({
+
+            query:({token,limit})=>{
+                console.log(limit,"in redux")
+                return{
+                    url:`/savepost?limit=${limit}`,
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    },
+                    method:"GET"
+                }
+            }
+        }),
+
+        getIndividualPost:builder.query({
+            
+            query:({token,uid,limit})=>{
+
+                return{
+                    url:`/post?uploaderId=${uid}&limit=${limit}`,
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    },
+                    method:"GET"
+                }
+            }
         })
     })
 })
 
-export const {useGetProfileQuery,useUpdateProfileMutation}=profileApi
+export const {useGetProfileQuery,useUpdateProfileMutation,useGetLookbookQuery,useGetIndividualPostQuery}=profileApi
