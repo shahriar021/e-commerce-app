@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import StackNavigation from "src/routes/StackNavigation";
 import { NavigationContainer } from "@react-navigation/native";
@@ -8,12 +8,38 @@ import { useFonts } from "expo-font";
 import { useAppSelector } from "src/redux/hooks";
 import SplashScreen from "../ui/splashScreen/SplashScreen";
 import ToastManager from 'toastify-react-native';
+import { useGetProfileQuery } from "src/redux/features/profile/profile/profileApi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MainLayout = () => {
   // const token = useAppSelector((state) => state.auth.user?.access_token);
   const token = useAppSelector((state) => state.auth.token);
   // const token = 0;
   const [isSplashVisible, setIsSplashVisible] = useState(true);
+
+  const {data:getProfile,isSuccess}=useGetProfileQuery(token)
+  console.log(token)
+
+  useEffect(() => {
+    if (isSuccess && getProfile) {
+      const saveProfile = async () => {
+        try {
+          const jsonValue = JSON.stringify(getProfile);
+          await AsyncStorage.setItem('user_profile', jsonValue);
+          
+          console.log('AsyncStorage Updated (Success):', getProfile);
+          
+          setIsSplashVisible(false);
+          
+        } catch (e) {
+          console.error("Failed to save profile to AsyncStorage", e);
+        }
+      };
+      
+      saveProfile();
+    }
+    
+  }, [getProfile, isSuccess]);
 
   const [fontsLoaded] = useFonts({
     'prosto-One': require("../../../assets/fonts/ProstoOne-Regular.ttf"),

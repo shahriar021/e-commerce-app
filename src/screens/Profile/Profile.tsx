@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,27 +7,21 @@ import {
   ScrollView,
   TouchableOpacity,
   ImageSourcePropType,
-  Platform,
   useWindowDimensions,
 } from "react-native";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
+import {  useSafeAreaInsets } from "react-native-safe-area-context";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { AntDesign, Entypo } from "@expo/vector-icons";
-import { StatusBar } from "expo-status-bar";
-import { profileItems } from "../../constants/profileItems";
+import { AntDesign } from "@expo/vector-icons";
 
 // ✅ SVG imports as components
-import LeftSVG from "../../../assets/restroIcon/leftSVG.svg";
-import RightSVG from "../../../assets/restroIcon/rightSVG.svg";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { useAppSelector } from "src/redux/hooks";
 import Posts from "../Feed/Posts";
-import Details from "../Feed/Details";
 import * as ImagePicker from 'expo-image-picker';
 import CreatePostModal from "../Feed/CreatePostModal";
-
-const { width } = Dimensions.get("window");
+import { useGetProfileQuery } from "src/redux/features/profile/profile/profileApi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type ProfileItemsProp = {
   icon: ImageSourcePropType;
@@ -45,9 +39,8 @@ type RootStackParamList = {
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
-const isTablet = width > 768;
-
 export default function YourComponent() {
+  const token=useAppSelector((state)=>state.auth.token)
   const [selectedImage, setSelectedImage] = useState(null);
   const userType = useAppSelector((store) => store.auth.userType)
   const [isPosts, setIsPosts] = useState("Posts")
@@ -56,7 +49,53 @@ export default function YourComponent() {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<NavigationProp>();
 
+  const {data:getProfile}=useGetProfileQuery(token)
+
   const { width, height } = useWindowDimensions()
+
+  // console.log(getProfile,"profile")
+
+  const [profile, setProfile] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('user_profile');
+        if (jsonValue != null) {
+          setProfile(JSON.parse(jsonValue));
+        } 
+      } catch (e) {
+        console.error("Failed to load profile from AsyncStorage", e);
+      }
+    };
+
+    loadProfile();
+  }, []);
+  useFocusEffect(
+    useCallback(() => {
+        const loadProfile = async () => {
+            try {
+                const jsonValue = await AsyncStorage.getItem('user_profile');
+                if (jsonValue != null) {
+                    // Update state, which triggers a re-render
+                    setProfile(JSON.parse(jsonValue));
+                } 
+            } catch (e) {
+                console.error("Failed to load profile from AsyncStorage", e);
+            }
+        };
+
+        loadProfile();
+
+        // Optional cleanup function
+        return () => {
+          // You can add logic to clean up any listeners here if needed
+        };
+        
+    }, []) // Empty array here ensures the function is stable across re-renders
+);
+  console.log(profile?.data?.data?.userName,"in profile")
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -162,19 +201,19 @@ export default function YourComponent() {
         </View>
 
         <View className='w-[92%] items-center'>
-          <Text className='text-white text-center font-instrumentSansBold mb-1' >Jack Robo</Text>
+          <Text className='text-white text-center font-instrumentSansBold mb-1' >{profile?.data?.data?.userName}</Text>
           <Text className='text-white font-instrumentSansSemiBold text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
           <View className='mt-3 flex-row gap-3'>
             <View className='bg-[#252525] p-2 items-center rounded-xl'>
-              <Text className='text-white font-instrumentRegular'>142</Text>
+              <Text className='text-white font-instrumentRegular'>{profile?.data?.data?.totalPosts | 0}</Text>
               <Text className='text-[#9CA3AF] font-instrumentRegular' >Posts</Text>
             </View>
             <View className='bg-[#252525] p-2 items-center rounded-xl'>
-              <Text className='text-white font-instrumentRegular'>2.1k</Text>
+              <Text className='text-white font-instrumentRegular'>{profile?.data?.data?.totalReacts | 0}</Text>
               <Text className='text-[#9CA3AF] font-instrumentRegular' >Likes</Text>
             </View>
             <View className='bg-[#252525] p-2 items-center rounded-xl'>
-              <Text className='text-white font-instrumentRegular'>89</Text>
+              <Text className='text-white font-instrumentRegular'>{profile?.data?.data?.totalFollowers | 0}</Text>
               <Text className='text-[#9CA3AF] font-instrumentRegular' >Followings</Text>
             </View>
           </View>

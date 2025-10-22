@@ -131,7 +131,7 @@ const Feed = () => {
                         <View className='flex-row justify-between mt-4 mb-1 '>
                             <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile", { upID: item.uploaderId })}>
                                 <View style={{ width: scale(30), height: scale(30) }}>
-                                   {item.uploaderType=="Brand" ?<Image source={{ uri: item.uploaderDetails.brandLogo[0] }} style={{ width: "100%", height: "100%" }} /> :<Image source={{ uri: item.uploaderDetails.profile[0] }} style={{ width: "100%", height: "100%" }} />}
+                                   {item.uploaderType=="Brand" ?<Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%" }} /> :<Image source={{ uri: item.profile[0] }} style={{ width: "100%", height: "100%" }} />}
                                 </View>
                                 <View className='flex-col  gap-2'>
 

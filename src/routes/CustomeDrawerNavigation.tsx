@@ -69,7 +69,8 @@ export const CustomDrawerContent = (props) => {
   ];
    const userType = useAppSelector((store)=>store.auth.userType)
 
-  const items = userType === 'user' ? [...userItems, ...commonItems] : [...providerItems, ...commonItems];
+  const items = userType === 'User' ? [...userItems, ...commonItems] : [...providerItems, ...commonItems];
+  console.log(userType,"user type")
 
  
   // userType == user or provider

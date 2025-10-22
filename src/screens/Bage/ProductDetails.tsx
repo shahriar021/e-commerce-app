@@ -9,6 +9,7 @@ import { useGetSpecificProductBasedOnIdQuery } from 'src/redux/features/product/
 import { useGetALlReviewBasedOnIdQuery } from 'src/redux/features/review/reviewApi';
 import { getTime } from 'src/components/shared/timeHistory';
 import { usePostAddToCartMutation } from 'src/redux/features/cart/cartApi';
+import { usePostFavProductMutation } from 'src/redux/features/profile/favourite/favouriteApi';
 
 const ProductDetails = () => {
 
@@ -27,6 +28,7 @@ const ProductDetails = () => {
     const { data } = useGetSpecificProductBasedOnIdQuery({ token, id: ID })
     const { data: getReview } = useGetALlReviewBasedOnIdQuery({ token, id: ID, limit: limit })
     const [postCart] = usePostAddToCartMutation()
+    const [postFavourite] = usePostFavProductMutation()
 
     navigation.setOptions({
         headerStyle: {
@@ -57,7 +59,7 @@ const ProductDetails = () => {
     }
 
     const handleAddToCart = async () => {
-        if(!isColor || !selectedSize || !quantity){
+        if (!isColor || !selectedSize || !quantity) {
             Alert.alert("Please select quantity,size and color properly.");
             return;
         }
@@ -69,10 +71,8 @@ const ProductDetails = () => {
                 quantity: quantity
             }
         }
-        console.log(body)
         try {
             const res = await postCart({ token, data: body }).unwrap()
-            console.log(res, "res....")
             if (res.success == true) {
                 Alert.alert(res.message)
                 navigation.navigate("Cart Page" as never)
@@ -80,7 +80,18 @@ const ProductDetails = () => {
         } catch (err) {
             Alert.alert("Something went wrong!")
         }
-        
+
+    }
+
+    const handleFav = async (id: string) => {
+        console.log(id, "favourite...")
+        try {
+            const res = await postFavourite({ token, id }).unwrap();
+            console.log(res?.data?.success)
+            setIsHeart(res?.success)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     return (
@@ -92,7 +103,7 @@ const ProductDetails = () => {
                         <TouchableOpacity className='bg-[#252525] p-3 rounded-full'>
                             <Ionicons name="chevron-back-sharp" size={24} color="white" />
                         </TouchableOpacity>
-                        <TouchableOpacity className='bg-[#252525] p-3 rounded-full' onPress={() => setIsHeart(!isHeart)}>
+                        <TouchableOpacity className='bg-[#252525] p-3 rounded-full' onPress={() => handleFav(data?.data?.product[0]?._id)}>
                             {isHeart ? <Ionicons name="heart" size={24} color="red" /> : <Ionicons name="heart" size={24} color="white" />}
                         </TouchableOpacity>
                     </View>
