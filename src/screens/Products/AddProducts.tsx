@@ -12,6 +12,9 @@ const AddProducts = () => {
     const navigation = useNavigation();
     const [isAvailble, setIsAvailable] = useState(false)
     const [selectChestSize,setSelectChestSize]=useState("")
+    const [selectWSize,setSelectWSize]=useState("")
+    const [selectHpSize,setSelectHpSize]=useState("")
+    const [selectHGSize,setSelectHGSize]=useState("")
 
     useLayoutEffect(() => {
         navigation.setOptions({
