@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export type TUser = {
-     
-        access_token: string;
+
+  access_token: string;
   address: string | null;
   api_token: string;
   branch_id: number | null;
@@ -21,7 +21,7 @@ export type TUser = {
   status: number;
   type: string | null;
   updated_at: string; // ISO date string
-      
+
 };
 
 export type TCredentials = {
@@ -31,48 +31,53 @@ export type TCredentials = {
 
 type TAuthData = {
   user: null | TUser;
+  id:null | string;
   credentials: null | TCredentials;
-  profile: null ;
-  companyAuth:null | string;
-  BASE_URL:string | null;
-  userType:string | null;
-  token:boolean 
+  profile: null;
+  companyAuth: null | string;
+  BASE_URL: string | null;
+  userType: string | null;
+  token: boolean
 };
 
 const initialState: TAuthData = {
   user: null,
+  id:null,
   credentials: null,
   profile: null,
-  companyAuth:null,
-  BASE_URL:null,
-  userType:null,
-  token:false
+  companyAuth: null,
+  BASE_URL: null,
+  userType: null,
+  token: false
 };
 
-const authSlice=createSlice({
-  name:"auth",
+const authSlice = createSlice({
+  name: "auth",
   initialState,
-  reducers:{
-    setUser:(state,action)=>{
-      const {user,credentials}=action.payload
+  reducers: {
+    setUser: (state, action) => {
+      const { user, credentials } = action.payload
       state.user = user
-      state.credentials=credentials
+      state.credentials = credentials
     },
-    setCompanyAuth:(state,action)=>{
-      state.companyAuth=action.payload
+    setId:(state,action)=>{
+      state.id=action.payload
     },
-    setBaseUrl:(state,action)=>{
-      state.BASE_URL=action.payload
+    setCompanyAuth: (state, action) => {
+      state.companyAuth = action.payload
     },
-    setUserType:(state,action)=>{
-      state.userType=action.payload
+    setBaseUrl: (state, action) => {
+      state.BASE_URL = action.payload
     },
-    setToken:(state,action)=>{
-      state.token=action.payload
+    setUserType: (state, action) => {
+      state.userType = action.payload
+    },
+    setToken: (state, action) => {
+      state.token = action.payload
     }
   }
 })
 
-export const { setUser,setCompanyAuth,setBaseUrl,setUserType,setToken } =
+export const { setUser, setCompanyAuth, setBaseUrl, setUserType, setToken,setId } =
   authSlice.actions;
 export default authSlice.reducer;

@@ -1,4 +1,4 @@
-import {  Feather } from "@expo/vector-icons"
+import { Feather } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import { LinearGradient } from "expo-linear-gradient"
 import React, { useLayoutEffect, useState } from "react"
@@ -6,6 +6,7 @@ import { Alert, Image, ScrollView, Text, TextInput, TouchableOpacity, View } fro
 import { scale, verticalScale } from "react-native-size-matters"
 import * as ImagePicker from 'expo-image-picker';
 import { useSignUpBrandMutation } from "src/redux/features/auth/authApi"
+import { launchCameraAndHandlePermissions } from "src/components/shared/ShareCamera"
 export const selectedCountry = {
   flag: require('../../../assets/e-icon/bdFlag.jpg'),
   dialCode: '+880',
@@ -17,11 +18,12 @@ const SignUpBrand = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isShowPassword, setIsShowPassword] = useState(false)
   const [postBody] = useSignUpBrandMutation()
-  const [brandName,setBrandName]=useState('');
+  const [brandName, setBrandName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [theme, setTheme] = useState("")
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -30,8 +32,8 @@ const SignUpBrand = () => {
       },
       headerTintColor: "#FFFFFF",
       headerTitle: '',
-      headerBackTitleVisible: false, 
-      headerBackTitle: '', 
+      headerBackTitleVisible: false,
+      headerBackTitle: '',
       headerLeft: () => (
         <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
           <Feather name="arrow-left-circle" size={24} color="white" />
@@ -44,24 +46,14 @@ const SignUpBrand = () => {
   }, [navigation])
 
   const openCamera = async () => {
-    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera is required!");
-      return;
-    }
-
-    const result = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setSelectedImage(result.assets[0].uri);
+    const asset = await launchCameraAndHandlePermissions();
+    if (asset) {
+      setSelectedImage(asset);
     }
   };
 
   const handleSignUpBrand = async () => {
+    const formData = new FormData();
     if (!email || !password || !phoneNumber) {
       Alert.alert("Please fill up the fields!")
       return;
@@ -73,7 +65,7 @@ const SignUpBrand = () => {
     }
     const userData = {
       brandName: brandName,
-      brandLogo: selectedImage,
+      theme: theme,
       email: email,
       password: password,
       confirmedPassword: confirmPassword,
@@ -82,16 +74,29 @@ const SignUpBrand = () => {
       countryCode: "+880",
     };
 
-    console.log(userData,"user data")
 
-    const formData = new FormData();
+
+    if (selectedImage) {
+
+      const imageFile = {
+        uri: selectedImage?.uri,
+        name: selectedImage?.fileName,
+        type: selectedImage?.mimeType
+      }
+      formData.append("brandLogo", imageFile)
+    }
+
 
     formData.append("data", JSON.stringify(userData));
 
+    console.log(formData,"form data...")
+
     try {
       const res = await postBody(formData).unwrap();
+
       Alert.alert(res.message);
     } catch (err: any) {
+      console.log(err)
       const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
       Alert.alert("Error", errorMessage);
     }
@@ -105,14 +110,20 @@ const SignUpBrand = () => {
         <Text className="mt-1 mb-2 text-[#FFFFFF] text-lg font-instrumentSansSemiBold">It is quick and easy to create you account</Text>
 
         <View className="bg-[#2C2C2C] mt-1 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-          <TextInput className="flex-1" placeholder="Enter Brand Name" placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} onChangeText={setBrandName}/>
+          <TextInput className="flex-1" placeholder="Enter Brand Name" placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} onChangeText={setBrandName} />
+        </View>
+
+        <Text className="mt-1 mb-2 text-[#FFFFFF] text-xl font-instrumentSansSemiBold">Theme</Text>
+
+        <View className="bg-[#2C2C2C] mt-1 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+          <TextInput className="flex-1" placeholder="Enter Theme" placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} onChangeText={setTheme} />
         </View>
 
         <Text className='font-instrumentSansSemiBold text-xl text-[#fff]  w-full'>Brand Logo</Text>
         <TouchableOpacity style={{ height: verticalScale(194) }} className='w-full items-center justify-center border border-dashed border-white  rounded-xl mt-3 bg-[#2C2C2C] mb-4 overflow-hidden' onPress={openCamera}>
           {selectedImage ?
             <Image
-              source={{ uri: selectedImage }}
+              source={{ uri: selectedImage.uri }}
               style={{ width: "100%", height: "100%" }}
               resizeMode="cover"
             />
@@ -145,11 +156,11 @@ const SignUpBrand = () => {
           />
         </View>
         <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-          <TextInput className="flex-1" placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} onChangeText={setEmail}/>
+          <TextInput className="flex-1" placeholder="Enter Your E-Mail Address" placeholderTextColor={"#ADAEBC"} style={{ color: "#ADAEBC" }} onChangeText={setEmail} />
         </View>
 
         <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{ color: "#ADAEBC" }} onChangeText={setPassword}/>
+          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Enter Your Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{ color: "#ADAEBC" }} onChangeText={setPassword} />
           <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
             {isShowPassword ? <Feather name="eye" size={24} color="gray" />
               : <Feather name="eye-off" size={24} color="gray" />}
@@ -157,7 +168,7 @@ const SignUpBrand = () => {
         </View>
 
         <View className="bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
-          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{ color: "#ADAEBC" }} onChangeText={setConfirmPassword}/>
+          <TextInput className="flex-1 text-[#ADAEBC]" placeholder="Confirmed Password" placeholderTextColor={"#ADAEBC"} secureTextEntry={isShowPassword} style={{ color: "#ADAEBC" }} onChangeText={setConfirmPassword} />
           <TouchableOpacity className="flex-row items-center" onPress={() => setIsShowPassword(!isShowPassword)}>
             {isShowPassword ? <Feather name="eye" size={24} color="gray" />
               : <Feather name="eye-off" size={24} color="gray" />}

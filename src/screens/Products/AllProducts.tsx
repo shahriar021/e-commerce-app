@@ -3,11 +3,18 @@ import React, { useLayoutEffect, useState } from 'react'
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { scale } from 'react-native-size-matters';
+import { useAppSelector } from 'src/redux/hooks';
+import { useProductListBrandIdWiseQuery } from 'src/redux/features/product/productApi';
 
 const AllProducts = () => {
-
+    const id=useAppSelector((state)=>state.auth.id)
     const navigation = useNavigation();
     const [orderHist] = useState(Array.from({ length: 10 }, (_, i) => i + 1))
+    const token=useAppSelector((state)=>state.auth.token)
+        const [loadMore,setLoadMore]=useState(10)
+        const {data:getBrands}=useProductListBrandIdWiseQuery({token,id,limit:loadMore})
+    
+        console.log(getBrands?.data?.product[0],"id...")
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -44,18 +51,18 @@ const AllProducts = () => {
             <View className='flex-1 bg-[#121212] '>
 
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingBottom:100}}>
-                    {orderHist?.map(item =>
-                         <TouchableOpacity key={item} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2 flex-row justify-between items-center gap-2' onPress={() => navigation.navigate("Details Product")}>
+                    {getBrands?.data?.product?.map((item:any) =>
+                         <TouchableOpacity key={item._ic} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2 flex-row justify-between items-center gap-2' onPress={() => navigation.navigate("Details Product",{id:item._id})}>
                         <View style={{ width: scale(52), height: scale(52) }} className='rounded-xl overflow-hidden'>
-                                <Image source={require("../../../assets/e-icon/orderHist.png")} style={{ width: "100%", height: "100%" }} />
+                                <Image source={{uri:item.productImages[0]}} style={{ width: "100%", height: "100%" }} />
                             </View>
 
                             <View className='flex-col flex-1 justify-center gap-1'>
-                                <Text className='text-white font-instrumentSansSemiBold text-xl'>Black Formal Dress</Text>
-                                <Text className='text-white font-instrumentRegular text-xl'>৳4,400</Text>
+                                <Text className='text-white font-instrumentSansSemiBold text-xl'>{item.productName}</Text>
+                                <Text className='text-white font-instrumentRegular text-xl'>{item.price}{" "}$</Text>
                                
                             </View>
-                             <Text className='text-[#86EFAC] p-2 rounded-2xl bg-[#14532D] font-instrumentRegular' >In Stock</Text>
+                             <Text className='text-[#86EFAC] p-2 rounded-2xl bg-[#14532D] font-instrumentRegular' >{item.inStock?"In Stock":""}</Text>
 
                     </TouchableOpacity>)}
                 </ScrollView>

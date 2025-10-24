@@ -5,11 +5,13 @@ import { AntDesign, Entypo, Feather, MaterialCommunityIcons } from '@expo/vector
 import { scale, verticalScale } from 'react-native-size-matters';
 import { demo } from '../Search/demo';
 import CreateProductSelecPicker from 'src/components/ui/products/CreateProductSelecPicker';
+import { womenSizeRangesCM } from './demo';
 
 const AddProducts = () => {
 
     const navigation = useNavigation();
     const [isAvailble, setIsAvailable] = useState(false)
+    const [selectChestSize,setSelectChestSize]=useState("")
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -71,70 +73,69 @@ const AddProducts = () => {
             <TextInput className='mt-2 mb-2 bg-[#2C2C2C] p-3 rounded-lg' placeholder='Describe fabric, fit, style...' style={{ color: "#ADAEBC" }} placeholderTextColor={"#ADAEBC"} />
              <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Category*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                <CreateProductSelecPicker />
-                <AntDesign name="down" size={24} color="white" />
+                 <TextInput className='mt-2 mb-2 bg-[#2C2C2C] p-3 rounded-lg' placeholder='category...' style={{ color: "#ADAEBC" }} placeholderTextColor={"#ADAEBC"} />
             </View>
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Size Group for Small*</Text> 
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Bust/Chest*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                <CreateProductSelecPicker />
+                <CreateProductSelecPicker data={womenSizeRangesCM} setSelectedState={setSelectChestSize} selectedState={selectChestSize} displayKey={"bust_range_cm"}/>
                 <AntDesign name="down" size={24} color="white" />
             </View>  
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Waist*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                <CreateProductSelecPicker />
+                <CreateProductSelecPicker data={womenSizeRangesCM} setSelectedState={setSelectChestSize} selectedState={selectChestSize} displayKey={"waist_range_cm"}/>
                 <AntDesign name="down" size={24} color="white" />
             </View>
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Hips*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                <CreateProductSelecPicker />
+                <CreateProductSelecPicker data={womenSizeRangesCM} setSelectedState={setSelectChestSize} selectedState={selectChestSize} displayKey={"hips_range_cm"}/>
                 <AntDesign name="down" size={24} color="white" />
             </View>
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Height Range*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                <CreateProductSelecPicker />
+                <CreateProductSelecPicker data={womenSizeRangesCM} setSelectedState={setSelectChestSize} selectedState={selectChestSize} displayKey={"height_range_cm"}/>
                 <AntDesign name="down" size={24} color="white" />
             </View>
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Size Group for Medium*</Text> 
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Bust/Chest*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                <CreateProductSelecPicker />
+                <CreateProductSelecPicker data={womenSizeRangesCM} setSelectedState={setSelectChestSize} selectedState={selectChestSize} displayKey={"bust_range_cm"}/>
                 <AntDesign name="down" size={24} color="white" />
             </View>
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Waist*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                <CreateProductSelecPicker />
+                <CreateProductSelecPicker data={womenSizeRangesCM} setSelectedState={setSelectChestSize} selectedState={selectChestSize} displayKey={"waist_range_cm"}/>
                 <AntDesign name="down" size={24} color="white" />
             </View>
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Hips*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                <CreateProductSelecPicker />
+                <CreateProductSelecPicker data={womenSizeRangesCM} setSelectedState={setSelectChestSize} selectedState={selectChestSize} displayKey={"hips_range_cm"}/>
                 <AntDesign name="down" size={24} color="white" />
             </View>
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Height Range*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                <CreateProductSelecPicker />
+                 <CreateProductSelecPicker data={womenSizeRangesCM} setSelectedState={setSelectChestSize} selectedState={selectChestSize} displayKey={"height_range_cm"}/>
                 <AntDesign name="down" size={24} color="white" />
             </View>
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Size Group for Large*</Text> 
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Bust/Chest*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                <CreateProductSelecPicker />
+                <CreateProductSelecPicker data={womenSizeRangesCM} setSelectedState={setSelectChestSize} selectedState={selectChestSize} displayKey={"bust_range_cm"}/>
                 <AntDesign name="down" size={24} color="white" />
             </View>
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Waist*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                <CreateProductSelecPicker />
+                <CreateProductSelecPicker data={womenSizeRangesCM} setSelectedState={setSelectChestSize} selectedState={selectChestSize} displayKey={"waist_range_cm"}/>
                 <AntDesign name="down" size={24} color="white" />
             </View>
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Hips*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                <CreateProductSelecPicker />
+                <CreateProductSelecPicker data={womenSizeRangesCM} setSelectedState={setSelectChestSize} selectedState={selectChestSize} displayKey={"hips_range_cm"}/>
                 <AntDesign name="down" size={24} color="white" />
             </View>
             <Text className='text-[#fff] font-instrumentSansSemiBold mt-2 mb-2'>Height Range*</Text>               
             <View className='flex-row items-center mt-2 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
-                <CreateProductSelecPicker />
+                <CreateProductSelecPicker data={womenSizeRangesCM} setSelectedState={setSelectChestSize} selectedState={selectChestSize} displayKey={"height_range_cm"}/>
                 <AntDesign name="down" size={24} color="white" />
             </View>
 

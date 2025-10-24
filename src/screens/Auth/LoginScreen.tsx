@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native"
 import React, { useLayoutEffect, useState } from "react"
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useDispatch } from "react-redux"
-import { setToken, setUserType } from "src/redux/features/auth/authSlice";
+import { setToken, setUserType,setId } from "src/redux/features/auth/authSlice";
 import { useLoginMutation } from "src/redux/features/auth/authApi"
 import { NavigationProp } from "src/types/auth"
 
@@ -75,7 +75,11 @@ const LoginScreen = () => {
             if(userTypes===res?.data?.role){
                 dispatch(setToken(res.data.accessToken));
                 dispatch(setUserType(userTypes));
+                if(res?.data?.id){
+                    dispatch(setId(res.data.id))
+                }
                 Alert.alert(res.message)
+                console.log(res)
             }else{
                 Alert.alert("There is a mismatch in user types,Please select your type carefully!")
             }

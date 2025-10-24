@@ -44,7 +44,6 @@ export default function YourComponent() {
   const [saveLoadlimit, setSaveLoadlimit] = useState(10);
   const { data: getLookbook } = useGetLookbookQuery({ token, limit: saveLoadlimit });
   const { data: getPostData } = useGetIndividualPostQuery({ token, uid: profile?.data?.data?._id, limit: postLoadlimit })
-  console.log(saveLoadlimit, "lookbook")
 
   useEffect(() => {
     const loadProfile = async () => {

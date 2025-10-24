@@ -28,12 +28,12 @@ const authApi = baseApi.injectEndpoints({
 
         // sign up as brand
         signUpBrand: builder.mutation({
-            query: (userBody) => {
+            query: (formData) => {
                 
                 return {
                     url: "/auth/signup",
                     method: "POST",
-                    body: userBody
+                    body: formData
                 }
 
             }
