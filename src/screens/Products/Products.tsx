@@ -6,12 +6,16 @@ import { scale } from 'react-native-size-matters'
 import { useNavigation } from '@react-navigation/native'
 import { useAppSelector } from 'src/redux/hooks'
 import { useProductListBrandIdWiseQuery } from 'src/redux/features/product/productApi'
+import { useGetBrandOrderListQuery } from 'src/redux/features/orders/orderApi'
 
 const Products = () => {
     
     const [orderHist] = useState(Array.from({ length: 10 }, (_, i) => i + 1))
     const navigation = useNavigation()
-    
+    const token=useAppSelector((state)=>state.auth.token)
+    console.log(token)
+    const {data:getOrdersBrand}=useGetBrandOrderListQuery({token,limit:4})
+    console.log(getOrdersBrand?.data?.data,"brand order")
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -63,25 +67,25 @@ const Products = () => {
                 <View className='flex-1 bg-[#121212] py-3'>
 
                     <ScrollView showsVerticalScrollIndicator={false}>
-                        {orderHist?.map(item => <View key={item} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2' >
+                        {getOrdersBrand?.data?.data?.map((item:any) => <View key={item} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2' >
                             <View className='flex-row justify-between items-center'>
-                                <Text className='text-[#fff] font-instrumentSansSemiBold'>#83473</Text>
-                                <Text className='text-[#FB923C] p-2 rounded-2xl font-instrumentRegular' style={{ backgroundColor: 'rgba(249, 115, 22, 0.20)' }}>Processing</Text>
+                                <Text className='text-[#fff] font-instrumentSansSemiBold'>#{(item.orderId).slice(-5)}</Text>
+                                <Text className='text-[#FB923C] p-2 rounded-2xl font-instrumentRegular' style={{ backgroundColor: 'rgba(249, 115, 22, 0.20)' }}>{item.remindStatus}</Text>
                             </View>
                             <View className='flex-row b items-center gap-2 mt-2 mb-1'>
                                 <View style={{ width: scale(52), height: scale(52) }} className='rounded-xl overflow-hidden'>
-                                    <Image source={require("../../../assets/e-icon/orderHist.png")} style={{ width: "100%", height: "100%" }} />
+                                    <Image source={{uri:item.productImages[0]}} style={{ width: "100%", height: "100%" }} />
                                 </View>
                                 <View className='flex-row justify-between flex-1 items-center'>
                                     <View className='flex-col'>
-                                        <Text className='font-instrumentSansSemiBold text-white'>Black Formal Dress</Text>
-                                        <Text className='font-instrumentRegular text-[#9CA3AF]'>Qty: 2 | Size: M</Text>
+                                        <Text className='font-instrumentSansSemiBold text-white'>{item.productName}</Text>
+                                        <Text className='font-instrumentRegular text-[#9CA3AF]'>Qty: {item.quntity} | Size: {item.size}</Text>
                                     </View>
-                                    <View><Text className='font-instrumentSansSemiBold text-white'>৳4,400</Text></View>
+                                    <View><Text className='font-instrumentSansSemiBold text-white'>{item.price}{" "}$</Text></View>
                                 </View>
                             </View>
                             <View className=''>
-                                <Text className='font-instrumentSansSemiBold text-[#9CA3AF]'>Placed: June 24</Text>
+                                <Text className='font-instrumentSansSemiBold text-[#9CA3AF]'>Placed: {new Date(item?.createdAt).toLocaleDateString()}</Text>
 
                             </View>
 
