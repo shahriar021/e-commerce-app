@@ -111,3 +111,215 @@ const Products = () => {
 }
 
 export default Products
+
+
+
+
+
+
+
+
+
+// import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
+// import React, { useLayoutEffect, useState } from "react";
+// import { SafeAreaView } from "react-native-safe-area-context";
+// import { AntDesign, Ionicons } from "@expo/vector-icons";
+// import { scale } from "react-native-size-matters";
+// import { useNavigation } from "@react-navigation/native";
+// import { useAppSelector } from "src/redux/hooks";
+// import {
+//  useGetBrandOrderListQuery,
+//  usePostStatusOrderBrandMutation,
+// } from "src/redux/features/orders/orderApi";
+// import { colorStatus, nameStatus } from "src/constants/productInfos";
+
+// const Products = () => {
+//  const navigation = useNavigation();
+//  const token = useAppSelector((state) => state.auth.token);
+//  // console.log(token);
+//  const { data: getOrdersBrand } = useGetBrandOrderListQuery({
+//  token,
+//  limit: 4,
+//  });
+//  const [postOrderStatus] = usePostStatusOrderBrandMutation();
+//  // console.log(getOrdersBrand?.data?.data, "brand order");
+
+//  useLayoutEffect(() => {
+//  navigation.setOptions({
+//  headerStyle: {
+//  backgroundColor: "#121212",
+//  },
+//  headerTitle: "",
+//  });
+//  }, [navigation]);
+
+//  const handleStatus = async (id: any, status: any) => {
+//  console.log(id);
+//  const info = {
+//  data: {
+//  sellerStatus: status,
+//  cartProductId: id,
+//  },
+//  };
+
+//  // console.log(info, "info..");
+
+//  try {
+//  const res = await postOrderStatus({ token, body: info }).unwrap();
+//  console.log(res);
+//  } catch (err) {
+//  console.log(err);
+//  }
+//  };
+
+//  return (
+//  <SafeAreaView style={{ flex: 1, backgroundColor: "#121212", padding: 10 }}>
+//  <ScrollView className="py-3 flex-1">
+//  <View className="flex-row justify-between items-center mb-2">
+//  <View className="flex-col">
+//  <Text className=" text-white font-instrumentSansBold text-xl">
+//  Manage Your Products
+//  </Text>
+//  <Text className="font-instrumentRegular text-[#9CA3AF] w-[70%]">
+//  Easily add new items or view your product catalog
+//  </Text>
+//  </View>
+//  <View className="flex-row items-center">
+//  <TouchableOpacity>
+//  <Ionicons name="notifications" size={24} color="white" />
+//  </TouchableOpacity>
+//  </View>
+//  </View>
+
+//  <View className="flex-row gap-2 mt-2 mb-2">
+//  <TouchableOpacity
+//  className="bg-[#212121] p-2 items-center justify-center flex-col gap-2 rounded-lg flex-1"
+//  onPress={() => navigation.navigate("Add Products")}
+//  >
+//  <Image
+//  source={require("../../../assets/e-icon/add-circle.png")}
+//  style={{ width: scale(32), height: scale(32) }}
+//  />
+//  <Text className="text-white font-instrumentSansSemiBold text-xl">
+//  Upload Product
+//  </Text>
+//  </TouchableOpacity>
+//  <TouchableOpacity
+//  className="bg-[#212121] p-2 items-center justify-center flex-col gap-2 rounded-lg flex-1"
+//  onPress={() => navigation.navigate("All Products")}
+//  >
+//  <Image
+//  source={require("../../../assets/e-icon/list.png")}
+//  style={{ width: scale(32), height: scale(32) }}
+//  />
+//  <Text className="text-white font-instrumentSansSemiBold text-xl">
+//  Product List
+//  </Text>
+//  </TouchableOpacity>
+//  </View>
+
+//  <View className="flex-row justify-between items-center mt-2 mb-2 py-1">
+//  <Text className="text-white font-instrumentSansSemiBold">
+//  Order List
+//  </Text>
+
+//  <TouchableOpacity
+//  className="flex-row items-center gap-2"
+//  onPress={() => navigation.navigate("Order List")}
+//  >
+//  <Text className="text-white font-instrumentSansSemiBold">
+//  See All
+//  </Text>
+//  <AntDesign name="arrowright" size={24} color="white" />
+//  </TouchableOpacity>
+//  </View>
+
+//  {/* */}
+
+//  <View className="flex-1 bg-[#121212] py-3">
+//  <ScrollView showsVerticalScrollIndicator={false}>
+//  {getOrdersBrand?.data?.data?.map((item: any) => (
+//  <View
+//  key={item}
+//  className="bg-[#212121] p-2 rounded-xl mt-1 mb-2"
+//  >
+//  <View className="flex-row justify-between items-center">
+//  <Text className="text-[#fff] font-instrumentSansSemiBold">
+//  #{item.orderId.slice(-5)}
+//  </Text>
+//  <Text
+//  className="text-[#FB923C] p-2 rounded-2xl font-instrumentRegular"
+//  style={{ backgroundColor: "rgba(249, 115, 22, 0.20)" }}
+//  >
+//  {nameStatus[item.remindStatus as keyof typeof nameStatus]}
+//  </Text>
+//  </View>
+//  <View className="flex-row b items-center gap-2 mt-2 mb-1">
+//  <View
+//  style={{ width: scale(52), height: scale(52) }}
+//  className="rounded-xl overflow-hidden"
+//  >
+//  <Image
+//  source={{ uri: item.productImages[0] }}
+//  style={{ width: "100%", height: "100%" }}
+//  />
+//  </View>
+//  <View className="flex-row justify-between flex-1 items-center">
+//  <View className="flex-col">
+//  <Text className="font-instrumentSansSemiBold text-white">
+//  {item.productName}
+//  </Text>
+//  <Text className="font-instrumentRegular text-[#9CA3AF]">
+//  Qty: {item.quntity} | Size: {item.size}
+//  </Text>
+//  </View>
+//  <View>
+//  <Text className="font-instrumentSansSemiBold text-white">
+//  {item.price} $
+//  </Text>
+//  </View>
+//  </View>
+//  </View>
+//  <View className="">
+//  <Text className="font-instrumentSansSemiBold text-[#9CA3AF]">
+//  Placed: {new Date(item?.createdAt).toLocaleDateString()}
+//  </Text>
+//  </View>
+
+//  <View className="flex-row items-center gap-2 mt-2 mb-1">
+//  <TouchableOpacity
+//  className={`flex-row items-center justify-center gap-2 p-2 rounded-md flex-1`}
+//  style={{
+//  backgroundColor:
+//  colorStatus[
+//  item.sellerStatus as keyof typeof colorStatus
+//  ],
+//  }}
+//  onPress={() =>
+//  handleStatus(item.cartProductId, item.sellerStatus)
+//  }
+//  >
+//  <AntDesign name="check" size={24} color="white" />
+//  <Text className="text-white font-instrumentSansBold">
+//  {nameStatus[item.sellerStatus as keyof typeof nameStatus]}
+//  </Text>
+//  </TouchableOpacity>
+//  <TouchableOpacity
+//  className="items-center bg-[#121212] p-2 rounded-md"
+//  onPress={() =>
+//  navigation.navigate("Order Details" as never)
+//  }
+//  >
+//  <AntDesign name="eye" size={24} color="white" />
+//  </TouchableOpacity>
+//  </View>
+//  </View>
+//  ))}
+//  </ScrollView>
+//  </View>
+//  </ScrollView>
+//  </SafeAreaView>
+//  );
+// };
+
+// export default Products;
