@@ -49,6 +49,7 @@ import DetailsProduct from "src/screens/Products/DetailsProduct";
 import Reward from "src/screens/Profile/Reward";
 import EditProducts from "src/screens/Products/EditProducts";
 import SearchPage from "src/screens/Search/SearchPage";
+import PaymentScreen from "src/screens/Payment/PaymentScreen";
 
 
 const Stack = createStackNavigator();
@@ -135,6 +136,7 @@ const StackNavigation = () => {
          <Stack.Screen name="Seller Profile" options={{headerShown:true}} component={SellerProfile}/>
         <Stack.Screen name="Brand Profile" options={{headerShown:true}} component={BrandProfile}/>
         <Stack.Screen name="Reward" options={{headerShown:true}} component={Reward}/>
+        <Stack.Screen name="Payment screen" options={{headerShown:true}} component={PaymentScreen}/>
 
       </Stack.Navigator>
     // </NavigationContainer>

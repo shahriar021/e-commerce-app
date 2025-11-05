@@ -1,3 +1,4 @@
+
 {
   "expo": {
     "name": "ARKIVE",
@@ -18,7 +19,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.smartsoftware.sas"
+      "bundleIdentifier": "com.smartsoftware.sas",
+      "urlScheme": "com.sta.ark" 
     },
     "android": {
       "versionCode": 139,
@@ -35,12 +37,30 @@
         "googleMaps": {
           "apiKey": "AIzaSyC4fsrgciACjhUacg9umvRHflrJJHFovdY"
         }
-      }
+      },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "com.sta.ark"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.com.your-app-name", 
+          "enableGooglePay": true 
+        }
+      ],
       [
         "expo-image-picker",
         {

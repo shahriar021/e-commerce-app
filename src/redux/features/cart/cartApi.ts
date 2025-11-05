@@ -1,40 +1,53 @@
 import { baseApi } from "src/redux/createdApi/baseApi";
 
 const cartApi = baseApi.injectEndpoints({
-    endpoints:(builder)=>({
-
-        postAddToCart:builder.mutation({
-
-            query:({token,data})=>{
-
-                return{
-                    url:"/cart",
-                    method:"POST",
-                    body:data,
-                    headers:{
-                        Authorization:`Bearer ${token}`
-                    }
-                }
+    endpoints: (builder) => ({
+        postAddToCart: builder.mutation({
+            query: ({ token, data }) => {
+                return {
+                    url: "/cart",
+                    method: "POST",
+                    body: data,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                };
             },
-            invalidatesTags:['getCart']
+            invalidatesTags: ["getCart"],
         }),
 
-        getAddToCart:builder.query({
-
-            query:(token)=>{
-
+        getAddToCart: builder.query({
+            query: (token) => {
                 return {
-                    url:`/cart`,
-                    method:"GET",
-                    headers:{
-                        Authorization:`Bearer ${token}`
-                    }
-                }
+                    url: `/cart`,
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                };
             },
-            providesTags:['getCart']
-        })
-    })
-})
+            providesTags: ["getCart"],
+        }),
 
-export const {usePostAddToCartMutation,useGetAddToCartQuery}=cartApi
+        updateCart: builder.mutation({
+            query: ({ token, body, id }) => {
+                console.log(id, "in redux");
+                return {
+                    url: `/cart/${id}`,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body,
+                    method: "PATCH",
+                };
+            },
+            invalidatesTags: ["getCart"],
+        }),
+    }),
+});
 
+export const {
+    usePostAddToCartMutation,
+    useGetAddToCartQuery,
+    useUpdateCartMutation,
+} = cartApi;
