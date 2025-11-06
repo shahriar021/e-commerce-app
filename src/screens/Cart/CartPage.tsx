@@ -148,8 +148,7 @@ const CartPage = () => {
         try {
             const res = await updateCart({ token, body, id }).unwrap();
             if (res.success) {
-                // navigation.navigate("Payment Options", { total, shiping });
-                navigation.navigate("Payment screen");
+                navigation.navigate("Payment screen",{ total, shiping });
             }
         } catch (err) {
             console.log(err);

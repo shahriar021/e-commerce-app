@@ -26,7 +26,22 @@ const paymentApi = baseApi.injectEndpoints({
                 };
             },
         }),
+
+        postPaymentToStripe:builder.mutation({
+            query:({token,body})=>{
+
+                return{
+
+                    url:`/payment-sheet`,
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    },
+                    method:"POST",
+                    body
+                }
+            }
+        })
     }),
 });
 
-export const { usePostPaymentMutation, useGetSetupIntentQuery } = paymentApi;
+export const { usePostPaymentMutation, useGetSetupIntentQuery ,usePostPaymentToStripeMutation} = paymentApi;
