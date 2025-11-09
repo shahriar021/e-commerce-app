@@ -20,7 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.smartsoftware.sas",
-      "urlScheme": "com.sta.ark" 
+      "urlScheme": "staark" 
     },
     "android": {
       "versionCode": 139,
@@ -43,7 +43,7 @@
           "action": "VIEW",
           "data": [
             {
-              "scheme": "com.sta.ark"
+              "scheme": "staark"
             }
           ],
           "category": ["BROWSABLE", "DEFAULT"]

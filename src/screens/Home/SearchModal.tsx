@@ -1,5 +1,5 @@
 import { View, Text, Modal, useWindowDimensions, TouchableOpacity, ScrollView, Image, TextInput } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AntDesign, Entypo } from '@expo/vector-icons'
 import { scale, verticalScale } from 'react-native-size-matters'
 import InputSelectPicker from 'src/components/shared/InputSelectPicker'
@@ -10,10 +10,11 @@ const SearchModal = ({ visible, onClose }: any) => {
 
     const { width, height } = useWindowDimensions()
     const navigation=useNavigation()
-
+    const [srcTxt,setSrcTxt]=useState("")
+       
     const handleSearch=()=>{
         onClose()
-        navigation.navigate("Search Page")
+        navigation.navigate("Search Page",{search:srcTxt})
     }
 
     return (
@@ -29,7 +30,7 @@ const SearchModal = ({ visible, onClose }: any) => {
 
                     <ScrollView contentContainerStyle={{ alignItems: "center", paddingHorizontal: 20, paddingBottom: 100 }}>
 
-                        <TextInput className='bg-[#2C2C2C] flex-1 border w-full p-5 rounded-lg mt-4 ' placeholderTextColor={"#ADAEBC"} placeholder='Search here...' style={{ color: "#ADAEBC" }} />
+                        <TextInput className='bg-[#2C2C2C] flex-1 border w-full p-5 rounded-lg mt-4 ' placeholderTextColor={"#ADAEBC"} placeholder='Search here...' style={{ color: "#ADAEBC" }} onChangeText={setSrcTxt}/>
 
                         <View className='flex-row w-full gap-3'>
                             <TouchableOpacity className='bg-[#EF4444] flex-1  p-4 items-center rounded-xl mt-5 mb-4' onPress={onClose}>

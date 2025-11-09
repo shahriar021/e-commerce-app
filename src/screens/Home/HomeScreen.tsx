@@ -71,12 +71,6 @@ const HomeScreen = () => {
     setCurrentIndex(index);
   };
 
-  const handleScroll2 = (event) => {
-    const index = Math.round(event.nativeEvent.contentOffset.x / width);
-    indexRef2.current = index;
-    setCurrentIndex(index);
-  };
-
   useEffect(() => {
     const interval = setInterval(() => {
       let nextIndex = (currentIndex + 1) % images2.length;

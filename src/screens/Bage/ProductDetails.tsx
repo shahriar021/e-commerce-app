@@ -46,6 +46,8 @@ const ProductDetails = () => {
     });
     const [postCart] = usePostAddToCartMutation();
     const [postFavourite] = usePostFavProductMutation();
+    console.log(ID,"--=-=")
+    console.log(data?.data?.product,"k--")
 
     navigation.setOptions({
         headerStyle: {
@@ -93,14 +95,17 @@ const ProductDetails = () => {
                 quantity: quantity,
             },
         };
+        console.log(body,"body..")
         try {
             const res = await postCart({ token, data: body }).unwrap();
+            console.log(res,"response")
             if (res.success == true) {
                 Alert.alert(res.message);
                 navigation.navigate("Cart Page" as never, { id: res.data.cart.id });
                 // console.log(res.data.cart.id);
             }
         } catch (err) {
+            console.log(err)
             Alert.alert("Something went wrong!");
         }
     };

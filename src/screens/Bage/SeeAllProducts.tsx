@@ -10,7 +10,7 @@ const SeeAllProducts = () => {
     const route = useRoute();
     const { id } = route.params
     const { width, height } = useWindowDimensions()
-    const [loadMore, setLoadMore] = useState(3)
+    const [loadMore, setLoadMore] = useState(10)
     const navigation = useNavigation()
     const [isClothType, setIsClothType] = useState("ALL")
     const token = useAppSelector((state) => state.auth.token)

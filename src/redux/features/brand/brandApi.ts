@@ -31,4 +31,4 @@ const brandApi = baseApi.injectEndpoints({
     })
 })
 
-export const {useFeatureBrandsQuery,useGetBrandWithIdQuery}=brandApi;
+export const {useFeatureBrandsQuery,useGetBrandWithIdQuery}=brandApi; 

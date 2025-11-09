@@ -1,13 +1,15 @@
-import { View, Text, Modal, ScrollView, Image, TouchableOpacity, Platform } from 'react-native'
+import { View, Text, Modal, ScrollView, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { scale, verticalScale } from 'react-native-size-matters'
-import { AntDesign, Feather } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 
-const SearchModal = ({ visible, onClose }: any) => {
+const SearchModal = ({ visible, onClose,data,srcImg }: any) => {
     const [isClothType, setIsClothType] = useState("ALL Results")
     const [items] = useState(Array.from({ length: 2 }))
     const insets = useSafeAreaInsets();
+    // console.log(data.data[0]?.productImages[0],"in modal")
+    
     return (
         <Modal visible={visible} onRequestClose={onClose}>
             <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: '#121212',  }}>
@@ -23,11 +25,11 @@ const SearchModal = ({ visible, onClose }: any) => {
 
                 <ScrollView contentContainerStyle={{ padding: 15, paddingBottom: 100 }}>
                     <View className='mt-2 mb-2 flex-row bg-[#212121] rounded-lg overflow-hidden p-3 gap-2 items-center'>
-                        <View style={{ width: scale(48), height: verticalScale(48) }}><Image source={require("../../../assets/e-icon/serc.png")} style={{ width: "100%", height: "100%" }} /></View>
+                        <View style={{ width: scale(48), height: verticalScale(48) }}><Image source={{uri:srcImg}} style={{ width: "100%", height: "100%" }} /></View>
                         <View className='flex-1 flex-row justify-between  items-center'>
                             <View className='flex-col gap-2'>
                                 <Text className='text-[#D1D5DB] font-instrumentRegular'>Searching for</Text>
-                                <Text className='text-white font-instrumentSansSemiBold'>Black Evening Dress</Text>
+                                <Text className='text-white font-instrumentSansSemiBold'>{data?.data[0]?.productName}</Text>
                             </View>
                             <View className='items-center justify-center' style={{ width: scale(48), height: verticalScale(48) }}><Image source={require("../../../assets/e-icon/cameraWhite.png")} style={{ width: "50%", height: "50%" }} /></View>
                         </View>
@@ -43,19 +45,21 @@ const SearchModal = ({ visible, onClose }: any) => {
                     </View>
                     <Text className='text-white text-xl mt-2 mb-2 font-instrumentSansBold'>Available In-App</Text>
 
-                    <View className='flex-row justify-between'>
-                        {items?.map(item => <View className='bg-[#212121] rounded-lg overflow-hidden ' style={{ width: "46%" }}>
+                    <ScrollView horizontal>
+                    <View className='flex-row gap-2'>
+                        {data?.data?.map((item:any) => <View className='bg-[#212121] rounded-lg overflow-hidden gap-1' style={{ width: 150 }}>
                             <Image source={require("../../../assets/e-icon/exctmatch.png")} style={{ width: "100%", height: 160 }} />
                             <View className='p-2 '>
-                                <Text className='text-white mt-1 font-instrumentSansSemiBold'>Elegant Black Dress</Text>
+                                <Text className='text-white mt-1 font-instrumentSansSemiBold'>{item?.productName}</Text>
                                 <Text className='text-[#9CA3AF] mb-1 font-instrumentRegular'>Fashion Brand</Text>
                                 <View className='flex-row justify-between'>
-                                    <Text className='text-[#60A5FA] font-instrumentRegular'>$89</Text>
+                                    <Text className='text-[#60A5FA] font-instrumentRegular'>${item?.price}</Text>
                                     <Text className='text-[#4ADE80] font-instrumentRegular'>In Stock</Text>
                                 </View>
                             </View>
                         </View>)}
                     </View>
+                    </ScrollView>
 
                     <Text className='text-white text-xl mt-2 mb-2 font-instrumentSansSemiBold'>Similar Items Online</Text>
 

@@ -73,40 +73,7 @@ const CartPage = () => {
         });
     };
 
-    // const handleQuantity = (type: string, productId: string) => {
-    // const currentChange = prQuantity[productId] || 0;
-
-    // setPrQuantity((prev) => {
-    // if (type == "add") {
-    // return {
-    // ...prev,
-    // [productId]: currentChange + 1,
-    // };
-    // } else {
-    // const originalQuantity =
-    // data?.data?.cart?.products.find((p: any) => p._id === productId)
-    // ?.quantity || 1;
-
-    // if (originalQuantity + currentChange > 1) {
-    // return {
-    // ...prev,
-    // [productId]: currentChange - 1,
-    // };
-    // }
-    // }
-    // return prev;
-    // });
-    // };
-
-    // const handleQuantity = (type: string, productId: string) => {
-    // setPrQuantity((prev) => {
-    // const current = prev[productId] || 1;
-    // if (type === "add") return { ...prev, [productId]: current + 1 };
-    // if (type === "subtract" && current > 1)
-    // return { ...prev, [productId]: current - 1 };
-    // return prev;
-    // });
-    // };
+    
     const calculateSubtotal = () => {
         const products = data?.data?.products;
 
@@ -126,7 +93,6 @@ const CartPage = () => {
 
         return total.toFixed(2);
     };
-
     const updatedSubtotal = calculateSubtotal();
     const shiping = data?.data?.shippingCharge;
     const total = (parseFloat(updatedSubtotal) + shiping).toFixed(2);
@@ -143,7 +109,6 @@ const CartPage = () => {
                 quantity: item.quantity + (prQuantity[item._id] || 0),
             })),
         };
-        // console.log(body);
 
         try {
             const res = await updateCart({ token, body, id }).unwrap();

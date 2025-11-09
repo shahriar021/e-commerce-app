@@ -42,7 +42,6 @@ const ProviderHomePage = () => {
     const [showModal, setShowModal] = useState(false)
     const { data: getBrandHomeStats } = useGetBrandHomeStatsQuery(token)
     const { data: getBrandHomeGraph } = useGetBrandHomeGraphQuery({ token, year })
-    console.log(getBrandHomeGraph,"year data...")
 
     const data = getBrandHomeGraph?.data.map((item: any, index: any) => ({
         value: item.earnings,
@@ -139,7 +138,7 @@ const ProviderHomePage = () => {
                     </View>
                 </View>
                 <View className='flex-row flex-wrap  justify-between'>
-                    {
+                    {getBrandHomeStats?.data &&
                         Object.keys(getBrandHomeStats?.data).map(item =>
                             <View key={item} className='bg-[#2D2D2D] p-3 rounded-lg mb-1 mt-1 ' style={{
                                 width: width * 0.45

@@ -1,28 +1,40 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native'
 import React, { useEffect, useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { demo } from './demo';
-
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import SearchModal from './SearchModal';
+import { useGetScanImageMutation } from 'src/redux/features/scan/scabApi';
+import { useAppSelector } from 'src/redux/hooks';
+import { Toast } from 'toastify-react-native';
 
 const Search = () => {
-    const [selectedImage, setSelectedImage] = useState(null);
+    const token = useAppSelector((state) => state.auth.token)
+    const [selectedImage, setSelectedImage] = useState([]);
     const [isOpenModal, setIsOpenModal] = useState(false)
-
+    const [data, setData] = useState()
+    const [res,setRes]=useState(null)
+    const [searchImg,setSearchImg]=useState()
+    const [loading,setLoading]=useState(false)
+    const [postImageforScan] = useGetScanImageMutation()
     const navigation = useNavigation();
+    if(res){
+        Toast.success(res.message)
+    }
 
     useEffect(() => {
-        if (selectedImage) {
+        if (res?.success) {
             setIsOpenModal(true);
         }
     }, [selectedImage]);
 
+    console.log(loading)
 
-    useLayoutEffect(() => {
+
+    useLayoutEffect(() => { 
         navigation.setOptions({
             headerStyle: {
                 backgroundColor: "#121212",
@@ -41,6 +53,7 @@ const Search = () => {
     }, [navigation])
 
     const openCamera = async () => {
+        setLoading(true)
         const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
         if (permissionResult.granted === false) {
             alert("Permission to access camera is required!");
@@ -54,7 +67,30 @@ const Search = () => {
         });
 
         if (!result.canceled) {
-            setSelectedImage(result.assets[0].uri);
+            setSelectedImage(result.assets);
+        }
+
+        if (selectedImage) {
+            const formData = new FormData()
+            const imageFile = {
+                uri: selectedImage[0].uri,
+                name: selectedImage[0].fileName,
+                type: selectedImage[0].mimeType
+            }
+            formData.append("scan", imageFile)
+            try {
+                console.log("result")
+                setLoading(false)
+                const res = await postImageforScan({ token, body: formData }).unwrap()
+                console.log(res)
+                setRes(res)
+                setData(res)
+            } catch (err) {
+                setLoading(false)
+                console.log(err)
+            }finally{
+                setLoading(false)
+            }
         }
     };
 
@@ -107,7 +143,7 @@ const Search = () => {
                 {/* You can place your image/content here */}
                 {selectedImage && (
                     <Image
-                        source={{ uri: selectedImage }}
+                        source={{ uri: selectedImage[0]?.uri }}
                         style={{ width: "100%", height: "100%" }}
                         resizeMode="cover"
                     />
@@ -116,7 +152,7 @@ const Search = () => {
 
             {/* click here to open camera and phoito */}
             <TouchableOpacity className='mt-3 mb-3 bg-[#252525] p-8 rounded-full' onPress={openCamera} style={{ width: scale(80), height: scale(80) }}>
-                <Image source={require("../../../assets/e-icon/Icon.png")} style={{ width: "100%", height: "100%" }} />
+                {loading?<ActivityIndicator size={"large"} color={"blue"}/>:<Image source={require("../../../assets/e-icon/Icon.png")} style={{ width: "100%", height: "100%" }} />}
             </TouchableOpacity>
 
             <View className='flex-1 bg-white rounded-xl' style={{ width: scale(308) }}>
@@ -132,7 +168,7 @@ const Search = () => {
 
                         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                             <View className="flex-row gap-2">
-                                {demo.map((img,index) => (
+                                {demo.map((img, index) => (
                                     <View
                                         key={index}
                                         className="rounded-xl overflow-hidden"
@@ -151,7 +187,7 @@ const Search = () => {
                 </View>
 
             </View>
-            <SearchModal visible={isOpenModal} onClose={() => setIsOpenModal(false)} />
+            <SearchModal visible={isOpenModal} onClose={() => setIsOpenModal(false)} data={data} srcImg={selectedImage[0]?.uri}/>
         </ScrollView>
 
     )

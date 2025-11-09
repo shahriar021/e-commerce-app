@@ -25,9 +25,7 @@ const categories = [
 const Feed = () => {
 
     const token = useAppSelector((state) => state.auth.token)
-    console.log(token)
     const navigation = useNavigation();
-    const [isClothType, setIsClothType] = useState("ALL")
     const [selectedItem, setSelectedItem] = useState()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [loadMore, setLoadMore] = useState(20)

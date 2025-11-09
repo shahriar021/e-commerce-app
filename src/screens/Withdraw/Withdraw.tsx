@@ -1,16 +1,15 @@
-import { View, Text, TouchableOpacity, useWindowDimensions, Image, ScrollView, TextInput } from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
+import { View, Text, TouchableOpacity, useWindowDimensions, Image, TextInput } from 'react-native'
+import React, { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import { createToken } from '@stripe/stripe-react-native';
+import { useAppSelector } from 'src/redux/hooks';
 
 const Withdraw = () => {
-
+    const token=useAppSelector((state)=>state.auth.token)
     const navigation = useNavigation();
-    const { width } = useWindowDimensions()
-
+    console.log(token)
     useLayoutEffect(() => {
         navigation.setOptions({
             headerStyle: {
@@ -34,6 +33,34 @@ const Withdraw = () => {
             )
         })
     }, [navigation])
+
+    const handleWithdraw = async () => {
+        const bankData = {
+            country: 'US',
+            currency: 'usd',
+            account_holder_name: 'John Doe',
+            account_holder_type: 'individual',
+            routing_number: '110000000', // ✅ Stripe test routing number
+            account_number: '000123456789', // ✅ Stripe test account number
+        };
+
+
+        try {
+            const { token, error } = await createToken({
+                type: 'BankAccount',
+                bankAccount: bankData, // ✅ must be inside `bankAccount`
+            });
+
+            if (error) {
+                console.log('Stripe bank token error:', error);
+            } else {
+                console.log('✅ Bank token created:', token.id);
+                // Now send token.id to your backend to link or withdraw
+            }
+        } catch (err) {
+            console.error('Error creating bank token:', err);
+        }
+    };
 
     return (
         <View className='flex-1 items-center p-3 bg-[#121212]'>
@@ -59,7 +86,7 @@ const Withdraw = () => {
                 <Text className='text-[#fff] font-instrumentSansSemiBold'>Card Number</Text>
                 <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='3536 3532 1235 0987' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} />
             </View>
-            <TouchableOpacity className='bg-[#1D3725] p-2 items-center rounded-lg mt-4 w-full' >
+            <TouchableOpacity className='bg-[#1D3725] p-2 items-center rounded-lg mt-4 w-full' onPress={handleWithdraw}>
                 <Text className='text-white font-instrumentSansSemiBold text-center text-xl'>Withdraw</Text>
             </TouchableOpacity>
         </View>

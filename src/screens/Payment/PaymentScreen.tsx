@@ -127,7 +127,7 @@ export default function PaymentScreen() {
           name: name,
         },
         style: 'alwaysDark',
-        returnURL: 'com.sta.ark://',
+        returnURL: 'staark://payment-complete',
       });
 
       if (error) {
@@ -190,26 +190,28 @@ export default function PaymentScreen() {
       setStatus('Ready to pay! 🎉'); 
       Alert.alert(`Payment Failed`, error.message);
       setLoading(true); // Re-enable for retry
-    } else {
-      if (paymentIntent && paymentMethod) {
-    console.log('✅ Payment successful!');
-    console.log('Payment Intent:', paymentIntent);
-    console.log('Payment Method:', paymentMethod);
-    
-    setStatus('Payment successful! ✅');
-  } else {
-    console.warn('❓ Payment successful, but missing paymentIntent or paymentMethod.');
-    Alert.alert('Payment Successful, but missing details', 'We were unable to retrieve all payment details.');
-  }
-      // console.log('✅ Payment successful!',paymentIntent,paymentMethod);
-      // setStatus('Payment successful! ✅');
-      // Alert.alert(
-      //     'Payment Successful!',
-      //     'Thank you for your purchase.',
-      //     [{ text: 'OK', onPress: () => navigation.navigate("BottomScreen", { brand: "Brand" })}] 
-      // );
-      // setLoading(false); // Disable after success
     }
+  //    else {
+  //     if (paymentIntent && paymentMethod) {
+  //   console.log('✅ Payment successful!');
+  //   console.log('Payment Intent:', paymentIntent);
+  //   console.log('Payment Method:', paymentMethod);
+    
+  //   setStatus('Payment successful! ✅');
+  // } 
+  // else {
+  //   console.warn('❓ Payment successful, but missing paymentIntent or paymentMethod.');
+  //   Alert.alert('Payment Successful, but missing details', 'We were unable to retrieve all payment details.');
+  // }
+      console.log('✅ Payment successful!',paymentIntent,paymentMethod);
+      setStatus('Payment successful! ✅');
+      Alert.alert(
+          'Payment Successful!',
+          'Thank you for your purchase.',
+          [{ text: 'OK', onPress: () => navigation.navigate("BottomScreen", { brand: "Brand" })}] 
+      );
+      setLoading(false); // Disable after success
+    
   }
 
 
