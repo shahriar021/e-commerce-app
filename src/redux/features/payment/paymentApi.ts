@@ -40,8 +40,23 @@ const paymentApi = baseApi.injectEndpoints({
                     body
                 }
             }
+        }),
+
+
+        postWithdraw:builder.mutation({
+            query:({token,body})=>{
+
+                return{
+                    url:`/withdraw`,
+                    method:"POST",
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    },
+                    body
+                }
+            }
         })
     }),
 });
 
-export const { usePostPaymentMutation, useGetSetupIntentQuery ,usePostPaymentToStripeMutation} = paymentApi;
+export const { usePostPaymentMutation, useGetSetupIntentQuery ,usePostPaymentToStripeMutation,usePostWithdrawMutation} = paymentApi;

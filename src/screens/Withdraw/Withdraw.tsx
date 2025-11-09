@@ -1,15 +1,24 @@
-import { View, Text, TouchableOpacity, useWindowDimensions, Image, TextInput } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import { View, Text, TouchableOpacity, useWindowDimensions, Image, TextInput, Alert, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native'
+import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { createToken } from '@stripe/stripe-react-native';
 import { useAppSelector } from 'src/redux/hooks';
+import { usePostWithdrawMutation } from 'src/redux/features/payment/paymentApi';
 
 const Withdraw = () => {
-    const token=useAppSelector((state)=>state.auth.token)
+    const token = useAppSelector((state) => state.auth.token)
     const navigation = useNavigation();
-    console.log(token)
+    const [postWithdraw] = usePostWithdrawMutation();
+    const [amount,setAmount]=useState<string>("")
+    const [country,setCountry]=useState<string>("")
+    const [currency,setCurrency]=useState<string>("")
+    const [AccHoldNmae,setAccHoldNmae]=useState<string>("")
+    const [AccHoldType,setAccHoldType]=useState<string>("")
+    const [routingNumbr,setRoutingNumbr]=useState<string>("")
+    const [AccNmbr,setAccNmbr]=useState<string>("")
+    const [loading,setLoading]=useState(false)
     useLayoutEffect(() => {
         navigation.setOptions({
             headerStyle: {
@@ -34,35 +43,34 @@ const Withdraw = () => {
         })
     }, [navigation])
 
+    console.log(loading)
     const handleWithdraw = async () => {
-        const bankData = {
-            country: 'US',
-            currency: 'usd',
-            account_holder_name: 'John Doe',
-            account_holder_type: 'individual',
-            routing_number: '110000000', // ✅ Stripe test routing number
-            account_number: '000123456789', // ✅ Stripe test account number
+        setLoading(true)
+        console.log("pressed")
+        const data = {
+            amount: parseInt(amount),
+            country: country,
+            currency: currency,
+            account_holder_name: AccHoldNmae,
+            account_holder_type: AccHoldType.trim(),
+            routing_number: routingNumbr,
+            account_number: AccNmbr
         };
-
-
+            console.log(data,"---")
         try {
-            const { token, error } = await createToken({
-                type: 'BankAccount',
-                bankAccount: bankData, // ✅ must be inside `bankAccount`
-            });
-
-            if (error) {
-                console.log('Stripe bank token error:', error);
-            } else {
-                console.log('✅ Bank token created:', token.id);
-                // Now send token.id to your backend to link or withdraw
-            }
-        } catch (err) {
-            console.error('Error creating bank token:', err);
+            
+            const res = await postWithdraw({ token, body: { data } }).unwrap();
+            console.log(res, "result..")
+            setLoading(false)
+        } catch (err:any) {
+            setLoading(false)
+            console.log(err)
+            Alert.alert(err?.data?.message)
         }
     };
 
     return (
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{flex:1}}>
         <View className='flex-1 items-center p-3 bg-[#121212]'>
             <View className='rounded-lg overflow-hidden w-full' >
                 <LinearGradient colors={["#212121", "#212121"]} style={{ padding: 10 }} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}>
@@ -76,20 +84,37 @@ const Withdraw = () => {
             </View>
             <View className='w-full mt-2 mb-2'>
                 <Text className='text-[#fff] font-instrumentSansSemiBold'>Amounts</Text>
-                <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='$100' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} />
+                <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='$1' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} onChangeText={setAmount}/>
             </View>
             <View className='w-full mt-2 mb-2'>
-                <Text className='text-[#fff] font-instrumentSansSemiBold'>Card Holde Name</Text>
-                <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='Tan' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} />
+                <Text className='text-[#fff] font-instrumentSansSemiBold'>Country</Text>
+                <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='US' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} onChangeText={setCountry}/>
             </View>
             <View className='w-full mt-2 mb-2'>
-                <Text className='text-[#fff] font-instrumentSansSemiBold'>Card Number</Text>
-                <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='3536 3532 1235 0987' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} />
+                <Text className='text-[#fff] font-instrumentSansSemiBold'>Currency</Text>
+                <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='USD' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} onChangeText={setCurrency}/>
+            </View>
+            <View className='w-full mt-2 mb-2'>
+                <Text className='text-[#fff] font-instrumentSansSemiBold'>Account Holder Name</Text>
+                <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='sr chowdhury' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} onChangeText={setAccHoldNmae}/>
+            </View>
+            <View className='w-full mt-2 mb-2'>
+                <Text className='text-[#fff] font-instrumentSansSemiBold'>Account Holder Type</Text>
+                <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='individual' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} onChangeText={setAccHoldType}/>
+            </View>
+            <View className='w-full mt-2 mb-2'>
+                <Text className='text-[#fff] font-instrumentSansSemiBold'>Routing Number</Text>
+                <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='110000000' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} onChangeText={setRoutingNumbr}/>
+            </View>
+            <View className='w-full mt-2 mb-2'>
+                <Text className='text-[#fff] font-instrumentSansSemiBold'>Account Number</Text>
+                <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='000123456789' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} onChangeText={setAccNmbr}/>
             </View>
             <TouchableOpacity className='bg-[#1D3725] p-2 items-center rounded-lg mt-4 w-full' onPress={handleWithdraw}>
-                <Text className='text-white font-instrumentSansSemiBold text-center text-xl'>Withdraw</Text>
+                <Text className='text-white font-instrumentSansSemiBold text-center text-xl'>{loading?<ActivityIndicator size={"small"} color={"blue"}/>:"Withdraw"}</Text>
             </TouchableOpacity>
         </View>
+        </KeyboardAvoidingView>
     )
 }
 
