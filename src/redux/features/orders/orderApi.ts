@@ -26,8 +26,20 @@ const orderApi = baseApi.injectEndpoints({
                 };
             },
         }),
+
+        getBrandOrderDetails:builder.query({
+            query:({token,id})=>{
+                console.log(token,id)
+                return{
+                    url:`/order?cartProductId=${id}`,
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
+            }
+        })
     }),
 });
 
-export const { useGetBrandOrderListQuery, usePostStatusOrderBrandMutation } =
+export const { useGetBrandOrderListQuery, usePostStatusOrderBrandMutation,useGetBrandOrderDetailsQuery } =
     orderApi;

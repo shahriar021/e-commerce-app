@@ -49,21 +49,17 @@ const AllProducts = () => {
             </View>
 
             <View className='flex-1 bg-[#121212] '>
-
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
                     {getBrands?.data?.product?.map((item: any) =>
-                        <TouchableOpacity key={item._ic} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2 flex-row justify-between items-center gap-2' onPress={() => navigation.navigate("Details Product", { id: item._id })}>
+                        <TouchableOpacity key={item._ic} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2 flex-row justify-between items-center gap-2' onPress={() => navigation.navigate("Details Product", { id: item.id })}>
                             <View style={{ width: scale(52), height: scale(52) }} className='rounded-xl overflow-hidden'>
                                 <Image source={{ uri: item.productImages[0] }} style={{ width: "100%", height: "100%" }} />
                             </View>
-
                             <View className='flex-col flex-1 justify-center gap-1'>
                                 <Text className='text-white font-instrumentSansSemiBold text-xl'>{item.productName}</Text>
                                 <Text className='text-white font-instrumentRegular text-xl'>{item.price}{" "}$</Text>
-
                             </View>
                             <Text className='text-[#86EFAC] p-2 rounded-2xl bg-[#14532D] font-instrumentRegular' >{item.inStock ? "In Stock" : ""}</Text>
-
                         </TouchableOpacity>)}
                 </ScrollView>
                 <TouchableOpacity className='bg-[#1D3725] p-2 items-center mt-4 mb-4 rounded-xl overflow-hidden w-full' onPress={() => setLoadMore(loadMore + 10)}>

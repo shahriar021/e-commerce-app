@@ -103,18 +103,6 @@ const ProviderHomePage = () => {
     // State to hold the currently selected year (optional, but useful)
     const [selectedYear, setSelectedYear] = useState(yearsData[yearsData.length - 1] || 'Select Year');
 
-    // Function to toggle the visibility of the list
-    const toggleList = () => {
-        setIsListVisible(!isListVisible);
-    };
-
-    // Function to handle year selection
-    const handleYearSelect = (year) => {
-        setSelectedYear(year);
-        // Optionally hide the list after selection
-        setIsListVisible(false);
-    };
-
     const onSelectYr=(year)=>{
         setYear(year)
     }

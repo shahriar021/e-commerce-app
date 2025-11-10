@@ -119,6 +119,20 @@ const productApi = baseApi.injectEndpoints({
             },
             invalidatesTags:['product']
         }),
+
+        updateProduct:builder.mutation({
+            query:({token,id,body})=>{
+                return{
+                    url:`/product/${id}`,
+                    method:"PATCH",
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    },
+                    body
+                }
+            },
+            invalidatesTags:['product']
+        })
     }),
 });
 
@@ -128,4 +142,5 @@ export const {
     useGetSpecificProductBasedOnIdQuery,
     useUploadProductMutation,
     useDeleteProductMutation,
+    useUpdateProductMutation
 } = productApi;

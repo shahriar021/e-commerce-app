@@ -36,3 +36,24 @@ export const colors = [
  { name: "charcoal", code: "#36454F" },
  { name: "slate", code: "#708090" },
 ];
+
+
+
+
+
+export const colorStatus = {
+  mark_ready: "#16A34A",
+  mark_for_shipping: "#2563EB",
+  mark_for_complete: "#CD2C58",
+  delivered: "#DCDCDC",
+};
+
+export const nameStatus = {
+  mark_ready: "Mark Ready",
+  mark_for_shipping: "Mark for Shipping",
+  mark_for_complete: "Mark for Complete",
+  delivered: "Delivered",
+  processing: "Processing",
+  ready_to_ship: "Ready to Ship",
+  ready_to_delivered: "Ready to Delivered",
+};

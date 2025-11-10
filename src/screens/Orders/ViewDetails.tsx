@@ -1,13 +1,18 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React, { useLayoutEffect } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { Entypo, FontAwesome } from '@expo/vector-icons'
+import { useAppSelector } from 'src/redux/hooks'
+import { useGetBrandOrderDetailsQuery } from 'src/redux/features/orders/orderApi'
 
 const ViewDetails = () => {
-
+    const route=useRoute()
+    const {id}=route.params
     const navigation = useNavigation()
-
+    const token=useAppSelector((state)=>state.auth.token)
+    const {data:details}=useGetBrandOrderDetailsQuery({token,id})
+    console.log(details,"details")
     useLayoutEffect(() => {
         navigation.setOptions({
             title:"Order Details",
@@ -28,6 +33,7 @@ const ViewDetails = () => {
             )
         })
     }, [navigation])
+
     return (
         <View className='p-2'>
             {/* card */}
