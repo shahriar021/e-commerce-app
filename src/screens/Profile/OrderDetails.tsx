@@ -16,7 +16,6 @@ const OrderDetails = () => {
         const {data:details}=useGetBrandOrderDetailsQuery({token,id})
         
         const info = details?.data?.data[0]
-        console.log(info[0],"details")
     useLayoutEffect(() => {
         navigation.setOptions({
             title: "Order Details",

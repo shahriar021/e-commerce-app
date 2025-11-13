@@ -7,6 +7,7 @@ import Posts from './Posts';
 import Details from './Details';
 import { useGetUploaderProfileQuery } from 'src/redux/features/feedApi/feedApi';
 import { useAppSelector } from 'src/redux/hooks';
+import { usePostFollowMutation } from 'src/redux/features/profile/follow/followApi';
 
 const UsersORBrandProfile = () => {
   const token=useAppSelector((state)=>state.auth.token)
@@ -15,6 +16,9 @@ const UsersORBrandProfile = () => {
   const [isPosts,setIsPosts]=useState("Posts")
   const {upID}=useRoute().params
   const {data:getSpecificUserData}=useGetUploaderProfileQuery({token,id:upID})
+  const userType = useAppSelector((store)=>store.auth.userType)
+  console.log(getSpecificUserData?.data?.userName,"user type")
+  const [postFollow]=usePostFollowMutation();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -24,7 +28,7 @@ const UsersORBrandProfile = () => {
         shadowOpacity: 0,
         borderBottomWidth: 0
       },
-      headerTitle: "Jack Robo",
+      headerTitle: getSpecificUserData?.data?.userName,
       headerTitleStyle: {
         color: "white",
         fontFamily: 'instrumentSans-Bold',
@@ -38,6 +42,16 @@ const UsersORBrandProfile = () => {
       }
     })
   }, [navigation])
+ 
+  const handleFollow=async()=>{
+    try{
+      const res = await postFollow({token,id:getSpecificUserData?.data?._id}).unwrap()
+      console.log(res?.data,"follow")
+    }catch(err){
+      console.log(err)
+    }
+  }
+
   return (
     <ScrollView
       contentContainerStyle={{
@@ -95,33 +109,27 @@ const UsersORBrandProfile = () => {
 
       <View className='w-[92%] items-center'>
         {/* <Text className='text-white text-center font-instrumentSansBold' >{type=="user"? "Jack Robo":"Coin Supply"}</Text> */}
-        <Text className='text-white font-instrumentSansSemiBold text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
+        <Text className='text-white font-instrumentSansSemiBold text-center'>{getSpecificUserData?.data?.theme}</Text>
         <View className='mt-3 flex-row gap-3'>
           <View className='bg-[#252525] p-2 items-center rounded-xl'>
-            <Text className='text-white font-instrumentRegular'>142</Text>
+            <Text className='text-white font-instrumentRegular'>{getSpecificUserData?.data?.totalPosts}</Text>
             <Text className='text-[#9CA3AF] font-instrumentRegular' >Posts</Text>
           </View>
           <View className='bg-[#252525] p-2 items-center rounded-xl'>
-            <Text className='text-white font-instrumentRegular'>2.1k</Text>
+            <Text className='text-white font-instrumentRegular'>{getSpecificUserData?.data?.totalReacts}</Text>
             <Text className='text-[#9CA3AF] font-instrumentRegular' >Likes</Text>
           </View>
           <View className='bg-[#252525] p-2 items-center rounded-xl'>
-            <Text className='text-white font-instrumentRegular'>89</Text>
+            <Text className='text-white font-instrumentRegular'>{getSpecificUserData?.data?.totalFollowing}</Text>
             <Text className='text-[#9CA3AF] font-instrumentRegular' >Followings</Text>
           </View>
         </View>
       </View>
-     {/* { type=="user"?<TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3'>
+
+     { userType=="User"&&<TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3' onPress={handleFollow}>
         <Text className='text-black font-instrumentSansSemiBold' >Follow</Text>
       </TouchableOpacity>
-      :<View className='flex-row items-center gap-2'>
-        <TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3'>
-        <Text className='text-black font-instrumentSansSemiBold ' >Follow</Text>
-      </TouchableOpacity>
-      <TouchableOpacity className='bg-[#1D3725] p-2 rounded-xl mt-3' onPress={()=>navigation.navigate("Brand Details")}>
-        <Text className='text-white font-instrumentSansSemiBold' >View Details</Text>
-      </TouchableOpacity>
-      </View>} */}
+     }
 
       <View className='w-[92%] flex-row gap-3 mt-2 mb-3'>
         <TouchableOpacity className={`${isPosts=="Posts"?"border-b border-b-white":""} py-1`} onPress={()=>setIsPosts("Posts")}>

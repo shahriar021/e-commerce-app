@@ -45,6 +45,8 @@ export default function YourComponent() {
   const { data: getLookbook } = useGetLookbookQuery({ token, limit: saveLoadlimit });
   const { data: getPostData } = useGetIndividualPostQuery({ token, uid: profile?.data?.data?._id, limit: postLoadlimit })
 
+  console.log(profile,"profile")
+
   useEffect(() => {
     const loadProfile = async () => {
       try {
@@ -156,23 +158,26 @@ export default function YourComponent() {
         </View>
 
         <View className='w-[92%] items-center'>
-          <Text className='text-white text-center font-instrumentSansBold mb-1' >{profile?.data?.data?.userName}</Text>
+          <Text className='text-white text-center font-instrumentSansBold mb-1' >{profile?.data?.userName}</Text>
           <Text className='text-white font-instrumentSansSemiBold text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
           <View className='mt-3 flex-row gap-3'>
             <View className='bg-[#252525] p-2 items-center rounded-xl'>
-              <Text className='text-white font-instrumentRegular'>{profile?.data?.data?.totalPosts | 0}</Text>
+              <Text className='text-white font-instrumentRegular'>{profile?.data?.totalPosts | 0}</Text>
               <Text className='text-[#9CA3AF] font-instrumentRegular' >Posts</Text>
             </View>
             <View className='bg-[#252525] p-2 items-center rounded-xl'>
-              <Text className='text-white font-instrumentRegular'>{profile?.data?.data?.totalReacts | 0}</Text>
+              <Text className='text-white font-instrumentRegular'>{profile?.data?.totalReacts | 0}</Text>
               <Text className='text-[#9CA3AF] font-instrumentRegular' >Likes</Text>
             </View>
             <View className='bg-[#252525] p-2 items-center rounded-xl'>
-              <Text className='text-white font-instrumentRegular'>{profile?.data?.data?.totalFollowers | 0}</Text>
+              <Text className='text-white font-instrumentRegular'>{profile?.data?.totalFollowers | 0}</Text>
               <Text className='text-[#9CA3AF] font-instrumentRegular' >Followings</Text>
             </View>
           </View>
         </View>
+       <View>
+       
+       </View>
 
         <View className='w-[92%] flex-row gap-3 mt-2 mb-3 justify-center items-center'>
           <TouchableOpacity className={`${isPosts == "Posts" ? "border-b border-b-white" : ""} py-1`} onPress={() => setIsPosts("Posts")}>

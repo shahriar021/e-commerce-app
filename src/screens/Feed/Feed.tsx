@@ -105,6 +105,8 @@ const Feed = () => {
         }
     }
 
+    console.log(getPostData?.data,"post data.")
+
     return (
         <View className='flex-1 bg-[#121212] p-5 relative'>
             <TouchableOpacity className='absolute right-10 bottom-4 z-10 bg-[#1D3725] p-3 rounded-full' onPress={handleModal}>
@@ -127,13 +129,13 @@ const Feed = () => {
                 {getPostData?.data?.data?.map((item, index) =>
                     <View key={index}>
                         <View className='flex-row justify-between mt-4 mb-1 '>
-                            <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile", { upID: item.uploaderId })}>
+                            <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile", { upID: item?.uploaderId })}>
                                 <View style={{ width: scale(30), height: scale(30) }}>
-                                    {item.uploaderType == "Brand" ? <Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%" }} /> : <Image source={{ uri: item.profile[0] }} style={{ width: "100%", height: "100%" }} />}
+                                    {item?.uploaderType == "Brand" ? <Image source={{ uri: item?.brandLogo?.[0] }} style={{ width: "100%", height: "100%" }} /> : <Image source={{ uri: item?.profile[0] }} style={{ width: "100%", height: "100%" }} />}
                                 </View>
                                 <View className='flex-col  gap-2'>
 
-                                    <Text className='text-white font-instrumentSansSemiBold'>{item.brandName}</Text>
+                                    <Text className='text-white font-instrumentSansSemiBold'>{item?.uploaderType=="Brand"?item?.brandName:item.userName}</Text>
 
                                     <Text className='text-[#ADAEBC] font-instrumentRegular'>{getTime(item.createdAt)}</Text>
                                 </View>
@@ -202,7 +204,7 @@ const Feed = () => {
                     </View>)
                 }
 
-                <TouchableOpacity className='bg-[#1D3725] p-2 items-center mt-4 mb-4 rounded-xl overflow-hidden w-full' onPress={() => setLoadMore(loadMore + 2)}>
+                <TouchableOpacity className='bg-[#1D3725] p-2 items-center mt-4 mb-4 rounded-xl overflow-hidden w-full' onPress={() => setLoadMore(loadMore + 10)}>
                     <Text className='text-white font-instrumentSansBold text-xl'>Load More</Text>
                 </TouchableOpacity>
 
@@ -215,3 +217,5 @@ const Feed = () => {
 }
 
 export default Feed
+
+

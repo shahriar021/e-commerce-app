@@ -1,15 +1,18 @@
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, useWindowDimensions } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
 import { useGetTermsQuery } from 'src/redux/features/profile/terms/termsApi';
 import { useAppSelector } from 'src/redux/hooks';
+import RenderHTML from "react-native-render-html";
+
 
 const Terms = () => {
 
     const navigation = useNavigation();
     const token=useAppSelector((state)=>state.auth.token)
     const {data:getTerms}=useGetTermsQuery({token,type:"terms_and_conditions"})
+    const { width } = useWindowDimensions();
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -36,6 +39,7 @@ const Terms = () => {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Text className='font-bold text-xl text-[#FDFDFD] font-instrumentSansBold'>Terms & Conditions</Text>
                 <Text className='mt-2 mb-2 text-[#FDFDFD] font-instrumentRegular'>{getTerms?.data?.setting[0]?.content}</Text>
+                
             </ScrollView>
         </View>
     )
