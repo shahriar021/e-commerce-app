@@ -13,6 +13,7 @@ import { useAppSelector } from 'src/redux/hooks';
 import InputSelectPicker from 'src/components/shared/InputSelectPicker';
 import InputSelectYear from 'src/components/shared/InputSelectYear';
 import InputYearPicker from 'src/components/shared/inputYearPicker';
+import { useGetBrandOrderListQuery } from 'src/redux/features/orders/orderApi';
 
 const days = {
     0: "Sunday", 1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday"
@@ -48,6 +49,10 @@ const ProviderHomePage = () => {
         label: item.month,
         frontColor: index === currentMonthIndex ? "#DCF3FF" : "#464747", // <-- dynamic color
     }));
+    const { data: getOrdersBrand } = useGetBrandOrderListQuery({
+    token,
+    limit: 4,
+  });
     const [orderHist] = useState(Array.from({ length: 10 }, (_, i) => i + 1))
 
     const navigation = useNavigation()
@@ -181,7 +186,7 @@ const ProviderHomePage = () => {
                 {/*  */}
                 <View className='flex-1 bg-[#121212] p-3'>
                     <ScrollView showsVerticalScrollIndicator={false}>
-                        {orderHist?.map(item => <View key={item} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2'>
+                        {getOrdersBrand?.data?.data?.map(item => <View key={item} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2'>
                             <View className='flex-row justify-between items-center'>
                                 <Text className='text-[#fff] font-instrumentSansSemiBold'>#83473</Text>
                                 <Text className='text-[#FB923C] p-2 rounded-2xl font-instrumentSansSemiBold' style={{ backgroundColor: 'rgba(249, 115, 22, 0.20)' }}>Processing</Text>
@@ -206,7 +211,7 @@ const ProviderHomePage = () => {
                                     <AntDesign name="check" size={24} color="white" />
                                     <Text className='text-white font-instrumentSansSemiBold'>Mark Ready</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity className='items-center bg-[#121212] p-2 rounded-md' onPress={() => navigation.navigate("Order Details")}>
+                                <TouchableOpacity className='items-center bg-[#121212] p-2 rounded-md' onPress={() => navigation.navigate("Order Details",{id:item?.cartProductId})}>
                                     <AntDesign name="eye" size={24} color="white" />
                                 </TouchableOpacity>
                             </View>

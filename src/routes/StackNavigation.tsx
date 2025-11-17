@@ -50,6 +50,8 @@ import Reward from "src/screens/Profile/Reward";
 import EditProducts from "src/screens/Products/EditProducts";
 import SearchPage from "src/screens/Search/SearchPage";
 import PaymentScreen from "src/screens/Payment/PaymentScreen";
+import Transaction from "src/screens/Earning/Transaction";
+import OrderHistoryDetails from "src/screens/Profile/orderHistoryDetails";
 
 
 const Stack = createStackNavigator();
@@ -137,6 +139,8 @@ const StackNavigation = () => {
         <Stack.Screen name="Brand Profile" options={{headerShown:true}} component={BrandProfile}/>
         <Stack.Screen name="Reward" options={{headerShown:true}} component={Reward}/>
         <Stack.Screen name="Payment screen" options={{headerShown:true}} component={PaymentScreen}/>
+        <Stack.Screen name="Transaction" options={{headerShown:true}} component={Transaction}/>
+        <Stack.Screen name="OrderHistoryDetails" options={{headerShown:true}} component={OrderHistoryDetails}/>
 
       </Stack.Navigator>
     // </NavigationContainer>

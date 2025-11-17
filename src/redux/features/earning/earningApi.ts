@@ -25,7 +25,18 @@ const earningApi = baseApi.injectEndpoints({
                 };
             },
         }),
+
+        getTransaction: builder.query({
+            query: (token) => {
+                return {
+                    url: `/order/transaction`,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                };
+            },
+        }),
     }),
 });
 
-export const { useGetGraphQuery, useGetEarningStatsQuery } = earningApi;
+export const { useGetGraphQuery, useGetEarningStatsQuery,useGetTransactionQuery } = earningApi;

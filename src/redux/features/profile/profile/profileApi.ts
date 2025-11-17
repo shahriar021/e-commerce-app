@@ -63,8 +63,37 @@ const profileApi = baseApi.injectEndpoints({
                     method:"GET"
                 }
             }
+        }),
+
+        updateBrandProfile:builder.mutation({
+
+            query:({token,formData})=>{
+
+                return{
+
+                    url:`/brand`,
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    },
+                    method:"PATCH",
+                    body:formData
+                }
+            },
+            invalidatesTags:['profile']
+        }),
+
+        orderHistory:builder.query({
+            query:(token)=>{
+                return{
+                    url:`/order`,
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    },
+
+                }
+            }
         })
     })
 })
 
-export const {useGetProfileQuery,useUpdateProfileMutation,useGetLookbookQuery,useGetIndividualPostQuery}=profileApi
+export const {useGetProfileQuery,useUpdateProfileMutation,useGetLookbookQuery,useGetIndividualPostQuery,useUpdateBrandProfileMutation,useOrderHistoryQuery}=profileApi

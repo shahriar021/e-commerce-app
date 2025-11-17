@@ -177,7 +177,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { BarChart } from "react-native-gifted-charts";
 import { useAppSelector } from "src/redux/hooks";
-import { useGetEarningStatsQuery, useGetGraphQuery } from "src/redux/features/earning/earningApi";
+import { useGetEarningStatsQuery, useGetGraphQuery, useGetTransactionQuery } from "src/redux/features/earning/earningApi";
 
 const Earning = () => {
     const navigation = useNavigation();
@@ -187,6 +187,7 @@ const Earning = () => {
     const currentMonthIndex = new Date().getMonth();
     const { data: getEarningGraph } = useGetGraphQuery(token);
     const { data: getEarningStats } = useGetEarningStatsQuery(token);
+    const { data: getTransaction } = useGetTransactionQuery(token);
 
     console.log(getEarningStats);
 
@@ -383,63 +384,40 @@ const Earning = () => {
                     <Text className="text-white text-xl font-instrumentSansSemiBold">
                         Transaction{" "}
                     </Text>
-                    <View className="flex-row gap-2 items-center">
+                    <TouchableOpacity className="flex-row gap-2 items-center" onPress={()=>navigation.navigate("Transaction")}>
                         <Text className="text-white text-xl font-instrumentSansSemiBold">
                             See All
                         </Text>
                         <AntDesign name="arrowright" size={24} color="white" />
-                    </View>
+                    </TouchableOpacity>
                 </View>
 
-                <View className="bg-[#121212] p-1 rounded-md mt-2">
-                    <View className="flex-row justify-between p-1">
-                        <Text className="text-white text-lg font-instrumentSansSemiBold">
-                            Order #84739
-                        </Text>
-                        <Text className="text-[#4ADE80] font-instrumentRegular">
-                            ৳2,500
-                        </Text>
-                    </View>
-                    <View className="flex-row justify-between p-1 mt-1">
-                        <Text className="text-[#9CA3AF] text-base font-instrumentRegular">
-                            Jun 24, 2024
-                        </Text>
-                        <Text className="text-[#4ADE80] font-instrumentRegular">Paid</Text>
-                    </View>
-                </View>
-
-                <View className="bg-[#121212] p-1 rounded-md mt-2">
-                    <View className="flex-row justify-between p-1">
-                        <Text className="text-white text-lg font-instrumentSansSemiBold">
-                            Order #84739
-                        </Text>
-                        <Text className="text-[#FB923C] font-instrumentRegular">
-                            ৳2,500
-                        </Text>
-                    </View>
-                    <View className="flex-row justify-between p-1 mt-1">
-                        <Text className="text-[#9CA3AF] text-base font-instrumentRegular">
-                            Jun 24, 2024
-                        </Text>
-                        <Text className="text-[#FB923C] font-instrumentRegular">Paid</Text>
-                    </View>
-                </View>
-                <View className="bg-[#121212] p-1 rounded-md mt-2">
-                    <View className="flex-row justify-between p-1">
-                        <Text className="text-white text-lg font-instrumentSansSemiBold">
-                            Order #84739
-                        </Text>
-                        <Text className="text-[#FB923C] font-instrumentRegular">
-                            ৳2,500
-                        </Text>
-                    </View>
-                    <View className="flex-row justify-between p-1 mt-1">
-                        <Text className="text-[#9CA3AF] text-base font-instrumentRegular">
-                            Jun 24, 2024
-                        </Text>
-                        <Text className="text-[#FB923C] font-instrumentRegular">Paid</Text>
-                    </View>
-                </View>
+                {getTransaction?.data?.data?.map((item) => (
+          <View className="bg-[#121212] p-1 rounded-md mt-2">
+            <View className="flex-row justify-between p-1">
+              <Text className="text-white text-lg font-instrumentSansSemiBold">
+                Order #{item?.cartProductId?.slice(-4)}
+              </Text>
+              <Text className="text-[#4ADE80] font-instrumentRegular">
+                {item?.earning}
+              </Text>
+            </View>
+            <View className="flex-row justify-between p-1 mt-1">
+              <Text className="text-[#9CA3AF] text-base font-instrumentRegular">
+                {new Date(item?.createdAt)?.toLocaleDateString()}
+              </Text>
+              <Text
+                className={`${
+                  item?.earningStatus == "paid"
+                    ? "text-[#4ADE80]"
+                    : "text-[#FB923C]"
+                }  font-instrumentRegular`}
+              >
+                {item?.earningStatus}
+              </Text>
+            </View>
+          </View>
+        ))}
             </View>
         </ScrollView>
     );

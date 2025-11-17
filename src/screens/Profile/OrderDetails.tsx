@@ -9,13 +9,13 @@ import { nameStatus } from 'src/constants/productInfos'
 
 const OrderDetails = () => {
     const { width, height } = useWindowDimensions()
-     const route=useRoute()
-        const {id}=route.params
-        const navigation = useNavigation()
-        const token=useAppSelector((state)=>state.auth.token)
-        const {data:details}=useGetBrandOrderDetailsQuery({token,id})
-        
-        const info = details?.data?.data[0]
+    const route = useRoute()
+    const { id } = route.params
+    const navigation = useNavigation()
+    const token = useAppSelector((state) => state.auth.token)
+    const { data: details } = useGetBrandOrderDetailsQuery({ token, id })
+
+    const info = details?.data?.data[0]
     useLayoutEffect(() => {
         navigation.setOptions({
             title: "Order Details",
@@ -27,7 +27,7 @@ const OrderDetails = () => {
             },
             headerTintColor: "white",
             headerTitleAlign: "start",
-            headerTitleStyle:'instrumentSans-Bold',
+            headerTitleStyle: 'instrumentSans-Bold',
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
                     <Feather name="arrow-left-circle" size={24} color="white" />
@@ -49,7 +49,7 @@ const OrderDetails = () => {
             <View className='flex-row justify-between items-center bg-[#212121] p-2 rounded-lg mt-2'>
                 <View className='flex-row b items-center gap-2 mt-2 mb-1'>
                     <View style={{ width: scale(52), height: scale(52) }} className='rounded-xl overflow-hidden'>
-                        <Image source={{uri:info?.productImages[0]}} style={{ width: "100%", height: "100%" }} />
+                        <Image source={{ uri: info?.productImages[0] }} style={{ width: "100%", height: "100%" }} />
                     </View>
                     <View className='flex-row justify-between flex-1 items-center'>
                         <View className='flex-col'>
@@ -73,7 +73,7 @@ const OrderDetails = () => {
                 </View>
                 <View className='flex-row gap-3 items-center'>
                     <Image source={require("../../../assets/e-icon/n.png")} style={{ width: 20, height: 18 }} />
-                    <Text className='font-instrumentSansSemiBold text-[#fff] text-lg' style={{flexShrink:1}}>{info?.address?.spotDetails}</Text>
+                    <Text className='font-instrumentSansSemiBold text-[#fff] text-lg' style={{ flexShrink: 1 }}>{info?.address?.spotDetails}</Text>
                 </View>
             </View>
 
@@ -85,11 +85,11 @@ const OrderDetails = () => {
                 </View>
                 <View className='flex-row justify-between mt-2'>
                     <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>Payment Status</Text>
-                    <Text className={`${info?.paymentStatus=="paid"?"text-[#4ADE80]":"text-red-400"} font-instrumentSansSemiBold`}>{info?.paymentStatus}</Text>
+                    <Text className={`${info?.paymentStatus == "paid" ? "text-[#4ADE80]" : "text-red-400"} font-instrumentSansSemiBold`}>{info?.paymentStatus}</Text>
 
                 </View>
-                <View className='border border-[#565656] mt-2'/>
-                 <View className='flex-row justify-between'>
+                <View className='border border-[#565656] mt-2' />
+                <View className='flex-row justify-between'>
                     <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>Subtotal</Text>
                     <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>৳4,400</Text>
                 </View>
@@ -98,14 +98,14 @@ const OrderDetails = () => {
                     <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>৳80</Text>
 
                 </View>
-                <View className='border border-[#565656] mt-2'/>
+                <View className='border border-[#565656] mt-2' />
                 <View className='flex-row justify-between mt-2'>
                     <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>Total</Text>
                     <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>৳4,480</Text>
 
                 </View>
             </View>
-             
+
         </ScrollView>
     )
 }

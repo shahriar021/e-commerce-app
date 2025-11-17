@@ -44,8 +44,10 @@ export default function YourComponent() {
   const [saveLoadlimit, setSaveLoadlimit] = useState(10);
   const { data: getLookbook } = useGetLookbookQuery({ token, limit: saveLoadlimit });
   const { data: getPostData } = useGetIndividualPostQuery({ token, uid: profile?.data?.data?._id, limit: postLoadlimit })
+  const userType = useAppSelector((state) => state.auth.userType)
+  console.log(userType)
 
-  console.log(profile,"profile")
+  console.log(profile, "profile")
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -92,6 +94,8 @@ export default function YourComponent() {
     setIsModalOpen(true)
   }
 
+
+
   return (
     <View className="flex-1 relative">
       <TouchableOpacity className='absolute right-10 bottom-4 z-10 bg-[#1D3725] p-3 rounded-full' onPress={handleModal}>
@@ -116,7 +120,7 @@ export default function YourComponent() {
           }}
         >
           <Image
-            source={require("../../../assets/e-icon/othersProfile.jpg")}
+            source={{uri:profile?.data?.coverPhoto?.[0]}}
             style={{
               width: '100%',
               height: verticalScale(250),
@@ -143,23 +147,33 @@ export default function YourComponent() {
               justifyContent: 'center',
             }}
           >
-            {profile?.data?.data?.profile[0] ? (
+            {profile?.data? (
+              userType === "Brand" ? (
+                <Image
+                  source={{ uri: profile?.data?.brandLogo?.[0] }}
+                  style={{ width: "100%", height: "100%" }}
+                  resizeMode="cover"
+                />
+              ) : (
+                <Image
+                  source={{ uri: profile?.data?.profile?.[0] }}
+                  style={{ width: "100%", height: "100%" }}
+                  resizeMode="cover"
+                />
+              )
+            ) : (
               <Image
-                source={{ uri: profile?.data?.data?.profile[0] }}
-                style={{ width: "100%", height: "100%" }}
+                source={require("../../../assets/e-icon/img (1).png")}
+                style={{ width: '100%', height: '100%' }}
                 resizeMode="cover"
               />
-            ) : <Image
-              source={require("../../../assets/e-icon/img (1).png")}
-              style={{ width: '100%', height: '100%' }}
-              resizeMode="cover"
-            />}
+            )}
           </View>
         </View>
 
         <View className='w-[92%] items-center'>
-          <Text className='text-white text-center font-instrumentSansBold mb-1' >{profile?.data?.userName}</Text>
-          <Text className='text-white font-instrumentSansSemiBold text-center'>S treetwear curator | #LagosStyle | Fashion enthusiast</Text>
+          <Text className='text-white text-center font-instrumentSansBold mb-1' >{userType == "Brand" ? profile?.data?.brandName : profile?.data?.userName}</Text>
+          <Text className='text-white font-instrumentSansSemiBold text-center'>{profile?.data?.theme}</Text>
           <View className='mt-3 flex-row gap-3'>
             <View className='bg-[#252525] p-2 items-center rounded-xl'>
               <Text className='text-white font-instrumentRegular'>{profile?.data?.totalPosts | 0}</Text>
@@ -175,9 +189,9 @@ export default function YourComponent() {
             </View>
           </View>
         </View>
-       <View>
-       
-       </View>
+        <View>
+
+        </View>
 
         <View className='w-[92%] flex-row gap-3 mt-2 mb-3 justify-center items-center'>
           <TouchableOpacity className={`${isPosts == "Posts" ? "border-b border-b-white" : ""} py-1`} onPress={() => setIsPosts("Posts")}>
