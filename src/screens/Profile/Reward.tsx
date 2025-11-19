@@ -3,10 +3,15 @@ import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { AntDesign, Feather } from '@expo/vector-icons'
 import { scale, verticalScale } from 'react-native-size-matters'
+import { useGetTotalRewardQuery } from 'src/redux/features/profile/reward/rewardApi'
+import { useAppSelector } from 'src/redux/hooks'
 
 const Reward = () => {
+    const token=useAppSelector(state=>state.auth.token)
     const navigation = useNavigation()
     const [activeTab, setActiveTab] = useState('Pending');
+    const {data:rewardData}=useGetTotalRewardQuery(token)
+    console.log(rewardData?.data)
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -26,8 +31,8 @@ const Reward = () => {
 
     return (
         <View className='flex-1 items-center '>
-            <Text className='text-white text-3xl mt-4 font-instrumentSansBold'>15600 pts</Text>
-            <Text className='text-[#6d6363] text-xl mt-1 font-instrumentSansSemiBold'>your points worth $15.6</Text>
+            <Text className='text-white text-3xl mt-4 font-instrumentSansBold'>0 pts</Text>
+            <Text className='text-[#6d6363] text-xl mt-1 font-instrumentSansSemiBold'>your points worth $0</Text>
 
             <View
                 className="border border-white mt-5 rounded-lg overflow-hidden p-1"

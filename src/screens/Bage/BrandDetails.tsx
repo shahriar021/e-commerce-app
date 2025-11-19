@@ -11,7 +11,7 @@ const BrandDetails = () => {
     const route=useRoute();
     const {id}=route.params
     const navigation = useNavigation()
-    const [loadMore, setLoadMore] = useState(3)
+    const [loadMore, setLoadMore] = useState(20)
       const token = useAppSelector((state) => state.auth.token);
       const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
       const {data:getData}=useGetBrandWithIdQuery({token,id:id})

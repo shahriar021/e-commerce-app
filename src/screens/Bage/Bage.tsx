@@ -78,7 +78,7 @@ import { useFeatureBrandsQuery } from 'src/redux/features/brand/brandApi'
 const Bage = () => {
 
   const navigation = useNavigation()
-  const [loadMore, setLoadMore] = useState(6)
+  const [loadMore, setLoadMore] = useState(20)
   const token = useAppSelector((state) => state.auth.token);
   const { data, isLoading: isQueryLoading } = useFeatureBrandsQuery({ token, limit: loadMore }) // 👈 Destructure isLoading
   const [search, setSearch] = useState("")

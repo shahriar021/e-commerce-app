@@ -132,6 +132,17 @@ const productApi = baseApi.injectEndpoints({
                 }
             },
             invalidatesTags:['product']
+        }),
+
+        getCategoryList:builder.query({
+            query:({token,id})=>{
+                return{
+                    url:`/stats/categorylist/${id}`,
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
+            }
         })
     }),
 });
@@ -142,5 +153,6 @@ export const {
     useGetSpecificProductBasedOnIdQuery,
     useUploadProductMutation,
     useDeleteProductMutation,
-    useUpdateProductMutation
+    useUpdateProductMutation,
+    useGetCategoryListQuery
 } = productApi;

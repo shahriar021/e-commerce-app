@@ -6,12 +6,14 @@ View,
     useWindowDimensions,
     TouchableOpacity,
     ScrollView,
+    ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import {
+    useDeleteCartItemMutation,
     useGetAddToCartQuery,
     useUpdateCartMutation,
 } from "src/redux/features/cart/cartApi";
@@ -23,9 +25,12 @@ const CartPage = () => {
     const { width, height } = useWindowDimensions();
     const token = useAppSelector((state) => state.auth.token);
     const navigation = useNavigation();
+    const [loading,setLoading]=useState(false)
     const [cartList] = useState(Array.from({ length: 2 }, (_, c) => c + 1));
     const { data } = useGetAddToCartQuery(token);
     const [prQuantity, setPrQuantity] = useState<{ [key: string]: number }>({});
+    const [deleteItem]=useDeleteCartItemMutation()
+    
 
     useEffect(() => {
         if (data?.data?.cart?.products) {
@@ -95,18 +100,29 @@ const CartPage = () => {
     };
     const updatedSubtotal = calculateSubtotal();
     const shiping = data?.data?.shippingCharge;
-    const total = (parseFloat(updatedSubtotal) + shiping).toFixed(2);
+    const total = data?.data?.total;
 
-    const handleDelete = () => { };
+    const handleDelete = async(id:any) => { 
+        setLoading(true)
+        console.log(id,"delete...")
+        try{
+            const res = await deleteItem({token,id});
+            setLoading(false)
+            console.log(res,"delete")
+        }catch(err){
+            console.log(err)
+            setLoading(false)
+        }
+    };
 
     const handlePaymentOption = async () => {
         const body = {
             data: data.data.products.map((item: any) => ({
-                productId: item._id,
+                productId: item.productId,
                 color: item.color,
                 size: item.size,
                 // quantity: prQuantity[item._id] ?? item.quantity,
-                quantity: item.quantity + (prQuantity[item._id] || 0),
+                quantity: item.quantity + (prQuantity[item.productId] || 0),
             })),
         };
 
@@ -167,8 +183,8 @@ const CartPage = () => {
                                         <AntDesign name="pluscircleo" size={24} color="white" />
                                     </TouchableOpacity>
                                 </View>
-                                <TouchableOpacity onPress={handleDelete}>
-                                    <AntDesign name="delete" size={24} color="red" />
+                                <TouchableOpacity onPress={handleDelete} onPress={()=>handleDelete(x._id)}>
+                                    {loading?<ActivityIndicator size={"small"} color={"red"}/>:<AntDesign name="delete" size={24} color="red" />}
                                 </TouchableOpacity>
                             </View>
                         </View>

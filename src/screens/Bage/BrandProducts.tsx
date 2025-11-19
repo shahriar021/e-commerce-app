@@ -3,19 +3,18 @@ import React, { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { allProducts } from './demoBage';
-import { useProductListBrandIdWiseQuery } from 'src/redux/features/product/productApi';
+import { useGetCategoryListQuery, useProductListBrandIdWiseQuery } from 'src/redux/features/product/productApi';
 import { useAppSelector } from 'src/redux/hooks';
 
 const BrandProducts = () => {
-    const [loadMore, setLoadMore] = useState(3)
+    const [loadMore, setLoadMore] = useState(20)
     const route = useRoute();
     const { ID } = route.params
     const token = useAppSelector((state) => state.auth.token)
-    const { width, height } = useWindowDimensions()
     const navigation = useNavigation()
     const [isClothType, setIsClothType] = useState("ALL")
     const { data } = useProductListBrandIdWiseQuery({ token, id: ID, limit: loadMore })
-    console.log(ID,"in.")
+    const { data: getCat } = useGetCategoryListQuery({ token, id: ID })
 
     navigation.setOptions({
         headerStyle: {
@@ -36,6 +35,10 @@ const BrandProducts = () => {
         )
     });
 
+    const catArr = getCat?.data ? getCat.data.map(item => item) : [];
+    if (catArr) {
+        catArr.unshift("ALL");
+    }
 
     return (
         <View className='flex-1 bg-[#121212] p-3'>
@@ -46,15 +49,9 @@ const BrandProducts = () => {
             </View>
 
             <View className='flex-row gap-3 mt-1 mb-2'>
-                <TouchableOpacity className={`${isClothType == "ALL" ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1 `} onPress={() => setIsClothType("ALL")}>
-                    <Text className={`font-instrumentSansBold ${isClothType == "ALL" ? "text-[#121212]" : "text-white"}`}>ALL</Text>
-                </TouchableOpacity>
-                <TouchableOpacity className={`${isClothType == "T-Shirts" ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1`} onPress={() => setIsClothType("tshirt")}>
-                    <Text className={`font-instrumentSansBold ${isClothType == "T-Shirts" ? "text-[#121212]" : "text-white"}`}>T-Shirts</Text>
-                </TouchableOpacity>
-                <TouchableOpacity className={`${isClothType == "Jeans" ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1`} onPress={() => setIsClothType("jeans")}>
-                    <Text className={`font-instrumentSansBold ${isClothType == "Jeans" ? "text-[#121212]" : "text-white"}`}>Jeans</Text>
-                </TouchableOpacity>
+                {catArr?.map(item => <TouchableOpacity className={`${isClothType == item ? "bg-[#DCF3FF]" : "bg-[#1D3725]"} rounded-md items-center p-1 `} onPress={() => setIsClothType(item)}>
+                    <Text className={`font-instrumentSansBold ${isClothType == item ? "text-[#121212]" : "text-white"}`}>{item}</Text>
+                </TouchableOpacity>)}
             </View>
 
             <View className='flex-row justify-between items-center mt-2 mb-2'>
@@ -69,7 +66,7 @@ const BrandProducts = () => {
 
                 <View className='flex-row flex-wrap  justify-between gap-2'>
                     {isClothType == "ALL" ? (data?.data?.product?.map((item, index) =>
-                        <TouchableOpacity key={index} style={{ width: "48%" }} className='bg-[#1D3725] items-center rounded-lg relative  ' onPress={() => navigation.navigate("Product Details",{ID:item.id})}>
+                        <TouchableOpacity key={index} style={{ width: "48%" }} className='bg-[#1D3725] items-center rounded-lg relative  ' onPress={() => navigation.navigate("Product Details", { ID: item.id })}>
                             <Image source={{ uri: item.productImages[0] }} style={{ width: "100%", height: 160, borderRadius: 8 }} />
                             <View className='bg-[#000000] border-[#1D3725] border-8 absolute p-1 bottom-14 rounded-full items-center justify-center' style={{ width: 50, height: 50 }}>
                                 <Image source={require("../../../assets/e-icon/bag-2.png")} style={{ width: "100%", height: "100%" }} />
@@ -78,7 +75,7 @@ const BrandProducts = () => {
                             <Text className='font-instrumentSansSemiBold text-white mb-2'>{item.price}</Text>
                         </TouchableOpacity>
                     )) : (data?.data?.product?.filter((item) => item.category == isClothType)?.map((item, index) =>
-                        <TouchableOpacity key={index} style={{ width: "48%" }} className='bg-[#1D3725] items-center rounded-lg relative  ' onPress={() => navigation.navigate("Product Details",{ID:item.id})}>
+                        <TouchableOpacity key={index} style={{ width: "48%" }} className='bg-[#1D3725] items-center rounded-lg relative  ' onPress={() => navigation.navigate("Product Details", { ID: item.id })}>
                             <Image source={{ uri: item.productImages[0] }} style={{ width: "100%", height: 160, borderRadius: 8 }} />
                             <View className='bg-[#000000] border-[#1D3725] border-8 absolute p-1 bottom-14 rounded-full items-center justify-center' style={{ width: 50, height: 50 }}>
                                 <Image source={require("../../../assets/e-icon/bag-2.png")} style={{ width: "100%", height: "100%" }} />
@@ -87,7 +84,7 @@ const BrandProducts = () => {
                             <Text className='font-instrumentSansSemiBold text-white mb-2'>{item.price}</Text>
                         </TouchableOpacity>
                     ))}
-                    <TouchableOpacity className=" items-center border rounded-3xl border-[#fff] p-2 mt-3" style={{ width: "95%" }} onPress={() => setLoadMore(loadMore + 2)}>
+                    <TouchableOpacity className=" items-center border rounded-3xl border-[#fff] p-2 mt-3" style={{ width: "95%" }} onPress={() => setLoadMore(loadMore + 20)}>
                         <Text className="font-instrumentSansSemiBold text-white text-xl">View All</Text>
                     </TouchableOpacity>
                 </View>

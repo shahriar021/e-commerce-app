@@ -1,7 +1,7 @@
 import { AntDesign, Feather } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import React, { useLayoutEffect, useState } from "react"
-import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Alert, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useDispatch } from "react-redux"
 import { setToken, setUserType,setId } from "src/redux/features/auth/authSlice";
 import { useLoginMutation } from "src/redux/features/auth/authApi"
@@ -13,6 +13,7 @@ const LoginScreen = () => {
     const [userTypes, setUserTypes] = useState<string>("")
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [loading,setLoading]=useState(false)
     const [loginData] = useLoginMutation()
     const dispatch = useDispatch();
 
@@ -40,6 +41,7 @@ const LoginScreen = () => {
     };
 
     const handleLogin = async () => {
+        setLoading(true)
         if (!userTypes) {
             Alert.alert("Error", "Please select a user type");
             return;
@@ -78,12 +80,14 @@ const LoginScreen = () => {
                 if(res?.data?.id){
                     dispatch(setId(res.data.id))
                 }
+                setLoading(false)
                 Alert.alert(res.message)
                 console.log(res)
             }else{
                 Alert.alert("There is a mismatch in user types,Please select your type carefully!")
             }
         } catch (err: any) {
+            setLoading(false)
             const errorMessage = err?.data?.message || err?.message || "Something went wrong!";
             Alert.alert("Error", errorMessage);
         }
@@ -135,7 +139,7 @@ const LoginScreen = () => {
                 </TouchableOpacity>
 
                 <TouchableOpacity className="mt-1 mb-3 items-center bg-[#fff] p-3 rounded-lg " onPress={handleLogin}>
-                    <Text className="text-[#000] text-xl font-instrumentSansBold" >login</Text>
+                    <Text className="text-[#000] text-xl font-instrumentSansBold" >{loading?<ActivityIndicator size={"small"} color={"green"}/>:"login"}</Text>
                 </TouchableOpacity>
             </View>
         </View>

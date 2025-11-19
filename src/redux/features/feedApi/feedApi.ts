@@ -5,10 +5,10 @@ const feedApi=baseApi.injectEndpoints({
 
         getAllPost:builder.query({
 
-            query:({token,limit})=>{
+            query:({token,limit,tag})=>{
                 return{
 
-                    url:`/post?limit=${limit}`,
+                    url:`/post?limit=${limit}&tags=${tag}`,
                     method:"GET",
                     headers:{
                         Authorization:`Bearer ${token}`
@@ -93,8 +93,19 @@ const feedApi=baseApi.injectEndpoints({
                     }
                 }
             },
+        }),
+
+        getFeedFilter:builder.query({
+            query:(token)=>{
+                return{
+                    url:`/stats/feedFilterlist`,
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
+            }
         })
     })
 })
 
-export const{useGetAllPostQuery,usePostCommentBasedOnIdMutation,usePostFeedPostMutation,usePostLikeMutation,usePostSaveMutation,useGetUploaderProfileQuery}=feedApi;
+export const{useGetAllPostQuery,usePostCommentBasedOnIdMutation,usePostFeedPostMutation,usePostLikeMutation,usePostSaveMutation,useGetUploaderProfileQuery,useGetFeedFilterQuery}=feedApi;

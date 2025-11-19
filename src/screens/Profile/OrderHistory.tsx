@@ -16,7 +16,7 @@ const OrderHistory = () => {
     const token = useAppSelector((state)=>state.auth.token)
     const {data:getOrderHist}=useOrderHistoryQuery(token)
     
-    
+    console.log(token,"order history..")
    
 
     useLayoutEffect(() => {

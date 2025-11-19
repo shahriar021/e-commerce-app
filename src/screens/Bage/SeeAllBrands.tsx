@@ -13,7 +13,7 @@ const SeeAllBrands = () => {
     const navigation = useNavigation()
     const [isClothType, setIsClothType] = useState("ALL")
     const token = useAppSelector((state) => state.auth.token);
-    const [loadMore, setLoadMore] = useState(10)
+    const [loadMore, setLoadMore] = useState(20)
     const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
 
     navigation.setOptions({
