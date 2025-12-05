@@ -85,6 +85,18 @@ const authApi = baseApi.injectEndpoints({
                 };
             },
         }),
+        changePassword: builder.mutation({
+            query: ({ token, body }) => {
+                return {
+                    url: `auth/update_password`,
+                    method: "PATCH",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body,
+                };
+            },
+        }),
 
 
     })

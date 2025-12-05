@@ -1,4 +1,4 @@
-import { View, Text, useWindowDimensions, TouchableOpacity, ScrollView, Image } from 'react-native'
+import { View, Text, useWindowDimensions, TouchableOpacity, ScrollView, Image, ActivityIndicator } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { AntDesign, Feather } from '@expo/vector-icons'
@@ -14,11 +14,8 @@ const OrderHistory = () => {
     const { width, height } = useWindowDimensions()
     const navigation = useNavigation()
     const token = useAppSelector((state)=>state.auth.token)
-    const {data:getOrderHist}=useOrderHistoryQuery(token)
+    const {data:getOrderHist,isLoading}=useOrderHistoryQuery(token)
     
-    console.log(token,"order history..")
-   
-
     useLayoutEffect(() => {
         navigation.setOptions({
             title: "Order History",
@@ -39,11 +36,18 @@ const OrderHistory = () => {
             )
         })
     }, [navigation])
+
+    if(isLoading){
+       return <View className='flex-1'><ActivityIndicator size={"large"} color={"white"}/></View>
+    }
+
+    console.log(getOrderHist?.data?.data?.length)
     
     return (
         <View className='flex-1 bg-[#121212] p-3'>
             <ScrollView showsVerticalScrollIndicator={false}>
-               {Array.isArray(getOrderHist?.data?.data) && getOrderHist?.data?.data?.map(item => {
+               {Array.isArray(getOrderHist?.data?.data) && getOrderHist?.data?.data?.length>0? 
+               getOrderHist?.data?.data?.map(item => {
                     // Get the first item in the order for display details
                     const firstItem = item.items?.[0]; 
                     
@@ -106,7 +110,7 @@ const OrderHistory = () => {
                             </View>
                         </TouchableOpacity>
                     );
-               })}
+               }):<Text className='text-white text-xl text-center'>No Order History!</Text>}
             </ScrollView>
         </View>
     )

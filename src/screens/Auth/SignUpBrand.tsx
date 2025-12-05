@@ -7,10 +7,7 @@ import { scale, verticalScale } from "react-native-size-matters"
 import * as ImagePicker from 'expo-image-picker';
 import { useSignUpBrandMutation } from "src/redux/features/auth/authApi"
 import { launchCameraAndHandlePermissions } from "src/components/shared/ShareCamera"
-export const selectedCountry = {
-  flag: require('../../../assets/e-icon/bdFlag.jpg'),
-  dialCode: '+880',
-};
+import { CountryPicker } from "react-native-country-codes-picker";
 
 const SignUpBrand = () => {
 
@@ -24,6 +21,8 @@ const SignUpBrand = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [theme, setTheme] = useState("")
+  const [countryCode, setCountryCode] = useState('+93');
+  const [show, setShow] = useState(false);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -71,7 +70,7 @@ const SignUpBrand = () => {
       confirmedPassword: confirmPassword,
       role: "Brand",
       mobile: phoneNumber,
-      countryCode: "+880",
+      countryCode: countryCode,
     };
 
 
@@ -89,12 +88,15 @@ const SignUpBrand = () => {
 
     formData.append("data", JSON.stringify(userData));
 
-    console.log(formData,"form data...")
+    console.log(formData, "form data...")
 
     try {
       const res = await postBody(formData).unwrap();
 
       Alert.alert(res.message);
+      if (res.message === "Brand registered successfully") {
+                navigation.navigate("OnBoarding")
+            }
     } catch (err: any) {
       console.log(err)
       const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
@@ -134,17 +136,32 @@ const SignUpBrand = () => {
 
         <View className="bg-[#2C2C2C] rounded-lg mt-2" style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 8, marginBottom: 5 }}>
 
-          {/* Dynamic Flag */}
-          <Image
-            source={selectedCountry.flag}
-            style={{ width: 24, height: 16, marginRight: 8 }}
-            resizeMode="contain"
+          <TouchableOpacity
+            onPress={() => setShow(true)}
+            style={{
+              width: '20%',
+              height: 60,
+              backgroundColor: 'black',
+              padding: 10,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <Text style={{
+              color: 'white',
+              fontSize: 20
+            }}>
+              {countryCode}
+            </Text>
+          </TouchableOpacity>
+          <CountryPicker
+            show={show}
+            // when picker button press you will get the country object with dial code
+            pickerButtonOnPress={(item) => {
+              setCountryCode(item.dial_code);
+              setShow(false);
+            }}
           />
-
-          {/* Dynamic Country Code */}
-          <Text style={{ fontSize: 16, color: 'white', marginRight: 8 }}>
-            {selectedCountry.dialCode}
-          </Text>
 
           {/* Phone Input */}
           <TextInput

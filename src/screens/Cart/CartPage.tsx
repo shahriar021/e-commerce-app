@@ -21,15 +21,15 @@ import { useAppSelector } from "src/redux/hooks";
 
 const CartPage = () => {
     const route = useRoute();
-    const { id } = route.params;
+    const { id } = route.params || {};
     const { width, height } = useWindowDimensions();
     const token = useAppSelector((state) => state.auth.token);
     const navigation = useNavigation();
     const [loading,setLoading]=useState(false)
-    const [cartList] = useState(Array.from({ length: 2 }, (_, c) => c + 1));
     const { data } = useGetAddToCartQuery(token);
     const [prQuantity, setPrQuantity] = useState<{ [key: string]: number }>({});
     const [deleteItem]=useDeleteCartItemMutation()
+    console.log(data?.data?.products?.reduce((acc , curr)=>acc+1,0))
     
 
     useEffect(() => {

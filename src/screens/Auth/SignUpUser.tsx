@@ -1,13 +1,10 @@
-import {  Feather } from "@expo/vector-icons"
+import { Feather } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import { LinearGradient } from "expo-linear-gradient"
 import React, { useLayoutEffect, useState } from "react"
-import { Alert, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useSignUpUserMutation } from "src/redux/features/auth/authApi"
-export const selectedCountry = {
-    flag: require('../../../assets/e-icon/bdFlag.jpg'),
-    dialCode: '+880',
-};
+import { CountryPicker } from "react-native-country-codes-picker";
 
 const SignUpUser = () => {
     const [postBody] = useSignUpUserMutation()
@@ -21,6 +18,8 @@ const SignUpUser = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
+    const [countryCode, setCountryCode] = useState('+93');
+    const [show, setShow] = useState(false);
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -41,7 +40,7 @@ const SignUpUser = () => {
             )
         })
     }, [navigation])
-    
+
     const handleSignUpUser = async () => {
         if (!email || !password || !firstName || !lastName || !phoneNumber) {
             Alert.alert("Please fill up the fields!")
@@ -60,7 +59,7 @@ const SignUpUser = () => {
             firstName: firstName,
             lastName: lastName,
             mobile: phoneNumber,
-            countryCode: "+880",
+            countryCode: countryCode,
         };
 
 
@@ -71,6 +70,9 @@ const SignUpUser = () => {
         try {
             const res = await postBody(formData).unwrap();
             Alert.alert(res.message);
+            if (res.message === "User registered successfully") {
+                navigation.navigate("OnBoarding")
+            }
         } catch (err: any) {
             const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
             Alert.alert("Error", errorMessage);
@@ -92,17 +94,32 @@ const SignUpUser = () => {
                 </View>
                 <View className="bg-[#2C2C2C] rounded-lg mt-2" style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 8, marginBottom: 5 }}>
 
-                    {/* Dynamic Flag */}
-                    <Image
-                        source={selectedCountry.flag}
-                        style={{ width: 24, height: 16, marginRight: 8 }}
-                        resizeMode="contain"
+                    <TouchableOpacity
+                        onPress={() => setShow(true)}
+                        style={{
+                            width: '20%',
+                            height: 60,
+                            backgroundColor: 'black',
+                            padding: 10,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        <Text style={{
+                            color: 'white',
+                            fontSize: 20
+                        }}>
+                            {countryCode}
+                        </Text>
+                    </TouchableOpacity>
+                    <CountryPicker
+                        show={show}
+                        // when picker button press you will get the country object with dial code
+                        pickerButtonOnPress={(item) => {
+                            setCountryCode(item.dial_code);
+                            setShow(false);
+                        }}
                     />
-
-                    {/* Dynamic Country Code */}
-                    <Text style={{ fontSize: 16, color: 'white', marginRight: 8 }}>
-                        {selectedCountry.dialCode}
-                    </Text>
 
                     {/* Phone Input */}
                     <TextInput

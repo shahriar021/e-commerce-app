@@ -19,10 +19,10 @@ import { Toast } from "toastify-react-native";
 const ChangePassword = () => {
   const { width } = useWindowDimensions();
   const token = useAppSelector((state) => state.auth.token);
-  console.log(token)
   const navigation = useNavigation();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [newPassword, setNewmPassword] = useState("");
   const [isVisilbe, setIsVisible] = useState(true);
   const [updatePass] = useUpdatePasswordMutation();
 
@@ -52,7 +52,7 @@ const ChangePassword = () => {
       return;
     }
 
-    if (password !== confirmPassword) {
+    if (newPassword !== confirmPassword) {
       Toast.warn("Password doesnt match!");
       return;
     }
@@ -90,6 +90,26 @@ const ChangePassword = () => {
           placeholderTextColor={"#75838D"}
           style={{ color: "#75838D" }}
           onChangeText={setPassword}
+          secureTextEntry={isVisilbe}
+        />
+        <TouchableOpacity onPress={() => setIsVisible(!isVisilbe)}>
+          {isVisilbe ? (
+            <Feather name="eye-off" size={24} color="gray" />
+          ) : (
+            <Feather name="eye" size={24} color="gray" />
+          )}
+        </TouchableOpacity>
+      </View>
+
+      <Text className="font-instrumentSansSemiBold text-xl text-[#fff] w-full">
+        New Password
+      </Text>
+      <View className="flex-row items-center border rounded-xl border-gray-400 mt-2 mb-2 p-1 bg-[#252525]">
+        <TextInput
+          className=" flex-1 "
+          placeholderTextColor={"#75838D"}
+          style={{ color: "#75838D" }}
+          onChangeText={setNewmPassword}
           secureTextEntry={isVisilbe}
         />
         <TouchableOpacity onPress={() => setIsVisible(!isVisilbe)}>

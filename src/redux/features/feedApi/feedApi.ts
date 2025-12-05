@@ -49,6 +49,17 @@ const feedApi=baseApi.injectEndpoints({
             invalidatesTags:['feedPost']
         }),
 
+        getComments:builder.query({
+            query:({token,pid})=>{
+                return{
+                    url:`/comments?postId=${pid}`,
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
+            }
+        }),
+
         postCommentBasedOnId:builder.mutation({
 
             query:({token,pId,info})=>{
@@ -108,4 +119,4 @@ const feedApi=baseApi.injectEndpoints({
     })
 })
 
-export const{useGetAllPostQuery,usePostCommentBasedOnIdMutation,usePostFeedPostMutation,usePostLikeMutation,usePostSaveMutation,useGetUploaderProfileQuery,useGetFeedFilterQuery}=feedApi;
+export const{useGetAllPostQuery,usePostCommentBasedOnIdMutation,usePostFeedPostMutation,usePostLikeMutation,usePostSaveMutation,useGetUploaderProfileQuery,useGetFeedFilterQuery,useGetCommentsQuery}=feedApi;

@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { AntDesign, Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/native';
 import { useAppSelector } from 'src/redux/hooks';
 import { useDispatch } from 'react-redux';
 import { setToken, setUserType } from 'src/redux/features/auth/authSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const CustomDrawerContent = (props) => {
   const navigation = useNavigation();
-  const dispatch=useDispatch()
+  const dispatch = useDispatch()
+  const [profile, setProfile] = useState(null);
   const userItems = [
     {
       label: 'Edit Profile',
@@ -27,7 +29,7 @@ export const CustomDrawerContent = (props) => {
       icon: require("../../assets/e-icon/favOlive.png"),
       screen: 'My Favourite',
     },
-        {
+    {
       label: 'Reward',
       icon: require("../../assets/e-icon/reward.png"),
       screen: 'Reward',
@@ -36,11 +38,7 @@ export const CustomDrawerContent = (props) => {
 
   // Items for provider only
   const providerItems = [
-    {
-      label: 'Seller Profile',
-      icon: require("../../assets/e-icon/reward.png"),
-      screen: 'Seller Profile',
-    },
+
     {
       label: 'Brand Profile',
       icon: require("../../assets/e-icon/editOlive.png"),
@@ -61,19 +59,52 @@ export const CustomDrawerContent = (props) => {
       screen: 'Terms',
     },
     {
-      label: 'Privacy and Policy',
+      label: 'Privacy  Policy',
       icon: require("../../assets/e-icon/privacyolive.png"),
       screen: 'Privacy',
     },
-   
+
   ];
-   const userType = useAppSelector((store)=>store.auth.userType)
+  const userType = useAppSelector((store) => store.auth.userType)
 
   const items = userType === 'User' ? [...userItems, ...commonItems] : [...providerItems, ...commonItems];
 
- 
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('user_profile');
+        if (jsonValue != null) {
+          setProfile(JSON.parse(jsonValue));
+        }
+      } catch (e) {
+        console.error("Failed to load profile from AsyncStorage", e);
+      }
+    };
+
+    loadProfile();
+  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      const loadProfile = async () => {
+        try {
+          const jsonValue = await AsyncStorage.getItem('user_profile');
+          if (jsonValue != null) {
+            setProfile(JSON.parse(jsonValue));
+          }
+        } catch (e) {
+          console.error("Failed to load profile from AsyncStorage", e);
+        }
+      };
+      loadProfile();
+      return () => {
+      };
+
+    }, [])
+  );
+
+
   // userType == user or provider
-  const handleLogout=()=>{
+  const handleLogout = () => {
     dispatch(setUserType(null))
     dispatch(setToken(null))
   }
@@ -91,20 +122,53 @@ export const CustomDrawerContent = (props) => {
           </TouchableOpacity>
 
           <View style={{ marginTop: 16, alignItems: 'center' }}>
-            <Image
-              source={require("../../assets/e-icon/img (1).png")} // Replace with real image
-              style={{
-                width: 60,
-                height: 60,
-                borderRadius: 30,
-                marginBottom: 8,
-                borderColor: '#fff',
-                borderWidth: 1,
-                
-              }}
-            />
-            <Text className='font-instrumentSansSemiBold' style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>{userType=="user"?"Jack Robo":"Coid Supply"}</Text>
-            <View className='w-full border border-[#707070] mt-4'/>
+            {profile?.data ? (
+              userType === "Brand" ? (
+                <Image
+                  source={{ uri: profile?.data?.brandLogo?.[0] }}
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: 30,
+                    marginBottom: 8,
+                    borderColor: '#fff',
+                    borderWidth: 1,
+
+                  }}
+                  resizeMode="cover"
+                />
+              ) : (
+                <Image
+                  source={{ uri: profile?.data?.profile?.[0] }}
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: 30,
+                    marginBottom: 8,
+                    borderColor: '#fff',
+                    borderWidth: 1,
+
+                  }}
+                  resizeMode="cover"
+                />
+              )
+            ) : (
+              <Image
+                source={require("../../assets/e-icon/img (1).png")}
+                style={{
+                  width: 60,
+                  height: 60,
+                  borderRadius: 30,
+                  marginBottom: 8,
+                  borderColor: '#fff',
+                  borderWidth: 1,
+
+                }}
+                resizeMode="cover"
+              />
+            )}
+            <Text className='font-instrumentSansSemiBold' style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>{userType == "Brand" ? profile?.data?.brandName : profile?.data?.userName}</Text>
+            <View className='w-full border border-[#707070] mt-4' />
           </View>
         </View>
 
@@ -123,7 +187,7 @@ export const CustomDrawerContent = (props) => {
               }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Image source={item.icon} style={{width:20,height:20}}/>
+                <Image source={item.icon} style={{ width: 20, height: 20 }} />
                 <Text style={{ marginLeft: 15, fontSize: 16, color: '#DCF3FF' }}>
                   {item.label}
                 </Text>
@@ -132,24 +196,24 @@ export const CustomDrawerContent = (props) => {
             </TouchableOpacity>
           ))}
           <TouchableOpacity
-              
-              onPress={handleLogout}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingVertical: 12,
-                paddingHorizontal: 20,
-                justifyContent: 'space-between',
-              }}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Image source={require("../../assets/e-icon/Frame (2).png")} style={{width:20,height:20}}/>
-                <Text style={{ marginLeft: 15, fontSize: 16, color: '#DCF3FF' }}>
-                  Logout
-                </Text>
-              </View>
-              <Feather name="chevron-right" size={20} color="#DCF3FF" />
-            </TouchableOpacity>
+
+            onPress={handleLogout}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingVertical: 12,
+              paddingHorizontal: 20,
+              justifyContent: 'space-between',
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Image source={require("../../assets/e-icon/Frame (2).png")} style={{ width: 20, height: 20 }} />
+              <Text style={{ marginLeft: 15, fontSize: 16, color: '#DCF3FF' }}>
+                Logout
+              </Text>
+            </View>
+            <Feather name="chevron-right" size={20} color="#DCF3FF" />
+          </TouchableOpacity>
         </View>
       </DrawerContentScrollView>
     </View>

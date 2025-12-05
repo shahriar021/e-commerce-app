@@ -11,12 +11,12 @@ import {
   Animated,
 } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
-import { homeInfo, images, images2 } from "./demo";
-import { LinearGradient } from "expo-linear-gradient";
+import { images, images2 } from "./demo";
 import BrandWeek from "src/components/ui/homepage/BrandWeek";
 import SearchModal from "./SearchModal";
 import { useFeatureBrandsQuery } from "src/redux/features/brand/brandApi";
 import { useAppSelector } from "src/redux/hooks";
+import { useGetAddToCartQuery } from "src/redux/features/cart/cartApi";
 
 const { width } = Dimensions.get("screen");
 
@@ -29,11 +29,11 @@ const HomeScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentIndex2, setCurrentIndex2] = useState(0);
   const [searchModal, setSearchModal] = useState(false)
-  const [loadMore, setLoadMore] = useState(3)
-
+  const [loadMore, setLoadMore] = useState(5)
   const navigation = useNavigation();
   const token = useAppSelector((state) => state.auth.token);
   const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
+  const { data: getCart } = useGetAddToCartQuery(token);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -87,7 +87,7 @@ const HomeScreen = () => {
 
   return (
     <>
-      <ScrollView className="bg-[#121212] flex-1" contentContainerStyle={{ paddingBottom: 200 }}>
+      <ScrollView className="bg-[#121212] flex-1" contentContainerStyle={{ paddingBottom: 100 }}>
         {/* Image Slider Wrapper */}
         <View style={{ position: "relative" }} >
           {/* Image ScrollView */}
@@ -110,9 +110,10 @@ const HomeScreen = () => {
             ))}
           </ScrollView>
 
-          <View
+          <TouchableOpacity
             className="absolute right-5 top-16"
             style={{ width: scale(30), height: verticalScale(30) }}
+            onPress={() => navigation.navigate("Cart Page")}
           >
             <Image
               source={require("../../../assets/e-icon/Frame.png")}
@@ -127,9 +128,9 @@ const HomeScreen = () => {
                 height: 15,
               }}
             >
-              <Text className="text-white text-[10px] font-bold">3</Text>
+              <Text className="text-white text-[10px] font-bold">{getCart?.data?.products?.reduce((acc: any, curr: any) => acc + 1, 0)}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
           <TouchableOpacity
             className="absolute right-20 top-16"
             style={{ width: scale(30), height: verticalScale(30) }}
@@ -187,7 +188,7 @@ const HomeScreen = () => {
           <Text className="font-instrumentSansBold text-3xl text-center text-[#fff] mt-5">Featured Brands</Text>
           <Text className="font-instrumentSansSemiBold text-lg text-center text-[#fff] mt-2 max-w-[90%]">Discover premium collections from top designers</Text>
 
-          {data?.data?.data?.map((item: any) => <TouchableOpacity key={item.name} className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }} onPress={() => navigation.navigate("Brand Products")}>
+          {data?.data?.data?.map((item: any) => <TouchableOpacity key={item.name} className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }} onPress={() => navigation.navigate("Brand Details", { id: item._id })}>
             <View className="rounded-3xl overflow-hidden" style={{ width: scale(80), height: verticalScale(80) }}>
               <Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%" }} className="rounded-3xl" />
             </View>
@@ -201,9 +202,9 @@ const HomeScreen = () => {
             <AntDesign name="right" size={24} color="#9CA3AF" />
           </TouchableOpacity>)}
 
-          <TouchableOpacity className=" items-center border rounded-3xl border-[#fff] p-2 mt-3" style={{ width: "95%" }} onPress={() => setLoadMore(loadMore + 2)}>
+          {/* <TouchableOpacity className=" items-center border rounded-3xl border-[#fff] p-2 mt-3" style={{ width: "95%" }} onPress={() => setLoadMore(loadMore + 2)}>
             <Text className="font-instrumentSansSemiBold text-white text-xl">View All</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <BrandWeek />
 

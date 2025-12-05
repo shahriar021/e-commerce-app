@@ -30,38 +30,38 @@ const EditProfile = () => {
     const [countryCode, setCountryCode] = useState('+93');
     const [show, setShow] = useState(false);
 
-     useEffect(() => {
-    const loadProfile = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem('user_profile');
-        if (jsonValue != null) {
-          setProfile(JSON.parse(jsonValue));
-        }
-      } catch (e) {
-        console.error("Failed to load profile from AsyncStorage", e);
-      }
-    };
+    useEffect(() => {
+        const loadProfile = async () => {
+            try {
+                const jsonValue = await AsyncStorage.getItem('user_profile');
+                if (jsonValue != null) {
+                    setProfile(JSON.parse(jsonValue));
+                }
+            } catch (e) {
+                console.error("Failed to load profile from AsyncStorage", e);
+            }
+        };
 
-    loadProfile();
-  }, []);
-  useFocusEffect(
-    useCallback(() => {
-      const loadProfile = async () => {
-        try {
-          const jsonValue = await AsyncStorage.getItem('user_profile');
-          if (jsonValue != null) {
-            setProfile(JSON.parse(jsonValue));
-          }
-        } catch (e) {
-          console.error("Failed to load profile from AsyncStorage", e);
-        }
-      };
-      loadProfile();
-      return () => {
-      };
+        loadProfile();
+    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            const loadProfile = async () => {
+                try {
+                    const jsonValue = await AsyncStorage.getItem('user_profile');
+                    if (jsonValue != null) {
+                        setProfile(JSON.parse(jsonValue));
+                    }
+                } catch (e) {
+                    console.error("Failed to load profile from AsyncStorage", e);
+                }
+            };
+            loadProfile();
+            return () => {
+            };
 
-    }, [])
-  );
+        }, [])
+    );
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -91,12 +91,12 @@ const EditProfile = () => {
         }
     };
 
-     const openCamera2 = async () => {
-            const asset = await launchCameraAndHandlePermissions();
-            if (asset) {
-                setSelectedImage2(asset);
-            }
-        };
+    const openCamera2 = async () => {
+        const asset = await launchCameraAndHandlePermissions();
+        if (asset) {
+            setSelectedImage2(asset);
+        }
+    };
 
     const handleUpdate = async () => {
         setLoading(true);
@@ -144,7 +144,7 @@ const EditProfile = () => {
             console.log(res, "update")
         } catch (err) {
             Toast.error("something went wrong!please try again later.")
-        }finally{
+        } finally {
             setLoading(false)
         }
     }
@@ -152,7 +152,7 @@ const EditProfile = () => {
     return (
         <ScrollView contentContainerStyle={{ alignItems: "center", padding: 12 }}>
             <View style={{ width: width * 0.3, height: height * 0.15 }} className='rounded-full  mt-4 relative border border-gray-100'>
-                {selectedImage ? <Image source={{ uri: selectedImage?.uri }} style={{ width: '100%', height: '100%', borderRadius: 100 }} /> : <Image source={{uri:profile?.data?.profile[0]}} style={{ width: '100%', height: '100%',borderRadius: 100  }} />}
+                {selectedImage ? <Image source={{ uri: selectedImage?.uri }} style={{ width: '100%', height: '100%', borderRadius: 100 }} /> : <Image source={{ uri: profile?.data?.profile[0] }} style={{ width: '100%', height: '100%', borderRadius: 100 }} />}
                 <TouchableOpacity className="absolute z-10 bg-[#2A2A2A] p-1 rounded-full" style={{
                     width: scale(24), height: scale(24), bottom: verticalScale(12), left: '50%',
                     transform: [{ translateX: scale(60) / 2 }]
@@ -171,33 +171,33 @@ const EditProfile = () => {
             <View style={{ flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#ccc', borderRadius: 8, paddingHorizontal: 10, paddingVertical: 8, marginBottom: 10 }}>
 
                 {/* Dynamic Flag */}
-                                <TouchableOpacity
-                                    onPress={() => setShow(true)}
-                                    style={{
-                                        width: '20%',
-                                        height: 60,
-                                        backgroundColor: 'black',
-                                        padding: 10,
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}
-                                >
-                                    <Text style={{
-                                        color: 'white',
-                                        fontSize: 20
-                                    }}>
-                                        {countryCode}
-                                    </Text>
-                                </TouchableOpacity>
-                
-                                <CountryPicker
-                                    show={show}
-                                    // when picker button press you will get the country object with dial code
-                                    pickerButtonOnPress={(item) => {
-                                        setCountryCode(item.dial_code);
-                                        setShow(false);
-                                    }}
-                                />
+                <TouchableOpacity
+                    onPress={() => setShow(true)}
+                    style={{
+                        width: '20%',
+                        height: 60,
+                        backgroundColor: 'black',
+                        padding: 10,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <Text style={{
+                        color: 'white',
+                        fontSize: 20
+                    }}>
+                        {countryCode}
+                    </Text>
+                </TouchableOpacity>
+
+                <CountryPicker
+                    show={show}
+                    // when picker button press you will get the country object with dial code
+                    pickerButtonOnPress={(item) => {
+                        setCountryCode(item.dial_code);
+                        setShow(false);
+                    }}
+                />
 
                 <TextInput
                     placeholder={profile?.data?.mobile}
@@ -216,7 +216,7 @@ const EditProfile = () => {
                 </View>
 
                 <View className='bg-[#252525] p-2 rounded-xl mt-3'>
-                    <Text className='text-white mb-3 font-instrumentSansSemiBold' >HomeTown</Text>
+                    <Text className='text-white mb-3 font-instrumentSansSemiBold' >Country</Text>
                     <TextInput onChangeText={setHomeTown} style={{ flex: 1, fontSize: 16, color: 'white' }} placeholder={profile?.data?.hometown} placeholderTextColor="#aaa" />
                 </View>
 
@@ -226,12 +226,12 @@ const EditProfile = () => {
                 </View>
             </View>
             <TouchableOpacity onPress={openCamera2} className='bg-[#252525] w-full m-2 p-2 rounded-lg'>
-                            <Text className='text-white'>{selectedImage2?selectedImage2?.fileName:"Change your cover photo"}</Text>
-                        </TouchableOpacity>
+                <Text className='text-white'>{selectedImage2 ? selectedImage2?.fileName : "Change your cover photo"}</Text>
+            </TouchableOpacity>
 
             <View className="items-center">
                 <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden bg-[#1D3725]" style={{ width: width * 0.9 }} onPress={handleUpdate}>
-                    <Text className="text-white p-3 font-instrumentSansBold">{loading?<ActivityIndicator size={"small"} color={"blue"}/>:"Save Changes"}</Text>
+                    <Text className="text-white p-3 font-instrumentSansBold">{loading ? <ActivityIndicator size={"small"} color={"blue"} /> : "Save Changes"}</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

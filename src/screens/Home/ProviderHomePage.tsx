@@ -14,6 +14,7 @@ import InputSelectPicker from 'src/components/shared/InputSelectPicker';
 import InputSelectYear from 'src/components/shared/InputSelectYear';
 import InputYearPicker from 'src/components/shared/inputYearPicker';
 import { useGetBrandOrderListQuery } from 'src/redux/features/orders/orderApi';
+import { colorStatus, nameStatus } from 'src/constants/productInfos';
 
 const days = {
     0: "Sunday", 1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday"
@@ -50,9 +51,9 @@ const ProviderHomePage = () => {
         frontColor: index === currentMonthIndex ? "#DCF3FF" : "#464747", // <-- dynamic color
     }));
     const { data: getOrdersBrand } = useGetBrandOrderListQuery({
-    token,
-    limit: 4,
-  });
+        token,
+        limit: 4,
+    });
     const [orderHist] = useState(Array.from({ length: 10 }, (_, i) => i + 1))
 
     const navigation = useNavigation()
@@ -108,14 +109,22 @@ const ProviderHomePage = () => {
     // State to hold the currently selected year (optional, but useful)
     const [selectedYear, setSelectedYear] = useState(yearsData[yearsData.length - 1] || 'Select Year');
 
-    const onSelectYr=(year)=>{
+    const onSelectYr = (year) => {
         setYear(year)
     }
 
-    const handleModal=()=>{
+    const handleModal = () => {
         setShowModal(true)
     }
-
+    const handleStatus = async (id: any, status: any) => {
+        console.log(id);
+        const info = {
+            data: {
+                sellerStatus: status,
+                cartProductId: id,
+            },
+        };
+    }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#121212", padding: 5 }}>
             <ScrollView className='p-3 flex-1'>
@@ -154,7 +163,7 @@ const ProviderHomePage = () => {
                             className='flex-row items-center justify-between bg-[#464747] p-3 rounded-xl'
                             onPress={handleModal}
                         >
-                           <Text className='text-white'>{year}</Text>
+                            <Text className='text-white'>{year}</Text>
                         </TouchableOpacity>
 
                     </View>
@@ -207,11 +216,19 @@ const ProviderHomePage = () => {
                                 <Text className='font-instrumentRegular text-[#9CA3AF]'>Placed: June 24</Text>
                             </View>
                             <View className='flex-row items-center gap-2 mt-2 mb-1'>
-                                <TouchableOpacity className='flex-row items-center justify-center gap-2 bg-[#16A34A] p-2 rounded-md flex-1'>
+                                <TouchableOpacity className='flex-row items-center justify-center gap-2 bg-[#16A34A] p-2 rounded-md flex-1' style={{
+                                    backgroundColor:
+                                        colorStatus[
+                                        item?.sellerStatus as keyof typeof colorStatus
+                                        ],
+                                }}
+                                    onPress={() =>
+                                        handleStatus(item?.cartProductId, item?.sellerStatus)
+                                    }>
                                     <AntDesign name="check" size={24} color="white" />
-                                    <Text className='text-white font-instrumentSansSemiBold'>Mark Ready</Text>
+                                    <Text className='text-white font-instrumentSansBold'>{nameStatus[item?.sellerStatus as keyof typeof nameStatus]}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity className='items-center bg-[#121212] p-2 rounded-md' onPress={() => navigation.navigate("Order Details",{id:item?.cartProductId})}>
+                                <TouchableOpacity className='items-center bg-[#121212] p-2 rounded-md' onPress={() => navigation.navigate("Order Details", { id: item?.cartProductId })}>
                                     <AntDesign name="eye" size={24} color="white" />
                                 </TouchableOpacity>
                             </View>
@@ -219,7 +236,7 @@ const ProviderHomePage = () => {
                     </ScrollView>
                 </View>
             </ScrollView>
-            <InputYearPicker visible={showModal} onClose={()=>setShowModal(false)} onSelect={onSelectYr}   propYear={year}/>
+            <InputYearPicker visible={showModal} onClose={() => setShowModal(false)} onSelect={onSelectYr} propYear={year} />
         </SafeAreaView>
     )
 }

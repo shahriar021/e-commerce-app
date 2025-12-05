@@ -158,7 +158,17 @@ const Bage = () => {
             {filteredData.length === 0 ? (
                 <Text className='text-white text-center w-full font-robotoBold'>No Items found!</Text>
             ) : (
-                filteredData.map((item: any) => (
+                [...filteredData].sort((a,b)=>{
+                  const nameA=a.brandName?a.brandName.toUpperCase():'';
+                  const nameB=b.brandName?b.brandName.toUpperCase():'';
+                  if(nameA<nameB){
+                    return -1;
+                  }
+                  if(nameA>nameB){
+                    return 1;
+                  }
+                  return 0;
+                }).map((item: any) => (
                     <TouchableOpacity 
                         key={item._id} 
                         className='relative rounded-xl overflow-hidden mt-1 mb-1 ' 
@@ -172,11 +182,11 @@ const Bage = () => {
             )}
           </View>
           {/* Only show Load More if there are more results expected or no search is active */}
-          {data?.data?.meta?.total > filteredData.length && !search && (
-            <TouchableOpacity className='bg-[#1D3725] p-2 items-center mt-4 mb-4 rounded-xl overflow-hidden w-full' onPress={() => setLoadMore(loadMore + 2)}>
+          
+            <TouchableOpacity className='bg-[#1D3725] p-2 items-center mt-4 mb-4 rounded-xl overflow-hidden w-full' onPress={() => setLoadMore(loadMore + 10)}>
               <Text className='text-white font-instrumentSansBold text-xl'>Load More</Text>
             </TouchableOpacity>
-          )}
+          
         </ScrollView>
       )}
     </View>

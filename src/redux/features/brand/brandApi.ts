@@ -27,8 +27,21 @@ const brandApi = baseApi.injectEndpoints({
                 id:id
             }
            }
+        }),
+
+        getBrandOfTheWeek:builder.query({
+           query:(token)=>{
+
+            return {
+                url:`/stats/brand_of_the_week`,
+                method:"GET",
+                headers:{
+                    Authorization:`Bearer ${token}`
+                },
+            }
+           }
         })
     })
 })
 
-export const {useFeatureBrandsQuery,useGetBrandWithIdQuery}=brandApi; 
+export const {useFeatureBrandsQuery,useGetBrandWithIdQuery,useGetBrandOfTheWeekQuery}=brandApi; 

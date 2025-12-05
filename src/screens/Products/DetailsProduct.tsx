@@ -326,7 +326,7 @@ const DetailsProduct = () => {
                         ))}
                     </View>
                     <Text className="text-[#ADAEBC] font-instrumentSansSemiBold mt-2">
-                        Custome Size
+                        Custom Size
                     </Text>
                     <View className="flex-row gap-2 mt-2">
                         {data?.data?.product[0]?.measurement.map((item, index) => (
