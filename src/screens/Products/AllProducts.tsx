@@ -14,8 +14,6 @@ const AllProducts = () => {
     const [loadMore, setLoadMore] = useState(10)
     const { data: getBrands } = useProductListBrandIdWiseQuery({ token, id, limit: loadMore })
 
-    console.log(getBrands?.data?.product[0], "id...")
-
     useLayoutEffect(() => {
         navigation.setOptions({
             headerStyle: {

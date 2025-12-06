@@ -17,11 +17,7 @@ const OrderHistoryDetails = () => {
     const { data: getOrderHist } = useOrderHistoryQuery(token)
 
     // Console log is now safe and correct.
-    console.log(
-        (Array.isArray(getOrderHist?.data?.data) ? getOrderHist.data.data : [])
-            .filter(item => item._id == orderId)[0]?.items,
-        "order history"
-    );
+    
 
     useLayoutEffect(() => {
         navigation.setOptions({

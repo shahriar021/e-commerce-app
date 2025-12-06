@@ -12,7 +12,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BrandProfile = () => {
     const token = useAppSelector((state) => state.auth.token)
-    console.log(token)
     const [show, setShow] = useState(false);
     const [countryCode, setCountryCode] = useState('+93');
     const { width, height } = Dimensions.get("window")
@@ -135,9 +134,7 @@ const BrandProfile = () => {
             if (res.success) {
                 Toast.success("updated..")
             }
-            console.log(res, "update")
         } catch (err) {
-            console.log(err, "err")
             Toast.error("something went wrong!please try again later.")
         } finally {
             setLoading(false)

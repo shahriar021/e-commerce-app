@@ -232,7 +232,6 @@ const DetailsProduct = () => {
             </TouchableOpacity>
         ),
     });
-    console.log(id,"product details")
 
     const handleDelete = async () => {
         try {

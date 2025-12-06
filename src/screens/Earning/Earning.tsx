@@ -189,7 +189,6 @@ const Earning = () => {
     const { data: getEarningStats } = useGetEarningStatsQuery(token);
     const { data: getTransaction } = useGetTransactionQuery(token);
 
-    console.log(getEarningStats);
 
     const data = getEarningGraph?.data.map((item: any, index: any) => ({
         value: item.earnings,

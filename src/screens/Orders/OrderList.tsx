@@ -11,10 +11,7 @@ const OrderList = () => {
     const navigation = useNavigation()
     const [loadMore, setLoadMore] = useState(10)
     const token=useAppSelector((state)=>state.auth.token)
-        console.log(token)
         const {data:getOrdersBrand}=useGetBrandOrderListQuery({token,limit:4})
-        console.log(getOrdersBrand?.data?.data,"brand order")
-    
 
     useLayoutEffect(() => {
         navigation.setOptions({

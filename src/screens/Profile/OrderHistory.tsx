@@ -41,7 +41,6 @@ const OrderHistory = () => {
        return <View className='flex-1'><ActivityIndicator size={"large"} color={"white"}/></View>
     }
 
-    console.log(getOrderHist?.data?.data?.length)
     
     return (
         <View className='flex-1 bg-[#121212] p-3'>

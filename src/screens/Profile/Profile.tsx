@@ -45,9 +45,7 @@ export default function YourComponent() {
   const { data: getLookbook } = useGetLookbookQuery({ token, limit: saveLoadlimit });
   const { data: getPostData } = useGetIndividualPostQuery({ token, uid: profile?.data?.data?._id, limit: postLoadlimit })
   const userType = useAppSelector((state) => state.auth.userType)
-  console.log(userType)
 
-  console.log(profile, "profile")
 
   useEffect(() => {
     const loadProfile = async () => {

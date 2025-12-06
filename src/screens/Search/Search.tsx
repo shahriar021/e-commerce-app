@@ -31,7 +31,6 @@ const Search = () => {
         }
     }, [selectedImage]);
 
-    console.log(loading)
 
 
     useLayoutEffect(() => { 
@@ -79,15 +78,12 @@ const Search = () => {
             }
             formData.append("scan", imageFile)
             try {
-                console.log("result")
                 setLoading(false)
                 const res = await postImageforScan({ token, body: formData }).unwrap()
-                console.log(res)
                 setRes(res)
                 setData(res)
             } catch (err) {
                 setLoading(false)
-                console.log(err)
             }finally{
                 setLoading(false)
             }
@@ -108,7 +104,7 @@ const Search = () => {
         });
 
         if (!result.canceled) {
-            setSelectedImage(result.assets[0].uri);
+            setSelectedImage(result.assets);
         }
     };
 
@@ -162,7 +158,7 @@ const Search = () => {
                         <Text className='text-white font-instrumentRegular' >Upload from Album</Text>
                     </View>
                     <View className=' flex-row gap-2'>
-                        <TouchableOpacity className='bg-[#252525]  p-2 rounded-xl items-center justify-center ' style={{ width: scale(90), height: verticalScale(90) }} >
+                        <TouchableOpacity className='bg-[#252525]  p-2 rounded-xl items-center justify-center ' style={{ width: scale(90), height: verticalScale(90) }} onPress={openImageLibrary}>
                             <Entypo name="circle-with-plus" size={24} color="white" />
                         </TouchableOpacity>
 

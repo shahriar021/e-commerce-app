@@ -88,8 +88,6 @@ const SignUpBrand = () => {
 
     formData.append("data", JSON.stringify(userData));
 
-    console.log(formData, "form data...")
-
     try {
       const res = await postBody(formData).unwrap();
 
@@ -98,7 +96,6 @@ const SignUpBrand = () => {
                 navigation.navigate("OnBoarding")
             }
     } catch (err: any) {
-      console.log(err)
       const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
       Alert.alert("Error", errorMessage);
     }

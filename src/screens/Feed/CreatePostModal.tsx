@@ -61,7 +61,7 @@ const CreatePostModal = ({ visible, onClose }: any) => {
         } catch (err) {
             Toast.error("Something went wrong!!")
             setLoading(false)
-            console.log(err)
+            // console.log(err)
         }finally{
             setLoading(false)
         }

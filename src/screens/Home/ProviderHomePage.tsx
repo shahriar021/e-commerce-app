@@ -117,7 +117,6 @@ const ProviderHomePage = () => {
         setShowModal(true)
     }
     const handleStatus = async (id: any, status: any) => {
-        console.log(id);
         const info = {
             data: {
                 sellerStatus: status,

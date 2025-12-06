@@ -17,10 +17,16 @@ import SearchModal from "./SearchModal";
 import { useFeatureBrandsQuery } from "src/redux/features/brand/brandApi";
 import { useAppSelector } from "src/redux/hooks";
 import { useGetAddToCartQuery } from "src/redux/features/cart/cartApi";
+import { RootStackParamList } from "src/types/screens";
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const { width } = Dimensions.get("screen");
 
-const HomeScreen = () => {
+type Props={
+  navigation:StackNavigationProp<RootStackParamList,"Cart Page">
+}
+
+const HomeScreen = ({navigation}:Props) => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<ScrollView>(null);
   const scrollRef2 = useRef<ScrollView>(null);
@@ -30,7 +36,6 @@ const HomeScreen = () => {
   const [currentIndex2, setCurrentIndex2] = useState(0);
   const [searchModal, setSearchModal] = useState(false)
   const [loadMore, setLoadMore] = useState(5)
-  const navigation = useNavigation();
   const token = useAppSelector((state) => state.auth.token);
   const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
   const { data: getCart } = useGetAddToCartQuery(token);
@@ -65,7 +70,7 @@ const HomeScreen = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleScroll = (event) => {
+  const handleScroll = (event:any) => {
     const index = Math.round(event.nativeEvent.contentOffset.x / width);
     indexRef.current = index;
     setCurrentIndex(index);

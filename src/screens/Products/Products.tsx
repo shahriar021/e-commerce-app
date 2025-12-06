@@ -15,9 +15,7 @@ const Products = () => {
     const [orderHist] = useState(Array.from({ length: 10 }, (_, i) => i + 1))
     const navigation = useNavigation()
     const token = useAppSelector((state) => state.auth.token)
-    console.log(token)
     const { data: getOrdersBrand } = useGetBrandOrderListQuery({ token, limit: 4 })
-    console.log(getOrdersBrand?.data?.data[0], "brand order")
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -29,7 +27,6 @@ const Products = () => {
         })
     }, [navigation])
     const handleStatus = async (id: any, status: any) => {
-        console.log(id);
         const info = {
             data: {
                 sellerStatus: status,

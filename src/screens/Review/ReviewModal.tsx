@@ -32,9 +32,7 @@ const ReviewModal = ({ visible, onClose, ID }: any) => {
         }
         formData.append("data", JSON.stringify(data))
         try {
-            console.log(ID,"ID..")
             const res = await postReview({ token, id: ID, formData }).unwrap()
-            console.log(res, "result...")
         } catch (err) {
             console.log(err)
         }

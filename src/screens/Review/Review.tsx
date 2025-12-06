@@ -16,7 +16,6 @@ const Review = () => {
     const navigation = useNavigation()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const token = useAppSelector((state) => state.auth.token)
-    console.log(token)
     const [limit, setLimit] = useState(20)
     const [userId]=useState(id)
     const [loadMore,setLoadMore]=useState(10)

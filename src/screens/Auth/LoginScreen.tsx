@@ -82,7 +82,6 @@ const LoginScreen = () => {
                 }
                 setLoading(false)
                 Alert.alert(res.message)
-                console.log(res)
             }else{
                 Alert.alert("There is a mismatch in user types,Please select your type carefully!")
             }

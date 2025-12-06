@@ -11,7 +11,6 @@ const Reward = () => {
     const navigation = useNavigation()
     const [activeTab, setActiveTab] = useState('Pending');
     const {data:rewardData}=useGetTotalRewardQuery(token)
-    console.log(rewardData?.data)
 
     useLayoutEffect(() => {
         navigation.setOptions({

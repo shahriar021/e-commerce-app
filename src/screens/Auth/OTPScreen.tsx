@@ -104,7 +104,6 @@ const OTPScreen = () => {
     
     const countDown = setInterval(() => {
       setTimer(seconds)
-      console.log(seconds);
       seconds--;
       if (seconds < 0) {
         clearInterval(countDown)

@@ -31,7 +31,6 @@ const cartApi = baseApi.injectEndpoints({
 
         updateCart: builder.mutation({
             query: ({ token, body, id }) => {
-                console.log(id, "in redux");
                 return {
                     url: `/cart/${id}`,
                     headers: {

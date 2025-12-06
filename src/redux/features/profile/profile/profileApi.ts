@@ -40,7 +40,6 @@ const profileApi = baseApi.injectEndpoints({
         getLookbook:builder.query({
 
             query:({token,limit})=>{
-                console.log(limit,"in redux")
                 return{
                     url:`/savepost?limit=${limit}`,
                     headers:{

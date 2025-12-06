@@ -29,7 +29,6 @@ const orderApi = baseApi.injectEndpoints({
 
         getBrandOrderDetails:builder.query({
             query:({token,id})=>{
-                console.log(token,id)
                 return{
                     url:`/order?cartProductId=${id}`,
                     headers:{

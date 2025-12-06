@@ -12,7 +12,6 @@ const BrandWeek = () => {
     const navigation=useNavigation()
     const token = useAppSelector((state) => state.auth.token)
     const { data } = useGetBrandOfTheWeekQuery(token)
-    console.log(data?.data, "brand of the week")
 
  
     return (

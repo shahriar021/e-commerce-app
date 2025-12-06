@@ -136,12 +136,10 @@ const EditProfile = () => {
 
 
         try {
-            console.log(formData, "form data.")
             const res = await updateProfile({ token, formData }).unwrap()
             if (res.success) {
                 Toast.success("updated..")
             }
-            console.log(res, "update")
         } catch (err) {
             Toast.error("something went wrong!please try again later.")
         } finally {

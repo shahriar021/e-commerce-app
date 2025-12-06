@@ -43,10 +43,8 @@ const Withdraw = () => {
         })
     }, [navigation])
 
-    console.log(loading)
     const handleWithdraw = async () => {
         setLoading(true)
-        console.log("pressed")
         const data = {
             amount: parseInt(amount),
             country: country,
@@ -56,15 +54,12 @@ const Withdraw = () => {
             routing_number: routingNumbr,
             account_number: AccNmbr
         };
-        console.log(data, "---")
         try {
 
             const res = await postWithdraw({ token, body: { data } }).unwrap();
-            console.log(res, "result..")
             setLoading(false)
         } catch (err: any) {
             setLoading(false)
-            console.log(err)
             Alert.alert(err?.data?.message)
         }
     };

@@ -1,17 +1,17 @@
-import { View, Text, Image, TextInput, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
+import { Text, Image, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
-import { useNavigation } from '@react-navigation/native';
-import { AntDesign, Feather } from '@expo/vector-icons';
-import { allProducts, bageData } from './demoBage';
-import { scale, verticalScale } from 'react-native-size-matters';
+import {  Feather } from '@expo/vector-icons';
+import { verticalScale } from 'react-native-size-matters';
 import { useAppSelector } from 'src/redux/hooks';
 import { useFeatureBrandsQuery } from 'src/redux/features/brand/brandApi';
+import { RootStackParamList } from 'src/types/screens';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-const SeeAllBrands = () => {
+type Props={
+  navigation:StackNavigationProp<RootStackParamList,"Brand Details">
+}
 
-    const { width, height } = useWindowDimensions()
-    const navigation = useNavigation()
-    const [isClothType, setIsClothType] = useState("ALL")
+const SeeAllBrands = ({navigation}:Props) => {
     const token = useAppSelector((state) => state.auth.token);
     const [loadMore, setLoadMore] = useState(20)
     const { data } = useFeatureBrandsQuery({ token, limit: loadMore })

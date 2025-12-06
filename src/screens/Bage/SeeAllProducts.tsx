@@ -1,17 +1,23 @@
-import { View, Text, Image, TextInput, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
+import { View, Text, Image,  TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { AntDesign, Feather } from '@expo/vector-icons';
-import { allProducts } from './demoBage';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import {  Feather } from '@expo/vector-icons';
 import { useAppSelector } from 'src/redux/hooks';
 import { useProductListBrandIdWiseQuery } from 'src/redux/features/product/productApi';
+import { RootStackParamList } from 'src/types/screens';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-const SeeAllProducts = () => {
-    const route = useRoute();
+type Props={
+  navigation:StackNavigationProp<RootStackParamList,"Product Details">
+}
+
+type BrandDetailsProps = RouteProp<RootStackParamList, "See all products">
+
+const SeeAllProducts = ({navigation}:Props) => {
+    const route = useRoute<BrandDetailsProps>();
     const { id } = route.params
     const { width, height } = useWindowDimensions()
     const [loadMore, setLoadMore] = useState(10)
-    const navigation = useNavigation()
     const [isClothType, setIsClothType] = useState("ALL")
     const token = useAppSelector((state) => state.auth.token)
 

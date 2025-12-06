@@ -32,7 +32,6 @@ const EditProducts = () => {
     const route = useRoute();
     const { id } = route.params as { id: string };
     const token = useAppSelector((state) => state.auth.token);
-    console.log(token)
     // State for basic info
      const [selectedImage, setSelectedImage] = useState([]);
     const [productName, setProductName] = useState("");
@@ -66,7 +65,6 @@ const EditProducts = () => {
             ),
         });
     }, [navigation]);
-    console.log(selectedImage[0]?.uri,"images.")
 
     // Measurement state
     const [measurements, setMeasurements] = useState<Measurement[]>([
@@ -164,7 +162,6 @@ const EditProducts = () => {
 
             formData.append("data", JSON.stringify(body));
             const res = await updateProduct({ token, id, body: formData }).unwrap();
-            console.log("Product updated", res);
             navigation.navigate("All Products");
         } catch (err) {
             console.error(err);

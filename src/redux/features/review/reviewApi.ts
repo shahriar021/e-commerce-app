@@ -6,7 +6,6 @@ const reviewApi = baseApi.injectEndpoints({
         getALlReviewBasedOnId: builder.query({
 
             query: ({ token, id, limit }) => {
-                console.log(token, id, limit, ".")
 
                 return {
                     url: `/review?productId=${id}&limit=${limit}`,

@@ -10,15 +10,14 @@ import { useAppSelector } from 'src/redux/hooks';
 import { usePostFollowMutation } from 'src/redux/features/profile/follow/followApi';
 
 const UsersORBrandProfile = () => {
-  const token=useAppSelector((state)=>state.auth.token)
+  const token = useAppSelector((state) => state.auth.token)
   const navigation = useNavigation();
-  const {width,height}=useWindowDimensions()
-  const [isPosts,setIsPosts]=useState("Posts")
-  const {upID}=useRoute().params
-  const {data:getSpecificUserData}=useGetUploaderProfileQuery({token,id:upID})
-  const userType = useAppSelector((store)=>store.auth.userType)
-  console.log(getSpecificUserData?.data?.userName,"user type")
-  const [postFollow]=usePostFollowMutation();
+  const { width, height } = useWindowDimensions()
+  const [isPosts, setIsPosts] = useState("Posts")
+  const { upID } = useRoute().params
+  const { data: getSpecificUserData } = useGetUploaderProfileQuery({ token, id: upID })
+  const userType = useAppSelector((store) => store.auth.userType)
+  const [postFollow] = usePostFollowMutation();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -42,12 +41,11 @@ const UsersORBrandProfile = () => {
       }
     })
   }, [navigation])
- 
-  const handleFollow=async()=>{
-    try{
-      const res = await postFollow({token,id:getSpecificUserData?.data?._id}).unwrap()
-      console.log(res?.data,"follow")
-    }catch(err){
+
+  const handleFollow = async () => {
+    try {
+      const res = await postFollow({ token, id: getSpecificUserData?.data?._id }).unwrap()
+    } catch (err) {
       console.log(err)
     }
   }
@@ -67,7 +65,7 @@ const UsersORBrandProfile = () => {
           borderRadius: moderateScale(24),
           overflow: 'hidden',
           marginTop: verticalScale(16),
-          
+
         }}
       >
         <Image
@@ -98,7 +96,7 @@ const UsersORBrandProfile = () => {
             justifyContent: 'center',
           }}
         >
-          
+
           <Image
             source={require("../../../assets/e-icon/brandLogo.png")}
             style={{ width: '100%', height: '100%' }}
@@ -126,20 +124,20 @@ const UsersORBrandProfile = () => {
         </View>
       </View>
 
-     { userType=="User"&&<TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3' onPress={handleFollow}>
+      {userType == "User" && <TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3' onPress={handleFollow}>
         <Text className='text-black font-instrumentSansSemiBold' >Follow</Text>
       </TouchableOpacity>
-     }
+      }
 
       <View className='w-[92%] flex-row gap-3 mt-2 mb-3'>
-        <TouchableOpacity className={`${isPosts=="Posts"?"border-b border-b-white":""} py-1`} onPress={()=>setIsPosts("Posts")}>
+        <TouchableOpacity className={`${isPosts == "Posts" ? "border-b border-b-white" : ""} py-1`} onPress={() => setIsPosts("Posts")}>
           <Text className='font-instrumentSansSemiBold text-white' >Posts</Text>
         </TouchableOpacity>
-        <TouchableOpacity  className={`${isPosts=="Details"?"border-b border-b-white":""} py-1`} onPress={()=>setIsPosts("Details")}>
+        <TouchableOpacity className={`${isPosts == "Details" ? "border-b border-b-white" : ""} py-1`} onPress={() => setIsPosts("Details")}>
           <Text className='font-instrumentSansSemiBold text-white' >Details</Text>
         </TouchableOpacity>
       </View>
-      {isPosts=="Posts"?<Posts/>:<Details/>}
+      {isPosts == "Posts" ? <Posts /> : <Details />}
     </ScrollView>
   )
 }

@@ -8,7 +8,7 @@ import {
     Alert,
 } from "react-native";
 import React, { useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import {
     AntDesign,
     Feather,
@@ -24,11 +24,18 @@ import { useGetALlReviewBasedOnIdQuery } from "src/redux/features/review/reviewA
 import { getTime } from "src/components/shared/timeHistory";
 import { usePostAddToCartMutation } from "src/redux/features/cart/cartApi";
 import { usePostFavProductMutation } from "src/redux/features/profile/favourite/favouriteApi";
+import { RootStackParamList } from "src/types/screens";
+import { StackNavigationProp } from "@react-navigation/stack";
 
-const ProductDetails = () => {
-    const route = useRoute();
+type Props = {
+    navigation: StackNavigationProp<RootStackParamList, "Product Details">
+}
+
+type BrandDetailsProps = RouteProp<RootStackParamList, "Product Details">
+
+const ProductDetails = ({ navigation }: Props) => {
+    const route = useRoute<BrandDetailsProps>();
     const { ID } = route.params;
-    const navigation = useNavigation();
     const token = useAppSelector((state) => state.auth.token);
     const { width, height } = useWindowDimensions();
     const [isHeart, setIsHeart] = useState(false);
@@ -46,8 +53,6 @@ const ProductDetails = () => {
     });
     const [postCart] = usePostAddToCartMutation();
     const [postFavourite] = usePostFavProductMutation();
-    console.log(ID,"--=-=")
-    console.log(data?.data?.product,"k--")
 
     navigation.setOptions({
         headerStyle: {
@@ -95,17 +100,13 @@ const ProductDetails = () => {
                 quantity: quantity,
             },
         };
-        console.log(body,"body..")
         try {
             const res = await postCart({ token, data: body }).unwrap();
-            console.log(res,"response")
             if (res.success == true) {
                 Alert.alert(res.message);
                 navigation.navigate("Cart Page" as never, { id: res.data.cart.id });
-                // console.log(res.data.cart.id);
             }
         } catch (err) {
-            console.log(err)
             Alert.alert("Something went wrong!");
         }
     };
@@ -244,13 +245,7 @@ const ProductDetails = () => {
                         <Text className="font-instrumentSansSemiBold text-white mt-4">
                             Review({getReview?.data?.meta?.total})
                         </Text>
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate("Review" as never, { id: ID })}
-                        >
-                            <Text className="font-instrumentSansSemiBold text-[#ADAEBC]">
-                                See All
-                            </Text>
-                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("Review" , { id: ID })}><Text className="font-instrumentSansSemiBold text-[#ADAEBC]"> See All</Text></TouchableOpacity>
                     </View>
                     {/* review */}
                     <View className="flex-row justify-between mt-2 mb-1">
@@ -285,8 +280,6 @@ const ProductDetails = () => {
                                 </Text>
                             </View>
                         </View>
-
-                        {/* <SimpleLineIcons name="options-vertical" size={24} color="white" /> */}
                     </View>
                     <Text className="font-instrumentRegular text-[#fff] mt-2">
                         {getReview?.data?.data[0]?.comments}

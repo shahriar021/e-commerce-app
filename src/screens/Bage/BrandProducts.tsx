@@ -1,17 +1,24 @@
 import { View, Text, Image, TextInput, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { allProducts } from './demoBage';
 import { useGetCategoryListQuery, useProductListBrandIdWiseQuery } from 'src/redux/features/product/productApi';
 import { useAppSelector } from 'src/redux/hooks';
+import { RootStackParamList } from 'src/types/screens';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-const BrandProducts = () => {
+type Props={
+  navigation:StackNavigationProp<RootStackParamList,"Brand Products">
+}
+
+type BrandDetailsProps=RouteProp<RootStackParamList,"Brand Products">
+
+const BrandProducts = ({navigation}:Props) => {
     const [loadMore, setLoadMore] = useState(20)
-    const route = useRoute();
+    const route = useRoute<BrandDetailsProps>();
     const { ID } = route.params
     const token = useAppSelector((state) => state.auth.token)
-    const navigation = useNavigation()
     const [isClothType, setIsClothType] = useState("ALL")
     const { data } = useProductListBrandIdWiseQuery({ token, id: ID, limit: loadMore })
     const { data: getCat } = useGetCategoryListQuery({ token, id: ID })

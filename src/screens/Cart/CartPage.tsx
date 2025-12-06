@@ -2,34 +2,38 @@ import {
 View,
     Text,
     Image,
-    Dimensions,
     useWindowDimensions,
     TouchableOpacity,
     ScrollView,
     ActivityIndicator,
 } from "react-native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { AntDesign, Feather } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import {
     useDeleteCartItemMutation,
     useGetAddToCartQuery,
     useUpdateCartMutation,
 } from "src/redux/features/cart/cartApi";
 import { useAppSelector } from "src/redux/hooks";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "src/types/screens";
 
-const CartPage = () => {
-    const route = useRoute();
+type Props={
+  navigation:StackNavigationProp<RootStackParamList,"Product Details">
+}
+
+type BrandDetailsProps = RouteProp<RootStackParamList, "Cart Page">
+
+const CartPage = ({navigation}:Props) => {
+    const route = useRoute<BrandDetailsProps>();
     const { id } = route.params || {};
     const { width, height } = useWindowDimensions();
     const token = useAppSelector((state) => state.auth.token);
-    const navigation = useNavigation();
     const [loading,setLoading]=useState(false)
     const { data } = useGetAddToCartQuery(token);
     const [prQuantity, setPrQuantity] = useState<{ [key: string]: number }>({});
     const [deleteItem]=useDeleteCartItemMutation()
-    console.log(data?.data?.products?.reduce((acc , curr)=>acc+1,0))
     
 
     useEffect(() => {
@@ -104,13 +108,10 @@ const CartPage = () => {
 
     const handleDelete = async(id:any) => { 
         setLoading(true)
-        console.log(id,"delete...")
         try{
             const res = await deleteItem({token,id});
             setLoading(false)
-            console.log(res,"delete")
         }catch(err){
-            console.log(err)
             setLoading(false)
         }
     };
@@ -132,7 +133,7 @@ const CartPage = () => {
                 navigation.navigate("Payment screen",{ total, shiping });
             }
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     };
 
@@ -183,7 +184,7 @@ const CartPage = () => {
                                         <AntDesign name="pluscircleo" size={24} color="white" />
                                     </TouchableOpacity>
                                 </View>
-                                <TouchableOpacity onPress={handleDelete} onPress={()=>handleDelete(x._id)}>
+                                <TouchableOpacity  onPress={()=>handleDelete(x._id)}>
                                     {loading?<ActivityIndicator size={"small"} color={"red"}/>:<AntDesign name="delete" size={24} color="red" />}
                                 </TouchableOpacity>
                             </View>

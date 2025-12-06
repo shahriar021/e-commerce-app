@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { BottomNavigation } from "./BottomNavigation";
 import { 
@@ -52,9 +52,10 @@ import SearchPage from "src/screens/Search/SearchPage";
 import PaymentScreen from "src/screens/Payment/PaymentScreen";
 import Transaction from "src/screens/Earning/Transaction";
 import OrderHistoryDetails from "src/screens/Profile/orderHistoryDetails";
+import { RootStackParamList } from "src/types/screens";
 
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
   const userType = useAppSelector((store)=>store.auth.userType)

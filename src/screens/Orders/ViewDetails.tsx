@@ -12,7 +12,6 @@ const ViewDetails = () => {
     const navigation = useNavigation()
     const token=useAppSelector((state)=>state.auth.token)
     const {data:details}=useGetBrandOrderDetailsQuery({token,id})
-    console.log(details,"details")
     useLayoutEffect(() => {
         navigation.setOptions({
             title:"Order Details",

@@ -29,7 +29,6 @@ const Feed = () => {
     if (feedCatgory) {
         feedCatgory.unshift("ALL")
     }
-    console.log(getComment?.data?.comments?.map(item=>item.comments))
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -88,7 +87,6 @@ const Feed = () => {
     const handleSave = async (id: string) => {
         try {
             const res = await postSave({ token, id }).unwrap()
-            console.log(res)
             if (res.success) {
                 Toast.success("saved.")
             }
