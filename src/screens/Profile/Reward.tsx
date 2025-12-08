@@ -30,8 +30,8 @@ const Reward = () => {
 
     return (
         <View className='flex-1 items-center '>
-            <Text className='text-white text-3xl mt-4 font-instrumentSansBold'>0 pts</Text>
-            <Text className='text-[#6d6363] text-xl mt-1 font-instrumentSansSemiBold'>your points worth $0</Text>
+            <Text className='text-white text-3xl mt-4 font-instrumentSansBold'>{rewardData?.data?.reward[0]?.reward} pts</Text>
+            <Text className='text-[#6d6363] text-xl mt-1 font-instrumentSansSemiBold'>your points worth ${rewardData?.data?.reward[0]?.rewardPrice}</Text>
 
             <View
                 className="border border-white mt-5 rounded-lg overflow-hidden p-1"

@@ -2,12 +2,13 @@ import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, ActivityInd
 import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { scale, verticalScale } from 'react-native-size-matters';
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import CreatePostModal from './CreatePostModal';
 import { useAppSelector } from 'src/redux/hooks';
 import { useGetAllPostQuery, useGetCommentsQuery, useGetFeedFilterQuery, usePostCommentBasedOnIdMutation, usePostLikeMutation, usePostSaveMutation } from 'src/redux/features/feedApi/feedApi';
 import { getTime } from 'src/components/shared/timeHistory';
 import { Toast } from 'toastify-react-native';
+import Share from 'react-native-share';
 
 const Feed = () => {
 
@@ -113,6 +114,20 @@ const Feed = () => {
         }
         
     }
+    const handleShare = async (image,caption) => {
+    const shareOptions = {
+      title: 'Check out this post!',
+      message: caption ,
+      url: image, 
+      social: Share.Social.FACEBOOK,
+    };
+
+    try {
+      await Share.open(shareOptions); 
+    } catch (error) {
+      console.log('Error sharing', error);
+    }
+  };
 
     return (
         <View className='flex-1 bg-[#121212] p-5 relative'>
@@ -177,6 +192,9 @@ const Feed = () => {
                                 </TouchableOpacity>
                                 <TouchableOpacity className=' p-2 rounded-full items-center justify-center gap-2' onPress={() => handleSave(item._id)}>
                                     <Image source={require("../../../assets/e-icon/gb.png")} style={{ width: 18, height: 18 }} resizeMode='contain' /><Text className='text-white'>Save</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity className=' p-2 rounded-full items-center justify-center gap-2' onPress={() => handleShare(item?.attachment[0],item?.caption)}>
+                                   <FontAwesome5 name="share" size={18} color="white" /><Text className='text-white'>Share</Text>
                                 </TouchableOpacity>
                             </View>
 

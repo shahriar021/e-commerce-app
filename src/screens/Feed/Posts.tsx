@@ -2,15 +2,17 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { getTime } from 'src/components/shared/timeHistory'
+import { useAppSelector } from 'src/redux/hooks'
 
 const Posts = ({ data,setPostLoad=()=>{} ,currentLimit}:any) => {
-
+     const upId=useAppSelector((state)=>state.auth.id)
     const currentPostCount = currentLimit || 10;
     const postData = data?.data
+    const filteredData=postData?.filter((item:any)=>item.uploaderId==upId)
 
     return (
         <View className='flex-1 bg-[#121212] w-full p-3'>
-            {postData?.map((item:any,index:any) => <View  key={index} className='flex-1 items-center bg-[#252525] p-2 rounded-3xl mt-1 mb-2'>
+            {filteredData?.map((item:any,index:any) => <View  key={index} className='flex-1 items-center bg-[#252525] p-2 rounded-3xl mt-1 mb-2'>
                 <View className='flex-row gap-2 items-center  w-full p-1 m-2'>
                     <View style={{ width: scale(30), height: scale(30) }}>
                         <Image source={{ uri: item.profile[0] }} style={{ width: "100%", height: "100%" }} />

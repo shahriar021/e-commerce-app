@@ -182,7 +182,7 @@ export default function YourComponent() {
               <Text className='text-[#9CA3AF] font-instrumentRegular' >Likes</Text>
             </View>
             <View className='bg-[#252525] p-2 items-center rounded-xl'>
-              <Text className='text-white font-instrumentRegular'>{profile?.data?.totalFollowers | 0}</Text>
+              <Text className='text-white font-instrumentRegular'>{profile?.data?.totalFollowing | 0}</Text>
               <Text className='text-[#9CA3AF] font-instrumentRegular' >Followings</Text>
             </View>
             <View className='bg-[#252525] p-2 items-center rounded-xl'>

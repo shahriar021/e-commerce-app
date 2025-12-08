@@ -104,7 +104,7 @@ const ProductDetails = ({ navigation }: Props) => {
             const res = await postCart({ token, data: body }).unwrap();
             if (res.success == true) {
                 Alert.alert(res.message);
-                navigation.navigate("Cart Page" as never, { id: res.data.cart.id });
+                navigation.navigate("Cart Page" as never);
             }
         } catch (err) {
             Alert.alert("Something went wrong!");

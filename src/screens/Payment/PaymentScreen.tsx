@@ -9,8 +9,7 @@ import { usePostPaymentToStripeMutation } from 'src/redux/features/payment/payme
 export default function PaymentScreen() {
   const route = useRoute();
   const totalAmount = parseFloat(route.params.total || 0);
-  const shippingFee = parseFloat(route.params.shiping || 0);
-  const finalTotal = (totalAmount + shippingFee).toFixed(2);
+  console.log(totalAmount,"in payment screen")
 
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState(false); // true when Stripe setup is COMPLETE
@@ -75,7 +74,7 @@ export default function PaymentScreen() {
       setStatus(`Connection failed.`);
       throw error; 
     }
-  }, [finalTotal, name, contact, address, token, postStrip]); 
+  }, [ name, contact, address, token, postStrip]); 
 
   // --- 2. INITIALIZE PAYMENT SHEET ---
   const initializePaymentSheet = useCallback(async () => {
@@ -196,14 +195,14 @@ export default function PaymentScreen() {
           <Text className=" text-sm text-[#ADAEBC] font-instrumentSansSemiBold">Subtotal</Text>
           <Text className=" mx-2 text-sm text-white font-instrumentRegular">${totalAmount.toFixed(2)}</Text>
         </View>
-        <View className="flex-row justify-between p-2 mx-2 mt-2 mb-2 w-full">
+        {/* <View className="flex-row justify-between p-2 mx-2 mt-2 mb-2 w-full">
           <Text className=" text-sm text-[#ADAEBC] font-instrumentSansSemiBold">Shipping</Text>
           <Text className=" mx-2 text-sm text-white font-instrumentRegular">${shippingFee.toFixed(2)}</Text>
-        </View>
+        </View> */}
         <View className="border border-dashed border-[#E2E2E2] mx-2 w-full" style={styles.divider} />
         <View className="flex-row justify-between p-2 mx-2 mt-2 mb-2 w-full">
           <Text className=" text-lg text-white font-instrumentSansBold">Total</Text>
-          <Text className=" mx-2 text-lg text-white font-instrumentSansBold">${finalTotal}</Text>
+          <Text className=" mx-2 text-lg text-white font-instrumentSansBold">${totalAmount.toFixed(2)}</Text>
         </View>
 
         {/* Status indicator */}

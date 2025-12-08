@@ -27,20 +27,22 @@ type BrandDetailsProps = RouteProp<RootStackParamList, "Cart Page">
 
 const CartPage = ({navigation}:Props) => {
     const route = useRoute<BrandDetailsProps>();
-    const { id } = route.params || {};
+    // const { id } = route.params || {};
     const { width, height } = useWindowDimensions();
     const token = useAppSelector((state) => state.auth.token);
     const [loading,setLoading]=useState(false)
     const { data } = useGetAddToCartQuery(token);
     const [prQuantity, setPrQuantity] = useState<{ [key: string]: number }>({});
     const [deleteItem]=useDeleteCartItemMutation()
+    console.log(data?.data,"get cart")
+    const id=data?.data?._id
     
 
     useEffect(() => {
-        if (data?.data?.cart?.products) {
+        if (data?.data?.products) {
             const obj: { [key: string]: number } = {};
-            data.data.cart.products.forEach((p: any) => {
-                obj[p._id] = p.quantity;
+            data.data.products.forEach((p: any) => {
+                obj[p.productId] = p.quantity;
             });
             setPrQuantity(obj);
         }
@@ -74,9 +76,10 @@ const CartPage = ({navigation}:Props) => {
     // After useEffect populates prQuantity
     const handleQuantity = (type: string, productId: string) => {
         setPrQuantity((prev) => {
-            const current = prev[productId] || 1; // start from backend value
+            const current = prev[productId] ?? 1; // start from backend value
+            console.log(current)
             if (type === "add") return { ...prev, [productId]: current + 1 };
-            if (type === "subtract" && current > 1)
+            if (type === "subtract" && current > 0)
                 return { ...prev, [productId]: current - 1 };
             return prev;
         });
@@ -90,7 +93,7 @@ const CartPage = ({navigation}:Props) => {
             return 0;
         }
 
-        const total = products.reduce((acc, x) => {
+        const total = products.reduce((acc:any, x:any) => {
             const currentChange = prQuantity[x._id] || 0;
 
             const finalQuantity = x.quantity + currentChange;
@@ -100,10 +103,11 @@ const CartPage = ({navigation}:Props) => {
             return acc + linePrice;
         }, 0);
 
-        return total.toFixed(2);
+        return total;
     };
+    
     const updatedSubtotal = calculateSubtotal();
-    const shiping = data?.data?.shippingCharge;
+    const dis = data?.data?.discount;
     const total = data?.data?.total;
 
     const handleDelete = async(id:any) => { 
@@ -123,17 +127,20 @@ const CartPage = ({navigation}:Props) => {
                 color: item.color,
                 size: item.size,
                 // quantity: prQuantity[item._id] ?? item.quantity,
-                quantity: item.quantity + (prQuantity[item.productId] || 0),
+                quantity: prQuantity[item.productId] ?? item.quantity,
+
             })),
         };
+        console.log(body,"---")
 
         try {
             const res = await updateCart({ token, body, id }).unwrap();
             if (res.success) {
-                navigation.navigate("Payment screen",{ total, shiping });
+                console.log(res?.data?.cart?.total,"res..")
+                navigation.navigate("Payment screen",{ total:res?.data?.cart?.total });
             }
         } catch (err) {
-            // console.log(err);
+            console.log(err);
         }
     };
 
@@ -144,8 +151,8 @@ const CartPage = ({navigation}:Props) => {
             showsVerticalScrollIndicator={false}
         >
             {data?.data?.products?.map((x: any) => {
-                const currentChange = prQuantity[x._id] || 0;
-                const finalQuantity = x.quantity + currentChange;
+                const finalQuantity = prQuantity[x.productId] ?? x.quantity;
+
 
                 return (
                     <View
@@ -173,13 +180,13 @@ const CartPage = ({navigation}:Props) => {
                             <View className="flex-row flex-1 items-center justify-between">
                                 <View className="flex-row items-center mx-2 gap-2">
                                     <TouchableOpacity
-                                        onPress={() => handleQuantity("minus", x._id)}
+                                        onPress={() => handleQuantity("subtract", x.productId)}
                                     >
                                         <AntDesign name="minuscircleo" size={24} color="white" />
                                     </TouchableOpacity>
                                     <Text className="text-white">{finalQuantity}</Text>
                                     <TouchableOpacity
-                                        onPress={() => handleQuantity("add", x._id)}
+                                        onPress={() => handleQuantity("add", x.productId)}
                                     >
                                         <AntDesign name="pluscircleo" size={24} color="white" />
                                     </TouchableOpacity>
@@ -197,14 +204,14 @@ const CartPage = ({navigation}:Props) => {
                 <Text className=" text-sm text-[#ADAEBC] font-instrumentSansSemiBold">
                     Subtotal
                 </Text>
-                <Text className=" mx-2 text-sm text-white">$ {updatedSubtotal}</Text>
+                <Text className=" mx-2 text-sm text-white">$ {updatedSubtotal?.toFixed(2)}</Text>
             </View>
             <View className="flex-row justify-between p-2 mx-2 mt-2 mb-2">
                 <Text className=" text-sm text-[#ADAEBC] font-instrumentSansSemiBold">
-                    Shipping
+                 Discount
                 </Text>
                 <Text className=" mx-2 text-sm text-white">
-                    $ {shiping?.toFixed(2)}
+                    $ {dis?.toFixed(2)}
                 </Text>
             </View>
 
@@ -218,7 +225,7 @@ const CartPage = ({navigation}:Props) => {
                     Total
                 </Text>
                 <Text className=" mx-2 text-sm text-white">
-                    $ {(parseFloat(updatedSubtotal) + shiping).toFixed(2)}
+                    $ {(parseFloat(total) ).toFixed(2)}
                 </Text>
             </View>
 
