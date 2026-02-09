@@ -2,11 +2,11 @@ import { View, Text, Image, TextInput, TouchableOpacity, ScrollView, useWindowDi
 import React, { useState } from 'react'
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { AntDesign, Feather } from '@expo/vector-icons';
-import { allProducts } from './demoBage';
 import { useGetCategoryListQuery, useProductListBrandIdWiseQuery } from 'src/redux/features/product/productApi';
 import { useAppSelector } from 'src/redux/hooks';
 import { RootStackParamList } from 'src/types/screens';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { AllProduct } from 'src/types/brand';
 
 type Props={
   navigation:StackNavigationProp<RootStackParamList,"Brand Products">
@@ -22,6 +22,7 @@ const BrandProducts = ({navigation}:Props) => {
     const [isClothType, setIsClothType] = useState("ALL")
     const { data } = useProductListBrandIdWiseQuery({ token, id: ID, limit: loadMore })
     const { data: getCat } = useGetCategoryListQuery({ token, id: ID })
+    
 
     navigation.setOptions({
         headerStyle: {
@@ -42,7 +43,8 @@ const BrandProducts = ({navigation}:Props) => {
         )
     });
 
-    const catArr = getCat?.data ? getCat.data.map(item => item) : [];
+    const catArr : string[] = getCat?.data ? getCat.data.map((item:string[]) => item) : [];
+
     if (catArr) {
         catArr.unshift("ALL");
     }
@@ -72,7 +74,7 @@ const BrandProducts = ({navigation}:Props) => {
             <ScrollView contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
 
                 <View className='flex-row flex-wrap  justify-between gap-2'>
-                    {isClothType == "ALL" ? (data?.data?.product?.map((item, index) =>
+                    {isClothType == "ALL" ? (data?.data?.product?.map((item:AllProduct, index:number) =>
                         <TouchableOpacity key={index} style={{ width: "48%" }} className='bg-[#1D3725] items-center rounded-lg relative  ' onPress={() => navigation.navigate("Product Details", { ID: item.id })}>
                             <Image source={{ uri: item.productImages[0] }} style={{ width: "100%", height: 160, borderRadius: 8 }} />
                             <View className='bg-[#000000] border-[#1D3725] border-8 absolute p-1 bottom-14 rounded-full items-center justify-center' style={{ width: 50, height: 50 }}>
@@ -81,7 +83,7 @@ const BrandProducts = ({navigation}:Props) => {
                             <Text className='font-instrumentSansBold text-white mt-8 mb-1'>{item.productName}</Text>
                             <Text className='font-instrumentSansSemiBold text-white mb-2'>{item.price}</Text>
                         </TouchableOpacity>
-                    )) : (data?.data?.product?.filter((item) => item.category == isClothType)?.map((item, index) =>
+                    )) : (data?.data?.product?.filter((item:AllProduct) => item.category == isClothType)?.map((item:AllProduct, index:number) =>
                         <TouchableOpacity key={index} style={{ width: "48%" }} className='bg-[#1D3725] items-center rounded-lg relative  ' onPress={() => navigation.navigate("Product Details", { ID: item.id })}>
                             <Image source={{ uri: item.productImages[0] }} style={{ width: "100%", height: 160, borderRadius: 8 }} />
                             <View className='bg-[#000000] border-[#1D3725] border-8 absolute p-1 bottom-14 rounded-full items-center justify-center' style={{ width: 50, height: 50 }}>

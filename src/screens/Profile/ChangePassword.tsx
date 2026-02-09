@@ -1,6 +1,5 @@
-import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { LinearGradient } from "expo-linear-gradient";
 import React, { useLayoutEffect, useState } from "react";
 import {
   Alert,
@@ -31,9 +30,9 @@ const ChangePassword = () => {
       title: "Change Password",
       headerStyle: {
         backgroundColor: "#121212",
-        elevation: 0, // for Android
-        shadowOpacity: 0, // for iOS
-        borderBottomWidth: 0, // for iOS
+        elevation: 0, 
+        shadowOpacity: 0, 
+        borderBottomWidth: 0, 
       },
       headerTintColor: "white",
       headerTitleAlign: "start",

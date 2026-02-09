@@ -7,20 +7,23 @@ import { usePostFeedPostMutation } from 'src/redux/features/feedApi/feedApi'
 import * as ImagePicker from 'expo-image-picker';
 import { useAppSelector } from 'src/redux/hooks'
 import { useFeatureBrandsQuery } from 'src/redux/features/brand/brandApi'
-import ToastManager, { Toast } from 'toastify-react-native'
+import  { Toast } from 'toastify-react-native'
+import { ImageObject } from 'src/types/search'
+import { SelectedBrand } from 'src/types/feed'
 
 const CreatePostModal = ({ visible, onClose }: any) => {
 
-    const { width, height } = useWindowDimensions()
+    const {  height } = useWindowDimensions()
     const token = useAppSelector((state) => state.auth.token);
-    const [loadMore, setLoadMore] = useState(100)
+    const [loadMore] = useState(100)
     const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
     const [loading,setLoading]=useState(false)
     const [postFeed] = usePostFeedPostMutation()
     const [hashtag, setHashtag] = useState<string[]>([])
     const [comment, setComments] = useState("");
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [selectedBrand, setSelectedBrand] = useState("");
+    const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null );
+    const [selectedBrand, setSelectedBrand] = useState<SelectedBrand | null>(null);
+    console.log(selectedImage?.uri)
 
     const handleHashTag = (text: string) => {
         const hashTagArray = text.split(" ").filter(Boolean);
@@ -38,7 +41,7 @@ const CreatePostModal = ({ visible, onClose }: any) => {
             tags: hashtag, caption: comment, brandName: selectedBrand?.brandName, brandId: selectedBrand?._id
         }
         if (selectedImage) {
-            const imageFile = {
+            const imageFile:any = {
                 uri: selectedImage?.uri,
                 name: selectedImage?.fileName,
                 type: selectedImage?.mimeType
@@ -61,7 +64,6 @@ const CreatePostModal = ({ visible, onClose }: any) => {
         } catch (err) {
             Toast.error("Something went wrong!!")
             setLoading(false)
-            // console.log(err)
         }finally{
             setLoading(false)
         }
@@ -70,47 +72,40 @@ const CreatePostModal = ({ visible, onClose }: any) => {
 
 
     const openCamera = async () => {
-        // 1. Check current status, which gives us both status and canAskAgain
         const permissionResult = await ImagePicker.getCameraPermissionsAsync();
         let status = permissionResult.status;
         let canAskAgain = permissionResult.canAskAgain;
 
-        // 2. Request if not granted AND we can still ask
         if (status !== 'granted' && canAskAgain) {
             const requestResult = await ImagePicker.requestCameraPermissionsAsync();
             status = requestResult.status;
             canAskAgain = requestResult.canAskAgain;
         }
 
-        // 3. Final Check: Handle Denied and Permanently Denied
         if (status !== 'granted') {
             if (!canAskAgain) {
-                // Permission is permanently denied: Direct user to Settings
                 Alert.alert(
                     "Camera Permission Required",
                     "It looks like you permanently denied camera access. Please go to your device settings to enable the camera for this app.",
                     [
                         { text: "Cancel", style: "cancel" },
-                        // Use Linking to open the app settings page
                         { text: "Open Settings", onPress: () => Linking.openSettings() }
                     ]
                 );
             } else {
-                // Permission denied but can be asked again (less common, usually caught in step 2)
                 alert("Permission to access camera is required!");
             }
-            return; // Exit the function if permission is not granted
+            return; 
         }
 
-        // 4. Launch camera only if permission is granted
-        const result = await ImagePicker.launchCameraAsync({
+        const result:any = await ImagePicker.launchCameraAsync({
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
         });
 
         if (!result.canceled) {
-            setSelectedImage(result.assets[0]);
+            setSelectedImage(result?.assets[0]);
         }
     };
 

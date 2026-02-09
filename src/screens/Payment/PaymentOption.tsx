@@ -207,7 +207,7 @@
 //                 <View className="flex-row mt-2 items-center justify-between border border-[#375DF8] rounded-lg p-4 bg-[#2C2C2C]">
 //                     <View className="flex-row gap-2">
 //                         <Image
-//                             source={require("../../../assets/restroIcon/logos_visa.png")}
+//                             source={require("../../../assets/e-icon/logos_visa.png")}
 //                             style={{ width: 20, height: 20 }}
 //                             resizeMode="contain"
 //                         />
@@ -218,7 +218,7 @@
 //                 <View className="flex-row mt-2 items-center justify-between border border-gray-200 rounded-lg p-4 bg-[#2C2C2C]">
 //                     <View className="flex-row gap-2">
 //                         <Image
-//                             source={require("../../../assets/restroIcon/logos_visa.png")}
+//                             source={require("../../../assets/e-icon/logos_visa.png")}
 //                             style={{ width: 20, height: 20 }}
 //                             resizeMode="contain"
 //                         />

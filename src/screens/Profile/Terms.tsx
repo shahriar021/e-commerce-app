@@ -1,27 +1,24 @@
-import { View, Text, ScrollView, TouchableOpacity, useWindowDimensions } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { useGetTermsQuery } from 'src/redux/features/profile/terms/termsApi';
 import { useAppSelector } from 'src/redux/hooks';
-import RenderHTML from "react-native-render-html";
-
 
 const Terms = () => {
 
     const navigation = useNavigation();
     const token=useAppSelector((state)=>state.auth.token)
     const {data:getTerms}=useGetTermsQuery({token,type:"terms_and_conditions"})
-    const { width } = useWindowDimensions();
 
     useLayoutEffect(() => {
         navigation.setOptions({
             title: "Terms And Conditions",
             headerStyle: {
                 backgroundColor: "#121212",
-                elevation: 0, // for Android
-                shadowOpacity: 0, // for iOS
-                borderBottomWidth: 0, // for iOS
+                elevation: 0, 
+                shadowOpacity: 0, 
+                borderBottomWidth: 0,
             },
             headerTintColor: "white",
             headerTitleAlign: "start",

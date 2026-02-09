@@ -39,7 +39,7 @@ const History = () => {
                 elevation: 5, // Android shadow (depth)
             }} >
                 <View style={{ width: scale(80), height: "100%" }} className=' rounded-xl overflow-hidden'>
-                    <Image source={require("../../../assets/restroIcon/nearbyRes.png")} style={{ width: "100%", height: "100%", borderRadius: 11 }} />
+                    <Image source={require("../../../assets/e-icon/nearbyRes.png")} style={{ width: "100%", height: "100%", borderRadius: 11 }} />
                 </View>
 
                 <View className='flex-col gap-2'>

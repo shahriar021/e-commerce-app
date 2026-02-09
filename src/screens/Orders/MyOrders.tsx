@@ -38,7 +38,7 @@ const MyOrders = () => {
                     <View className='flex-row items-center justify-between'>
                         <View className='flex-row items-center gap-2'>
                             <View className='rounded-xl overflow-hidden' style={{ width: scale(48), height: verticalScale(48) }} >
-                                <Image source={require("../../../assets/restroIcon/nearbyRes.png")} style={{ width: "100%", height: "100%" }} />
+                                <Image source={require("../../../assets/e-icon/nearbyRes.png")} style={{ width: "100%", height: "100%" }} />
                             </View>
                             <Text className='font-robotoBold font-bold text-black text-xl'>The Burger Spot</Text>
                         </View>
@@ -64,7 +64,7 @@ const MyOrders = () => {
                     <View className='flex-row items-center justify-between'>
                         <View className='flex-row items-center gap-2'>
                             <View className='rounded-xl overflow-hidden' style={{ width: scale(48), height: verticalScale(48) }} >
-                                <Image source={require("../../../assets/restroIcon/nearbyRes.png")} style={{ width: "100%", height: "100%" }} />
+                                <Image source={require("../../../assets/e-icon/nearbyRes.png")} style={{ width: "100%", height: "100%" }} />
                             </View>
                             <Text className='font-robotoBold font-bold text-black text-xl'>The Burger Spot</Text>
                         </View>

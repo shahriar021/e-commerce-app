@@ -1,22 +1,8 @@
-import {
-    View,
-    Text,
-    ScrollView,
-    TouchableOpacity,
-    Image,
-    useWindowDimensions,
-    Alert,
-} from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Image, useWindowDimensions, Alert, } from "react-native";
 import React, { useState } from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import {
-    AntDesign,
-    Feather,
-    FontAwesome,
-    Ionicons,
-    SimpleLineIcons,
-} from "@expo/vector-icons";
-import { Rating, AirbnbRating } from "react-native-ratings";
+import { AntDesign, Feather, FontAwesome, Ionicons, } from "@expo/vector-icons";
+import { Rating } from "react-native-ratings";
 import { scale, verticalScale } from "react-native-size-matters";
 import { useAppSelector } from "src/redux/hooks";
 import { useGetSpecificProductBasedOnIdQuery } from "src/redux/features/product/productApi";
@@ -26,6 +12,7 @@ import { usePostAddToCartMutation } from "src/redux/features/cart/cartApi";
 import { usePostFavProductMutation } from "src/redux/features/profile/favourite/favouriteApi";
 import { RootStackParamList } from "src/types/screens";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { SizeData } from "src/types/brand";
 
 type Props = {
     navigation: StackNavigationProp<RootStackParamList, "Product Details">
@@ -35,13 +22,13 @@ type BrandDetailsProps = RouteProp<RootStackParamList, "Product Details">
 
 const ProductDetails = ({ navigation }: Props) => {
     const route = useRoute<BrandDetailsProps>();
-    const { ID } = route.params;
+    const { ID } = route.params ?? {};
     const token = useAppSelector((state) => state.auth.token);
     const { width, height } = useWindowDimensions();
     const [isHeart, setIsHeart] = useState(false);
     const [isReadMore, setIsReadMore] = useState(true);
     const [isColor, setIsColor] = useState();
-    const [selectedSize, setSelectedSize] = useState(null);
+    const [selectedSize, setSelectedSize] = useState<SizeData | null>(null);
     const [quantity, setQuanity] = useState(1);
     const [limit] = useState(2);
 
@@ -112,15 +99,19 @@ const ProductDetails = ({ navigation }: Props) => {
     };
 
     const handleFav = async (id: string) => {
-        // console.log(id, "favourite...");
         try {
             const res = await postFavourite({ token, id }).unwrap();
-            // console.log(res?.data?.success);
             setIsHeart(res?.success);
         } catch (err) {
             console.log(err);
         }
     };
+
+    const handleNavigateToReview = () => {
+    if (ID) {
+      navigation.navigate("Review", { id: ID });
+    }
+  };
 
     return (
         <View className="flex-1 bg-[#121212] p-3">
@@ -205,15 +196,7 @@ const ProductDetails = ({ navigation }: Props) => {
                         Color
                     </Text>
                     <View className="flex-row gap-2 mt-1 mb-1">
-                        {data?.data?.product[0]?.colors.map((item: any) => (
-                            <TouchableOpacity
-                                onPress={() => setIsColor(item)}
-                                className={`rounded-full ${isColor == item ? "border-white" : "border-transparent"
-                                    } border-2`}
-                            >
-                                <FontAwesome name="circle" size={24} color={item} />
-                            </TouchableOpacity>
-                        ))}
+                        {data?.data?.product[0]?.colors.map((item: any) => (<TouchableOpacity onPress={() => setIsColor(item)} className={`rounded-full ${isColor == item ? "border-white" : "border-transparent"} border-2`}                           >                               <FontAwesome name="circle" size={24} color={item} />                           </TouchableOpacity>))}
                     </View>
                     <Text className="text-[#ADAEBC] font-instrumentSansSemiBold mt-2">
                         Custom Size
@@ -245,7 +228,7 @@ const ProductDetails = ({ navigation }: Props) => {
                         <Text className="font-instrumentSansSemiBold text-white mt-4">
                             Review({getReview?.data?.meta?.total})
                         </Text>
-                        <TouchableOpacity onPress={() => navigation.navigate("Review" , { id: ID })}><Text className="font-instrumentSansSemiBold text-[#ADAEBC]"> See All</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={handleNavigateToReview}><Text className="font-instrumentSansSemiBold text-[#ADAEBC]"> See All</Text></TouchableOpacity>
                     </View>
                     {/* review */}
                     <View className="flex-row justify-between mt-2 mb-1">

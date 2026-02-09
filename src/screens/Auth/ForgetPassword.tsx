@@ -2,7 +2,7 @@ import {  Feather } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import { LinearGradient } from "expo-linear-gradient"
 import React, { useLayoutEffect, useState } from "react"
-import { Alert, Text, TextInput,  TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Alert, Text, TextInput,  TouchableOpacity, View } from "react-native"
 import { useForgetPasswordMutation } from "src/redux/features/auth/authApi"
 import { NavigationProp } from "src/types/auth"
 
@@ -11,6 +11,7 @@ const ForgetPassword = () => {
   const navigation = useNavigation<NavigationProp>()
   const [forgetPass] = useForgetPasswordMutation()
   const [email, setEmail] = useState<string>('');
+  const [loading,setLoading]=useState(false)
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -32,7 +33,7 @@ const ForgetPassword = () => {
   }, [navigation])
 
   const handleForgetPassword = async () => {
-
+    setLoading(true)
     if (!email) {
       Alert.alert("Put Your E-mail")
       return;
@@ -44,7 +45,7 @@ const ForgetPassword = () => {
     }
     try {
       const res = await forgetPass(forget).unwrap();
-
+      console.log(res)
       if (res.success === true) {
         const otp=res.data.otp
         const email =res.data.email
@@ -55,6 +56,8 @@ const ForgetPassword = () => {
     } catch (err: any) {
       const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
       Alert.alert("Error", errorMessage);
+      console.log(err)
+      setLoading(false)
     }
 
 
@@ -77,7 +80,7 @@ const ForgetPassword = () => {
             className="w-full rounded-lg overflow-hidden "
             style={{ width: "100%", alignItems: "center", padding: 10 }}
           >
-            <Text className="text-[#121212] text-xl font-instrumentSansBold" >Send Email</Text>
+            <Text className="text-[#121212] text-xl font-instrumentSansBold" >{loading?<ActivityIndicator size={"small"} color={"blue"}/>:"Send Email"}</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>

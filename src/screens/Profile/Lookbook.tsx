@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { getTime } from 'src/components/shared/timeHistory'
 
-
 const Lookbook = ({ data,setFavLimit=()=>{} ,currentLimit}:any) => {
   const currentPostCount = currentLimit || 10;
       const favData = data?.data

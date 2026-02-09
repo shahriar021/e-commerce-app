@@ -7,6 +7,7 @@ import { useAppSelector } from 'src/redux/hooks'
 import { useFeatureBrandsQuery, useGetBrandWithIdQuery } from 'src/redux/features/brand/brandApi'
 import { RootStackParamList } from 'src/types/screens'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { BrandItem } from 'src/types/brand'
 
 type Props={
   navigation:StackNavigationProp<RootStackParamList,"Cart Page">
@@ -62,7 +63,7 @@ const BrandDetails = ({navigation}:Props) => {
 
             <ScrollView className='flex-1 ' horizontal>
 
-                {data?.data?.data?.map((item, index) =>
+                {data?.data?.data?.map((item:BrandItem, index:number) =>
 
                     <TouchableOpacity key={index} className='relative gap-3 rounded-xl overflow-hidden mt-1 mb-1 mr-3' style={{ width: scale(150), height: verticalScale(150) }}>
                         <Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%" }} />

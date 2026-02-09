@@ -10,17 +10,19 @@ import SearchModal from './SearchModal';
 import { useGetScanImageMutation } from 'src/redux/features/scan/scabApi';
 import { useAppSelector } from 'src/redux/hooks';
 import { Toast } from 'toastify-react-native';
+import { ImageObject } from 'src/types/search';
 
 const Search = () => {
     const token = useAppSelector((state) => state.auth.token)
-    const [selectedImage, setSelectedImage] = useState([]);
+    const [selectedImage, setSelectedImage] = useState<ImageObject[]>([]);
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [data, setData] = useState()
     const [res,setRes]=useState(null)
-    const [searchImg,setSearchImg]=useState()
     const [loading,setLoading]=useState(false)
     const [postImageforScan] = useGetScanImageMutation()
     const navigation = useNavigation();
+
+    console.log(res)
     if(res){
         Toast.success(res.message)
     }
@@ -30,8 +32,6 @@ const Search = () => {
             setIsOpenModal(true);
         }
     }, [selectedImage]);
-
-
 
     useLayoutEffect(() => { 
         navigation.setOptions({
@@ -120,23 +120,14 @@ const Search = () => {
                 style={{ width: scale(308), height: verticalScale(294) }}
                 className='bg-[#2C2C2C] rounded-xl relative overflow-hidden'
             >
-                {/* Top-left corner */}
                 <View className='absolute top-0 left-0 w-7 h-0.5 bg-white rounded-full  border-white border-4 z-10' />
                 <View className='absolute top-0 left-0 w-2 h-9 bg-white rounded-full' />
-
-                {/* Top-right corner */}
                 <View className='absolute top-0 right-0 w-7 h-0.5 bg-white rounded-full border-white border-4' />
                 <View className='absolute top-0 right-0 w-2 h-9 bg-white rounded-full' />
-
-                {/* Bottom-left corner */}
                 <View className='absolute bottom-0 left-0 w-7 h-0.5 bg-white rounded-full border-white border-4' />
                 <View className='absolute bottom-0 left-0 w-2 h-9 bg-white rounded-full' />
-
-                {/* Bottom-right corner */}
                 <View className='absolute bottom-0 right-0 w-7 h-0.5 bg-white rounded-full border-white border-4' />
                 <View className='absolute bottom-0 right-0 w-2 h-9 bg-white rounded-full' />
-                {/* this is the view where the camera will open */}
-                {/* You can place your image/content here */}
                 {selectedImage && (
                     <Image
                         source={{ uri: selectedImage[0]?.uri }}
@@ -146,7 +137,6 @@ const Search = () => {
                 )}
             </View>
 
-            {/* click here to open camera and phoito */}
             <TouchableOpacity className='mt-3 mb-3 bg-[#252525] p-8 rounded-full' onPress={openCamera} style={{ width: scale(80), height: scale(80) }}>
                 {loading?<ActivityIndicator size={"large"} color={"blue"}/>:<Image source={require("../../../assets/e-icon/Icon.png")} style={{ width: "100%", height: "100%" }} />}
             </TouchableOpacity>

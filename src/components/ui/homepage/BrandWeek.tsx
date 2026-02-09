@@ -1,19 +1,20 @@
-import { View, Text, Animated, Dimensions, ScrollView, Image, TouchableOpacity } from 'react-native'
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { images2 } from 'src/screens/Home/demo';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text, Animated, Dimensions, Image, TouchableOpacity } from 'react-native'
+import React from 'react'
 import { verticalScale } from 'react-native-size-matters';
 import { useGetBrandOfTheWeekQuery } from 'src/redux/features/brand/brandApi';
 import { useAppSelector } from 'src/redux/hooks';
-import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from 'src/types/screens';
 const { width } = Dimensions.get("screen");
 
-const BrandWeek = () => {
-    const navigation=useNavigation()
+type Props = {
+    navigation: StackNavigationProp<RootStackParamList, "Brand Details">;
+};
+
+const BrandWeek = ({navigation}:Props) => {
     const token = useAppSelector((state) => state.auth.token)
     const { data } = useGetBrandOfTheWeekQuery(token)
 
- 
     return (
         <View className='flex-1 w-full'>
             {data?.data && data?.data?.brandLogo?.[0] ? (
@@ -33,10 +34,10 @@ const BrandWeek = () => {
                                 textAlign: "center",
                                 fontSize: 24,
                                 fontWeight: 'bold',
-                                backgroundColor: 'rgba(0, 0, 0, 0.6)', // semi-transparent black background
-                                color: 'white', // white text color
-                                paddingVertical: 5, // padding for the text
-                                borderRadius: 10 // rounded corners for the background
+                                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                                color: 'white', 
+                                paddingVertical: 5,
+                                borderRadius: 10 
                             }}
                         >
                             {data?.data?.brandName}

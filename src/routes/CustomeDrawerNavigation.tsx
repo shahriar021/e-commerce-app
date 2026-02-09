@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { setToken, setUserType } from 'src/redux/features/auth/authSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const CustomDrawerContent = (props) => {
+export const CustomDrawerContent = (props:any) => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const [profile, setProfile] = useState(null);

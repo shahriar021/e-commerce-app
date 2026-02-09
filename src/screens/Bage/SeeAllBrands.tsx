@@ -6,6 +6,7 @@ import { useAppSelector } from 'src/redux/hooks';
 import { useFeatureBrandsQuery } from 'src/redux/features/brand/brandApi';
 import { RootStackParamList } from 'src/types/screens';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { BrandItem } from 'src/types/brand';
 
 type Props={
   navigation:StackNavigationProp<RootStackParamList,"Brand Details">
@@ -41,7 +42,7 @@ const SeeAllBrands = ({navigation}:Props) => {
             showsVerticalScrollIndicator={false}
 
         >
-            {data?.data?.data?.map((item, index) => (
+            {data?.data?.data?.map((item:BrandItem, index:number) => (
                 <TouchableOpacity
                     key={index}
                     className="relative gap-3 rounded-xl overflow-hidden mt-1 mb-1"

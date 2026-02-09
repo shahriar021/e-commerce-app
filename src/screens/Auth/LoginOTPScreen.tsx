@@ -31,7 +31,6 @@ const LoginOTPScreen = () => {
   };
 
   const handleVerify = () => {
-    const code = otpNumbers.join('');
     navigation.navigate("Reset Password" as never);
   };
 

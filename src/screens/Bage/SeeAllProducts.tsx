@@ -6,6 +6,7 @@ import { useAppSelector } from 'src/redux/hooks';
 import { useProductListBrandIdWiseQuery } from 'src/redux/features/product/productApi';
 import { RootStackParamList } from 'src/types/screens';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { AllProduct } from 'src/types/brand';
 
 type Props={
   navigation:StackNavigationProp<RootStackParamList,"Product Details">
@@ -46,7 +47,7 @@ const SeeAllProducts = ({navigation}:Props) => {
             <ScrollView contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
 
                 <View className='flex-row flex-wrap  justify-between gap-2'>
-                    {data?.data?.product?.map((item, index) =>
+                    {data?.data?.product?.map((item:AllProduct, index:number) =>
                         <TouchableOpacity key={index} style={{ width: "48%" }} className='bg-[#1D3725] items-center rounded-lg relative  ' onPress={() => navigation.navigate("Product Details")}>
                             <Image source={{ uri: item.productImages[0] }} style={{ width: "100%", height: 160, borderRadius: 8 }} />
                             <View className='bg-[#000000] border-[#1F2937] border-8 absolute p-1 bottom-14 rounded-full items-center justify-center' style={{ width: 50, height: 50 }}>

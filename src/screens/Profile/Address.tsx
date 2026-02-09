@@ -40,9 +40,9 @@ const Address = () => {
 
             <View className='flex-col items-center mt-2 mb-2 border border-gray-200 rounded-xl p-3 justify-center gap-2' style={{ width: width * .9 }}>
                 <View className='flex-row items-center gap-1'>
-                    <Image source={require("../../../assets/restroIcon/addressLocation.png")} />
+                    <Image source={require("../../../assets/e-icon/addressLocation.png")} />
                     <Text>123 Main Street, Berlin, Germany, 10115</Text>
-                    <Image source={require("../../../assets/restroIcon/editIcon.png")} />
+                    <Image source={require("../../../assets/e-icon/editIcon.png")} />
                 </View>
                 <View className='border border-[#2E8DD6] p-2 px-9 rounded-full'><Text className='text-[#2E8DD6]'>Default</Text></View>
             </View>

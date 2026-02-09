@@ -22,11 +22,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 const { width } = Dimensions.get("screen");
 
-type Props={
-  navigation:StackNavigationProp<RootStackParamList,"Cart Page">
-}
-
-const HomeScreen = ({navigation}:Props) => {
+const HomeScreen = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Brand Details">>();
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<ScrollView>(null);
   const scrollRef2 = useRef<ScrollView>(null);
@@ -207,11 +204,7 @@ const HomeScreen = ({navigation}:Props) => {
             <AntDesign name="right" size={24} color="#9CA3AF" />
           </TouchableOpacity>)}
 
-          {/* <TouchableOpacity className=" items-center border rounded-3xl border-[#fff] p-2 mt-3" style={{ width: "95%" }} onPress={() => setLoadMore(loadMore + 2)}>
-            <Text className="font-instrumentSansSemiBold text-white text-xl">View All</Text>
-          </TouchableOpacity> */}
-
-          <BrandWeek />
+          <BrandWeek navigation={navigation}/>
 
         </View>
 

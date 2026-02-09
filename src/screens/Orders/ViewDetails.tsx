@@ -38,7 +38,7 @@ const ViewDetails = () => {
             {/* card */}
             <View style={{ width: "100%", height: verticalScale(100) }} className='border border-gray-300 rounded-2xl overflow-hidden p-1 flex-row gap-2'>
                 <View style={{ width: scale(80), height: "100%" }}>
-                    <Image source={require("../../../assets/restroIcon/nearbyRes.png")} style={{ width: "100%", height: "100%" }} className='rounded-2xl' />
+                    <Image source={require("../../../assets/e-icon/nearbyRes.png")} style={{ width: "100%", height: "100%" }} className='rounded-2xl' />
                 </View>
                 <View className='flex-1 '>
                     <View className='flex-row justify-between items-center'>
@@ -47,11 +47,11 @@ const ViewDetails = () => {
                     </View>
                     <Text className='text-[#222222]'>Order ID:1fd21rg</Text>
                     <View className='flex-1 flex-row items-center  gap-3'>
-                        <View className='flex-row items-center gap-2'><Image source={require("../../../assets/restroIcon/calendar-03.png")} />
+                        <View className='flex-row items-center gap-2'><Image source={require("../../../assets/e-icon/calendar-03.png")} />
                             <Text>May 10</Text>
                         </View>
                         <View className='flex-row items-center gap-2 '>
-                            <Image source={require("../../../assets/restroIcon/clock-01.png")} />
+                            <Image source={require("../../../assets/e-icon/clock-01.png")} />
                             <Text>08:00 pm</Text>
                         </View>
                     </View>
@@ -104,7 +104,7 @@ const ViewDetails = () => {
             <View className='border border-gray-100 w-full mx-3 mb-1' />
 
             <View className='flex-row gap-2 w-full' style={{alignItems:"flex-start"}}>
-                <Image source={require("../../../assets/restroIcon/orderLocation.png")} style={{width:18,height:18}}/>
+                <Image source={require("../../../assets/e-icon/orderLocation.png")} style={{width:18,height:18}}/>
                 <Text className='text-[#BA2720] font-robotoRegular'>Delivery Location</Text>
                 
             </View>

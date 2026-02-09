@@ -1,7 +1,7 @@
-import { View, Text, TouchableOpacity, ScrollView, Image, useWindowDimensions } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
+import {  Feather } from '@expo/vector-icons';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 import Posts from './Posts';
 import Details from './Details';
@@ -12,9 +12,9 @@ import { usePostFollowMutation } from 'src/redux/features/profile/follow/followA
 const UsersORBrandProfile = () => {
   const token = useAppSelector((state) => state.auth.token)
   const navigation = useNavigation();
-  const { width, height } = useWindowDimensions()
   const [isPosts, setIsPosts] = useState("Posts")
-  const { upID } = useRoute().params
+  const route = useRoute<any>()
+  const { upID } = route?.params
   const { data: getSpecificUserData } = useGetUploaderProfileQuery({ token, id: upID })
   const userType = useAppSelector((store) => store.auth.userType)
   const [postFollow] = usePostFollowMutation();

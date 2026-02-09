@@ -6,6 +6,7 @@ export type RootStackParamList = {
   'Sign Up as Rider':undefined;
   'Sign Up as Brand':undefined;
   'Sign Up as User':undefined;
+  'Success page':undefined;
   'OTP Screen':{Otp:string,Email:string};
   'Reset Password':{atoken:string}
 //   'Home Screen': { userId: string };  // User ID required

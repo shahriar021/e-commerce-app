@@ -7,8 +7,6 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 const SearchModal = ({ visible, onClose,data,srcImg }: any) => {
     const [isClothType, setIsClothType] = useState("ALL Results")
     const [items] = useState(Array.from({ length: 2 }))
-    const insets = useSafeAreaInsets();
-    // console.log(data.data[0]?.productImages[0],"in modal")
     
     return (
         <Modal visible={visible} onRequestClose={onClose}>
@@ -17,7 +15,7 @@ const SearchModal = ({ visible, onClose,data,srcImg }: any) => {
                 <TouchableOpacity
                     className='flex-row gap-2 items-center ml-2 mb-1'
                     onPress={onClose}
-                    style={{ marginTop: 3 }}  // <-- no extra iOS gap now
+                    style={{ marginTop: 3 }}  
                 >
                                    <Feather name="arrow-left-circle" size={24} color="white" />
                     <Text className='text-white text-xl font-instrumentSansBold'>Exact Matches</Text>

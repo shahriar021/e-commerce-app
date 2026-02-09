@@ -51,7 +51,7 @@ const TrackOrder = () => {
                     }}
                 >
                     <Image
-                        source={require('../../../assets/restroIcon/nearbyRes.png')}
+                        source={require('../../../assets/e-icon/nearbyRes.png')}
                         style={{ width: '100%', height: '100%' }}
                         resizeMode='cover'
                     />
@@ -124,7 +124,7 @@ const TrackOrder = () => {
             <View className='border border-gray-100 w-full mx-3 mb-1' />
 
             <View className='flex-row gap-2 w-full' style={{alignItems:"flex-start"}}>
-                <Image source={require("../../../assets/restroIcon/orderLocation.png")} style={{width:18,height:18}}/>
+                <Image source={require("../../../assets/e-icon/orderLocation.png")} style={{width:18,height:18}}/>
                 <Text className='text-[#BA2720] font-robotoRegular'>Delivery Location</Text>
                 
             </View>

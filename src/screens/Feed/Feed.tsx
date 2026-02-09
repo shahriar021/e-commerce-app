@@ -1,6 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, ActivityIndicator, Alert, Keyboard, } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
 import { scale, verticalScale } from 'react-native-size-matters';
 import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import CreatePostModal from './CreatePostModal';
@@ -8,24 +7,33 @@ import { useAppSelector } from 'src/redux/hooks';
 import { useGetAllPostQuery, useGetCommentsQuery, useGetFeedFilterQuery, usePostCommentBasedOnIdMutation, usePostLikeMutation, usePostSaveMutation } from 'src/redux/features/feedApi/feedApi';
 import { getTime } from 'src/components/shared/timeHistory';
 import { Toast } from 'toastify-react-native';
-import Share from 'react-native-share';
+import {  Comment, FeedCategoryResponse,  Post,  } from 'src/types/feed';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from 'src/types/screens';
+import { handleShare } from 'src/utils/feed/handleShare';
 
-const Feed = () => {
+type Props = {
+    navigation: StackNavigationProp<RootStackParamList, "Other/brand profile">;
+};
+
+const Feed = ({ navigation }: Props) => {
 
     const token = useAppSelector((state) => state.auth.token)
-    const navigation = useNavigation();
     const [selectedItem, setSelectedItem] = useState("")
-    const [selectedCid, setSelectedCid] = useState(null)
+    const [selectedCid, setSelectedCid] = useState<string | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [loadMore, setLoadMore] = useState(20)
     const [comment, setComments] = useState('');
     const [loading, setLoading] = useState(false);
-    const { data: getPostData, isLoading, error } = useGetAllPostQuery({ token, limit: loadMore, tag: selectedItem })
-    const { data: getFeedCat } = useGetFeedFilterQuery(token)
-    const {data:getComment}=useGetCommentsQuery({token,pid:selectedCid})
     const [postComment] = usePostCommentBasedOnIdMutation()
     const [postLike] = usePostLikeMutation()
     const [postSave] = usePostSaveMutation()
+    const { data: getPostData, isLoading, error } = useGetAllPostQuery({ token, limit: loadMore, tag: selectedItem })
+    const { data: getFeedCat } = useGetFeedFilterQuery(token) as { data?: FeedCategoryResponse }
+    const { data: getComment } = useGetCommentsQuery({ token, pid: selectedCid })
+
+    const comments = getComment?.data?.comments;
+
     const feedCatgory = getFeedCat?.data ? getFeedCat?.data.map(item => item) : [];
     if (feedCatgory) {
         feedCatgory.unshift("ALL")
@@ -98,7 +106,7 @@ const Feed = () => {
         }
     }
 
-    const handleSaveCat = (item) => {
+    const handleSaveCat = (item: string) => {
         if (item == "ALL") {
             setSelectedItem("")
         } else {
@@ -106,28 +114,15 @@ const Feed = () => {
         }
     }
 
-    const handleShowCom=(cid)=>{
-        if(selectedCid==cid){
+    const handleShowCom = (cid: string) => {
+        if (selectedCid == cid) {
             setSelectedCid(null)
-        }else{
+        } else {
             setSelectedCid(cid)
         }
-        
-    }
-    const handleShare = async (image,caption) => {
-    const shareOptions = {
-      title: 'Check out this post!',
-      message: caption ,
-      url: image, 
-      social: Share.Social.FACEBOOK,
-    };
 
-    try {
-      await Share.open(shareOptions); 
-    } catch (error) {
-      console.log('Error sharing', error);
     }
-  };
+    
 
     return (
         <View className='flex-1 bg-[#121212] p-5 relative'>
@@ -148,7 +143,7 @@ const Feed = () => {
             {isLoading && <ActivityIndicator size={"large"} color={"blue"} />}
 
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-                {getPostData?.data?.data?.map((item, index) =>
+                {getPostData?.data?.data?.map((item: Post, index: number) =>
                     <View key={index}>
                         <View className='flex-row justify-between mt-4 mb-1 '>
                             <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile", { upID: item?.uploaderId })}>
@@ -171,7 +166,7 @@ const Feed = () => {
                         <Text className='font-instrumentSansBold text-white mt-2'>{item.caption}✨</Text>
 
                         <View className='flex-row gap-2 mt-3 '>
-                            {item.tags.map(item => <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#{item}</Text>)}
+                            {item.tags.map((item: string) => <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#{item}</Text>)}
                         </View>
 
                         <View className='relative mt-4 rounded-xl overflow-hidden ' style={{ width: scale(320), height: verticalScale(300) }}>
@@ -186,20 +181,20 @@ const Feed = () => {
                             </TouchableOpacity>
                             <View className='flex-row items-center gap-2'>
                                 {/* <Image source={require("../../../assets/e-icon/Vector.png")} style={{ width: 18, height: 18 }} className='' /> */}
-                                <TouchableOpacity className='items-center justify-center' onPress={()=>handleShowCom(item._id)}>
+                                <TouchableOpacity className='items-center justify-center' onPress={() => handleShowCom(item._id)}>
                                     <Image source={require("../../../assets/e-icon/Vector (1).png")} style={{ width: 18, height: 18 }} className='' />
                                     <Text className='text-white font-instrumentRegular mt-2'>{item.totalComments}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity className=' p-2 rounded-full items-center justify-center gap-2' onPress={() => handleSave(item._id)}>
                                     <Image source={require("../../../assets/e-icon/gb.png")} style={{ width: 18, height: 18 }} resizeMode='contain' /><Text className='text-white'>Save</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity className=' p-2 rounded-full items-center justify-center gap-2' onPress={() => handleShare(item?.attachment[0],item?.caption)}>
-                                   <FontAwesome5 name="share" size={18} color="white" /><Text className='text-white'>Share</Text>
+                                <TouchableOpacity className=' p-2 rounded-full items-center justify-center gap-2' onPress={() => handleShare(item?.attachment[0], item?.caption)}>
+                                    <FontAwesome5 name="share" size={18} color="white" /><Text className='text-white'>Share</Text>
                                 </TouchableOpacity>
                             </View>
 
                         </View>
-                        {selectedCid==item?._id&&<View className='p-1 flex-col gap-1'>{getComment?.data?.comments?.length>0?getComment?.data?.comments?.map(item=><Text className='text-white bg-gray-800 p-2'>{item.comments}</Text>):<Text className='text-white bg-gray-800 p-2'>No Comments!</Text>}</View>}
+                        {selectedCid == item?._id && <View className='p-1 flex-col gap-1'>{comments?.length > 0 ? comments?.map((item: Comment) => <Text className='text-white bg-gray-800 p-2'>{item.comments}</Text>) : <Text className='text-white bg-gray-800 p-2'>No Comments!</Text>}</View>}
 
                         <View className='bg-[#313030] flex-row justify-between items-center p-2 mt-4 rounded-lg'>
 
@@ -242,5 +237,3 @@ const Feed = () => {
 }
 
 export default Feed
-
-

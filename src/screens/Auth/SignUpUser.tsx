@@ -27,9 +27,9 @@ const SignUpUser = () => {
                 backgroundColor: "#121212"
             },
             headerTintColor: "#FFFFFF",
-            headerTitle: '', // hides title in header center
-            headerBackTitleVisible: false, // hides back label
-            headerBackTitle: '', // extra safety for iOS
+            headerTitle: '', 
+            headerBackTitleVisible: false, 
+            headerBackTitle: '', 
             headerLeft: () => (
                 <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.goBack()}>
                     <Feather name="arrow-left-circle" size={24} color="white" />
@@ -71,7 +71,7 @@ const SignUpUser = () => {
             const res = await postBody(formData).unwrap();
             Alert.alert(res.message);
             if (res.message === "User registered successfully") {
-                navigation.navigate("OnBoarding")
+                navigation.navigate("OnBoarding" as never)
             }
         } catch (err: any) {
             const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
@@ -114,14 +114,13 @@ const SignUpUser = () => {
                     </TouchableOpacity>
                     <CountryPicker
                         show={show}
-                        // when picker button press you will get the country object with dial code
+                        lang="en"
                         pickerButtonOnPress={(item) => {
                             setCountryCode(item.dial_code);
                             setShow(false);
                         }}
                     />
 
-                    {/* Phone Input */}
                     <TextInput
                         placeholder="Phone number"
                         placeholderTextColor="#aaa"

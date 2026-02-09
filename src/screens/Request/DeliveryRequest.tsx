@@ -32,7 +32,7 @@ const DeliveryRequestView = () => {
         <View className='flex-1 p-2'>
             <View style={{ width: "100%", height: verticalScale(100) }} className='border border-gray-300 rounded-2xl overflow-hidden p-1 flex-row gap-2'>
                 <View style={{ width: scale(80), height: "100%" }}>
-                    <Image source={require("../../../assets/restroIcon/nearbyRes.png")} style={{ width: "100%", height: "100%" }} className='rounded-2xl' />
+                    <Image source={require("../../../assets/e-icon/nearbyRes.png")} style={{ width: "100%", height: "100%" }} className='rounded-2xl' />
                 </View>
                 <View className='flex-1 '>
                     <View className='flex-row justify-between items-center'>
@@ -41,11 +41,11 @@ const DeliveryRequestView = () => {
                     </View>
                     <Text className='text-[#222222]'>Order ID:1fd21rg</Text>
                     <View className='flex-1 flex-row items-center  gap-3'>
-                        <View className='flex-row items-center gap-2'><Image source={require("../../../assets/restroIcon/calendar-03.png")} />
+                        <View className='flex-row items-center gap-2'><Image source={require("../../../assets/e-icon/calendar-03.png")} />
                             <Text>May 10</Text>
                         </View>
                         <View className='flex-row items-center gap-2 '>
-                            <Image source={require("../../../assets/restroIcon/clock-01.png")} />
+                            <Image source={require("../../../assets/e-icon/clock-01.png")} />
                             <Text>08:00 pm</Text>
                         </View>
                     </View>
@@ -61,14 +61,14 @@ const DeliveryRequestView = () => {
                     <Text className='font-robotoBold text-2xl mt-2'>Special Instructions</Text>
                     <Text className='font-robotoRegular mt-1 mb-1'>Call me when you arrive. Leave it at the door. Use the side gate.</Text>
                     <View className='flex-row items-center gap-2 mt-1 mb-1'>
-                        <Image source={require("../../../assets/restroIcon/orderLocation.png")} style={{ width: 20, height: 20 }} />
+                        <Image source={require("../../../assets/e-icon/orderLocation.png")} style={{ width: 20, height: 20 }} />
                         <Text className='text-[#BA2720]'>Pickup Location</Text>
                         
                     </View>
                     <Text className='font-robotoBold text-xl mt-1 mb-1'>32 Samwell Sq, Chevron</Text>
                     <View className='border border-gray-200' />
                     <View className='flex-row items-center gap-2 mt-1 mb-1'>
-                        <Image source={require("../../../assets/restroIcon/orderLocation.png")} style={{ width: 20, height: 20 }} />
+                        <Image source={require("../../../assets/e-icon/orderLocation.png")} style={{ width: 20, height: 20 }} />
                         <Text className='text-[#BA2720]'>Delivery Location</Text>
                         
                     </View>
@@ -94,10 +94,10 @@ const DeliveryRequestView = () => {
                     </TouchableOpacity>
                     <View className='flex-row items-center justify-between gap-2 mt-3'>
                         <TouchableOpacity className='flex-1 p-4 items-center border border-[#4BB54B] rounded-full bg-green-100'>
-                            <Image source={require("../../../assets/restroIcon/tick.png")} style={{width:30,height:30}}/>
+                            <Image source={require("../../../assets/e-icon/tick.png")} style={{width:30,height:30}}/>
                         </TouchableOpacity>
                         <TouchableOpacity className='flex-1 p-4 items-center border border-[#BA2A23] rounded-full bg-red-100'>
-                            <Image source={require("../../../assets/restroIcon/crs.png")} style={{width:30,height:30}}/>
+                            <Image source={require("../../../assets/e-icon/crs.png")} style={{width:30,height:30}}/>
                         </TouchableOpacity>
                     </View>
                 </View>

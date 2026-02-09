@@ -36,7 +36,7 @@ const Bank = () => {
             headerRight: () => {
                 return <TouchableOpacity className='p-1' onPress={() => navigation.navigate("Bank Edit")}>
                     <View className='w-[35px] h-[35px] border border-red-100 items-center justify-center rounded-full overflow-hidden p-2'>
-                        <Image source={require("../../../assets/restroIcon/Rectangle 1.png")} style={{width:"100%",height:"100%"}} resizeMode='contain'/>
+                        <Image source={require("../../../assets/e-icon/Rectangle 1.png")} style={{width:"100%",height:"100%"}} resizeMode='contain'/>
                     </View>
                 </TouchableOpacity>
             }

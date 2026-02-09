@@ -1,15 +1,15 @@
-import { View, Text, useWindowDimensions, TouchableOpacity, ScrollView, Image } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native'
 import React, { useLayoutEffect } from 'react'
-import { useNavigation, useRoute } from '@react-navigation/native'
-import { AntDesign, Feather } from '@expo/vector-icons'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
+import {  Feather } from '@expo/vector-icons'
 import { scale } from 'react-native-size-matters'
 import { useAppSelector } from 'src/redux/hooks'
 import { useGetBrandOrderDetailsQuery } from 'src/redux/features/orders/orderApi'
 import { nameStatus } from 'src/constants/productInfos'
+import { RootStackParamList } from 'src/types/screens'
 
 const OrderDetails = () => {
-    const { width, height } = useWindowDimensions()
-    const route = useRoute()
+    const route = useRoute<RouteProp<RootStackParamList, 'Order Details'>>();
     const { id } = route.params
     const navigation = useNavigation()
     const token = useAppSelector((state) => state.auth.token)

@@ -1,6 +1,5 @@
 import { View, Text, Image, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
 import { useAppSelector } from 'src/redux/hooks'
 import { useFeatureBrandsQuery } from 'src/redux/features/brand/brandApi'
 import { RootStackParamList } from 'src/types/screens'
@@ -19,38 +18,29 @@ const Bage = ({navigation}:Props) => {
   const [loading, setLoading] = useState(false)
 
 
-  // 🔑 FIX: Use useEffect to sync API data with filteredData
   useEffect(() => {
     if (data?.data?.data) {
-        // Only update if there is data AND no active search filter is applied
         if (!search) {
             setFilteredData(data.data.data);
         }
-        // If there is a search filter applied, re-run the filter on the new data
-        // (This handles "Load More" while a search is active)
         if (search) {
              setFilteredData(data.data.data.filter((item: any) => item?.brandName?.toLowerCase().includes(search?.toLowerCase())));
         }
     }
-  }, [data, search]); // Rerun when 'data' or 'search' changes
+  }, [data, search]); 
 
 
   const handleSearch = async (text: string) => {
     setLoading(true)
     setSearch(text)
     
-    // ⚠️ Note: Avoid using setTimeout for synchronous filtering. 
-    // It's better to filter directly or use a debounce hook for API calls.
-    // For local data filtering, direct call is fine, but I'll keep your structure.
     setTimeout(() => {
-      // Use the raw data from the API response for filtering
       const rawData = data?.data?.data || [];
       if (text) {
         setFilteredData(rawData.filter((item: any) => 
           item?.brandName?.toLowerCase().includes(text?.toLowerCase())
         ));
       } else {
-        // When search is cleared, show all fetched data
         setFilteredData(rawData);
       }
       setLoading(false)
@@ -59,7 +49,6 @@ const Bage = ({navigation}:Props) => {
 
 
   useLayoutEffect(() => {
-    // ... (header setup remains the same)
     navigation.setOptions({
       headerStyle: {
         backgroundColor: "#121212",

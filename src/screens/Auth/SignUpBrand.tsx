@@ -4,15 +4,15 @@ import { LinearGradient } from "expo-linear-gradient"
 import React, { useLayoutEffect, useState } from "react"
 import { Alert, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { scale, verticalScale } from "react-native-size-matters"
-import * as ImagePicker from 'expo-image-picker';
 import { useSignUpBrandMutation } from "src/redux/features/auth/authApi"
 import { launchCameraAndHandlePermissions } from "src/components/shared/ShareCamera"
 import { CountryPicker } from "react-native-country-codes-picker";
+import { ImageObject } from "src/types/search"
 
 const SignUpBrand = () => {
 
   const navigation = useNavigation()
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
   const [isShowPassword, setIsShowPassword] = useState(false)
   const [postBody] = useSignUpBrandMutation()
   const [brandName, setBrandName] = useState('');
@@ -45,11 +45,12 @@ const SignUpBrand = () => {
   }, [navigation])
 
   const openCamera = async () => {
-    const asset = await launchCameraAndHandlePermissions();
+    const asset: any = await launchCameraAndHandlePermissions();
+
     if (asset) {
       setSelectedImage(asset);
     }
-  };
+  }
 
   const handleSignUpBrand = async () => {
     const formData = new FormData();
@@ -77,7 +78,7 @@ const SignUpBrand = () => {
 
     if (selectedImage) {
 
-      const imageFile = {
+      const imageFile:any = {
         uri: selectedImage?.uri,
         name: selectedImage?.fileName,
         type: selectedImage?.mimeType
@@ -93,8 +94,8 @@ const SignUpBrand = () => {
 
       Alert.alert(res.message);
       if (res.message === "Brand registered successfully") {
-                navigation.navigate("OnBoarding")
-            }
+        navigation.navigate("OnBoarding" as never)
+      }
     } catch (err: any) {
       const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
       Alert.alert("Error", errorMessage);
@@ -153,7 +154,7 @@ const SignUpBrand = () => {
           </TouchableOpacity>
           <CountryPicker
             show={show}
-            // when picker button press you will get the country object with dial code
+            lang="en"
             pickerButtonOnPress={(item) => {
               setCountryCode(item.dial_code);
               setShow(false);

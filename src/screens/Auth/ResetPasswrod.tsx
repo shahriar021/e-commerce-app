@@ -1,15 +1,16 @@
 import { Entypo, Feather } from '@expo/vector-icons';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute,RouteProp } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useLayoutEffect, useState } from 'react'
 import { View, Text, TouchableOpacity, useWindowDimensions, TextInput, Alert } from 'react-native'
 import { useResetPasswordMutation } from 'src/redux/features/auth/authApi';
+import { RootStackParamList } from 'src/types/auth';
 
 const ResetPassword = () => {
-    const route = useRoute()
+    const route = useRoute<RouteProp<RootStackParamList, "Reset Password">>()
     const { atoken } = route.params
-    const { width, height } = useWindowDimensions();
+    const { width } = useWindowDimensions();
     const [newPassword, setNewPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
@@ -20,9 +21,9 @@ const ResetPassword = () => {
             title: "Reset Password",
             headerStyle: {
                 backgroundColor: "#121212",
-                elevation: 0, // for Android
-                shadowOpacity: 0, // for iOS
-                borderBottomWidth: 0, // for iOS
+                elevation: 0, 
+                shadowOpacity: 0, 
+                borderBottomWidth: 0, 
             },
             headerTintColor: "white",
             headerTitleAlign: "center",
@@ -57,7 +58,7 @@ const ResetPassword = () => {
             try {
                 const res = await resetPassword({ info, atoken }).unwrap();
                 Alert.alert(res.message);
-                navigation.navigate("Success page")
+                navigation.navigate("Success page" as never)
             } catch (err: any) {
                 Alert.alert("Error", err?.message || "An error occurred.");
             }

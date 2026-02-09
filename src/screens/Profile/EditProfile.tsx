@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, Dimensions, TextInput, ScrollView, Alert, Linking, ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, Image, Dimensions, TextInput, ScrollView,  ActivityIndicator } from 'react-native'
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
@@ -10,6 +10,8 @@ import { launchCameraAndHandlePermissions } from 'src/components/shared/ShareCam
 import { Toast } from 'toastify-react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { CountryPicker } from "react-native-country-codes-picker";
+import { ImageObject } from 'src/types/search'
+import { ProfileResponse } from 'src/types/profile'
 
 
 const EditProfile = () => {
@@ -23,10 +25,10 @@ const EditProfile = () => {
     const [about, setAbout] = useState("");
     const [homeTown, setHomeTown] = useState("")
     const [favStyle, setFavStyle] = useState("")
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [selectedImage2, setSelectedImage2] = useState(null);
+    const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
+    const [selectedImage2, setSelectedImage2] = useState<ImageObject | null>(null);
     const [loading, setLoading] = useState(false)
-    const [profile, setProfile] = useState(null);
+    const [profile, setProfile] = useState<ProfileResponse | null>(null);
     const [countryCode, setCountryCode] = useState('+93');
     const [show, setShow] = useState(false);
 
@@ -85,14 +87,14 @@ const EditProfile = () => {
     }, [navigation])
 
     const openCamera = async () => {
-        const asset = await launchCameraAndHandlePermissions();
+        const asset:any = await launchCameraAndHandlePermissions();
         if (asset) {
             setSelectedImage(asset);
         }
     };
 
     const openCamera2 = async () => {
-        const asset = await launchCameraAndHandlePermissions();
+        const asset:any = await launchCameraAndHandlePermissions();
         if (asset) {
             setSelectedImage2(asset);
         }
@@ -116,7 +118,7 @@ const EditProfile = () => {
 
         if (selectedImage) {
 
-            const imageFile = {
+            const imageFile:any = {
                 uri: selectedImage?.uri,
                 name: selectedImage?.fileName,
                 type: selectedImage?.mimeType
@@ -126,7 +128,7 @@ const EditProfile = () => {
 
         if (selectedImage2) {
 
-            const imageFile = {
+            const imageFile:any = {
                 uri: selectedImage2?.uri,
                 name: selectedImage2?.fileName,
                 type: selectedImage2?.mimeType
@@ -190,7 +192,7 @@ const EditProfile = () => {
 
                 <CountryPicker
                     show={show}
-                    // when picker button press you will get the country object with dial code
+                    lang='en'
                     pickerButtonOnPress={(item) => {
                         setCountryCode(item.dial_code);
                         setShow(false);
