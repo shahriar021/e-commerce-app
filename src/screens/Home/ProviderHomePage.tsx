@@ -44,6 +44,7 @@ const ProviderHomePage = () => {
     const [showModal, setShowModal] = useState(false)
     const { data: getBrandHomeStats } = useGetBrandHomeStatsQuery(token)
     const { data: getBrandHomeGraph } = useGetBrandHomeGraphQuery({ token, year })
+    console.log(token,"brand.")
 
     const data = getBrandHomeGraph?.data.map((item: any, index: any) => ({
         value: item.earnings,

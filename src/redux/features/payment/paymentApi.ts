@@ -27,36 +27,48 @@ const paymentApi = baseApi.injectEndpoints({
             },
         }),
 
-        postPaymentToStripe:builder.mutation({
-            query:({token,body})=>{
+        postPaymentToStripe: builder.mutation({
+            query: ({ token, body }) => {
 
-                return{
+                return {
 
-                    url:`/payment-sheet`,
-                    headers:{
-                        Authorization:`Bearer ${token}`
+                    url: `/payment-sheet`,
+                    headers: {
+                        Authorization: `Bearer ${token}`
                     },
-                    method:"POST",
+                    method: "POST",
                     body
                 }
             }
         }),
 
 
-        postWithdraw:builder.mutation({
-            query:({token,body})=>{
+        postWithdraw: builder.mutation({
+            query: ({ token, body }) => {
 
-                return{
-                    url:`/withdraw`,
-                    method:"POST",
-                    headers:{
-                        Authorization:`Bearer ${token}`
+                return {
+                    url: `/withdraw`,
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`
                     },
                     body
+                }
+            }
+        }),
+
+        initialPostWithdraw: builder.mutation({
+            query: ( token ) => {
+                return {
+                    url: `/withdraw/onboarding/initiate`, 
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
                 }
             }
         })
     }),
 });
 
-export const { usePostPaymentMutation, useGetSetupIntentQuery ,usePostPaymentToStripeMutation,usePostWithdrawMutation} = paymentApi;
+export const { usePostPaymentMutation, useGetSetupIntentQuery, usePostPaymentToStripeMutation, usePostWithdrawMutation,useInitialPostWithdrawMutation } = paymentApi;

@@ -1,16 +1,15 @@
-import { View, Text, TouchableOpacity, useWindowDimensions, Image, TextInput, Alert, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
+import { View, Text, TouchableOpacity, Image, TextInput, Alert, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { createToken } from '@stripe/stripe-react-native';
 import { useAppSelector } from 'src/redux/hooks';
-import { usePostWithdrawMutation } from 'src/redux/features/payment/paymentApi';
+import { useInitialPostWithdrawMutation } from 'src/redux/features/payment/paymentApi';
 
 const Withdraw = () => {
-    const token = useAppSelector((state) => state.auth.token)
+    const [triggerWithdraw, { isLoading, data, isError }] = useInitialPostWithdrawMutation();
+    const token = useAppSelector((state) => state.auth.token);
     const navigation = useNavigation();
-    const [postWithdraw] = usePostWithdrawMutation();
     const [amount, setAmount] = useState<string>("")
     const [country, setCountry] = useState<string>("")
     const [currency, setCurrency] = useState<string>("")
@@ -19,6 +18,15 @@ const Withdraw = () => {
     const [routingNumbr, setRoutingNumbr] = useState<string>("")
     const [AccNmbr, setAccNmbr] = useState<string>("")
     const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        if (token) {
+            triggerWithdraw(token).unwrap().catch(err => {
+                console.error("Mutation Error:", err);
+            });
+        }
+    }, [token, triggerWithdraw]);
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerStyle: {
@@ -43,30 +51,15 @@ const Withdraw = () => {
         })
     }, [navigation])
 
-    const handleWithdraw = async () => {
-        setLoading(true)
-        const data = {
-            amount: parseInt(amount),
-            country: country,
-            currency: currency,
-            account_holder_name: AccHoldNmae,
-            account_holder_type: AccHoldType.trim(),
-            routing_number: routingNumbr,
-            account_number: AccNmbr
-        };
-        try {
+    if (!token) {
+        return <Text>Loading Token...</Text>;
+    }
 
-            const res = await postWithdraw({ token, body: { data } }).unwrap();
-            setLoading(false)
-        } catch (err: any) {
-            setLoading(false)
-            Alert.alert(err?.data?.message)
-        }
-    };
+    console.log(data, "withdraw data from server");
 
-    return (
+        return (
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} >
-            <ScrollView contentContainerStyle={{ flexGrow: 1,paddingBottom:100 }} keyboardShouldPersistTaps="handled">
+            <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }} keyboardShouldPersistTaps="handled">
                 <View className='flex-1 items-center p-3 bg-[#121212]'>
                     <View className='rounded-lg overflow-hidden w-full' >
                         <LinearGradient colors={["#212121", "#212121"]} style={{ padding: 10 }} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}>
@@ -106,13 +99,13 @@ const Withdraw = () => {
                         <Text className='text-[#fff] font-instrumentSansSemiBold'>Account Number</Text>
                         <TextInput className='mt-1 bg-[#2C2C2C] p-3 rounded-lg' placeholder='000123456789' style={{ color: "#ADAEBC" }} placeholderTextColor={"#fff"} onChangeText={setAccNmbr} />
                     </View>
-                    <TouchableOpacity className='bg-[#1D3725] p-2 items-center rounded-lg mt-4 w-full' onPress={handleWithdraw}>
+                    <TouchableOpacity className='bg-[#1D3725] p-2 items-center rounded-lg mt-4 w-full'>
                         <Text className='text-white font-instrumentSansSemiBold text-center text-xl'>{loading ? <ActivityIndicator size={"small"} color={"blue"} /> : "Withdraw"}</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
         </KeyboardAvoidingView>
     )
-}
+};
 
 export default Withdraw

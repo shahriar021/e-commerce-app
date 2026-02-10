@@ -36,6 +36,7 @@ const HomeScreen = () => {
   const token = useAppSelector((state) => state.auth.token);
   const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
   const { data: getCart } = useGetAddToCartQuery(token);
+  console.log(token)
 
   useLayoutEffect(() => {
     navigation.setOptions({
