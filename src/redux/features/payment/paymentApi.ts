@@ -47,7 +47,7 @@ const paymentApi = baseApi.injectEndpoints({
             query: ({ token, body }) => {
 
                 return {
-                    url: `/withdraw`,
+                    url: `/withdraw/withdraw`,
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -58,17 +58,25 @@ const paymentApi = baseApi.injectEndpoints({
         }),
 
         initialPostWithdraw: builder.mutation({
-            query: ( token ) => {
+            query: (token) => {
                 return {
-                    url: `/withdraw/onboarding/initiate`, 
+                    url: `/withdraw/onboarding/initiate`,
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 }
             }
-        })
+        }),
+
+        getWithdrawOnboardingStatus: builder.query<any, { token: string; stripe_account_id: string }>({
+            query: ({ token, stripe_account_id }) => ({
+                url: `/withdraw/onboarding/status`,
+                method: "GET",
+                headers: { Authorization: `Bearer ${token}` },
+            }),
+        }),
     }),
 });
 
-export const { usePostPaymentMutation, useGetSetupIntentQuery, usePostPaymentToStripeMutation, usePostWithdrawMutation,useInitialPostWithdrawMutation } = paymentApi;
+export const { usePostPaymentMutation, useGetSetupIntentQuery, usePostPaymentToStripeMutation, usePostWithdrawMutation, useInitialPostWithdrawMutation,useGetWithdrawOnboardingStatusQuery } = paymentApi;

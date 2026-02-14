@@ -291,7 +291,7 @@ const Earning = () => {
                             </Text>
                         </View>
                         <Text className="text-white text-xl mt-2 font-instrumentSansSemiBold">
-                            {getEarningStats?.data?.totalPending} $
+                            {getEarningStats?.data?.available} $
                         </Text>
                         <Text className="text-[#DCF3FF] font-instrumentSansSemiBold">
                             For Withdrawal
@@ -383,7 +383,7 @@ const Earning = () => {
                     <Text className="text-white text-xl font-instrumentSansSemiBold">
                         Transaction{" "}
                     </Text>
-                    <TouchableOpacity className="flex-row gap-2 items-center" onPress={()=>navigation.navigate("Transaction")}>
+                    <TouchableOpacity className="flex-row gap-2 items-center" onPress={() => navigation.navigate("Transaction")}>
                         <Text className="text-white text-xl font-instrumentSansSemiBold">
                             See All
                         </Text>
@@ -392,31 +392,30 @@ const Earning = () => {
                 </View>
 
                 {getTransaction?.data?.data?.map((item) => (
-          <View className="bg-[#121212] p-1 rounded-md mt-2">
-            <View className="flex-row justify-between p-1">
-              <Text className="text-white text-lg font-instrumentSansSemiBold">
-                Order #{item?.cartProductId?.slice(-4)}
-              </Text>
-              <Text className="text-[#4ADE80] font-instrumentRegular">
-                {item?.earning}
-              </Text>
-            </View>
-            <View className="flex-row justify-between p-1 mt-1">
-              <Text className="text-[#9CA3AF] text-base font-instrumentRegular">
-                {new Date(item?.createdAt)?.toLocaleDateString()}
-              </Text>
-              <Text
-                className={`${
-                  item?.earningStatus == "paid"
-                    ? "text-[#4ADE80]"
-                    : "text-[#FB923C]"
-                }  font-instrumentRegular`}
-              >
-                {item?.earningStatus}
-              </Text>
-            </View>
-          </View>
-        ))}
+                    <View className="bg-[#121212] p-1 rounded-md mt-2">
+                        <View className="flex-row justify-between p-1">
+                            <Text className="text-white text-lg font-instrumentSansSemiBold">
+                                Order #{item?.cartProductId?.slice(-4)}
+                            </Text>
+                            <Text className="text-[#4ADE80] font-instrumentRegular">
+                                {item?.earning}
+                            </Text>
+                        </View>
+                        <View className="flex-row justify-between p-1 mt-1">
+                            <Text className="text-[#9CA3AF] text-base font-instrumentRegular">
+                                {new Date(item?.createdAt)?.toLocaleDateString()}
+                            </Text>
+                            <Text
+                                className={`${item?.earningStatus == "paid"
+                                        ? "text-[#4ADE80]"
+                                        : "text-[#FB923C]"
+                                    }  font-instrumentRegular`}
+                            >
+                                {item?.earningStatus}
+                            </Text>
+                        </View>
+                    </View>
+                ))}
             </View>
         </ScrollView>
     );
