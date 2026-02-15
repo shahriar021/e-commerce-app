@@ -174,7 +174,7 @@ const Withdraw = () => {
 
         }
     };
-
+    console.log(getEarningStats?.data,"--")
 
     return (
         <>
