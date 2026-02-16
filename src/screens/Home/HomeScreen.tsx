@@ -1,6 +1,6 @@
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   View,
   ScrollView,
@@ -9,6 +9,8 @@ import {
   Text,
   TouchableOpacity,
   Animated,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 import { images, images2 } from "./demo";
@@ -24,19 +26,16 @@ const { width } = Dimensions.get("screen");
 
 const HomeScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList, "Brand Details">>();
-  const scrollX = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef<ScrollView>(null);
-  const scrollRef2 = useRef<ScrollView>(null);
   const indexRef = useRef(0);
-  const indexRef2 = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentIndex2, setCurrentIndex2] = useState(0);
   const [searchModal, setSearchModal] = useState(false)
   const [loadMore, setLoadMore] = useState(5)
   const token = useAppSelector((state) => state.auth.token);
   const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
   const { data: getCart } = useGetAddToCartQuery(token);
-  console.log(token)
+
+  console.log("yooo.")
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -47,41 +46,33 @@ const HomeScreen = () => {
   }, [navigation]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const nextIndex = (indexRef.current + 1) % images.length;
-      scrollRef.current?.scrollTo({ x: nextIndex * width, animated: true });
-      indexRef.current = nextIndex;
-      setCurrentIndex(nextIndex);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const nextIndex = (indexRef2.current + 1) % images.length;
-      scrollRef2.current?.scrollTo({ x: nextIndex * width, animated: true });
-      indexRef2.current = nextIndex;
-      setCurrentIndex2(nextIndex);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleScroll = (event:any) => {
-    const index = Math.round(event.nativeEvent.contentOffset.x / width);
-    indexRef.current = index;
-    setCurrentIndex(index);
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      let nextIndex = (currentIndex + 1) % images2.length;
-      scrollRef2.current?.scrollTo({ x: nextIndex * width, animated: true });
-      setCurrentIndex(nextIndex);
-    }, 4000);
-    return () => clearInterval(interval);
+    indexRef.current = currentIndex;
   }, [currentIndex]);
+
+
+  // Auto scroll carousel 1 (ONE interval)
+  useFocusEffect(
+    useCallback(() => {
+      // screen focused -> start interval
+      const id = setInterval(() => {
+        const next = (indexRef.current + 1) % images.length;
+        scrollRef.current?.scrollTo({ x: next * width, animated: true });
+        setCurrentIndex(next);
+      }, 3000);
+
+      return () => {
+        // screen unfocused -> clear interval
+        clearInterval(id);
+      };
+    }, [images.length])
+  );
+
+
+
+  const handleScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const index = Math.round(event.nativeEvent.contentOffset.x / width);
+    setCurrentIndex(index);
+  }, []);
 
   const handleSearch = () => {
     setSearchModal(true)
@@ -204,12 +195,8 @@ const HomeScreen = () => {
             </View>
             <AntDesign name="right" size={24} color="#9CA3AF" />
           </TouchableOpacity>)}
-
-          <BrandWeek navigation={navigation}/>
-
+          <BrandWeek navigation={navigation} />
         </View>
-
-
       </ScrollView>
       <SearchModal visible={searchModal} onClose={() => setSearchModal(false)} />
     </>
