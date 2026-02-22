@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { AntDesign, Feather } from '@expo/vector-icons';
+import {  Feather } from '@expo/vector-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/native';
 import { useAppSelector } from 'src/redux/hooks';

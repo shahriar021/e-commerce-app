@@ -10,19 +10,18 @@ import SearchModal from './SearchModal';
 import { useGetScanImageMutation } from 'src/redux/features/scan/scabApi';
 import { useAppSelector } from 'src/redux/hooks';
 import { Toast } from 'toastify-react-native';
-import { ImageObject } from 'src/types/search';
+import {  ImageObject, ProductsResponse } from 'src/types/search';
 
 const Search = () => {
     const token = useAppSelector((state) => state.auth.token)
     const [selectedImage, setSelectedImage] = useState<ImageObject[]>([]);
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [data, setData] = useState()
-    const [res,setRes]=useState(null)
+    const [res,setRes]=useState<ProductsResponse | null>(null)
     const [loading,setLoading]=useState(false)
     const [postImageforScan] = useGetScanImageMutation()
     const navigation = useNavigation();
 
-    console.log(res)
     if(res){
         Toast.success(res.message)
     }
@@ -66,19 +65,20 @@ const Search = () => {
         });
 
         if (!result.canceled) {
-            setSelectedImage(result.assets);
+            setSelectedImage(result.assets as ImageObject[]);
         }
 
         if (selectedImage) {
             const formData = new FormData()
-            const imageFile = {
+            const imageFile  = {
                 uri: selectedImage[0].uri,
                 name: selectedImage[0].fileName,
                 type: selectedImage[0].mimeType
             }
-            formData.append("scan", imageFile)
+            formData.append("scan", imageFile as any)
             try {
                 setLoading(false)
+
                 const res = await postImageforScan({ token, body: formData }).unwrap()
                 setRes(res)
                 setData(res)
@@ -104,11 +104,9 @@ const Search = () => {
         });
 
         if (!result.canceled) {
-            setSelectedImage(result.assets);
+            setSelectedImage(result.assets as ImageObject[]);
         }
     };
-
-
 
     return (
         <ScrollView contentContainerStyle={{ alignItems: "center", padding: 12, backgroundColor: '#121212' }}>

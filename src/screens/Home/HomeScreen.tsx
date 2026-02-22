@@ -35,7 +35,6 @@ const HomeScreen = () => {
   const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
   const { data: getCart } = useGetAddToCartQuery(token);
 
-  console.log("yooo.")
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -182,7 +181,7 @@ const HomeScreen = () => {
           <Text className="font-instrumentSansBold text-3xl text-center text-[#fff] mt-5">Featured Brands</Text>
           <Text className="font-instrumentSansSemiBold text-lg text-center text-[#fff] mt-2 max-w-[90%]">Discover premium collections from top designers</Text>
 
-          {data?.data?.data?.map((item: any) => <TouchableOpacity key={item.name} className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }} onPress={() => navigation.navigate("Brand Details", { id: item._id })}>
+          {data?.data?.data?.map((item: any,index:number) => <TouchableOpacity key={index} className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }} onPress={() => navigation.navigate("Brand Details", { id: item._id })}>
             <View className="rounded-3xl overflow-hidden" style={{ width: scale(80), height: verticalScale(80) }}>
               <Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%" }} className="rounded-3xl" />
             </View>

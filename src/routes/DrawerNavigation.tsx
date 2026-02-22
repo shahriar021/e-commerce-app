@@ -1,8 +1,7 @@
 import React from 'react';
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { HomeScreen, Profile } from "../screens"; // make sure this exists
+import { HomeScreen, Profile } from "../screens"; 
 import { Feather } from "@expo/vector-icons";
-import { View, Text } from 'react-native';
 import { CustomDrawerContent } from './CustomeDrawerNavigation';
 
 const Drawer = createDrawerNavigator();

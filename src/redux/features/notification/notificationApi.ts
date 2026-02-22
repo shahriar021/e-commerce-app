@@ -9,8 +9,21 @@ const notificationApi=baseApi.injectEndpoints({
                     method:"GET"
                 }
             }
+        }),
+
+         postNotificationRegister:builder.mutation({
+            query:({token,body})=>{
+                return {
+                    url:"/user/fcm/register",
+                    method:"Post",
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    },
+                    body
+                }
+            }
         })
     })
 })
 
-export const {useGetNotificationQuery}=notificationApi
+export const {useGetNotificationQuery,usePostNotificationRegisterMutation}=notificationApi

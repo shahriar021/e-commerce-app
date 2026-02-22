@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "708830993033",
+    "project_id": "arkive-130fc",
+    "storage_bucket": "arkive-130fc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708830993033:android:f8e3c898e7581f8fe90458",
+        "android_client_info": {
+          "package_name": "com.sparktech.sas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYrws6nI2ii_cXGfKRakKa1ynYSHZP1wM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

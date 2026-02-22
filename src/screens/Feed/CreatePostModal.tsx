@@ -23,7 +23,6 @@ const CreatePostModal = ({ visible, onClose }: any) => {
     const [comment, setComments] = useState("");
     const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null );
     const [selectedBrand, setSelectedBrand] = useState<SelectedBrand | null>(null);
-    console.log(selectedImage?.uri)
 
     const handleHashTag = (text: string) => {
         const hashTagArray = text.split(" ").filter(Boolean);

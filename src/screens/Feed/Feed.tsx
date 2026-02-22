@@ -33,6 +33,7 @@ const Feed = ({ navigation }: Props) => {
     const { data: getComment } = useGetCommentsQuery({ token, pid: selectedCid })
 
     const comments = getComment?.data?.comments;
+    console.log(getPostData?.data?.data[10])
 
     const feedCatgory = getFeedCat?.data ? getFeedCat?.data.map(item => item) : [];
     if (feedCatgory) {
@@ -48,7 +49,7 @@ const Feed = ({ navigation }: Props) => {
                 borderBottomWidth: 0
             },
             headerTitle: 'StyleFeed',
-            headerTitleAlign: "start",
+            headerTitleAlign: "left",
             headerTitleStyle: {
                 color: "white",
                 fontFamily: 'instrumentSans-Bold',
@@ -159,14 +160,13 @@ const Feed = ({ navigation }: Props) => {
 
                             </TouchableOpacity>
 
-                            {/* <SimpleLineIcons name="options-vertical" size={24} color="white" /> */}
                             {item.uploaderType == "Brand" && <View className='bg-[#54EF8D] p-1 items-center rounded-2xl justify-center' style={{ backgroundColor: 'rgba(78, 242, 138, 0.32)', borderColor: '#4ADE80' }}><Text className='text-[#54EF8D]'>Brand</Text></View>}
                         </View>
 
                         <Text className='font-instrumentSansBold text-white mt-2'>{item.caption}✨</Text>
 
                         <View className='flex-row gap-2 mt-3 '>
-                            {item.tags.map((item: string) => <Text className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#{item}</Text>)}
+                            {item.tags.map((item: string) => <Text key={item} className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#{item}</Text>)}
                         </View>
 
                         <View className='relative mt-4 rounded-xl overflow-hidden ' style={{ width: scale(320), height: verticalScale(300) }}>
@@ -194,7 +194,7 @@ const Feed = ({ navigation }: Props) => {
                             </View>
 
                         </View>
-                        {selectedCid == item?._id && <View className='p-1 flex-col gap-1'>{comments?.length > 0 ? comments?.map((item: Comment) => <Text className='text-white bg-gray-800 p-2'>{item.comments}</Text>) : <Text className='text-white bg-gray-800 p-2'>No Comments!</Text>}</View>}
+                        {selectedCid == item?._id && <View className='p-1 flex-col gap-1'>{comments?.length > 0 ? comments?.map((item: Comment) => <Text key={item.id} className='text-white bg-gray-800 p-2'>{item.comments}</Text>) : <Text className='text-white bg-gray-800 p-2'>No Comments!</Text>}</View>}
 
                         <View className='bg-[#313030] flex-row justify-between items-center p-2 mt-4 rounded-lg'>
 

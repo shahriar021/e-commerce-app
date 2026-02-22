@@ -3,6 +3,7 @@
   "expo": {
     "name": "ARKIVE",
     "slug": "ARKIVE",
+    "platforms": ["android"],
     "version": "1.2.34",
     "orientation": "portrait",
     "icon": "./assets/arkiveTransparent.png",
@@ -33,6 +34,7 @@
       ],
       "useNextNotificationsApi": true,
       "package": "com.sparktech.sas",
+      "googleServicesFile": "./google-services.json",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyC4fsrgciACjhUacg9umvRHflrJJHFovdY"

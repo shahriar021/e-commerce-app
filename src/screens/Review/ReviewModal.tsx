@@ -6,6 +6,7 @@ import { Rating } from 'react-native-ratings'
 import { usePostReviewBasedOnIdMutation } from 'src/redux/features/review/reviewApi'
 import { useAppSelector } from 'src/redux/hooks'
 import * as ImagePicker from 'expo-image-picker';
+import { ImageObject } from 'src/types/search'
 
 const ReviewModal = ({ visible, onClose, ID }: any) => {
     const token = useAppSelector((state) => state.auth.token)
@@ -13,7 +14,7 @@ const ReviewModal = ({ visible, onClose, ID }: any) => {
     const [postReview] = usePostReviewBasedOnIdMutation()
     const [comments, setComments] = useState('')
     const [rating, setRatings] = useState(0)
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
 
     const handlePost = async () => {
         const formData = new FormData()
@@ -28,7 +29,7 @@ const ReviewModal = ({ visible, onClose, ID }: any) => {
                 name: selectedImage.fileName,
                 type: selectedImage.mimeType
             }
-            formData.append("attachment", imageFile)
+            formData.append("attachment", imageFile as any)
         }
         formData.append("data", JSON.stringify(data))
         try {
@@ -84,7 +85,7 @@ const ReviewModal = ({ visible, onClose, ID }: any) => {
         });
 
         if (!result.canceled) {
-            setSelectedImage(result.assets[0]);
+            setSelectedImage(result.assets[0] as ImageObject);
         }
     };
 

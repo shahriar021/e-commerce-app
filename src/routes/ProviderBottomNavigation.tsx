@@ -1,23 +1,12 @@
 import React from "react"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  Feather,
-  Ionicons,
-  FontAwesome,
-  MaterialIcons,
-} from "@expo/vector-icons";
-import NavRight from "src/components/shared/NavRight";
 import { Image, Platform, Text, useWindowDimensions, View } from "react-native";
-import { useAppSelector } from "src/redux/hooks";
 
 const BottomTabs = createBottomTabNavigator();
 
 import { TouchableOpacity } from 'react-native';
-import { HomeScreen } from "src/screens";
-import Bage from "src/screens/Bage/Bage";
 import Feed from "src/screens/Feed/Feed";
 import { DrawerNavigation } from "./DrawerNavigation";
-import Search from "src/screens/Search/Search";
 import ProviderHomePage from "src/screens/Home/ProviderHomePage";
 import Products from "src/screens/Products/Products";
 import Earning from "src/screens/Earning/Earning";
@@ -100,17 +89,17 @@ export const ProviderBottomNavigation = () => {
           name="Earning"
           component={Earning}
           options={{
-            tabBarIcon: ({ focused}) => (
-               <View style={{ alignItems: "center" }} className="">
-              <Image source={require("../../assets/e-icon/earning-olive.png")} style={{ width: 24, height: 24 }} />
-              {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Earning</Text>}
+            tabBarIcon: ({ focused }) => (
+              <View style={{ alignItems: "center" }} className="">
+                <Image source={require("../../assets/e-icon/earning-olive.png")} style={{ width: 24, height: 24 }} />
+                {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Earning</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
           }}
         />
 
-         <BottomTabs.Screen
+        <BottomTabs.Screen
           name="Feed"
           component={Feed}
           options={{
@@ -129,9 +118,9 @@ export const ProviderBottomNavigation = () => {
           name="Products"
           component={Products}
           options={{
-            headerShown:false,
+            headerShown: false,
             tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: "center" }} className="">
+              <View style={{ alignItems: "center" }} className="">
 
                 <Image source={require("../../assets/e-icon/product-olive.png")} style={{ width: 24, height: 24 }} />
                 {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Products</Text>}
