@@ -1,63 +1,43 @@
 import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { AntDesign, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { scale } from 'react-native-size-matters';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { providerHomepage } from './demo';
-import { BarChart, LineChart, PieChart, PopulationPyramid, RadarChart } from "react-native-gifted-charts";
-import OrderHistory from '../Profile/OrderHistory';
+import { BarChart} from "react-native-gifted-charts";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useGetBrandHomeGraphQuery, useGetBrandHomeStatsQuery } from 'src/redux/features/brandHome/brandHomeApi';
 import { useAppSelector } from 'src/redux/hooks';
-import InputSelectPicker from 'src/components/shared/InputSelectPicker';
-import InputSelectYear from 'src/components/shared/InputSelectYear';
 import InputYearPicker from 'src/components/shared/inputYearPicker';
 import { useGetBrandOrderListQuery } from 'src/redux/features/orders/orderApi';
 import { colorStatus, nameStatus } from 'src/constants/productInfos';
-
-const days = {
-    0: "Sunday", 1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday"
-}
-
-const month = { 0: 'January', 1: 'Februay', 2: 'March', 3: 'April', 4: 'May', 5: 'June', 6: 'July', 7: 'Augest', 8: 'September', 9: 'October', 10: 'November', 11: 'December' };
-
-const brandHomeStatsName = {
-    totalOrders: "Total Orders",
-    totalSales: "Total Sales",
-    totalReviews: "Total Reviews",
-    totalProducts: "Total Products",
-}
-
+import { brandHomeStatsName, days, month } from 'src/constants/providerHome';
+import { providerHomepage } from './demo';
+import { greetingTime } from 'src/utils/greetingTime';
+import { BrandProfileResponse } from 'src/types/brand';
 
 const ProviderHomePage = () => {
+    const navigation = useNavigation()
     const date = new Date();
     const token = useAppSelector((state) => state.auth.token)
-    const [yearsData] = useState([2020, 2021, 2022, 2023, 2024, 2025])
-    const { width, height } = Dimensions.get("screen");
-    const [isAvailble, setIsAvailable] = useState(false)
-    const [requestList] = useState(Array.from({ length: 10 }, (_, i) => i + 1))
-    const [profile, setProfile] = useState(null);
+    const { width } = Dimensions.get("screen");
+    const [profile, setProfile] = useState<BrandProfileResponse | null>(null);
     const currentMonthIndex = new Date().getMonth();
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const [year, setYear] = useState(date.getFullYear())
     const [showModal, setShowModal] = useState(false)
     const { data: getBrandHomeStats } = useGetBrandHomeStatsQuery(token)
     const { data: getBrandHomeGraph } = useGetBrandHomeGraphQuery({ token, year })
-    console.log(token,"brand.")
+    console.log(getOrdersBrand,"brand.")
 
     const data = getBrandHomeGraph?.data.map((item: any, index: any) => ({
         value: item.earnings,
         label: item.month,
-        frontColor: index === currentMonthIndex ? "#DCF3FF" : "#464747", // <-- dynamic color
+        frontColor: index === currentMonthIndex ? "#DCF3FF" : "#464747", 
     }));
     const { data: getOrdersBrand } = useGetBrandOrderListQuery({
         token,
         limit: 4,
     });
-    const [orderHist] = useState(Array.from({ length: 10 }, (_, i) => i + 1))
-
-    const navigation = useNavigation()
 
     useEffect(() => {
         const loadProfile = async () => {
@@ -92,25 +72,7 @@ const ProviderHomePage = () => {
         }, [])
     );
 
-
-    const value = date.getHours()
-    const greetingTime = (value: any) => {
-
-        if (value >= 6 && value > 12) {
-            return "Morning"
-        } else if (value >= 12 && value < 18) {
-            return "Afternoon"
-        } else {
-            return "Night"
-        }
-
-    }
-
-    const [isListVisible, setIsListVisible] = useState(false);
-    // State to hold the currently selected year (optional, but useful)
-    const [selectedYear, setSelectedYear] = useState(yearsData[yearsData.length - 1] || 'Select Year');
-
-    const onSelectYr = (year) => {
+    const onSelectYr = (year:number) => {
         setYear(year)
     }
 
@@ -125,13 +87,14 @@ const ProviderHomePage = () => {
             },
         };
     }
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#121212", padding: 5 }}>
             <ScrollView className='p-3 flex-1'>
                 <View className="flex-row justify-between items-center mb-2">
                     <View className='flex-col'>
                         <Text className=" text-white font-instrumentSansBold text-xl" >
-                            Good {greetingTime(date.getHours())}, {profile?.data?.brandName}
+                            Good {greetingTime(date.getHours())},{" "} {profile?.data?.brandName}
                         </Text>
                         <Text className='font-instrumentSansSemiBold text-[#9CA3AF]'>{days[date.getDay() as keyof typeof days]} , {month[date.getMonth() as keyof typeof month]} {date.getDate()}</Text>
                     </View>
@@ -145,10 +108,10 @@ const ProviderHomePage = () => {
                             <View key={item} className='bg-[#2D2D2D] p-3 rounded-lg mb-1 mt-1 ' style={{
                                 width: width * 0.45
                             }}>
-                                <Text className='text-[#9CA3AF] font-instrumentSansSemiBold mb-2'>{brandHomeStatsName[item]}</Text>
+                                <Text className='text-[#9CA3AF] font-instrumentSansSemiBold mb-2'>{brandHomeStatsName[item as keyof typeof brandHomeStatsName]}</Text>
                                 <View className='flex-row justify-between'>
-                                    <Text className='flex-row text-white font-instrumentSansSemiBold text-xl'>{getBrandHomeStats?.data[item]}</Text>
-                                    <Image source={providerHomepage[item]} />
+                                    <Text className='flex-row text-white font-instrumentSansSemiBold text-xl'>{(getBrandHomeStats?.data[item])?.toFixed(2)}</Text>
+                                    <Image source={providerHomepage[item as keyof typeof providerHomepage]} />
                                 </View>
                             </View>)}
                 </View>

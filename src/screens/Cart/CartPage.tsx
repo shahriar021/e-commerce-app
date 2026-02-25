@@ -109,6 +109,7 @@ const CartPage = ({navigation}:Props) => {
     const updatedSubtotal = calculateSubtotal();
     const dis = data?.data?.discount;
     const total = data?.data?.total;
+    console.log(total,"cart")
 
     const handleDelete = async(id:any) => { 
         setLoading(true)

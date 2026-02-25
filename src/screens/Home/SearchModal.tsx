@@ -1,14 +1,11 @@
-import { View, Text, Modal, useWindowDimensions, TouchableOpacity, ScrollView, Image, TextInput } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { AntDesign, Entypo } from '@expo/vector-icons'
-import { scale, verticalScale } from 'react-native-size-matters'
-import InputSelectPicker from 'src/components/shared/InputSelectPicker'
-import CreateModalSelecPicker from 'src/components/ui/feed/CreateModalSelecPicker'
+import { View, Text, Modal, useWindowDimensions, TouchableOpacity, ScrollView, TextInput } from 'react-native'
+import React, { useState } from 'react'
+import {  Entypo } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
 const SearchModal = ({ visible, onClose }: any) => {
 
-    const { width, height } = useWindowDimensions()
+    const {  height } = useWindowDimensions()
     const navigation=useNavigation()
     const [srcTxt,setSrcTxt]=useState("")
        

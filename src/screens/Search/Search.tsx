@@ -21,6 +21,7 @@ const Search = () => {
     const [loading,setLoading]=useState(false)
     const [postImageforScan] = useGetScanImageMutation()
     const navigation = useNavigation();
+    console.log(token,"token")
 
     if(res){
         Toast.success(res.message)

@@ -31,7 +31,7 @@ const ProductDetails = ({ navigation }: Props) => {
     const [selectedSize, setSelectedSize] = useState<SizeData | null>(null);
     const [quantity, setQuanity] = useState(1);
     const [limit] = useState(2);
-
+    
     const { data } = useGetSpecificProductBasedOnIdQuery({ token, id: ID });
     const { data: getReview } = useGetALlReviewBasedOnIdQuery({
         token,
@@ -40,6 +40,7 @@ const ProductDetails = ({ navigation }: Props) => {
     });
     const [postCart] = usePostAddToCartMutation();
     const [postFavourite] = usePostFavProductMutation();
+    console.log(ID)
 
     navigation.setOptions({
         headerStyle: {
@@ -99,6 +100,7 @@ const ProductDetails = ({ navigation }: Props) => {
     };
 
     const handleFav = async (id: string) => {
+      
         try {
             const res = await postFavourite({ token, id }).unwrap();
             setIsHeart(res?.success);
@@ -142,7 +144,7 @@ const ProductDetails = ({ navigation }: Props) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                             className="bg-[#252525] p-3 rounded-full"
-                            onPress={() => handleFav(data?.data?.product[0]?._id)}
+                            onPress={() => handleFav(data?.data?.product[0]?.id)}
                         >
                             {isHeart ? (
                                 <Ionicons name="heart" size={24} color="red" />
@@ -283,7 +285,7 @@ const ProductDetails = ({ navigation }: Props) => {
                     >
                         <Image source={require("../../../assets/e-icon/Main Icon.png")} />
                         <Text className="text-[#DCF3FF] font-instrumentSansBold">
-                            Add to Cart | $80 $110
+                            Add to Cart 
                         </Text>
                     </TouchableOpacity>
                 </View>

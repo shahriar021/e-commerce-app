@@ -9,14 +9,12 @@ import { usePostPaymentToStripeMutation } from 'src/redux/features/payment/payme
 export default function PaymentScreen() {
   const route = useRoute();
   const totalAmount = parseFloat(route.params.total || 0);
-  console.log(totalAmount,"in payment screen")
 
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
-  const [loading, setLoading] = useState(false); // true when Stripe setup is COMPLETE
-  const [setupInProgress, setSetupInProgress] = useState(false); // true when fetching/initializing
+  const [loading, setLoading] = useState(false); 
+  const [setupInProgress, setSetupInProgress] = useState(false); 
   const [status, setStatus] = useState('Enter your address details to pay.');
   
-  // Address State (using placeholder data)
   const [name, setName] = useState('John Doe'); 
   const [contact, setContact] = useState('5551234567');
   const [address, setAddress] = useState('123 Main St, Apt 4B');
@@ -27,7 +25,6 @@ export default function PaymentScreen() {
 
   const isAddressFilled = name.trim() !== '' && contact.trim() !== '' && address.trim() !== '';
 
-  // --- HEADER SETUP ---
   useLayoutEffect(() => {
     navigation.setOptions({
       headerStyle: { backgroundColor: "#121212", elevation: 0, shadowOpacity: 0, borderBottomWidth: 0 },
@@ -41,7 +38,6 @@ export default function PaymentScreen() {
     });
   }, [navigation]);
 
-  // --- 1. FETCH PAYMENT SHEET PARAMS FROM SERVER ---
   const fetchPaymentSheetParams = useCallback(async () => {
     try {
       setStatus('Connecting to server...');
@@ -59,7 +55,6 @@ export default function PaymentScreen() {
       
       const response = await postStrip({ token, body }).unwrap();
       setStatus('Payment data received from server');
-
       if (response?.data?.paymentIntent && response.data.ephemeralKey && response.data.customer) {
         return {
           paymentIntent: response.data.paymentIntent,
@@ -76,19 +71,16 @@ export default function PaymentScreen() {
     }
   }, [ name, contact, address, token, postStrip]); 
 
-  // --- 2. INITIALIZE PAYMENT SHEET ---
   const initializePaymentSheet = useCallback(async () => {
-    // Optimization: Use separate state for fields to reduce redundant re-runs of this heavy callback
-    // We already check isAddressFilled outside, but keep it here for safety.
+    
     if (!isAddressFilled || setupInProgress) return false;
-
-    setLoading(false); 
-    setSetupInProgress(true);
-    setStatus('Setting up payment...');
+      setLoading(false); 
+      setSetupInProgress(true);
+      setStatus('Setting up payment...');
 
     try {
       const { paymentIntent, ephemeralKey, customer } = await fetchPaymentSheetParams();
-      console.log(paymentIntent, ephemeralKey, customer,"init...")
+      console.log(paymentIntent, ephemeralKey, customer,"i want to show that.")
 
       setStatus('Preparing payment sheet...');
 
@@ -103,7 +95,7 @@ export default function PaymentScreen() {
         },
         style: 'alwaysDark',
         returnURL: 'staark://payment-complete',
-        customFlow: false, // CRASH FIX
+        customFlow: false, 
       });
 
       setSetupInProgress(false);
@@ -115,7 +107,7 @@ export default function PaymentScreen() {
         return false; 
       } else {
         setStatus('Ready to pay! 🎉');
-        setLoading(true); // Enable the pay button
+        setLoading(true);
         return true; 
       }
     } catch (error) {
@@ -123,17 +115,17 @@ export default function PaymentScreen() {
       setLoading(false);
       return false;
     }
-    // Added token to dependencies for completeness, although token shouldn't change
+    
   }, [fetchPaymentSheetParams, initPaymentSheet, name, isAddressFilled, setupInProgress, token]); 
 
-  // --- 3. OPEN PAYMENT SHEET ---
+  
   const openPaymentSheet = async () => {
     setLoading(false); 
     setStatus('Processing payment...');
 
-    // 🔑 FIX: Destructure the expected return values
+   
     const { error, paymentIntent, paymentMethod } = await presentPaymentSheet(); 
-    console.log(paymentIntent, paymentMethod,"info....")
+    
 
     if (error) {
       console.error('❌ Payment error:', error);
@@ -141,7 +133,7 @@ export default function PaymentScreen() {
       Alert.alert(`Payment Failed`, error.message);
       setLoading(true); // Re-enable for retry
     } else {
-      // SUCCESS BLOCK
+      
       console.log('✅ Payment successful!', paymentIntent, paymentMethod);
       setStatus('Payment successful! ✅');
       
@@ -151,24 +143,22 @@ export default function PaymentScreen() {
           [{ text: 'OK', onPress: () => navigation.navigate("BottomScreen", { brand: "Brand" })}] 
       );
       
-      setLoading(false); // Disable button after success
+      setLoading(false); 
     }
 }
 
-  // --- AUTOMATIC SETUP TRIGGER (STABILIZED) ---
+  
   useEffect(() => {
-    // Ensure we only run when necessary
+   
     if (isAddressFilled && !loading && !setupInProgress) {
         console.log('--- Address filled: Triggering setup automatically ---');
         initializePaymentSheet();
     }
-    // Dependency array should include all state and functions used inside.
-    // NOTE: This will still log twice if you are using React 18's StrictMode, 
-    // but the actual Stripe call will be blocked by `setupInProgress`.
+    
   }, [isAddressFilled, loading, setupInProgress, initializePaymentSheet]);
 
 
-  // --- HANDLE PAY NOW BUTTON PRESS ---
+  
   const handlePayNow = async () => {
     if (!isAddressFilled) {
         Alert.alert('Missing Details', 'Please fill in your name, contact, and address before proceeding.');
@@ -190,27 +180,21 @@ export default function PaymentScreen() {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         
-        {/* Summary Views */}
         <View className="flex-row justify-between p-2 mx-2 mt-2 mb-2 w-full">
           <Text className=" text-sm text-[#ADAEBC] font-instrumentSansSemiBold">Subtotal</Text>
           <Text className=" mx-2 text-sm text-white font-instrumentRegular">${totalAmount.toFixed(2)}</Text>
         </View>
-        {/* <View className="flex-row justify-between p-2 mx-2 mt-2 mb-2 w-full">
-          <Text className=" text-sm text-[#ADAEBC] font-instrumentSansSemiBold">Shipping</Text>
-          <Text className=" mx-2 text-sm text-white font-instrumentRegular">${shippingFee.toFixed(2)}</Text>
-        </View> */}
+       
         <View className="border border-dashed border-[#E2E2E2] mx-2 w-full" style={styles.divider} />
         <View className="flex-row justify-between p-2 mx-2 mt-2 mb-2 w-full">
           <Text className=" text-lg text-white font-instrumentSansBold">Total</Text>
           <Text className=" mx-2 text-lg text-white font-instrumentSansBold">${totalAmount.toFixed(2)}</Text>
         </View>
 
-        {/* Status indicator */}
         <View className='my-2 w-full'>
           <Text className='text-[#ADAEBC] font-instrumentRegular'>{status}</Text>
         </View>
 
-        {/* Address Inputs */}
         <Text className='p-2 m-2 text-white font-interBold text-2xl w-full'>Address</Text>
         <View className='p-2 m-2 w-full'>
           <TextInput
@@ -240,7 +224,6 @@ export default function PaymentScreen() {
           />
         </View>
 
-        {/* Pay Now button */}
         <TouchableOpacity
           className={`m-2 w-full px-2 rounded-lg 
             ${isAddressFilled && loading 
@@ -259,7 +242,6 @@ export default function PaymentScreen() {
           </Text>
         </TouchableOpacity>
 
-        {/* Retry button */}
         <TouchableOpacity
           className='mt-4'
           onPress={initializePaymentSheet}
@@ -294,3 +276,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#121212', 
     }
 });
+
+

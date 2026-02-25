@@ -32,16 +32,16 @@ const sendFCMTokenToBackend = async (fcToken: string) => {
     try {
       // Example API call to sync the token with the backend
       const res = await postNotiRegis({ token: fcToken, body: payload }).unwrap();
-      console.log('FCM Token synced with backend', res);
+      // console.log('FCM Token synced with backend', res);
     } catch (err) {
-      console.error('Failed to sync FCM token', err);
+      // console.error('Failed to sync FCM token', err);
     }
   }
 };
 
 const handleForegroundNotifications = () => {
   return messaging().onMessage(async (remoteMessage) => {
-    console.log('Foreground message:', remoteMessage);
+    // console.log('Foreground message:', remoteMessage);
 
     // Display the notification using expo-notifications
     await Notifications.setNotificationHandler({
@@ -65,14 +65,14 @@ const handleForegroundNotifications = () => {
 
 const handleBackgroundNotifications = () => {
   return messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-    console.log('Background message:', remoteMessage);
+    // console.log('Background message:', remoteMessage);
     // Optionally handle background notifications here
   });
 };
 
 const handleNotificationResponse = () => {
   Notifications.addNotificationResponseReceivedListener((response) => {
-    console.log('User tapped the notification:', response);
+    // console.log('User tapped the notification:', response);
     // You can navigate or perform any action when the user taps the notification
   });
 };

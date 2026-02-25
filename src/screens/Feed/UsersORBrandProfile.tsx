@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import {  Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 import Posts from './Posts';
 import Details from './Details';
@@ -11,13 +11,17 @@ import { usePostFollowMutation } from 'src/redux/features/profile/follow/followA
 
 const UsersORBrandProfile = () => {
   const token = useAppSelector((state) => state.auth.token)
+  const UID = useAppSelector((state) => state.auth.id)
   const navigation = useNavigation();
   const [isPosts, setIsPosts] = useState("Posts")
+  const [postLoadlimit, setPostLoadlimit] = useState(10);
   const route = useRoute<any>()
   const { upID } = route?.params
   const { data: getSpecificUserData } = useGetUploaderProfileQuery({ token, id: upID })
   const userType = useAppSelector((store) => store.auth.userType)
   const [postFollow] = usePostFollowMutation();
+  console.log(getSpecificUserData?.data)
+
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -27,7 +31,7 @@ const UsersORBrandProfile = () => {
         shadowOpacity: 0,
         borderBottomWidth: 0
       },
-      headerTitle: getSpecificUserData?.data?.userName,
+      headerTitle: userType == "Brand" ? getSpecificUserData?.data?.brandName : getSpecificUserData?.data?.userName,
       headerTitleStyle: {
         color: "white",
         fontFamily: 'instrumentSans-Bold',
@@ -69,7 +73,7 @@ const UsersORBrandProfile = () => {
         }}
       >
         <Image
-          source={require("../../../assets/e-icon/othersProfile.jpg")}
+          source={{ uri: getSpecificUserData?.data?.coverPhoto?.[0] }}
           style={{
             width: '100%',
             height: verticalScale(250),
@@ -96,17 +100,32 @@ const UsersORBrandProfile = () => {
             justifyContent: 'center',
           }}
         >
-
-          <Image
-            source={require("../../../assets/e-icon/brandLogo.png")}
-            style={{ width: '100%', height: '100%' }}
-            resizeMode="cover"
-          />
+          {getSpecificUserData?.data ? (
+            userType === "Brand" ? (
+              <Image
+                source={{ uri: getSpecificUserData?.data?.brandLogo?.[0] }}
+                style={{ width: "100%", height: "100%" }}
+                resizeMode="cover"
+              />
+            ) : (
+              <Image
+                source={{ uri: getSpecificUserData?.data?.profile?.[0] }}
+                style={{ width: "100%", height: "100%" }}
+                resizeMode="cover"
+              />
+            )
+          ) : (
+            <Image
+              source={require("../../../assets/e-icon/img (1).png")}
+              style={{ width: '100%', height: '100%' }}
+              resizeMode="cover"
+            />
+          )}
         </View>
       </View>
 
       <View className='w-[92%] items-center'>
-        {/* <Text className='text-white text-center font-instrumentSansBold' >{type=="user"? "Jack Robo":"Coin Supply"}</Text> */}
+        <Text className='text-white text-center font-instrumentSansBold mb-1' >{userType == "Brand" ? getSpecificUserData?.data?.brandName : getSpecificUserData?.data?.userName}</Text>
         <Text className='text-white font-instrumentSansSemiBold text-center'>{getSpecificUserData?.data?.theme}</Text>
         <View className='mt-3 flex-row gap-3'>
           <View className='bg-[#252525] p-2 items-center rounded-xl'>
@@ -121,10 +140,14 @@ const UsersORBrandProfile = () => {
             <Text className='text-white font-instrumentRegular'>{getSpecificUserData?.data?.totalFollowing}</Text>
             <Text className='text-[#9CA3AF] font-instrumentRegular' >Followings</Text>
           </View>
+          <View className='bg-[#252525] p-2 items-center rounded-xl'>
+            <Text className='text-white font-instrumentRegular'>{getSpecificUserData?.data?.totalFollowers}</Text>
+            <Text className='text-[#9CA3AF] font-instrumentRegular' >Followers</Text>
+          </View>
         </View>
       </View>
 
-      {userType == "User" && <TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3' onPress={handleFollow}>
+      {UID !== getSpecificUserData?.data?._id && <TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3' onPress={handleFollow}>
         <Text className='text-black font-instrumentSansSemiBold' >Follow</Text>
       </TouchableOpacity>
       }
@@ -137,7 +160,7 @@ const UsersORBrandProfile = () => {
           <Text className='font-instrumentSansSemiBold text-white' >Details</Text>
         </TouchableOpacity>
       </View>
-      {isPosts == "Posts" ? <Posts /> : <Details />}
+      {isPosts == "Posts" ? <Posts data={getSpecificUserData?.data} setPostLoad={setPostLoadlimit} currentLimit={postLoadlimit}/> : <Details />}
     </ScrollView>
   )
 }

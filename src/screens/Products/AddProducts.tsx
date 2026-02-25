@@ -4,24 +4,18 @@ import {
     TouchableOpacity,
     ScrollView,
     Image,
-    TextInput,
-    Platform,
 } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
-    AntDesign,
     Feather,
-    MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { scale, verticalScale } from "react-native-size-matters";
-import CreateProductSelecPicker from "src/components/ui/products/CreateProductSelecPicker";
 import { womenSizeRangesCM } from "./demo";
 import { useUploadProductMutation } from "src/redux/features/product/productApi";
 import { useAppSelector } from "src/redux/hooks";
 import { launchCameraAndHandlePermissions } from "src/components/shared/ShareCamera";
 import ColorsModal from "./ColorsModal";
-import { Toast } from "toastify-react-native";
 import AddProductsUI from "src/components/ui/products/AddProductsUI";
 import { handleSave } from "src/utils/addProducts/handleSave";
 

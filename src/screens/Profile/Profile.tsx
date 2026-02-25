@@ -46,7 +46,6 @@ export default function YourComponent() {
   const { data: getPostData } = useGetIndividualPostQuery({ token, uid: profile?.data?.data?._id, limit: postLoadlimit })
   const userType = useAppSelector((state) => state.auth.userType)
 
-
   useEffect(() => {
     const loadProfile = async () => {
       try {

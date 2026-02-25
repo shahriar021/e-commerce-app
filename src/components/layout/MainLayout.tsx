@@ -10,11 +10,9 @@ import SplashScreen from "../ui/splashScreen/SplashScreen";
 import ToastManager from 'toastify-react-native';
 import { useGetProfileQuery } from "src/redux/features/profile/profile/profileApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Platform, Alert } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import * as Notifications from 'expo-notifications';
 import { usePostNotificationRegisterMutation } from "src/redux/features/notification/notificationApi";
-import { FirebaseNotificationService } from "src/services/firebasaeNotificationService";
 
 const MainLayout = () => {
   const token = useAppSelector((state) => state.auth.token);
@@ -87,11 +85,11 @@ const MainLayout = () => {
       try {
         // 1. Request permission for notifications (For iOS)
         await messaging().requestPermission();
-        console.log('Notification permission granted');
+        // console.log('Notification permission granted');
         
         // 2. Get the FCM token (To send push notifications)
         const fcToken = await messaging().getToken();
-        console.log('FCM Token:', fcToken);
+        // console.log('FCM Token:', fcToken);
         
         // 3. Send token to the backend
         const payload = {
@@ -101,17 +99,17 @@ const MainLayout = () => {
           }
         };
         
-        console.log('Payload for Backend:', payload);
+        // console.log('Payload for Backend:', payload);
 
         try {
           // Example API call to sync token with the backend
           const res = await postNotiRegis({ token, body: payload }).unwrap();
-          console.log('FCM Token synced with backend', res);
+          // console.log('FCM Token synced with backend', res);
         } catch (err) {
-          console.error('Failed to sync FCM token', err);
+          // console.error('Failed to sync FCM token', err);
         }
       } catch (error) {
-        console.log('Notification permission denied:', error);
+        // console.log('Notification permission denied:', error);
       }
     };
 
@@ -119,7 +117,7 @@ const MainLayout = () => {
 
     // 4. Handle foreground notifications (When the app is open)
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      console.log('Foreground message:', remoteMessage);
+      // console.log('Foreground message:', remoteMessage);
 
       // Display the notification using expo-notifications
       await Notifications.setNotificationHandler({
@@ -142,17 +140,17 @@ const MainLayout = () => {
 
     // 5. Handle background notifications (When the app is in the background or terminated)
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      console.log('Background message:', remoteMessage);
+      // console.log('Background message:', remoteMessage);
       // Optionally handle background notifications here
     });
 
     // 6. Handle notifications in the background or when tapped
     Notifications.addNotificationReceivedListener((notification) => {
-      console.log('Received notification in background:', notification);
+      // console.log('Received notification in background:', notification);
     });
 
     Notifications.addNotificationResponseReceivedListener((response) => {
-      console.log('User tapped the notification:', response);
+      // console.log('User tapped the notification:', response);
       // You can navigate or perform any action when the user taps the notification
     });
 

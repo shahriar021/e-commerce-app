@@ -35,3 +35,53 @@ export interface SizeData {
   size: string;
   waist: string;
 }
+
+// ------
+// types/brand.ts
+
+ interface NotificationSettings {
+  emailEnabled: boolean;
+  orderUpdates: boolean;
+  promotions: boolean;
+  pushEnabled: boolean;
+  rewards: boolean;
+  withdrawals: boolean;
+}
+
+interface BrandData {
+  __t: string;
+  __v: number;
+  _id: string;
+  brandLogo: string[];
+  brandName: string;
+  confirmedPassword: string;
+  countryCode: string;
+  coverPhoto: string[];
+  createdAt: string;
+  email: string;
+  failed_attempts: number;
+  fcmTokens: object[];
+  isDeleted: boolean;
+  last_login: string;
+  mobile: string;
+  notificationSettings: NotificationSettings;
+  password: string;
+  passwordUpdatedAt: string;
+  profile: any[];
+  role: string;
+  stripe_accounts_id: string;
+  stripe_customer_id: string;
+  theme: string;
+  totalFollowers: number;
+  totalFollowing: number;
+  totalPosts: number;
+  totalReacts: number;
+  updatedAt: string;
+  userName: string;
+}
+
+export interface BrandProfileResponse {
+  data: BrandData;
+  message: string;
+  success: boolean;
+}

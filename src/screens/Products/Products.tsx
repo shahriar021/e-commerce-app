@@ -5,14 +5,11 @@ import { AntDesign, Ionicons } from '@expo/vector-icons'
 import { scale } from 'react-native-size-matters'
 import { useNavigation } from '@react-navigation/native'
 import { useAppSelector } from 'src/redux/hooks'
-import { useProductListBrandIdWiseQuery } from 'src/redux/features/product/productApi'
 import { useGetBrandOrderListQuery } from 'src/redux/features/orders/orderApi'
 import { colorStatus, nameStatus } from 'src/constants/productInfos'
 
-
 const Products = () => {
 
-    const [orderHist] = useState(Array.from({ length: 10 }, (_, i) => i + 1))
     const navigation = useNavigation()
     const token = useAppSelector((state) => state.auth.token)
     const { data: getOrdersBrand } = useGetBrandOrderListQuery({ token, limit: 4 })

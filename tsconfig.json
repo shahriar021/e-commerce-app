@@ -3,6 +3,10 @@
   "compilerOptions": {
     "jsx": "react",
     "strict": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
     "baseUrl": "./",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,

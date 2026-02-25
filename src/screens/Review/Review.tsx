@@ -16,10 +16,10 @@ const Review = () => {
     const navigation = useNavigation()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const token = useAppSelector((state) => state.auth.token)
-    const [limit, setLimit] = useState(20)
     const [userId]=useState(id)
     const [loadMore,setLoadMore]=useState(10)
     const { data: getReview ,isLoading} = useGetALlReviewBasedOnIdQuery({ token, id: id, limit: loadMore })
+    console.log(getReview)
 
     navigation.setOptions({
         headerStyle: {
@@ -48,13 +48,13 @@ const Review = () => {
     }
 
     return (
-        <View className='relative flex-1'>
+        <View className='relative flex-1 '>
             <TouchableOpacity className='absolute right-10 bottom-10 z-10 bg-[#1D3725] p-3 rounded-full' onPress={handleModal}>
                 <AntDesign name="plus" size={24} color="white" />
             </TouchableOpacity>
             <ScrollView contentContainerStyle={{alignItems:"center",paddingBottom:100}}>
 
-                <View className='flex-1 bg-[#121212] p-4 '>
+                <View className='flex-1 bg-[#121212] p-4  w-full'>
                     {isLoading&&<ActivityIndicator size={"large"}/>}
 
                     {getReview?.data?.data?.map((item: any) => <View className='bg-[#2C2C2C] rounded-lg overflow-hidden p-2 mt-2 mb-3'>

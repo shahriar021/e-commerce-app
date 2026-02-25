@@ -5,14 +5,15 @@ import { useNavigation } from '@react-navigation/native';
 import { scale } from 'react-native-size-matters';
 import { useAppSelector } from 'src/redux/hooks';
 import { useProductListBrandIdWiseQuery } from 'src/redux/features/product/productApi';
+import { Product } from 'src/types/products';
 
 const AllProducts = () => {
     const id = useAppSelector((state) => state.auth.id)
     const navigation = useNavigation();
-    const [orderHist] = useState(Array.from({ length: 10 }, (_, i) => i + 1))
     const token = useAppSelector((state) => state.auth.token)
     const [loadMore, setLoadMore] = useState(10)
     const { data: getBrands } = useProductListBrandIdWiseQuery({ token, id, limit: loadMore })
+    const products: Product[] = getBrands?.data?.product ?? [];
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -48,8 +49,8 @@ const AllProducts = () => {
 
             <View className='flex-1 bg-[#121212] '>
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
-                    {getBrands?.data?.product?.map((item: any) =>
-                        <TouchableOpacity key={item._ic} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2 flex-row justify-between items-center gap-2' onPress={() => navigation.navigate("Details Product", { id: item.id })}>
+                    {products?.map((item) =>
+                        <TouchableOpacity key={item.id} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2 flex-row justify-between items-center gap-2' onPress={() => navigation.navigate("Details Product", { id: item.id })}>
                             <View style={{ width: scale(52), height: scale(52) }} className='rounded-xl overflow-hidden'>
                                 <Image source={{ uri: item.productImages[0] }} style={{ width: "100%", height: "100%" }} />
                             </View>

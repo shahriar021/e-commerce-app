@@ -2,11 +2,11 @@ import { View, Text, Modal, ScrollView, Image, TouchableOpacity } from 'react-na
 import React, { useState } from 'react'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { Feather } from '@expo/vector-icons'
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const SearchModal = ({ visible, onClose,data,srcImg }: any) => {
     const [isClothType, setIsClothType] = useState("ALL Results")
-    const [items] = useState(Array.from({ length: 2 }))
+    console.log(data,"---")
     
     return (
         <Modal visible={visible} onRequestClose={onClose}>
