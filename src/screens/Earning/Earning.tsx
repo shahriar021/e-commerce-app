@@ -14,14 +14,17 @@ import { BarChart } from "react-native-gifted-charts";
 import { useAppSelector } from "src/redux/hooks";
 import { useGetEarningStatsQuery, useGetGraphQuery, useGetTransactionQuery } from "src/redux/features/earning/earningApi";
 import { TransactionResponse } from "src/types/earning";
+import InputYearPicker from "src/components/shared/inputYearPicker";
 
 const Earning = () => {
     const navigation = useNavigation();
     const { width } = useWindowDimensions();
+    const date = new Date();
     const token = useAppSelector((state) => state.auth.token);
     const currentMonthIndex = new Date().getMonth();
-
-    const { data: getEarningGraph } = useGetGraphQuery(token);
+    const [year, setYear] = useState(date.getFullYear())
+    const [showModal, setShowModal] = useState(false)
+    const { data: getEarningGraph } = useGetGraphQuery({token,year});
     const { data: getEarningStats } = useGetEarningStatsQuery(token);
     const { data: getTransaction } = useGetTransactionQuery<TransactionResponse>(token);
     const data = getEarningGraph?.data.map((item: any, index: any) => ({
@@ -29,7 +32,6 @@ const Earning = () => {
         label: item.month,
         frontColor: index === currentMonthIndex ? "#DCF3FF" : "#464747",
     }));
-    console.log(getTransaction?.data?.data)
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -49,6 +51,13 @@ const Earning = () => {
             headerTitleAlign: "start",
         });
     }, [navigation]);
+    const onSelectYr = (year: number) => {
+        setYear(year)
+    }
+
+    const handleModal = () => {
+        setShowModal(true)
+    }
 
     return (
         <ScrollView
@@ -187,9 +196,11 @@ const Earning = () => {
                             Track your sales performance over time
                         </Text>
                     </View>
-                    <TouchableOpacity className="flex-row items-center bg-[#464747] p-2 rounded-xl gap-2">
-                        <Text className="text-white font-instrumentRegular">2025</Text>
-                        <AntDesign name="down" size={20} color="white" />
+                    <TouchableOpacity
+                        className='flex-row items-center justify-between bg-[#464747] p-3 rounded-xl'
+                        onPress={handleModal}
+                    >
+                        <Text className='text-white'>{year}</Text>
                     </TouchableOpacity>
                 </View>
                 <View className="flex-row items-center gap-2 w-full mt-1">
@@ -226,8 +237,8 @@ const Earning = () => {
                     </TouchableOpacity>
                 </View>
 
-                {getTransaction?.data?.data?.map((item) => (
-                    <View className="bg-[#121212] p-1 rounded-md mt-2">
+                {getTransaction?.data?.data?.map((item,index) => (
+                    <View key={index} className="bg-[#121212] p-1 rounded-md mt-2">
                         <View className="flex-row justify-between p-1">
                             <Text className="text-white text-lg font-instrumentSansSemiBold">
                                 Order #{item?.cartProductId?.slice(-4)}
@@ -252,6 +263,7 @@ const Earning = () => {
                     </View>
                 ))}
             </View>
+            <InputYearPicker visible={showModal} onClose={() => setShowModal(false)} onSelect={onSelectYr} propYear={year} />
         </ScrollView>
     );
 };

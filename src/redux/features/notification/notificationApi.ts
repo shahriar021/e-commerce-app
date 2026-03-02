@@ -3,10 +3,13 @@ import { baseApi } from "src/redux/createdApi/baseApi";
 const notificationApi=baseApi.injectEndpoints({
     endpoints:(builder)=>({
         getNotification:builder.query({
-            query:()=>{
+            query:(token)=>{
                 return {
-                    url:"/notifications",
-                    method:"GET"
+                    url:"/notification",
+                    method:"GET",
+                     headers:{
+                        Authorization:`Bearer ${token}`
+                    },
                 }
             }
         }),

@@ -12,7 +12,8 @@ const followApi=baseApi.injectEndpoints({
                         Authorization:`Bearer ${token}`
                     }
                 }
-            }
+            },
+            invalidatesTags:['specificProfile']
         })
     })
 })

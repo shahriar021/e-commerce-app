@@ -44,8 +44,8 @@ const SearchModal = ({ visible, onClose,data,srcImg }: any) => {
                     <Text className='text-white text-xl mt-2 mb-2 font-instrumentSansBold'>Available In-App</Text>
 
                     <ScrollView horizontal>
-                    <View className='flex-row gap-2'>
-                        {data?.data?.map((item:any) => <View className='bg-[#212121] rounded-lg overflow-hidden gap-1' style={{ width: 150 }}>
+                    <View className='flex-row gap-2 '>
+                        {data?.data?.length==0?<Text className='text-white text-center w-full  p-1'>{data?.message}</Text>:data?.data?.map((item:any) => <View className='bg-[#212121] rounded-lg overflow-hidden gap-1' style={{ width: 150 }}>
                             <Image source={{uri:item.productImages[0]}} style={{ width: "100%", height: 160 }} />
                             <View className='p-2 '>
                                 <Text className='text-white mt-1 font-instrumentSansSemiBold'>{item?.productName}</Text>

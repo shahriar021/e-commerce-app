@@ -23,6 +23,6 @@ const DynamicBaseQRY=async (args:any,api:any,extraOption:any)=>{
 export const baseApi =createApi({
   reducerPath:"baseApi",
   baseQuery:DynamicBaseQRY,
-  tagTypes:['getCart','feedPost','favProduct','profile','product'],
+  tagTypes:['getCart','feedPost','favProduct','profile','product','brandOrderList','specificProfile'],
   endpoints:()=>({})
 })

@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
+import React, {  useLayoutEffect, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
@@ -14,14 +14,13 @@ const UsersORBrandProfile = () => {
   const UID = useAppSelector((state) => state.auth.id)
   const navigation = useNavigation();
   const [isPosts, setIsPosts] = useState("Posts")
-  const [postLoadlimit, setPostLoadlimit] = useState(10);
+  
   const route = useRoute<any>()
   const { upID } = route?.params
   const { data: getSpecificUserData } = useGetUploaderProfileQuery({ token, id: upID })
   const userType = useAppSelector((store) => store.auth.userType)
   const [postFollow] = usePostFollowMutation();
-  console.log(getSpecificUserData?.data)
-
+  const [followRes,setFollowRes]=useState(getSpecificUserData?.data?.isFollowing)
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -44,11 +43,13 @@ const UsersORBrandProfile = () => {
         </TouchableOpacity>
       }
     })
-  }, [navigation])
+  }, [navigation,getSpecificUserData?.data])
 
   const handleFollow = async () => {
     try {
       const res = await postFollow({ token, id: getSpecificUserData?.data?._id }).unwrap()
+      console.log(res,"follow")
+      setFollowRes(res?.data?.isFollowing)
     } catch (err) {
       console.log(err)
     }
@@ -148,7 +149,7 @@ const UsersORBrandProfile = () => {
       </View>
 
       {UID !== getSpecificUserData?.data?._id && <TouchableOpacity className='bg-[#fff] p-2 rounded-xl mt-3' onPress={handleFollow}>
-        <Text className='text-black font-instrumentSansSemiBold' >Follow</Text>
+        <Text className='text-black font-instrumentSansSemiBold' >{followRes?"Unfollow":"Follow"}</Text>
       </TouchableOpacity>
       }
 
@@ -160,7 +161,7 @@ const UsersORBrandProfile = () => {
           <Text className='font-instrumentSansSemiBold text-white' >Details</Text>
         </TouchableOpacity>
       </View>
-      {isPosts == "Posts" ? <Posts data={getSpecificUserData?.data} setPostLoad={setPostLoadlimit} currentLimit={postLoadlimit}/> : <Details />}
+      {isPosts == "Posts" ? <Posts data={getSpecificUserData?.data?._id} /> : <Details data={getSpecificUserData?.data}/>}
     </ScrollView>
   )
 }

@@ -12,6 +12,7 @@ const orderApi = baseApi.injectEndpoints({
                     },
                 };
             },
+            providesTags:['brandOrderList']
         }),
 
         postStatusOrderBrand: builder.mutation({
@@ -25,6 +26,7 @@ const orderApi = baseApi.injectEndpoints({
                     body,
                 };
             },
+            invalidatesTags:['brandOrderList']
         }),
 
         getBrandOrderDetails:builder.query({

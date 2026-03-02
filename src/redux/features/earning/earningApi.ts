@@ -3,9 +3,9 @@ import { baseApi } from "src/redux/createdApi/baseApi";
 const earningApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getGraph: builder.query({
-            query: (token) => {
+            query: ({token,year}) => {
                 return {
-                    url: `/graph/earnings`,
+                    url: `/graph/earnings?year=${year}`,
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

@@ -1,7 +1,6 @@
 import { View, Text, Modal, TouchableOpacity, Platform, TextInput, useWindowDimensions } from 'react-native'
 import React from 'react'
 import { Entypo } from '@expo/vector-icons'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
 
 const AddAddressModal = ({ visible, onClose }: any) => {

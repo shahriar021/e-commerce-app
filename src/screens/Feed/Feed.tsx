@@ -33,8 +33,6 @@ const Feed = ({ navigation }: Props) => {
     const { data: getComment } = useGetCommentsQuery({ token, pid: selectedCid })
 
     const comments = getComment?.data?.comments;
-    console.log(getPostData?.data?.data[10])
-
     const feedCatgory = getFeedCat?.data ? getFeedCat?.data.map(item => item) : [];
     if (feedCatgory) {
         feedCatgory.unshift("ALL")

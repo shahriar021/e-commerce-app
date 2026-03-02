@@ -5,7 +5,6 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  ImageSourcePropType,
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -14,15 +13,9 @@ import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { useAppSelector } from "src/redux/hooks";
 import Posts from "../Feed/Posts";
 import CreatePostModal from "../Feed/CreatePostModal";
-import { useGetIndividualPostQuery, useGetLookbookQuery, useGetProfileQuery } from "src/redux/features/profile/profile/profileApi";
+import { useGetIndividualPostQuery, useGetLookbookQuery } from "src/redux/features/profile/profile/profileApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Lookbook from "./Lookbook";
-
-type ProfileItemsProp = {
-  icon: ImageSourcePropType;
-  label: string;
-  onPress: () => void;
-};
 
 type RootStackParamList = {
   Settings: undefined;
@@ -40,10 +33,9 @@ export default function YourComponent() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const navigation = useNavigation<NavigationProp>();
   const [profile, setProfile] = useState(null);
-  const [postLoadlimit, setPostLoadlimit] = useState(10);
+  
   const [saveLoadlimit, setSaveLoadlimit] = useState(10);
   const { data: getLookbook } = useGetLookbookQuery({ token, limit: saveLoadlimit });
-  const { data: getPostData } = useGetIndividualPostQuery({ token, uid: profile?.data?.data?._id, limit: postLoadlimit })
   const userType = useAppSelector((state) => state.auth.userType)
 
   useEffect(() => {
@@ -202,7 +194,7 @@ export default function YourComponent() {
             <Text className='font-instrumentSansBold text-white' >My Lookbook</Text>
           </TouchableOpacity>
         </View>
-        {isPosts == "Posts" ? <Posts data={getPostData?.data} setPostLoad={setPostLoadlimit} currentLimit={postLoadlimit} /> : <Lookbook data={getLookbook?.data} setFavLimit={setSaveLoadlimit} currentSave={saveLoadlimit} />}
+        {isPosts == "Posts" ? <Posts data={profile?.data?._id}  /> : <Lookbook data={getLookbook?.data} setFavLimit={setSaveLoadlimit} currentSave={saveLoadlimit} />}
       </ScrollView>
       <CreatePostModal visible={isModalOpen}
         onClose={() => setIsModalOpen(false)}

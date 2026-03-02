@@ -23,15 +23,14 @@ const Search = () => {
     const navigation = useNavigation();
     console.log(token,"token")
 
-    if(res){
-        Toast.success(res.message)
-    }
+    
 
     useEffect(() => {
         if (res?.success) {
+             Toast.success(res.message)
             setIsOpenModal(true);
         }
-    }, [selectedImage]);
+    }, [res]);
 
     useLayoutEffect(() => { 
         navigation.setOptions({
@@ -52,44 +51,46 @@ const Search = () => {
     }, [navigation])
 
     const openCamera = async () => {
-        setLoading(true)
-        const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-        if (permissionResult.granted === false) {
-            alert("Permission to access camera is required!");
-            return;
-        }
+    setLoading(true)
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    if (permissionResult.granted === false) {
+        alert("Permission to access camera is required!");
+        setLoading(false)
+        return;
+    }
 
-        const result = await ImagePicker.launchCameraAsync({
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
+    const result = await ImagePicker.launchCameraAsync({
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+    });
 
-        if (!result.canceled) {
-            setSelectedImage(result.assets as ImageObject[]);
-        }
+    if (result.canceled) {
+        setLoading(false)
+        return;
+    }
 
-        if (selectedImage) {
-            const formData = new FormData()
-            const imageFile  = {
-                uri: selectedImage[0].uri,
-                name: selectedImage[0].fileName,
-                type: selectedImage[0].mimeType
-            }
-            formData.append("scan", imageFile as any)
-            try {
-                setLoading(false)
+    const assets = result.assets as ImageObject[]
+    setSelectedImage(assets) 
 
-                const res = await postImageforScan({ token, body: formData }).unwrap()
-                setRes(res)
-                setData(res)
-            } catch (err) {
-                setLoading(false)
-            }finally{
-                setLoading(false)
-            }
-        }
-    };
+    const formData = new FormData()
+    const imageFile = {
+        uri: assets[0].uri,
+        name: assets[0].fileName,
+        type: assets[0].mimeType
+    }
+    formData.append("scan", imageFile as any)
+
+    try {
+        const res = await postImageforScan({ token, body: formData }).unwrap()
+        setRes(res)
+        setData(res)
+    } catch (err) {
+        Toast.error("Something went wrong!")
+    } finally {
+        setLoading(false)
+    }
+};
 
     const openImageLibrary = async () => {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();

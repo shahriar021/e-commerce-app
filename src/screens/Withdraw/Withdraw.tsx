@@ -18,7 +18,7 @@ const Withdraw = () => {
     const token = useAppSelector((state) => state.auth.token);
     const { data: getEarningStats } = useGetEarningStatsQuery(token);
     const [postWithdraw, { isLoading: withdrawLoading }] = usePostWithdrawMutation()
-    const [triggerWithdraw, { data, isLoading: initLoading }] =
+    const [triggerWithdraw, { data, }] =
         useInitialPostWithdrawMutation();
 
     const initData = data as WithdrawInitResponse | undefined;

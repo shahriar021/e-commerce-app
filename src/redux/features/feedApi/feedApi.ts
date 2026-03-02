@@ -30,6 +30,7 @@ const feedApi=baseApi.injectEndpoints({
                     }
                 }
             },
+            providesTags:['specificProfile','profile']
             
         }),
 

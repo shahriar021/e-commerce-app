@@ -16,6 +16,7 @@ const OrderDetails = () => {
     const { data: details } = useGetBrandOrderDetailsQuery({ token, id })
 
     const info = details?.data?.data[0]
+
     useLayoutEffect(() => {
         navigation.setOptions({
             title: "Order Details",
@@ -35,6 +36,7 @@ const OrderDetails = () => {
             )
         })
     }, [navigation])
+
     return (
         <ScrollView contentContainerStyle={{ padding: 10 }}>
             <View className='flex-row justify-between items-center bg-[#212121] p-2 rounded-lg mt-2'>
@@ -88,20 +90,20 @@ const OrderDetails = () => {
                     <Text className={`${info?.paymentStatus == "paid" ? "text-[#4ADE80]" : "text-red-400"} font-instrumentSansSemiBold`}>{info?.paymentStatus}</Text>
 
                 </View>
-                <View className='border border-[#565656] mt-2' />
+                <View className='border-dashed border-[#565656] mt-2' />
                 <View className='flex-row justify-between'>
                     <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>Subtotal</Text>
-                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>৳4,400</Text>
+                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>{info?.subTotal}$</Text>
                 </View>
-                <View className='flex-row justify-between mt-2'>
+                {/* <View className='flex-row justify-between mt-2'>
                     <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>Shipping Fee</Text>
-                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>৳80</Text>
+                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>{info?.subTotal}$</Text>
 
-                </View>
+                </View> */}
                 <View className='border border-[#565656] mt-2' />
                 <View className='flex-row justify-between mt-2'>
                     <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>Total</Text>
-                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>৳4,480</Text>
+                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>{info?.totalAmount}$</Text>
 
                 </View>
             </View>

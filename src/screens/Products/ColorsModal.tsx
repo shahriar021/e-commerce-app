@@ -1,8 +1,7 @@
-import { AntDesign, FontAwesome, Fontisto } from "@expo/vector-icons";
-import React, { useState } from "react";
+import {  FontAwesome, Fontisto } from "@expo/vector-icons";
+import React from "react";
 import {
     Modal,
-    StyleSheet,
     Text,
     TouchableOpacity,
     useWindowDimensions,

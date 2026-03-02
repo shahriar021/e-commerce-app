@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
-import { AntDesign, Feather } from '@expo/vector-icons';
+import {  Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { scale } from 'react-native-size-matters';
 import { useAppSelector } from 'src/redux/hooks';

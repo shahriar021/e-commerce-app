@@ -3,25 +3,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { BottomNavigation } from "./BottomNavigation";
 import { 
   Profile,
-  AboutUs,
   Privacy,
   Terms,
   Address,
   Setting,
   ChangePassword,
   EditProfile,
-  PaymentAnimation,
-  PaymentInfo,
-  TrackOrder,
-  ViewDetails,
-  PaymentOption,
-  SpecialInstructions,
-  DeliveryRequestView,
   Withdraw,
-  WithdrawRequest,
-  Bank,
-  BankEdit,
-  History
 } from "src/screens";
 
 import { ProviderBottomNavigation } from "./ProviderBottomNavigation";
@@ -53,6 +41,7 @@ import PaymentScreen from "src/screens/Payment/PaymentScreen";
 import Transaction from "src/screens/Earning/Transaction";
 import OrderHistoryDetails from "src/screens/Profile/orderHistoryDetails";
 import { RootStackParamList } from "src/types/screens";
+import Notification from "src/screens/Notification/Notification";
 
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -94,8 +83,6 @@ const StackNavigation = () => {
         />}
         {/* <Stack.Screen name="Notification" component={} /> */}
         <Stack.Screen name="Profile" options={{headerShown:false}} component={Profile} />
-
-        <Stack.Screen name="about" component={AboutUs}/>
         <Stack.Screen name="Privacy" component={Privacy}/>
         <Stack.Screen name="Terms" component={Terms}/>
         <Stack.Screen name="Address" component={Address}/>
@@ -106,23 +93,9 @@ const StackNavigation = () => {
         <Stack.Screen name="Order History" component={OrderHistory}/>
         <Stack.Screen name="Order Details" component={OrderDetails}/>
         <Stack.Screen name="Order List" options={{headerShown:true}} component={OrderList}/>
-
-        <Stack.Screen name="Payment Animation" options={{headerShown:false}} component={PaymentAnimation}/>
-        <Stack.Screen name="Payment Info" options={{headerShown:false}} component={PaymentInfo}/>
-        <Stack.Screen name="Track Order" component={TrackOrder}/>
-        <Stack.Screen name="View Details" component={ViewDetails}/>
-        <Stack.Screen name="Payment Options" component={PaymentOption}/>
-        <Stack.Screen name="Special Instructions" component={SpecialInstructions}/>
-
-        <Stack.Screen name="Delivery Request" component={DeliveryRequestView}/>
         <Stack.Screen name="Search Result" options={{headerShown:false}} component={SearchResult}/>
         <Stack.Screen name="Search Page" options={{headerShown:false}} component={SearchPage}/>
-        
         <Stack.Screen name="Withdraw" component={Withdraw}/>
-        <Stack.Screen name="Withdraw Request" component={WithdrawRequest}/>
-        <Stack.Screen name="Bank" component={Bank}/>
-        <Stack.Screen name="Bank Edit" component={BankEdit}/>
-        <Stack.Screen name="History" component={History}/>
         <Stack.Screen name="Brand Details" options={{headerShown:true}} component={BrandDetails}/>
         <Stack.Screen name="Brand Products" options={{headerShown:true}} component={BrandProducts}/>
         <Stack.Screen name="See all products" options={{headerShown:true}} component={SeeAllProducts}/>
@@ -142,6 +115,7 @@ const StackNavigation = () => {
         <Stack.Screen name="Payment screen" options={{headerShown:true}} component={PaymentScreen}/>
         <Stack.Screen name="Transaction" options={{headerShown:true}} component={Transaction}/>
         <Stack.Screen name="OrderHistoryDetails" options={{headerShown:true}} component={OrderHistoryDetails}/>
+        <Stack.Screen name="Notification" options={{headerShown:true}} component={Notification}/>
 
       </Stack.Navigator>
     // </NavigationContainer>

@@ -28,11 +28,12 @@ export default function Transaction() {
 
   const token = useAppSelector((state) => state.auth.token);
   const { data: getTransaction } = useGetTransactionQuery(token);
+  console.log(getTransaction?.data?.data,"getTransaction")
 
   return (
     <View className='flex-1 p-2'>
       {getTransaction?.data?.data?.map((item) => (
-        <View className="bg-[#121212] p-1 rounded-md mt-2 border border-gray-700">
+        <View key={item?._id} className="bg-[#121212] p-1 rounded-md mt-2 border border-gray-700">
           <View className="flex-row justify-between p-1">
             <Text className="text-white text-lg font-instrumentSansSemiBold">
               Order #{item?.cartProductId?.slice(-4)}

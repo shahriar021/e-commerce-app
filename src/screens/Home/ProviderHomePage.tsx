@@ -2,24 +2,25 @@ import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView } from 'rea
 import React, { useCallback, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AntDesign, Ionicons } from '@expo/vector-icons';
-import { scale } from 'react-native-size-matters';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { BarChart} from "react-native-gifted-charts";
+import { BarChart } from "react-native-gifted-charts";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useGetBrandHomeGraphQuery, useGetBrandHomeStatsQuery } from 'src/redux/features/brandHome/brandHomeApi';
 import { useAppSelector } from 'src/redux/hooks';
 import InputYearPicker from 'src/components/shared/inputYearPicker';
 import { useGetBrandOrderListQuery } from 'src/redux/features/orders/orderApi';
-import { colorStatus, nameStatus } from 'src/constants/productInfos';
 import { brandHomeStatsName, days, month } from 'src/constants/providerHome';
 import { providerHomepage } from './demo';
 import { greetingTime } from 'src/utils/greetingTime';
 import { BrandProfileResponse } from 'src/types/brand';
+import { useGetNotificationQuery } from 'src/redux/features/notification/notificationApi';
+import OrderListBrand from 'src/components/shared/OrderListBrand';
 
 const ProviderHomePage = () => {
     const navigation = useNavigation()
     const date = new Date();
     const token = useAppSelector((state) => state.auth.token)
+    console.log(token)
     const { width } = Dimensions.get("screen");
     const [profile, setProfile] = useState<BrandProfileResponse | null>(null);
     const currentMonthIndex = new Date().getMonth();
@@ -27,17 +28,16 @@ const ProviderHomePage = () => {
     const [showModal, setShowModal] = useState(false)
     const { data: getBrandHomeStats } = useGetBrandHomeStatsQuery(token)
     const { data: getBrandHomeGraph } = useGetBrandHomeGraphQuery({ token, year })
-    console.log(getOrdersBrand,"brand.")
-
     const data = getBrandHomeGraph?.data.map((item: any, index: any) => ({
-        value: item.earnings,
+        value: item.orders,
         label: item.month,
-        frontColor: index === currentMonthIndex ? "#DCF3FF" : "#464747", 
+        frontColor: index === currentMonthIndex ? "#DCF3FF" : "#464747",
     }));
-    const { data: getOrdersBrand } = useGetBrandOrderListQuery({
+    const { data: getOrdersBrand, isLoading: orderBrandLoading } = useGetBrandOrderListQuery({
         token,
         limit: 4,
     });
+    const { data: notiData } = useGetNotificationQuery(token)
 
     useEffect(() => {
         const loadProfile = async () => {
@@ -72,20 +72,12 @@ const ProviderHomePage = () => {
         }, [])
     );
 
-    const onSelectYr = (year:number) => {
+    const onSelectYr = (year: number) => {
         setYear(year)
     }
 
     const handleModal = () => {
         setShowModal(true)
-    }
-    const handleStatus = async (id: any, status: any) => {
-        const info = {
-            data: {
-                sellerStatus: status,
-                cartProductId: id,
-            },
-        };
     }
 
     return (
@@ -98,9 +90,16 @@ const ProviderHomePage = () => {
                         </Text>
                         <Text className='font-instrumentSansSemiBold text-[#9CA3AF]'>{days[date.getDay() as keyof typeof days]} , {month[date.getMonth() as keyof typeof month]} {date.getDate()}</Text>
                     </View>
-                    <View className="flex-row items-center">
-                        <TouchableOpacity ><Ionicons name="notifications" size={24} color="white" /></TouchableOpacity>
-                    </View>
+                    <TouchableOpacity className="relative" onPress={() => navigation.navigate("Notification")}>
+                        <Ionicons name="notifications" size={24} color="white" />
+                        {notiData?.data?.pagination?.total > 0 && (
+                            <View className="absolute -top-1 -right-1 bg-red-500 rounded-full min-w-[16px] h-4 items-center justify-center px-1">
+                                <Text className="text-white text-[10px] font-bold">
+                                    {notiData?.data?.pagination?.total > 99 ? '99+' : notiData?.data?.pagination?.total}
+                                </Text>
+                            </View>
+                        )}
+                    </TouchableOpacity>
                 </View>
                 <View className='flex-row flex-wrap  justify-between'>
                     {getBrandHomeStats?.data &&
@@ -116,11 +115,15 @@ const ProviderHomePage = () => {
                             </View>)}
                 </View>
                 {/*  */}
-                <View className='bg-[#2D2D2D] p-3 rounded-lg mt-2 mb-2'>
-                    <View className='flex-row justify-between mt-1 mb-2'>
-                        <View className='flex-1'>
-                            <Text className='text-white font-instrumentSansSemiBold'>Monthly Orders Trend</Text>
-                            <Text className='text-[#ADAEBC] font-instrumentRegular'>Track your sales performance over time</Text>
+                <View className="bg-[#2D2D2D] p-3 rounded-lg mt-2 mb-2">
+                    <View className="flex-row justify-between mt-1 mb-2">
+                        <View className="flex-1">
+                            <Text className="text-white font-instrumentSansSemiBold">
+                                Monthly Orders Trend
+                            </Text>
+                            <Text className="text-[#ADAEBC] font-instrumentRegular">
+                                Track your sales performance over time
+                            </Text>
                         </View>
                         <TouchableOpacity
                             className='flex-row items-center justify-between bg-[#464747] p-3 rounded-xl'
@@ -128,20 +131,19 @@ const ProviderHomePage = () => {
                         >
                             <Text className='text-white'>{year}</Text>
                         </TouchableOpacity>
-
                     </View>
-                    <View className='flex-row items-center gap-2 w-full mt-1'>
-                        <View className='border-dashed border-2 border-white flex-1' />
-                        <Text className='text-white font-instrumentRegular'>$150</Text>
+                    <View className="flex-row items-center gap-2 w-full mt-1">
+                        <View className="border-dashed border-2 border-white flex-1" />
+                        <Text className="text-white font-instrumentRegular">$150</Text>
                     </View>
-                    <View className=''>
+                    <View className="">
                         <BarChart
                             data={data}
                             barWidth={10}
                             frontColor="#DCF3FF"
                             yAxisThickness={0}
                             hideYAxisText
-                            xAxisLabelTextStyle={{ color: 'white' }}
+                            xAxisLabelTextStyle={{ color: "white" }}
                             xAxisThickness={0}
                             isAnimated
                             hideRules
@@ -156,48 +158,7 @@ const ProviderHomePage = () => {
                     </View>
                 </TouchableOpacity>
                 {/*  */}
-                <View className='flex-1 bg-[#121212] p-3'>
-                    <ScrollView showsVerticalScrollIndicator={false}>
-                        {getOrdersBrand?.data?.data?.map(item => <View key={item} className='bg-[#212121] p-2 rounded-xl mt-1 mb-2'>
-                            <View className='flex-row justify-between items-center'>
-                                <Text className='text-[#fff] font-instrumentSansSemiBold'>#83473</Text>
-                                <Text className='text-[#FB923C] p-2 rounded-2xl font-instrumentSansSemiBold' style={{ backgroundColor: 'rgba(249, 115, 22, 0.20)' }}>Processing</Text>
-                            </View>
-                            <View className='flex-row b items-center gap-2 mt-2 mb-1'>
-                                <View style={{ width: scale(52), height: scale(52) }} className='rounded-xl overflow-hidden'>
-                                    <Image source={require("../../../assets/e-icon/orderHist.png")} style={{ width: "100%", height: "100%" }} />
-                                </View>
-                                <View className='flex-row justify-between flex-1 items-center'>
-                                    <View className='flex-col'>
-                                        <Text className='font-instrumentSansSemiBold text-white'>Black Formal Dress</Text>
-                                        <Text className='font-instrumentRegular text-[#9CA3AF]'>Qty: 2 | Size: M</Text>
-                                    </View>
-                                    <View><Text className='font-instrumentSansSemiBold text-white'>৳4,400</Text></View>
-                                </View>
-                            </View>
-                            <View className=''>
-                                <Text className='font-instrumentRegular text-[#9CA3AF]'>Placed: June 24</Text>
-                            </View>
-                            <View className='flex-row items-center gap-2 mt-2 mb-1'>
-                                <TouchableOpacity className='flex-row items-center justify-center gap-2 bg-[#16A34A] p-2 rounded-md flex-1' style={{
-                                    backgroundColor:
-                                        colorStatus[
-                                        item?.sellerStatus as keyof typeof colorStatus
-                                        ],
-                                }}
-                                    onPress={() =>
-                                        handleStatus(item?.cartProductId, item?.sellerStatus)
-                                    }>
-                                    <AntDesign name="check" size={24} color="white" />
-                                    <Text className='text-white font-instrumentSansBold'>{nameStatus[item?.sellerStatus as keyof typeof nameStatus]}</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity className='items-center bg-[#121212] p-2 rounded-md' onPress={() => navigation.navigate("Order Details", { id: item?.cartProductId })}>
-                                    <AntDesign name="eye" size={24} color="white" />
-                                </TouchableOpacity>
-                            </View>
-                        </View>)}
-                    </ScrollView>
-                </View>
+                <OrderListBrand orderBrandListData={getOrdersBrand} loading={orderBrandLoading} token={token} />
             </ScrollView>
             <InputYearPicker visible={showModal} onClose={() => setShowModal(false)} onSelect={onSelectYr} propYear={year} />
         </SafeAreaView>

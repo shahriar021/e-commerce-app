@@ -20,7 +20,7 @@ export const DrawerNavigation = () => {
         >
 
             <Drawer.Screen
-                name="Profile"
+                name="ProfileScreen"
                 component={Profile}
                 options={{
                     headerShown: true,

@@ -6,7 +6,6 @@ const { height } = Dimensions.get("screen");
 
 type TProps = {
   propYear: number;
-  propMonth: number;
   visible: boolean;
   onClose: any;
   onSelect: any;
