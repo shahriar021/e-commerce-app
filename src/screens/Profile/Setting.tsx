@@ -62,7 +62,7 @@ const Setting = () => {
                     key={index}
                     icon={item.icon}
                     label={item.label}
-                    onPress={() => navigation.navigate(item?.route)}
+                    onPress={() => navigation.navigate(item?.route as any)}
                 />
             ))}
             <TouchableOpacity onPress={handleDelete} className="flex-row justify-between border p-2 m-2 rounded-xl border-gray-300 w-full" >

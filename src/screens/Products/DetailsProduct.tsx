@@ -22,7 +22,7 @@ import { useAppSelector } from "src/redux/hooks";
 import { Toast } from "toastify-react-native";
 
 const DetailsProduct = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const { width, height } = useWindowDimensions();
     const [isReadMore, setIsReadMore] = useState(true);
     const [isColor, setIsColor] = useState("#787676");

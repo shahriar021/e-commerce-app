@@ -21,7 +21,7 @@ export const selectedCountry = {
 
 const SellerProfile = () => {
   const { width, height } = Dimensions.get("window");
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const token = useAppSelector((state) => state.auth.token);
   const { data: getOrdersBrand } = useGetBrandOrderListQuery({
     token,

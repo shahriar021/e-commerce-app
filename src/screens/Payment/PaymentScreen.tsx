@@ -20,7 +20,7 @@
 //   const [address, setAddress] = useState('123 Main St, Apt 4B');
 
 //   const token = useAppSelector((state) => state.auth.token);
-//   const navigation = useNavigation();
+//   const navigation = useNavigation<any>();
 //   const [postStrip] = usePostPaymentToStripeMutation();
 
 //   const isAddressFilled = name.trim() !== '' && contact.trim() !== '' && address.trim() !== '';
@@ -308,7 +308,7 @@ export default function PaymentScreen() {
   const totalAmount = parseFloat(route.params?.total || 0);
 
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const token = useAppSelector((state) => state.auth.token);
 
   const [postStrip] = usePostPaymentToStripeMutation();

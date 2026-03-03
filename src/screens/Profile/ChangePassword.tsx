@@ -18,7 +18,7 @@ import { Toast } from "toastify-react-native";
 const ChangePassword = () => {
   const { width } = useWindowDimensions();
   const token = useAppSelector((state) => state.auth.token);
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [newPassword, setNewmPassword] = useState("");

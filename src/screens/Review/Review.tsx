@@ -13,13 +13,12 @@ import { getTime } from 'src/components/shared/timeHistory'
 const Review = () => {
     const route = useRoute()
     const { id } = route.params
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const token = useAppSelector((state) => state.auth.token)
     const [userId]=useState(id)
     const [loadMore,setLoadMore]=useState(10)
     const { data: getReview ,isLoading} = useGetALlReviewBasedOnIdQuery({ token, id: id, limit: loadMore })
-    console.log(getReview)
 
     navigation.setOptions({
         headerStyle: {

@@ -56,7 +56,8 @@ const StackNavigation = () => {
   }
 
   return (
-    
+    <>
+      {/* @ts-ignore */}
       <Stack.Navigator
         screenOptions={{
           cardStyle: {
@@ -71,7 +72,6 @@ const StackNavigation = () => {
             fontFamily: "HelveticaNeue-Black",
           },
           headerTintColor: "#006400",
-          // headerRight: () => <NavRight routeName={routeNameRef.current} />,
         }}
       >
         {<Stack.Screen
@@ -81,7 +81,6 @@ const StackNavigation = () => {
             headerShown: false,
           }}
         />}
-        {/* <Stack.Screen name="Notification" component={} /> */}
         <Stack.Screen name="Profile" options={{headerShown:false}} component={Profile} />
         <Stack.Screen name="Privacy" component={Privacy}/>
         <Stack.Screen name="Terms" component={Terms}/>
@@ -118,7 +117,7 @@ const StackNavigation = () => {
         <Stack.Screen name="Notification" options={{headerShown:true}} component={Notification}/>
 
       </Stack.Navigator>
-    // </NavigationContainer>
+      </>
   );
 };
 

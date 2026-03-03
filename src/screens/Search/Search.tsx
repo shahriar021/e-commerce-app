@@ -20,8 +20,7 @@ const Search = () => {
     const [res,setRes]=useState<ProductsResponse | null>(null)
     const [loading,setLoading]=useState(false)
     const [postImageforScan] = useGetScanImageMutation()
-    const navigation = useNavigation();
-    console.log(token,"token")
+    const navigation = useNavigation<any>();
 
     
 

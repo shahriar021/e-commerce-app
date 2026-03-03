@@ -46,7 +46,6 @@ export default function YourComponent() {
           setProfile(JSON.parse(jsonValue));
         }
       } catch (e) {
-        console.error("Failed to load profile from AsyncStorage", e);
       }
     };
 
@@ -61,7 +60,6 @@ export default function YourComponent() {
             setProfile(JSON.parse(jsonValue));
           }
         } catch (e) {
-          console.error("Failed to load profile from AsyncStorage", e);
         }
       };
       loadProfile();

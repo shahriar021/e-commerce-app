@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 const SearchModal = ({ visible, onClose }: any) => {
 
     const {  height } = useWindowDimensions()
-    const navigation=useNavigation()
+    const navigation=useNavigation<any>()
     const [srcTxt,setSrcTxt]=useState("")
        
     const handleSearch=()=>{

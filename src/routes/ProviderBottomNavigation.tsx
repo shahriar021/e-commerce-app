@@ -39,6 +39,7 @@ export const ProviderBottomNavigation = () => {
 
   return (
     <View className="bg-transparent flex-1">
+      {/* @ts-ignore */}
       <BottomTabs.Navigator
         screenOptions={{
           tabBarShowLabel: false,

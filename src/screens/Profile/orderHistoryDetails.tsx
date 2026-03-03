@@ -11,10 +11,9 @@ import { Order } from 'src/types/profile'
 const OrderHistoryDetails = () => {
      const route = useRoute<RouteProp<RootStackParamList, 'OrderHistoryDetails'>>();
     const { orderId } = route.params
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const token = useAppSelector((state) => state.auth.token)
     const { data: getOrderHist } = useOrderHistoryQuery(token)  
-    console.log(getOrderHist?.data?.data)  
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -108,16 +107,16 @@ const OrderHistoryDetails = () => {
                 <View className='border border-[#565656] mt-2' />
                 <View className='flex-row justify-between'>
                     <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>Subtotal</Text>
-                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>৳4,400</Text>
+                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>$4,400</Text>
                 </View>
                 <View className='flex-row justify-between mt-2'>
                     <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>Shipping Fee</Text>
-                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>৳80</Text>
+                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>$80</Text>
                 </View>
                 <View className='border border-[#565656] mt-2' />
                 <View className='flex-row justify-between mt-2'>
                     <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>Total</Text>
-                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>৳4,480</Text>
+                    <Text className='text-[#ADAEBC] font-instrumentSansSemiBold'>$4,480</Text>
                 </View>
             </View>
 

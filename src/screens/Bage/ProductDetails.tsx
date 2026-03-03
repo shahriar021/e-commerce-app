@@ -40,7 +40,6 @@ const ProductDetails = ({ navigation }: Props) => {
     });
     const [postCart] = usePostAddToCartMutation();
     const [postFavourite] = usePostFavProductMutation();
-    console.log(ID)
 
     navigation.setOptions({
         headerStyle: {
@@ -105,7 +104,6 @@ const ProductDetails = ({ navigation }: Props) => {
             const res = await postFavourite({ token, id }).unwrap();
             setIsHeart(res?.success);
         } catch (err) {
-            console.log(err);
         }
     };
 

@@ -28,8 +28,7 @@ const OrderHistory = ({navigation}:Props) => {
                 borderBottomWidth: 0,
             },
             headerTintColor: "white",
-            headerTitleAlign: "start",
-            // Corrected font style property name
+            headerTitleAlign: "left",
             headerTitleStyle: { fontFamily: 'instruemntSans-Bold' }, 
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
@@ -86,7 +85,7 @@ const OrderHistory = ({navigation}:Props) => {
                                     </View>
                                     <View>
                                         <Text className='font-instrumentSansSemiBold text-white'>
-                                            ৳{totalPrice}
+                                            ${totalPrice}
                                         </Text>
                                     </View>
                                 </View>

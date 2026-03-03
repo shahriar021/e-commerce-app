@@ -12,7 +12,7 @@ const SearchPage = ({ visible, onClose }: any) => {
     const [isClothType, setIsClothType] = useState("ALL Results")
     const [items] = useState(Array.from({ length: 2 }))
     const insets = useSafeAreaInsets();
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const route=useRoute()
     const {search}=route.params
     const {data:getSearchData}=useGetSearchProductByTextQuery({token,text:search})

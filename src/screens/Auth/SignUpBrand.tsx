@@ -11,7 +11,7 @@ import { ImageObject } from "src/types/search"
 
 const SignUpBrand = () => {
 
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
   const [isShowPassword, setIsShowPassword] = useState(false)
   const [postBody] = useSignUpBrandMutation()
@@ -91,13 +91,11 @@ const SignUpBrand = () => {
 
     try {
       const res = await postBody(formData).unwrap();
-        console.log(res,"response")
       Alert.alert(res.message);
       if (res.message === "Brand registered successfully") {
         navigation.navigate("OnBoarding" as never)
       }
     } catch (err: any) {
-      console.log(err,"err")
       const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
       Alert.alert("Error", errorMessage);
     }

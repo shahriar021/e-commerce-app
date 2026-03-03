@@ -6,7 +6,7 @@ import AddAddressModal from './AddAddressModal';
 
 const Address = () => {
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const [showModal, setShowModal] = useState(false)
     const { width, height } = useWindowDimensions()
 

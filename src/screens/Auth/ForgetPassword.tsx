@@ -45,7 +45,6 @@ const ForgetPassword = () => {
     }
     try {
       const res = await forgetPass(forget).unwrap();
-      console.log(res)
       if (res.success === true) {
         const otp=res.data.otp
         const email =res.data.email
@@ -56,11 +55,8 @@ const ForgetPassword = () => {
     } catch (err: any) {
       const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
       Alert.alert("Error", errorMessage);
-      console.log(err)
       setLoading(false)
     }
-
-
   }
 
   return (

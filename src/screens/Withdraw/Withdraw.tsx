@@ -37,7 +37,7 @@ const Withdraw = () => {
         isFetching: statusFetching,
         refetch: refetchStatus,
     } = useGetWithdrawOnboardingStatusQuery(
-        { token, stripe_account_id: stripeAccountId },
+        { token:String(token), },
         { skip: !token || !stripeAccountId || !pollingEnabled }
     );
 
@@ -52,7 +52,6 @@ const Withdraw = () => {
             triggerWithdraw(token)
                 .unwrap()
                 .catch((err: any) => {
-                    console.error("Mutation Error:", err);
                     Alert.alert("Error", "Failed to start withdraw onboarding.");
                 });
         }
@@ -271,7 +270,7 @@ const Withdraw = () => {
                                     </Text>
                                 </View>
                                 <Text className="text-white text-xl mt-2 font-instrumentSansSemiBold">
-                                    ৳{getEarningStats?.data?.available}
+                                    ${(getEarningStats?.data?.available)?.toFixed(2)}
                                 </Text>
                                 <Text className="text-[#DCF3FF] font-instrumentRegular">
                                     For Withdrawal

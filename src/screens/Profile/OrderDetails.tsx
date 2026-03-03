@@ -11,7 +11,7 @@ import { RootStackParamList } from 'src/types/screens'
 const OrderDetails = () => {
     const route = useRoute<RouteProp<RootStackParamList, 'Order Details'>>();
     const { id } = route.params
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const token = useAppSelector((state) => state.auth.token)
     const { data: details } = useGetBrandOrderDetailsQuery({ token, id })
 

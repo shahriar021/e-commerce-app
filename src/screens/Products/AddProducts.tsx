@@ -20,7 +20,7 @@ import AddProductsUI from "src/components/ui/products/AddProductsUI";
 import { handleSave } from "src/utils/addProducts/handleSave";
 
 const AddProducts = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const token = useAppSelector((state) => state.auth.token);
     const [selectedImage, setSelectedImage] = useState([]);
     const [isAvailble, setIsAvailable] = useState(false);

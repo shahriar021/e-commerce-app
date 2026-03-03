@@ -6,7 +6,7 @@ import { useAppSelector } from 'src/redux/hooks'
 import { useGetPrivacyQuery } from 'src/redux/features/profile/privacy/privacyApi'
 
 const Privacy = () => {
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const token = useAppSelector((state) => state.auth.token)
     const { data: getPrivacy } = useGetPrivacyQuery({ token, type: "privacy_policy" })
 

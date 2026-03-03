@@ -6,7 +6,7 @@ import { Text, TextInput, TouchableOpacity, useWindowDimensions, View } from 're
 
 const LoginOTPScreen = () => {
   const { width, height } = useWindowDimensions();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   const [otpNumbers, setOtpNumbers] = useState(['', '', '', '']);
   const inputRefs = useRef<Array<TextInput | null>>([]);

@@ -7,7 +7,7 @@ import { useAppSelector } from 'src/redux/hooks';
 
 const Terms = () => {
 
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const token=useAppSelector((state)=>state.auth.token)
     const {data:getTerms}=useGetTermsQuery({token,type:"terms_and_conditions"})
 

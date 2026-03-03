@@ -7,7 +7,7 @@ View,
     ScrollView,
     ActivityIndicator,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import {
@@ -27,17 +27,14 @@ type BrandDetailsProps = RouteProp<RootStackParamList, "Cart Page">
 
 const CartPage = ({navigation}:Props) => {
     const route = useRoute<BrandDetailsProps>();
-    // const { id } = route.params || {};
     const { width, height } = useWindowDimensions();
     const token = useAppSelector((state) => state.auth.token);
     const [loading,setLoading]=useState(false)
     const { data } = useGetAddToCartQuery(token);
     const [prQuantity, setPrQuantity] = useState<{ [key: string]: number }>({});
     const [deleteItem]=useDeleteCartItemMutation()
-    console.log(data?.data,"get cart")
     const id=data?.data?._id
     
-
     useEffect(() => {
         if (data?.data?.products) {
             const obj: { [key: string]: number } = {};
@@ -50,7 +47,8 @@ const CartPage = ({navigation}:Props) => {
 
     const [updateCart] = useUpdateCartMutation();
 
-    navigation.setOptions({
+    useLayoutEffect(()=>{
+        navigation.setOptions({
         headerStyle: {
             backgroundColor: "#121212",
             elevation: 0,
@@ -72,12 +70,12 @@ const CartPage = ({navigation}:Props) => {
             </TouchableOpacity>
         ),
     });
+    },[navigation])
+    
 
-    // After useEffect populates prQuantity
     const handleQuantity = (type: string, productId: string) => {
         setPrQuantity((prev) => {
-            const current = prev[productId] ?? 1; // start from backend value
-            console.log(current)
+            const current = prev[productId] ?? 1; 
             if (type === "add") return { ...prev, [productId]: current + 1 };
             if (type === "subtract" && current > 0)
                 return { ...prev, [productId]: current - 1 };
@@ -109,7 +107,6 @@ const CartPage = ({navigation}:Props) => {
     const updatedSubtotal = calculateSubtotal();
     const dis = data?.data?.discount;
     const total = data?.data?.total;
-    console.log(total,"cart")
 
     const handleDelete = async(id:any) => { 
         setLoading(true)
@@ -127,21 +124,17 @@ const CartPage = ({navigation}:Props) => {
                 productId: item.productId,
                 color: item.color,
                 size: item.size,
-                // quantity: prQuantity[item._id] ?? item.quantity,
                 quantity: prQuantity[item.productId] ?? item.quantity,
 
             })),
         };
-        console.log(body,"---")
 
         try {
             const res = await updateCart({ token, body, id }).unwrap();
             if (res.success) {
-                console.log(res?.data?.cart?.total,"res..")
                 navigation.navigate("Payment screen",{ total:res?.data?.cart?.total });
             }
         } catch (err) {
-            console.log(err);
         }
     };
 

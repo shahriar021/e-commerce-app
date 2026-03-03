@@ -54,7 +54,8 @@ const paymentApi = baseApi.injectEndpoints({
                     },
                     body
                 }
-            }
+            },
+            invalidatesTags:['earningStats']
         }),
 
         initialPostWithdraw: builder.mutation({
@@ -69,8 +70,8 @@ const paymentApi = baseApi.injectEndpoints({
             }
         }),
 
-        getWithdrawOnboardingStatus: builder.query<any, { token: string; stripe_account_id: string }>({
-            query: ({ token, stripe_account_id }) => ({
+        getWithdrawOnboardingStatus: builder.query<any, { token: string;  }>({
+            query: ({ token, }) => ({
                 url: `/withdraw/onboarding/status`,
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}` },
@@ -92,8 +93,8 @@ const paymentApi = baseApi.injectEndpoints({
             }
         }),
 
-        getRewardOnboardingStatus: builder.query<any, { token: string; stripe_account_id: string }>({
-            query: ({ token, stripe_account_id }) => ({
+        getRewardOnboardingStatus: builder.query<any, { token: string;  }>({
+            query: ({ token,  }) => ({
                 url: `/reward/onboarding/status`,
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}` },

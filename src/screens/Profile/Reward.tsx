@@ -13,7 +13,7 @@ import { useStripeOnboardingFlow } from 'src/hooks/useStripeOnboardingFlow'
 
 const Reward = () => {
     const token = useAppSelector(state => state.auth.token)
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const [activeTab, setActiveTab] = useState('Pending');
     const [postReward, { isLoading: redeemLoading }] = usePostRewardMutation()
     const { data: getRewardBalance } = useGetRewardBalanceQuery(token)
@@ -35,7 +35,7 @@ const Reward = () => {
         isFetching: statusFetching,
         refetch: refetchStatus,
     } = useGetRewardOnboardingStatusQuery(
-        { token, stripe_account_id: stripeAccountId },
+        { token: token as unknown as string},
         { skip: !token || !stripeAccountId || !pollingEnabled }
     );
 
@@ -48,7 +48,6 @@ const Reward = () => {
             triggerWithdraw(token)
                 .unwrap()
                 .catch((err: any) => {
-                    console.error("Mutation Error:", err);
                     Alert.alert("Error", "Failed to start withdraw onboarding.");
                 });
         }

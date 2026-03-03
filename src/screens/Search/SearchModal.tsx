@@ -6,7 +6,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 const SearchModal = ({ visible, onClose,data,srcImg }: any) => {
     const [isClothType, setIsClothType] = useState("ALL Results")
-    console.log(data,"---")
     
     return (
         <Modal visible={visible} onRequestClose={onClose}>

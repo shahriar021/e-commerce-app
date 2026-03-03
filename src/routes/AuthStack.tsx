@@ -1,3 +1,4 @@
+ {/* @ts-nocheck */}
 import React from 'react'
 import { createStackNavigator } from "@react-navigation/stack";
 import OTPScreen from "src/screens/Auth/OTPScreen";
@@ -11,11 +12,13 @@ import SignUpUser from 'src/screens/Auth/SignUpUser';
 import SuccessPage from 'src/screens/Auth/SuccessPage';
 import SignUpBrand from 'src/screens/Auth/SignUpBrand';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<any>();
 
 const AuthStack = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <>
+   
+    <Stack.Navigator id={undefined}  screenOptions={{ headerShown: false }}>
       <Stack.Screen name="OnBoarding" component={OnBoarding} />
       <Stack.Screen options={{headerShown:true}} name="Login Screen" component={LoginScreen}/>
       <Stack.Screen options={{headerShown:true}} name="Sign Up as User" component={SignUpUser}/>
@@ -27,6 +30,7 @@ const AuthStack = () => {
       <Stack.Screen options={{headerShown:true}} name="OTP Screen" component={OTPScreen} />
       <Stack.Screen options={{headerShown:true}} name="Verification Page" component={VerificationPage}/>
     </Stack.Navigator>
+    </>
   );
 };
 

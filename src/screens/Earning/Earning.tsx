@@ -13,11 +13,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import { BarChart } from "react-native-gifted-charts";
 import { useAppSelector } from "src/redux/hooks";
 import { useGetEarningStatsQuery, useGetGraphQuery, useGetTransactionQuery } from "src/redux/features/earning/earningApi";
-import { TransactionResponse } from "src/types/earning";
 import InputYearPicker from "src/components/shared/inputYearPicker";
 
 const Earning = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const { width } = useWindowDimensions();
     const date = new Date();
     const token = useAppSelector((state) => state.auth.token);
@@ -26,7 +25,7 @@ const Earning = () => {
     const [showModal, setShowModal] = useState(false)
     const { data: getEarningGraph } = useGetGraphQuery({token,year});
     const { data: getEarningStats } = useGetEarningStatsQuery(token);
-    const { data: getTransaction } = useGetTransactionQuery<TransactionResponse>(token);
+    const { data: getTransaction } = useGetTransactionQuery(String(token));
     const data = getEarningGraph?.data.map((item: any, index: any) => ({
         value: item.earnings,
         label: item.month,

@@ -9,7 +9,7 @@ import { CountryPicker } from "react-native-country-codes-picker";
 const SignUpUser = () => {
     const [postBody] = useSignUpUserMutation()
 
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
 
     const [isShowPassword, setIsShowPassword] = useState<boolean>(false)
     const [firstName, setFirstName] = useState<string>('');

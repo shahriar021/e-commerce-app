@@ -11,6 +11,5 @@ export const handleShare = async (image: string, caption: string) => {
         try {
             await Share.open(shareOptions);
         } catch (error) {
-            console.log('Error sharing', error);
         }
     };

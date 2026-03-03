@@ -1,7 +1,7 @@
 import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { BarChart } from "react-native-gifted-charts";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,14 +13,13 @@ import { brandHomeStatsName, days, month } from 'src/constants/providerHome';
 import { providerHomepage } from './demo';
 import { greetingTime } from 'src/utils/greetingTime';
 import { BrandProfileResponse } from 'src/types/brand';
-import { useGetNotificationQuery } from 'src/redux/features/notification/notificationApi';
 import OrderListBrand from 'src/components/shared/OrderListBrand';
+import Notification from 'src/components/ui/homepage/Notification';
 
 const ProviderHomePage = () => {
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const date = new Date();
     const token = useAppSelector((state) => state.auth.token)
-    console.log(token)
     const { width } = Dimensions.get("screen");
     const [profile, setProfile] = useState<BrandProfileResponse | null>(null);
     const currentMonthIndex = new Date().getMonth();
@@ -37,7 +36,7 @@ const ProviderHomePage = () => {
         token,
         limit: 4,
     });
-    const { data: notiData } = useGetNotificationQuery(token)
+    
 
     useEffect(() => {
         const loadProfile = async () => {
@@ -47,7 +46,6 @@ const ProviderHomePage = () => {
                     setProfile(JSON.parse(jsonValue));
                 }
             } catch (e) {
-                console.error("Failed to load profile from AsyncStorage", e);
             }
         };
 
@@ -62,7 +60,6 @@ const ProviderHomePage = () => {
                         setProfile(JSON.parse(jsonValue));
                     }
                 } catch (e) {
-                    console.error("Failed to load profile from AsyncStorage", e);
                 }
             };
             loadProfile();
@@ -90,16 +87,7 @@ const ProviderHomePage = () => {
                         </Text>
                         <Text className='font-instrumentSansSemiBold text-[#9CA3AF]'>{days[date.getDay() as keyof typeof days]} , {month[date.getMonth() as keyof typeof month]} {date.getDate()}</Text>
                     </View>
-                    <TouchableOpacity className="relative" onPress={() => navigation.navigate("Notification")}>
-                        <Ionicons name="notifications" size={24} color="white" />
-                        {notiData?.data?.pagination?.total > 0 && (
-                            <View className="absolute -top-1 -right-1 bg-red-500 rounded-full min-w-[16px] h-4 items-center justify-center px-1">
-                                <Text className="text-white text-[10px] font-bold">
-                                    {notiData?.data?.pagination?.total > 99 ? '99+' : notiData?.data?.pagination?.total}
-                                </Text>
-                            </View>
-                        )}
-                    </TouchableOpacity>
+                    <Notification/>
                 </View>
                 <View className='flex-row flex-wrap  justify-between'>
                     {getBrandHomeStats?.data &&

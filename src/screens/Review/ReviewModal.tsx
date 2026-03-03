@@ -35,7 +35,6 @@ const ReviewModal = ({ visible, onClose, ID }: any) => {
         try {
             const res = await postReview({ token, id: ID, formData }).unwrap()
         } catch (err) {
-            console.log(err)
         }
 
     }

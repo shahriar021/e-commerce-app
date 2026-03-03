@@ -16,7 +16,7 @@ import { ProfileResponse } from 'src/types/profile'
 
 const EditProfile = () => {
     const { width, height } = Dimensions.get("window")
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const token = useAppSelector((state) => state.auth.token)
     const [updateProfile] = useUpdateProfileMutation()
     const [userNmae, setUserNmae] = useState("")
@@ -40,7 +40,6 @@ const EditProfile = () => {
                     setProfile(JSON.parse(jsonValue));
                 }
             } catch (e) {
-                console.error("Failed to load profile from AsyncStorage", e);
             }
         };
 
@@ -55,7 +54,6 @@ const EditProfile = () => {
                         setProfile(JSON.parse(jsonValue));
                     }
                 } catch (e) {
-                    console.error("Failed to load profile from AsyncStorage", e);
                 }
             };
             loadProfile();

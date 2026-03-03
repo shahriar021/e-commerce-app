@@ -14,7 +14,7 @@ const ResetPassword = () => {
     const [newPassword, setNewPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
 
     useLayoutEffect(() => {
         navigation.setOptions({

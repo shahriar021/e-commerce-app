@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {  Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import CreateProductSelecPicker from './CreateProductSelecPicker'
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
@@ -223,7 +223,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                 onChangeText={setTotalQnt}
             />
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
-                Price (৳)*
+                Price ($)*
             </Text>
             <TextInput
                 className="mt-2 mb-2 bg-[#2C2C2C] p-3 rounded-lg"

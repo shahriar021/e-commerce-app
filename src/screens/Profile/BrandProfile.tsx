@@ -17,7 +17,7 @@ const BrandProfile = () => {
     const [show, setShow] = useState(false);
     const [countryCode, setCountryCode] = useState('+93');
     const { width, height } = Dimensions.get("window")
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
     const [selectedImage2, setSelectedImage2] = useState<ImageObject | null>(null);
     const [loading, setLoading] = useState(false)
@@ -36,7 +36,6 @@ const BrandProfile = () => {
           setProfile(JSON.parse(jsonValue));
         }
       } catch (e) {
-        console.error("Failed to load profile from AsyncStorage", e);
       }
     };
 
@@ -51,7 +50,6 @@ const BrandProfile = () => {
             setProfile(JSON.parse(jsonValue));
           }
         } catch (e) {
-          console.error("Failed to load profile from AsyncStorage", e);
         }
       };
       loadProfile();

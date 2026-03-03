@@ -8,14 +8,15 @@ const Drawer = createDrawerNavigator();
 
 export const DrawerNavigation = () => {
     return (
+        <>{/* @ts-ignore */}
         <Drawer.Navigator
             drawerContent={(props) => <CustomDrawerContent {...props} />}
             screenOptions={{
                 drawerStyle: {
-                    backgroundColor: '#252525', // drawer background
+                    backgroundColor: '#252525',
                 },
-                drawerActiveTintColor: '#1A5EED', // active item color
-                drawerInactiveTintColor: '#333',  // inactive item color
+                drawerActiveTintColor: '#1A5EED',
+                drawerInactiveTintColor: '#333', 
             }}
         >
 
@@ -33,5 +34,6 @@ export const DrawerNavigation = () => {
             />
             
         </Drawer.Navigator>
+        </>
     );
 };

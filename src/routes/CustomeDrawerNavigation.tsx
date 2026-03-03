@@ -10,7 +10,7 @@ import { setToken, setUserType } from 'src/redux/features/auth/authSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const CustomDrawerContent = (props:any) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const dispatch = useDispatch()
   const [profile, setProfile] = useState(null);
   const userItems = [

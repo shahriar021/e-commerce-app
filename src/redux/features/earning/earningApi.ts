@@ -1,4 +1,5 @@
 import { baseApi } from "src/redux/createdApi/baseApi";
+import { TransactionResponse } from "src/types/earning";
 
 const earningApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -12,6 +13,7 @@ const earningApi = baseApi.injectEndpoints({
                     method: "GET",
                 };
             },
+            providesTags:['earningGraph']
         }),
 
         getEarningStats: builder.query({
@@ -24,6 +26,7 @@ const earningApi = baseApi.injectEndpoints({
                     method: "GET",
                 };
             },
+            providesTags:['earningStats']
         }),
 
         getTransaction: builder.query({
@@ -35,6 +38,7 @@ const earningApi = baseApi.injectEndpoints({
                     },
                 };
             },
+            providesTags:['earningTransaction']
         }),
     }),
 });

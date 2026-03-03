@@ -9,7 +9,7 @@ import { colorStatus, nameStatus } from 'src/constants/productInfos'
 import { Toast } from 'toastify-react-native'
 
 const OrderList = () => {
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const [loadMore, setLoadMore] = useState(10)
     const token = useAppSelector((state) => state.auth.token)
     const { data: getOrdersBrand } = useGetBrandOrderListQuery({ token, limit: 4 })

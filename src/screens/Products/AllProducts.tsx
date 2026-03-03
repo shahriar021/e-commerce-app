@@ -9,7 +9,7 @@ import { Product } from 'src/types/products';
 
 const AllProducts = () => {
     const id = useAppSelector((state) => state.auth.id)
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const token = useAppSelector((state) => state.auth.token)
     const [loadMore, setLoadMore] = useState(10)
     const { data: getBrands } = useProductListBrandIdWiseQuery({ token, id, limit: loadMore })

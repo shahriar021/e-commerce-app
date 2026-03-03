@@ -78,7 +78,6 @@ const Feed = ({ navigation }: Props) => {
             setComments('')
         } catch (err) {
             setLoading(false)
-            console.log(err)
         }
     }
 

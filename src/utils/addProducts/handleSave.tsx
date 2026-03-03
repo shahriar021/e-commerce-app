@@ -76,15 +76,12 @@ export const handleSave = async ({selectedImage,slectedProductName,shortDescript
 
         }
 
-        // console.log(info, "in info");
         try {
             const res = await postProduct({ token, formData }).unwrap();
-            console.log(res, "response");
             if (res.success) {
                 Toast.success(res.message)
             }
         } catch (err) {
-            console.log(err,"add propduxts.");
             if (err) {
                 Toast.error("Something went wrong!")
             }

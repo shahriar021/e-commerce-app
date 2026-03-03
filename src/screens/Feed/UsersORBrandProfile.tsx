@@ -12,7 +12,7 @@ import { usePostFollowMutation } from 'src/redux/features/profile/follow/followA
 const UsersORBrandProfile = () => {
   const token = useAppSelector((state) => state.auth.token)
   const UID = useAppSelector((state) => state.auth.id)
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const [isPosts, setIsPosts] = useState("Posts")
   
   const route = useRoute<any>()
@@ -48,10 +48,8 @@ const UsersORBrandProfile = () => {
   const handleFollow = async () => {
     try {
       const res = await postFollow({ token, id: getSpecificUserData?.data?._id }).unwrap()
-      console.log(res,"follow")
       setFollowRes(res?.data?.isFollowing)
     } catch (err) {
-      console.log(err)
     }
   }
 

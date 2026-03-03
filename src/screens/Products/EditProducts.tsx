@@ -28,7 +28,7 @@ interface Measurement {
 }
 
 const EditProducts = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const route = useRoute();
     const { id } = route.params as { id: string };
     const token = useAppSelector((state) => state.auth.token);
@@ -164,7 +164,6 @@ const EditProducts = () => {
             const res = await updateProduct({ token, id, body: formData }).unwrap();
             navigation.navigate("All Products");
         } catch (err) {
-            console.error(err);
         }
     };
 
@@ -285,7 +284,7 @@ const EditProducts = () => {
                 style={{ color: "#ADAEBC" }}
             />
 
-            <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Price (৳)*</Text>
+            <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Price ($)*</Text>
             <TextInput
                 value={price}
                 onChangeText={setPrice}

@@ -26,7 +26,7 @@ const orderApi = baseApi.injectEndpoints({
                     body,
                 };
             },
-            invalidatesTags:['brandOrderList']
+            invalidatesTags:['brandOrderList','earningStats','earningGraph','earningTransaction']
         }),
 
         getBrandOrderDetails:builder.query({

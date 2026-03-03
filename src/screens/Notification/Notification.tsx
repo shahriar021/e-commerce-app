@@ -7,7 +7,7 @@ import { useAppSelector } from 'src/redux/hooks';
 
 const Notification = () => {
 
-    const navigaiton = useNavigation()
+    const navigaiton = useNavigation<any>()
     const token = useAppSelector((state) => state.auth.token)
     const { data: notiData } = useGetNotificationQuery(token)
 

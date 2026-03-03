@@ -6,6 +6,6 @@ import App from './App';
 // It also ensures that whether you load the app in Expo Go or in a native build,
 // the environment is set up appropriately
 messaging().setBackgroundMessageHandler(async remoteMessage => {
-  console.log('Message handled in the background!', remoteMessage);
+  // console.log('Message handled in the background!', remoteMessage);
 });
 registerRootComponent(App);

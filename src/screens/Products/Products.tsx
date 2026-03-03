@@ -7,10 +7,11 @@ import { useNavigation } from '@react-navigation/native'
 import { useAppSelector } from 'src/redux/hooks'
 import { useGetBrandOrderListQuery } from 'src/redux/features/orders/orderApi'
 import OrderListBrand from 'src/components/shared/OrderListBrand'
+import Notification from 'src/components/ui/homepage/Notification'
 
 const Products = () => {
 
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const token = useAppSelector((state) => state.auth.token)
     const { data: getOrdersBrand, isLoading: orderBrandLoading } = useGetBrandOrderListQuery({ token, limit: 4 })
 
@@ -28,16 +29,14 @@ const Products = () => {
         <SafeAreaView style={{ flex: 1, backgroundColor: "#121212", padding: 10 }}>
 
             <ScrollView className='py-3 flex-1'>
-                <View className="flex-row justify-between items-center mb-2">
-                    <View className='flex-col'>
+                <View className="flex-row justify-between items-center mb-2  p-2">
+                    <View className='flex-1'>
                         <Text className=" text-white font-instrumentSansBold text-xl" >
                             Manage Your Products
                         </Text>
                         <Text className='font-instrumentRegular text-[#9CA3AF] w-[70%]'>Easily add new items or view your product catalog</Text>
                     </View>
-                    <View className="flex-row items-center">
-                        <TouchableOpacity ><Ionicons name="notifications" size={24} color="white" /></TouchableOpacity>
-                    </View>
+                    <Notification/>
                 </View>
 
                 <View className='flex-row gap-2 mt-2 mb-2'>

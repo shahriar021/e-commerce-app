@@ -5,8 +5,8 @@ import { useGetTransactionQuery } from 'src/redux/features/earning/earningApi';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Transaction() {
-  const navigation = useNavigation()
-  
+  const navigation = useNavigation<any>()
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerStyle: {
@@ -28,35 +28,42 @@ export default function Transaction() {
 
   const token = useAppSelector((state) => state.auth.token);
   const { data: getTransaction } = useGetTransactionQuery(token);
-  console.log(getTransaction?.data?.data,"getTransaction")
 
   return (
     <View className='flex-1 p-2'>
-      {getTransaction?.data?.data?.map((item) => (
-        <View key={item?._id} className="bg-[#121212] p-1 rounded-md mt-2 border border-gray-700">
-          <View className="flex-row justify-between p-1">
-            <Text className="text-white text-lg font-instrumentSansSemiBold">
-              Order #{item?.cartProductId?.slice(-4)}
-            </Text>
-            <Text className="text-[#4ADE80] font-instrumentRegular">
-              {item?.earning}
-            </Text>
-          </View>
-          <View className="flex-row justify-between p-1 mt-1">
-            <Text className="text-[#9CA3AF] text-base font-instrumentRegular">
-              {new Date(item?.createdAt)?.toLocaleDateString()}
-            </Text>
-            <Text
-              className={`${item?.earningStatus == "paid"
+      {getTransaction?.data?.data?.length === 0 ? (
+        <View className="mt-4 items-center">
+          <Text className="text-gray-400 font-instrumentRegular">
+            No transactions found
+          </Text>
+        </View>
+      ) :
+        (getTransaction?.data?.data?.map((item) => (
+          <View key={item?._id} className="bg-[#121212] p-1 rounded-md mt-2 border border-gray-700">
+            <View className="flex-row justify-between p-1">
+              <Text className="text-white text-lg font-instrumentSansSemiBold">
+                Order #{item?.cartProductId?.slice(-4)}
+              </Text>
+              <Text className="text-[#4ADE80] font-instrumentRegular">
+                {item?.earning}
+              </Text>
+            </View>
+            <View className="flex-row justify-between p-1 mt-1">
+              <Text className="text-[#9CA3AF] text-base font-instrumentRegular">
+                {new Date(item?.createdAt)?.toLocaleDateString()}
+              </Text>
+              <Text
+                className={`${item?.earningStatus == "paid"
                   ? "text-[#4ADE80]"
                   : "text-[#FB923C]"
-                }  font-instrumentRegular`}
-            >
-              {item?.earningStatus}
-            </Text>
+                  }  font-instrumentRegular`}
+              >
+                {item?.earningStatus}
+              </Text>
+            </View>
           </View>
-        </View>
-      ))}
+        )
+        ))}
     </View>
   )
 }

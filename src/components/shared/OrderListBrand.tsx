@@ -8,7 +8,7 @@ import { usePostStatusOrderBrandMutation } from 'src/redux/features/orders/order
 import { scale } from 'react-native-size-matters'
 
 const OrderListBrand = ({ orderBrandListData, loading, token }: any) => {
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const [orderStatusLoading, setOrderStatusLoading] = useState(false)
     const [postStatus] = usePostStatusOrderBrandMutation()
     const handleStatus = async (id: any, status: any) => {
@@ -27,7 +27,6 @@ const OrderListBrand = ({ orderBrandListData, loading, token }: any) => {
             setOrderStatusLoading(false)
         }
     }
-    console.log(orderBrandListData?.data?.data)
     return (
         <View className='flex-1 bg-[#121212] p-3'>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -40,12 +39,12 @@ const OrderListBrand = ({ orderBrandListData, loading, token }: any) => {
                         <View style={{ width: scale(52), height: scale(52) }} className='rounded-xl overflow-hidden'>
                             <Image source={{ uri: item?.productImages?.[0] }} style={{ width: "100%", height: "100%" }} />
                         </View>
-                        <View className='flex-row justify-between flex-1 items-center'>
-                            <View className='flex-col'>
-                                <Text className='font-instrumentSansSemiBold text-white'>{item?.productName}</Text>
+                        <View className='flex-row justify-between flex-1 items-center '>
+                            <View className='flex-1  pt-2'>
+                                <Text className='font-instrumentSansSemiBold text-white' numberOfLines={1} ellipsizeMode='tail' >{item?.productName}</Text>
                                 <Text className='font-instrumentRegular text-[#9CA3AF]'>Qty: {item?.quntity} | Size: {item?.size}</Text>
                             </View>
-                            <View><Text className='font-instrumentSansSemiBold text-white'>{item?.price}{" "}$</Text></View>
+                            <View className='ml-2'><Text className='font-instrumentSansSemiBold text-white'>{item?.price}{" "}$</Text></View>
                         </View>
                     </View>
                     <View className=''>

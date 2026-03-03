@@ -20,6 +20,5 @@ export  const handleComment = async (id: string, comment: string, setLoading: Re
             setComments('')
         } catch (err) {
             setLoading(false)
-            console.log(err)
         }
     }

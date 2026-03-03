@@ -35,7 +35,7 @@ type TAuthData = {
   credentials: null | TCredentials;
   profile: null;
   companyAuth: null | string;
-  BASE_URL: string | null;
+  EXPO_PUBLIC_BASE_URL: string | null;
   userType: string | null;
   token: boolean
 };
@@ -46,7 +46,7 @@ const initialState: TAuthData = {
   credentials: null,
   profile: null,
   companyAuth: null,
-  BASE_URL: null,
+  EXPO_PUBLIC_BASE_URL: null,
   userType: null,
   token: false
 };
@@ -67,7 +67,7 @@ const authSlice = createSlice({
       state.companyAuth = action.payload
     },
     setBaseUrl: (state, action) => {
-      state.BASE_URL = action.payload
+      state.EXPO_PUBLIC_BASE_URL = action.payload
     },
     setUserType: (state, action) => {
       state.userType = action.payload
