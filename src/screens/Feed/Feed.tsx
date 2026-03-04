@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, ActivityIndicator, Alert, Keyboard, } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, ActivityIndicator, Alert, Keyboard, RefreshControl, } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { scale, verticalScale } from 'react-native-size-matters';
 import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
@@ -25,10 +25,12 @@ const Feed = ({ navigation }: Props) => {
     const [loadMore, setLoadMore] = useState(20)
     const [comment, setComments] = useState('');
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false)
+
     const [postComment] = usePostCommentBasedOnIdMutation()
     const [postLike] = usePostLikeMutation()
     const [postSave] = usePostSaveMutation()
-    const { data: getPostData, isLoading, error } = useGetAllPostQuery({ token, limit: loadMore, tag: selectedItem })
+    const { data: getPostData, isLoading, error,refetch } = useGetAllPostQuery({ token, limit: loadMore, tag: selectedItem })
     const { data: getFeedCat } = useGetFeedFilterQuery(token) as { data?: FeedCategoryResponse }
     const { data: getComment } = useGetCommentsQuery({ token, pid: selectedCid })
 
@@ -37,6 +39,11 @@ const Feed = ({ navigation }: Props) => {
     if (feedCatgory) {
         feedCatgory.unshift("ALL")
     }
+    const onRefresh = async () => {
+    setRefreshing(true)
+    await refetch() // your RTK Query refetch function
+    setRefreshing(false)
+  }
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -140,13 +147,20 @@ const Feed = ({ navigation }: Props) => {
             {error && <Text className='text-center m-5 text-white'>Something went wrong,Please Try again sometimes later.</Text>}
             {isLoading && <ActivityIndicator size={"large"} color={"blue"} />}
 
-            <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+            <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor="#ffffff"
+          colors={["#237227"]}
+        />
+      }>
                 {getPostData?.data?.data?.map((item: Post, index: number) =>
                     <View key={index}>
                         <View className='flex-row justify-between mt-4 mb-1 '>
                             <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile", { upID: item?.uploaderId })}>
                                 <View style={{ width: scale(30), height: scale(30) }}>
-                                    {item?.uploaderType == "Brand" ? <Image source={{ uri: item?.brandLogo?.[0] }} style={{ width: "100%", height: "100%" }} /> : <Image source={{ uri: item?.profile[0] }} style={{ width: "100%", height: "100%" }} />}
+                                    {item?.uploaderType == "Brand" ? <Image source={{ uri: item?.brandLogo?.[0] }} style={{ width: "100%", height: "100%",borderRadius:10,overflow:"hidden" }} /> : <Image source={{ uri: item?.profile[0] }} style={{ width: "100%", height: "100%",borderRadius:10,overflow:"hidden" }} />}
                                 </View>
                                 <View className='flex-col  gap-2'>
 

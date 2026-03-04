@@ -39,6 +39,12 @@ const AllProducts = () => {
         })
     }, [navigation])
 
+    if(products?.length===0){
+                return (<View className='flex-1'>
+                    <Text className='text-white text-xl text-center'>No products data</Text>
+                </View>)
+            }
+
     return (
         <View className='flex-1 bg-[#121212] p-5'>
             <View className='border p-2 mb-2 rounded-xl bg-[#252525] flex-row gap-3'>

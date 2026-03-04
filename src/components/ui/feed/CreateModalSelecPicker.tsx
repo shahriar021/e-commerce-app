@@ -70,10 +70,10 @@ const CreateModalSelecPicker = ({
           style={{ top: inputBoxHeight }}
         >
           <ScrollView>
-            {data?.data?.map((item: any) => {
+            {data?.data?.map((item: any,index:any) => {
               return (
                 <TouchableOpacity
-                  key={item?.id}
+                  key={index}
                   onPress={() => handleItemPick(item)}
                 >
                   <Text className="p-2 border-b border-gray-200 rounded-md">

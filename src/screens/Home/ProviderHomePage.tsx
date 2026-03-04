@@ -1,4 +1,4 @@
-import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AntDesign } from '@expo/vector-icons';
@@ -25,14 +25,15 @@ const ProviderHomePage = () => {
     const currentMonthIndex = new Date().getMonth();
     const [year, setYear] = useState(date.getFullYear())
     const [showModal, setShowModal] = useState(false)
-    const { data: getBrandHomeStats } = useGetBrandHomeStatsQuery(token)
-    const { data: getBrandHomeGraph } = useGetBrandHomeGraphQuery({ token, year })
+    const [refreshing, setRefreshing] = useState(false)
+    const { data: getBrandHomeStats,refetch } = useGetBrandHomeStatsQuery(token)
+    const { data: getBrandHomeGraph,refetch2 } = useGetBrandHomeGraphQuery({ token, year })
     const data = getBrandHomeGraph?.data.map((item: any, index: any) => ({
         value: item.orders,
         label: item.month,
         frontColor: index === currentMonthIndex ? "#DCF3FF" : "#464747",
     }));
-    const { data: getOrdersBrand, isLoading: orderBrandLoading } = useGetBrandOrderListQuery({
+    const { data: getOrdersBrand, isLoading: orderBrandLoading,refetch3 } = useGetBrandOrderListQuery({
         token,
         limit: 4,
     });
@@ -77,9 +78,26 @@ const ProviderHomePage = () => {
         setShowModal(true)
     }
 
+     const onRefresh = async () => {
+    setRefreshing(true)
+    await Promise.all([
+    refetch(),
+    refetch2(),
+    refetch3(),
+  ])
+    setRefreshing(false)
+  }
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#121212", padding: 5 }}>
-            <ScrollView className='p-3 flex-1'>
+            <ScrollView className='p-3 flex-1' refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                      tintColor="#ffffff"
+                      colors={["#237227"]}
+                    />
+                  }>
                 <View className="flex-row justify-between items-center mb-2">
                     <View className='flex-col'>
                         <Text className=" text-white font-instrumentSansBold text-xl" >

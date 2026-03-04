@@ -5,11 +5,10 @@
     "platforms": [
       "android"
     ],
-    "version": "1.2.34",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/arkiveTransparent.png",
     "userInterfaceStyle": "light",
-    "developmentClient": true,
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -25,22 +24,16 @@
       "urlScheme": "staark"
     },
     "android": {
-      "versionCode": 139,
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000"
       },
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ],
+      "permissions": [],
       "useNextNotificationsApi": true,
       "package": "com.sparktech.sas",
       "googleServicesFile": "./google-services.json",
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyC4fsrgciACjhUacg9umvRHflrJJHFovdY"
-        }
-      },
+     
       "intentFilters": [
         {
           "action": "VIEW",
@@ -60,7 +53,9 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      "@react-native-firebase/app",
       [
+        
         "react-native-share",
         {
           "ios": [
@@ -81,7 +76,7 @@
       [
         "@stripe/stripe-react-native",
         {
-          "merchantIdentifier": "merchant.com.your-app-name",
+          "merchantIdentifier": "merchant.com.sparktech.sas",
           "enableGooglePay": true
         }
       ],

@@ -49,6 +49,11 @@ const OrderList = () => {
             setOrderStatusLoading(false)
         }
     }
+     if(getOrdersBrand?.data?.data?.length===0){
+            return (<View className='flex-1'>
+                <Text className='text-white text-xl text-center'>No Orderlist data</Text>
+            </View>)
+        }
     return (
         <View className='flex-1 p-3'>
             <ScrollView showsVerticalScrollIndicator={false}>

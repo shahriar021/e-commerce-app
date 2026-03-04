@@ -21,7 +21,7 @@ export default function Transaction() {
         color: "white",
       },
       headerTitle: "Transactions",
-      headerTintColor: "#33363F",
+      headerTintColor: "#ffffff",
       headerTitleAlign: "start",
     });
   }, [navigation]);
@@ -38,8 +38,8 @@ export default function Transaction() {
           </Text>
         </View>
       ) :
-        (getTransaction?.data?.data?.map((item) => (
-          <View key={item?._id} className="bg-[#121212] p-1 rounded-md mt-2 border border-gray-700">
+        (getTransaction?.data?.data?.map((item,index) => (
+          <View key={index} className="bg-[#121212] p-1 rounded-md mt-2 border border-gray-700">
             <View className="flex-row justify-between p-1">
               <Text className="text-white text-lg font-instrumentSansSemiBold">
                 Order #{item?.cartProductId?.slice(-4)}

@@ -2,7 +2,7 @@ import { Feather } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
 import { LinearGradient } from "expo-linear-gradient"
 import React, { useLayoutEffect, useState } from "react"
-import { Alert, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Alert, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { scale, verticalScale } from "react-native-size-matters"
 import { useSignUpBrandMutation } from "src/redux/features/auth/authApi"
 import { launchCameraAndHandlePermissions } from "src/components/shared/ShareCamera"
@@ -23,6 +23,7 @@ const SignUpBrand = () => {
   const [theme, setTheme] = useState("")
   const [countryCode, setCountryCode] = useState('+93');
   const [show, setShow] = useState(false);
+  const [loading,setLoading]=useState(false)
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -51,8 +52,8 @@ const SignUpBrand = () => {
       setSelectedImage(asset);
     }
   }
-
   const handleSignUpBrand = async () => {
+    setLoading(true)
     const formData = new FormData();
     if (!email || !password || !phoneNumber) {
       Alert.alert("Please fill up the fields!")
@@ -90,12 +91,14 @@ const SignUpBrand = () => {
     formData.append("data", JSON.stringify(userData));
 
     try {
+      setLoading(false)
       const res = await postBody(formData).unwrap();
       Alert.alert(res.message);
       if (res.message === "Brand registered successfully") {
         navigation.navigate("OnBoarding" as never)
       }
     } catch (err: any) {
+      setLoading(false)
       const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
       Alert.alert("Error", errorMessage);
     }
@@ -199,7 +202,7 @@ const SignUpBrand = () => {
             className="w-full rounded-lg  overflow-hidden"
             style={{ width: "100%", alignItems: "center", padding: 10 }}
           >
-            <Text className="text-[#121212] text-xl font-instrumentSansBold" >Create a Brand Account</Text>
+            <Text className="text-[#121212] text-xl font-instrumentSansBold" >{loading?<ActivityIndicator size={"small"} color={"blue"}/>:"Create a Brand Account"}</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>
