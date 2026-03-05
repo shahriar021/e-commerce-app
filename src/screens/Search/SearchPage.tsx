@@ -68,7 +68,7 @@ const SearchPage = ({ visible, onClose }: any) => {
 
                     <Text className='text-white text-xl mt-2 mb-2 font-instrumentSansSemiBold'>Similar Items Online</Text>
 
-                    {items?.map((item, index) => <View key={index} className='bg-[#212121] p-3 rounded-lg mt-2 mb-2 border border-[#2A2A2A]'>
+                    {/*{items?.map((item, index) => <View key={index} className='bg-[#212121] p-3 rounded-lg mt-2 mb-2 border border-[#2A2A2A]'>
                         <View className='flex-row gap-2'>
                             <View style={{ width: scale(64), height: scale(64) }}>
                                 <Image source={require("../../../assets/e-icon/suit.png")} style={{ width: "100%", height: "100%" }} />
@@ -95,7 +95,7 @@ const SearchPage = ({ visible, onClose }: any) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                    </View>)}
+                    </View>)}*/}
 
                 </ScrollView>
             </SafeAreaView>
