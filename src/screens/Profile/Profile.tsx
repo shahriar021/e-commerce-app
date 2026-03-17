@@ -13,7 +13,7 @@ import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { useAppSelector } from "src/redux/hooks";
 import Posts from "../Feed/Posts";
 import CreatePostModal from "../Feed/CreatePostModal";
-import { useGetIndividualPostQuery, useGetLookbookQuery } from "src/redux/features/profile/profile/profileApi";
+import {  useGetLookbookQuery } from "src/redux/features/profile/profile/profileApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Lookbook from "./Lookbook";
 
@@ -33,7 +33,7 @@ export default function YourComponent() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const navigation = useNavigation<NavigationProp>();
   const [profile, setProfile] = useState(null);
-  
+  const [refreshKey, setRefreshKey] = useState(0);
   const [saveLoadlimit, setSaveLoadlimit] = useState(10);
   const { data: getLookbook } = useGetLookbookQuery({ token, limit: saveLoadlimit });
   const userType = useAppSelector((state) => state.auth.userType)
@@ -50,7 +50,7 @@ export default function YourComponent() {
     };
 
     loadProfile();
-  }, []);
+  }, [refreshKey]);
   useFocusEffect(
     useCallback(() => {
       const loadProfile = async () => {
@@ -196,6 +196,7 @@ export default function YourComponent() {
       </ScrollView>
       <CreatePostModal visible={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        onPostSuccess={() => setRefreshKey(prev => prev + 1)}
       />
     </View>
   );

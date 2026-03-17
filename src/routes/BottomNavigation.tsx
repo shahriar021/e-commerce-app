@@ -10,7 +10,7 @@ import { DrawerNavigation } from "./DrawerNavigation";
 import Search from "src/screens/Search/Search";
 
 const CustomTabBarButton = ({ children, onPress, accessibilityState }: any) => {
-  const focused = accessibilityState.selected;
+  const focused = accessibilityState?.selected;
 
   return (
     <TouchableOpacity

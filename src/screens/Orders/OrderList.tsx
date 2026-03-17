@@ -23,7 +23,7 @@ const OrderList = () => {
                 borderBottomWidth: 0
             },
             headerTintColor: "white",
-            headerTitleStyle: 'instrumentSans-Bold',
+            headerTitleStyle: { fontFamily: 'instrumentSans-Bold' },
             headerLeft: () => {
                 return <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
                     <Feather name="arrow-left-circle" size={24} color="white" />

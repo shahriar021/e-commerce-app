@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, Dimensions, ActivityIndicator } from 'react-native'
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import {  Feather } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
 import { scale, verticalScale } from 'react-native-size-matters';
 import { useUpdateBrandProfileMutation } from 'src/redux/features/profile/profile/profileApi';
 import { launchCameraAndHandlePermissions } from 'src/components/shared/ShareCamera';
@@ -29,35 +29,35 @@ const BrandProfile = () => {
     const [profile, setProfile] = useState<ProfileResponse | null>(null);
 
     useEffect(() => {
-    const loadProfile = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem('user_profile');
-        if (jsonValue != null) {
-          setProfile(JSON.parse(jsonValue));
-        }
-      } catch (e) {
-      }
-    };
+        const loadProfile = async () => {
+            try {
+                const jsonValue = await AsyncStorage.getItem('user_profile');
+                if (jsonValue != null) {
+                    setProfile(JSON.parse(jsonValue));
+                }
+            } catch (e) {
+            }
+        };
 
-    loadProfile();
-  }, []);
-  useFocusEffect(
-    useCallback(() => {
-      const loadProfile = async () => {
-        try {
-          const jsonValue = await AsyncStorage.getItem('user_profile');
-          if (jsonValue != null) {
-            setProfile(JSON.parse(jsonValue));
-          }
-        } catch (e) {
-        }
-      };
-      loadProfile();
-      return () => {
-      };
+        loadProfile();
+    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            const loadProfile = async () => {
+                try {
+                    const jsonValue = await AsyncStorage.getItem('user_profile');
+                    if (jsonValue != null) {
+                        setProfile(JSON.parse(jsonValue));
+                    }
+                } catch (e) {
+                }
+            };
+            loadProfile();
+            return () => {
+            };
 
-    }, [])
-  );
+        }, [])
+    );
 
 
     useLayoutEffect(() => {
@@ -71,7 +71,9 @@ const BrandProfile = () => {
             },
             headerTintColor: "white",
             headerTitleAlign: "start",
-            headerTitleStyle: "instrumentSans-Bold",
+            headerTitleStyle: {
+                fontFamily: "instrumentSans-Bold",
+            },
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
                     <Feather name="arrow-left-circle" size={24} color="white" />
@@ -81,14 +83,14 @@ const BrandProfile = () => {
     }, [navigation])
 
     const openCamera = async () => {
-        const asset:any = await launchCameraAndHandlePermissions();
+        const asset: any = await launchCameraAndHandlePermissions();
         if (asset) {
             setSelectedImage(asset);
         }
     };
 
-      const openCamera2 = async () => {
-        const asset:any = await launchCameraAndHandlePermissions();
+    const openCamera2 = async () => {
+        const asset: any = await launchCameraAndHandlePermissions();
         if (asset) {
             setSelectedImage2(asset);
         }
@@ -110,7 +112,7 @@ const BrandProfile = () => {
 
         if (selectedImage) {
 
-            const imageFile:any = {
+            const imageFile: any = {
                 uri: selectedImage?.uri,
                 name: selectedImage?.fileName,
                 type: selectedImage?.mimeType
@@ -120,7 +122,7 @@ const BrandProfile = () => {
 
         if (selectedImage2) {
 
-            const imageFile:any = {
+            const imageFile: any = {
                 uri: selectedImage2?.uri,
                 name: selectedImage2?.fileName,
                 type: selectedImage2?.mimeType
@@ -144,7 +146,7 @@ const BrandProfile = () => {
     return (
         <ScrollView contentContainerStyle={{ alignItems: "center", padding: 12, paddingBottom: 100 }}>
             <View style={{ width: width * 0.3, height: height * 0.15 }} className='rounded-full  mt-4 relative '>
-                {selectedImage ? <Image source={{ uri: selectedImage?.uri }} style={{ width: '100%', height: '100%', borderRadius: 100 }} /> : <Image source={{uri:profile?.data?.brandLogo[0]}} style={{ width: '100%', height: '100%',borderRadius: 100  }} />}
+                {selectedImage ? <Image source={{ uri: selectedImage?.uri }} style={{ width: '100%', height: '100%', borderRadius: 100 }} /> : <Image source={{ uri: profile?.data?.brandLogo[0] }} style={{ width: '100%', height: '100%', borderRadius: 100 }} />}
                 <TouchableOpacity className="absolute z-10 bg-[#2A2A2A] p-1 rounded-full" style={{
                     width: scale(24), height: scale(24), bottom: verticalScale(12), left: '50%',
                     transform: [{ translateX: scale(60) / 2 }]
@@ -225,13 +227,13 @@ const BrandProfile = () => {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={openCamera2} className='bg-[#252525] w-full m-2 p-2 rounded-lg'>
-                <Text className='text-white'>{selectedImage2?selectedImage2?.fileName:"Change your cover photo"}</Text>
+                <Text className='text-white'>{selectedImage2 ? selectedImage2?.fileName : "Change your cover photo"}</Text>
             </TouchableOpacity>
 
             <View className="items-center">
                 <TouchableOpacity className=" items-center mt-3 rounded-full  overflow-hidden bg-[#FFF]" style={{ width: width * 0.9 }} onPress={handleUpdate}>
 
-                    <Text className="text-[#121212] p-3 font-instrumentSansBold">{loading?<ActivityIndicator size={"small"} color={"white"}/>:"Save Changes"}</Text>
+                    <Text className="text-[#121212] p-3 font-instrumentSansBold">{loading ? <ActivityIndicator size={"small"} color={"white"} /> : "Save Changes"}</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>

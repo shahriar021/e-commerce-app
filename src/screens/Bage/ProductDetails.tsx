@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, Image, useWindowDimensions, Alert, } from "react-native";
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { AntDesign, Feather, FontAwesome, Ionicons, } from "@expo/vector-icons";
 import { Rating } from "react-native-ratings";
@@ -31,7 +31,7 @@ const ProductDetails = ({ navigation }: Props) => {
     const [selectedSize, setSelectedSize] = useState<SizeData | null>(null);
     const [quantity, setQuanity] = useState(1);
     const [limit] = useState(2);
-    
+
     const { data } = useGetSpecificProductBasedOnIdQuery({ token, id: ID });
     const { data: getReview } = useGetALlReviewBasedOnIdQuery({
         token,
@@ -41,28 +41,28 @@ const ProductDetails = ({ navigation }: Props) => {
     const [postCart] = usePostAddToCartMutation();
     const [postFavourite] = usePostFavProductMutation();
 
-    navigation.setOptions({
-        headerStyle: {
-            backgroundColor: "#121212",
-            elevation: 0,
-            shadowOpacity: 0,
-            borderBottomWidth: 0,
-        },
-        headerTitle: () => null,
-        headerLeft: () => (
-            <TouchableOpacity
-                className="flex-row gap-2 items-center"
-                onPress={() => navigation.goBack()}
-            >
-                <Feather name="arrow-left-circle" size={24} color="white" />
-                <View className="">
-                    <Text className="font-instrumentSansBold text-white text-2xl">
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerStyle: {
+                backgroundColor: "#121212",
+                elevation: 0,
+                shadowOpacity: 0,
+                borderBottomWidth: 0,
+            },
+            headerTitle: () => null,
+            headerLeft: () => (
+                <TouchableOpacity
+                    style={{ flexDirection: "row", gap: 8, alignItems: "center" }}
+                    onPress={() => navigation.goBack()}
+                >
+                    <Feather name="arrow-left-circle" size={24} color="white" />
+                    <Text style={{ fontFamily: "instrumentSans-Bold", color: "white", fontSize: 24 }}>
                         Product Details
                     </Text>
-                </View>
-            </TouchableOpacity>
-        ),
-    });
+                </TouchableOpacity>
+            ),
+        });
+    }, [navigation])
 
     const handleQuantity = (type: string) => {
         if (type == "add") {
@@ -99,7 +99,7 @@ const ProductDetails = ({ navigation }: Props) => {
     };
 
     const handleFav = async (id: string) => {
-      
+
         try {
             const res = await postFavourite({ token, id }).unwrap();
             setIsHeart(res?.success);
@@ -108,10 +108,10 @@ const ProductDetails = ({ navigation }: Props) => {
     };
 
     const handleNavigateToReview = () => {
-    if (ID) {
-      navigation.navigate("Review", { id: ID });
-    }
-  };
+        if (ID) {
+            navigation.navigate("Review", { id: ID });
+        }
+    };
 
     return (
         <View className="flex-1 bg-[#121212] p-3">
@@ -136,10 +136,8 @@ const ProductDetails = ({ navigation }: Props) => {
                             borderRadius: 20,
                         }}
                     />
-                    <View className="absolute flex-row justify-between top-2 left-3 right-3 items-center ">
-                        <TouchableOpacity className="bg-[#252525] p-3 rounded-full">
-                            <Ionicons name="chevron-back-sharp" size={24} color="white" />
-                        </TouchableOpacity>
+                    <View className="absolute flex-end top-2 left-3 right-3 items-end ">
+
                         <TouchableOpacity
                             className="bg-[#252525] p-3 rounded-full"
                             onPress={() => handleFav(data?.data?.product[0]?.id)}
@@ -158,7 +156,7 @@ const ProductDetails = ({ navigation }: Props) => {
                             {data?.data?.product[0]?.productName}
                         </Text>
                         <Text className="text-white font-instrumentSansSemiBold">
-                            ${data?.data?.product[0]?.price}
+                            {`$${data?.data?.product[0]?.price ?? ''}`}
                         </Text>
                     </View>
                     <View className="flex-row items-center gap-2">
@@ -196,7 +194,7 @@ const ProductDetails = ({ navigation }: Props) => {
                         Color
                     </Text>
                     <View className="flex-row gap-2 mt-1 mb-1">
-                        {data?.data?.product[0]?.colors.map((item: any) => (<TouchableOpacity onPress={() => setIsColor(item)} className={`rounded-full ${isColor == item ? "border-white" : "border-transparent"} border-2`}                           >                               <FontAwesome name="circle" size={24} color={item} />                           </TouchableOpacity>))}
+                        {data?.data?.product[0]?.colors.map((item: any, index: any) => (<TouchableOpacity key={index} onPress={() => setIsColor(item)} className={`rounded-full ${isColor == item ? "border-white" : "border-transparent"} border-2`}                           >                               <FontAwesome name="circle" size={24} color={item} />                           </TouchableOpacity>))}
                     </View>
                     <Text className="text-[#ADAEBC] font-instrumentSansSemiBold mt-2">
                         Custom Size
@@ -226,9 +224,9 @@ const ProductDetails = ({ navigation }: Props) => {
 
                     <View className="mt-2 flex-row justify-between mb-5">
                         <Text className="font-instrumentSansSemiBold text-white mt-4">
-                            Review({getReview?.data?.meta?.total})
+                            {`Review(${getReview?.data?.meta?.total ?? 0})`}
                         </Text>
-                        <TouchableOpacity onPress={handleNavigateToReview}><Text className="font-instrumentSansSemiBold text-[#ADAEBC]"> See All</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={handleNavigateToReview}><Text className="font-instrumentSansSemiBold text-[#ADAEBC]">See All</Text></TouchableOpacity>
                     </View>
                     {/* review */}
                     <View className="flex-row justify-between mt-2 mb-1">
@@ -265,7 +263,7 @@ const ProductDetails = ({ navigation }: Props) => {
                         </View>
                     </View>
                     <Text className="font-instrumentRegular text-[#fff] mt-2">
-                        {getReview?.data?.data[0]?.comments}
+                        {getReview?.data?.data[0]?.comments || ""}
                     </Text>
                     <View
                         className="mt-2 rounded-xl overflow-hidden"
@@ -282,9 +280,7 @@ const ProductDetails = ({ navigation }: Props) => {
                         onPress={handleAddToCart}
                     >
                         <Image source={require("../../../assets/e-icon/Main Icon.png")} />
-                        <Text className="text-[#DCF3FF] font-instrumentSansBold">
-                            Add to Cart 
-                        </Text>
+                        <Text className="text-[#DCF3FF] font-instrumentSansBold">Add to Cart</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

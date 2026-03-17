@@ -7,31 +7,36 @@ import { usePostFeedPostMutation } from 'src/redux/features/feedApi/feedApi'
 import * as ImagePicker from 'expo-image-picker';
 import { useAppSelector } from 'src/redux/hooks'
 import { useFeatureBrandsQuery } from 'src/redux/features/brand/brandApi'
-import  { Toast } from 'toastify-react-native'
+import { Toast } from 'toastify-react-native'
 import { ImageObject } from 'src/types/search'
 import { SelectedBrand } from 'src/types/feed'
+import { useGetProfileQuery } from "src/redux/features/profile/profile/profileApi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const CreatePostModal = ({ visible, onClose }: any) => {
+const CreatePostModal = ({ visible, onClose,onPostSuccess }: any) => {
 
-    const {  height } = useWindowDimensions()
+    const { height } = useWindowDimensions()
     const token = useAppSelector((state) => state.auth.token);
     const [loadMore] = useState(100)
     const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
-    const [loading,setLoading]=useState(false)
+    const [loading, setLoading] = useState(false)
     const [postFeed] = usePostFeedPostMutation()
     const [hashtag, setHashtag] = useState<string[]>([])
     const [comment, setComments] = useState("");
-    const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null );
+    const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
     const [selectedBrand, setSelectedBrand] = useState<SelectedBrand | null>(null);
+    const { refetch } = useGetProfileQuery(token);
+
+    const userType = useAppSelector((state) => state.auth.userType);
 
     const handleHashTag = (text: string) => {
         const hashTagArray = text.split(" ").filter(Boolean);
         setHashtag([...new Set(hashTagArray)]);
     }
     const handlePost = async () => {
-        if(!selectedImage || !hashtag || !comment ||!selectedBrand){
+        if (!selectedImage || !hashtag || !comment || !selectedBrand) {
             Alert.alert("Fill all the fields to post!")
-            return ;
+            return;
         }
         setLoading(true);
         const formData = new FormData()
@@ -40,7 +45,7 @@ const CreatePostModal = ({ visible, onClose }: any) => {
             tags: hashtag, caption: comment, brandName: selectedBrand?.brandName, brandId: selectedBrand?._id
         }
         if (selectedImage) {
-            const imageFile:any = {
+            const imageFile: any = {
                 uri: selectedImage?.uri,
                 name: selectedImage?.fileName,
                 type: selectedImage?.mimeType
@@ -49,21 +54,24 @@ const CreatePostModal = ({ visible, onClose }: any) => {
         }
         formData.append("data", JSON.stringify(data))
         try {
-            
+
             const res = await postFeed({ token, formData }).unwrap()
-            if(res.success){
+            if (res.success) {
                 setComments("")
                 setHashtag([''])
+                const updatedProfile = await refetch().unwrap();
+                await AsyncStorage.setItem('user_profile', JSON.stringify(updatedProfile));
                 Toast.success('Posted')
+                onPostSuccess() 
                 onClose()
-            }else{
+            } else {
                 Toast.warn('Something went wrong!!')
                 onClose()
             }
         } catch (err) {
             Toast.error("Something went wrong!!")
             setLoading(false)
-        }finally{
+        } finally {
             setLoading(false)
         }
     }
@@ -94,10 +102,10 @@ const CreatePostModal = ({ visible, onClose }: any) => {
             } else {
                 alert("Permission to access camera is required!");
             }
-            return; 
+            return;
         }
 
-        const result:any = await ImagePicker.launchCameraAsync({
+        const result: any = await ImagePicker.launchCameraAsync({
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
@@ -144,15 +152,16 @@ const CreatePostModal = ({ visible, onClose }: any) => {
 
                         <TextInput className='bg-[#2C2C2C] flex-1 border w-full p-5 rounded-lg mt-4 mb-2' placeholderTextColor={"#ADAEBC"} placeholder='Add comments..' style={{ color: "#ADAEBC" }} onChangeText={setComments} />
 
-                        <Text className='font-instrumentSansSemiBold text-white w-full mt-2'>Select Brand</Text>
+                        <Text className='font-instrumentSansSemiBold text-white w-full mt-2'>
+                            {userType === "Brand" ? "Posting as your Brand" : "Select Brand"}
+                        </Text>
 
                         <View className='flex-row items-center mt-4 gap-4 border   rounded-xl bg-[#2C2C2C] px-1' >
                             <CreateModalSelecPicker data={data?.data} selectedState={selectedBrand} setSelectedState={setSelectedBrand} />
-                            <AntDesign name="down" size={24} color="white" />
                         </View>
 
                         <TouchableOpacity className='bg-[#1D3725] w-full p-4 items-center rounded-xl mt-5 mb-4' onPress={handlePost}>
-                            <Text className='text-[#CACACA] font-instrumentSansBold text-xl'>{loading?<ActivityIndicator size={"small"} color={"blue"}/>:"Post"}</Text>
+                            <Text className='text-[#CACACA] font-instrumentSansBold text-xl'>{loading ? <ActivityIndicator size={"small"} color={"blue"} /> : "Post"}</Text>
                         </TouchableOpacity>
                     </ScrollView>
                 </View>

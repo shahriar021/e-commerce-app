@@ -1,14 +1,21 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { getTime } from 'src/components/shared/timeHistory'
 import { useAppSelector } from 'src/redux/hooks'
 import { useGetIndividualPostQuery } from 'src/redux/features/profile/profile/profileApi'
+import { useFocusEffect } from '@react-navigation/native'
 
 const Posts = ({ data}:any) => {
     const token = useAppSelector((state) => state.auth.token)
     const [postLoadlimit, setPostLoadlimit] = useState(10);
-    const { data: getPostData } = useGetIndividualPostQuery({ token, uid: data, limit: postLoadlimit })
+    const { data: getPostData,refetch } = useGetIndividualPostQuery({ token, uid: data, limit: postLoadlimit })
+
+     useFocusEffect(
+        useCallback(() => {
+            if (data) refetch();
+        }, [data, refetch])
+    );
 
     return (
         <View className='flex-1 bg-[#121212] w-full p-3'>

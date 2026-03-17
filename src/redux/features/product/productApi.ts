@@ -143,6 +143,17 @@ const productApi = baseApi.injectEndpoints({
                     }
                 }
             }
+        }),
+
+        getSearchProduct:builder.query({
+            query:({token,name})=>{
+                return{
+                    url:`/product?searchTerm=${name}`,
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
+            }
         })
     }),
 });
@@ -154,5 +165,6 @@ export const {
     useUploadProductMutation,
     useDeleteProductMutation,
     useUpdateProductMutation,
-    useGetCategoryListQuery
+    useGetCategoryListQuery,
+    useGetSearchProductQuery
 } = productApi;

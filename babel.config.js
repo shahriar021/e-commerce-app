@@ -1,12 +1,8 @@
-const plugin = require("tailwindcss");
-const { plugins } = require("./tailwind.config");
-
 module.exports = function (api) {
   api.cache(true);
   return {
     presets: [
       ["babel-preset-expo", { jsxImportSource: "nativewind" }],
-      "nativewind/babel",
     ],
     plugins: [
       [
@@ -20,6 +16,7 @@ module.exports = function (api) {
           allowUndefined: true,
         },
       ],
+      "react-native-reanimated/plugin", // still required even in RN 0.79, must be LAST
     ],
   };
 };

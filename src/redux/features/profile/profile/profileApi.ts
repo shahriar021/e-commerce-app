@@ -47,7 +47,8 @@ const profileApi = baseApi.injectEndpoints({
                     },
                     method:"GET"
                 }
-            }
+            },
+            providesTags: ['feedPost'],
         }),
 
         getIndividualPost:builder.query({

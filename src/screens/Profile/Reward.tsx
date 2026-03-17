@@ -110,7 +110,7 @@ const Reward = () => {
             },
             headerTintColor: "white",
             headerTitleAlign: "start",
-            headerTitleStyle: 'instrumentSans-Bold',
+            headerTitleStyle: { fontFamily: 'instrumentSans-Bold' },
             headerLeft: () => (
                 <TouchableOpacity className='p-1' onPress={() => navigation.goBack()}>
                     <Feather name="arrow-left-circle" size={24} color="white" />

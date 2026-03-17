@@ -1,13 +1,13 @@
 import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, ActivityIndicator, Alert, Keyboard, RefreshControl, } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { scale, verticalScale } from 'react-native-size-matters';
-import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { AntDesign, Feather, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import CreatePostModal from './CreatePostModal';
 import { useAppSelector } from 'src/redux/hooks';
 import { useGetAllPostQuery, useGetCommentsQuery, useGetFeedFilterQuery, usePostCommentBasedOnIdMutation, usePostLikeMutation, usePostSaveMutation } from 'src/redux/features/feedApi/feedApi';
 import { getTime } from 'src/components/shared/timeHistory';
 import { Toast } from 'toastify-react-native';
-import {  Comment, FeedCategoryResponse,  Post,  } from 'src/types/feed';
+import { Comment, FeedCategoryResponse, Post, } from 'src/types/feed';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from 'src/types/screens';
 import { handleShare } from 'src/utils/feed/handleShare';
@@ -30,7 +30,7 @@ const Feed = ({ navigation }: Props) => {
     const [postComment] = usePostCommentBasedOnIdMutation()
     const [postLike] = usePostLikeMutation()
     const [postSave] = usePostSaveMutation()
-    const { data: getPostData, isLoading, error,refetch } = useGetAllPostQuery({ token, limit: loadMore, tag: selectedItem })
+    const { data: getPostData, isLoading, error, refetch } = useGetAllPostQuery({ token, limit: loadMore, tag: selectedItem })
     const { data: getFeedCat } = useGetFeedFilterQuery(token) as { data?: FeedCategoryResponse }
     const { data: getComment } = useGetCommentsQuery({ token, pid: selectedCid })
 
@@ -40,10 +40,10 @@ const Feed = ({ navigation }: Props) => {
         feedCatgory.unshift("ALL")
     }
     const onRefresh = async () => {
-    setRefreshing(true)
-    await refetch() // your RTK Query refetch function
-    setRefreshing(false)
-  }
+        setRefreshing(true)
+        await refetch() // your RTK Query refetch function
+        setRefreshing(false)
+    }
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -127,7 +127,7 @@ const Feed = ({ navigation }: Props) => {
         }
 
     }
-    
+
 
     return (
         <View className='flex-1 bg-[#121212] p-5 relative'>
@@ -148,19 +148,25 @@ const Feed = ({ navigation }: Props) => {
             {isLoading && <ActivityIndicator size={"large"} color={"blue"} />}
 
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          tintColor="#ffffff"
-          colors={["#237227"]}
-        />
-      }>
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    tintColor="#ffffff"
+                    colors={["#237227"]}
+                />
+            }>
                 {getPostData?.data?.data?.map((item: Post, index: number) =>
                     <View key={index}>
                         <View className='flex-row justify-between mt-4 mb-1 '>
                             <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile", { upID: item?.uploaderId })}>
                                 <View style={{ width: scale(30), height: scale(30) }}>
-                                    {item?.uploaderType == "Brand" ? <Image source={{ uri: item?.brandLogo?.[0] }} style={{ width: "100%", height: "100%",borderRadius:10,overflow:"hidden" }} /> : <Image source={{ uri: item?.profile[0] }} style={{ width: "100%", height: "100%",borderRadius:10,overflow:"hidden" }} />}
+                                    {item?.uploaderType == "Brand" && item?.brandLogo?.[0] ? (
+                                        <Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%", borderRadius: 10, overflow: "hidden" }} />
+                                    ) : item?.uploaderType != "Brand" && item?.profile?.[0] ? (
+                                        <Image source={{ uri: item.profile[0] }} style={{ width: "100%", height: "100%", borderRadius: 10, overflow: "hidden" }} />
+                                    ) : (
+                                        <Feather name="user" size={scale(30)} color="#999" />
+                                    )}
                                 </View>
                                 <View className='flex-col  gap-2'>
 

@@ -55,6 +55,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      "./plugins/withRootBuildGradle",
       "@react-native-firebase/app",
       [
         "react-native-share",
@@ -97,9 +98,13 @@
         "expo-build-properties",
         {
           "android": {
+            "ndkVersion": "27.1.12297006",
+            "agpVersion": "8.5.1",
             "kotlinVersion": "2.0.21",
             "targetSdkVersion": 35,
             "compileSdkVersion": 35,
+            "buildToolsVersion": "35.0.0",
+            "newArchEnabled": true,
             "freeCompilerArgs": [
               "-Xskip-prerelease-check",
               "-P",
@@ -108,11 +113,27 @@
           }
         }
       ],
-      "expo-font"
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/AntDesign.ttf",
+            "./node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Entypo.ttf",
+            "./node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Feather.ttf",
+            "./node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
+            "./node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
+            "./node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
+            "./node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Ionicons.ttf",
+            "./node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
+            "./node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"
+          ]
+        }
+      ],
+      "@react-native-community/datetimepicker"
     ],
     "extra": {
       "eas": {
-        "projectId": ""
+        "projectId": "a85a43b9-4bdc-4ae7-bc58-98b35eed0ecb"
       }
     },
     "owner": "bdcalling"

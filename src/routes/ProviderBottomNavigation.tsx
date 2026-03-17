@@ -10,9 +10,10 @@ import { DrawerNavigation } from "./DrawerNavigation";
 import ProviderHomePage from "src/screens/Home/ProviderHomePage";
 import Products from "src/screens/Products/Products";
 import Earning from "src/screens/Earning/Earning";
+import { useAppSelector } from "src/redux/hooks";
 
 const CustomTabBarButton = ({ children, onPress, accessibilityState }: any) => {
-  const focused = accessibilityState.selected;
+  const focused = accessibilityState?.selected;
 
   return (
     <TouchableOpacity
@@ -33,7 +34,7 @@ const CustomTabBarButton = ({ children, onPress, accessibilityState }: any) => {
 
 
 export const ProviderBottomNavigation = () => {
-
+  
 
   const { width } = useWindowDimensions();
 

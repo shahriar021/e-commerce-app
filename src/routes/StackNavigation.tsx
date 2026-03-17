@@ -27,7 +27,6 @@ import Review from "src/screens/Review/Review";
 import Products from "src/screens/Products/Products";
 import AddProducts from "src/screens/Products/AddProducts";
 import AllProducts from "src/screens/Products/AllProducts";
-import SellerProfile from "src/screens/Profile/SellerProfile";
 import BrandProfile from "src/screens/Profile/BrandProfile";
 import SeeAllProducts from "src/screens/Bage/SeeAllProducts";
 import SeeAllBrands from "src/screens/Bage/SeeAllBrands";
@@ -47,12 +46,12 @@ import Notification from "src/screens/Notification/Notification";
 const Stack = createStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
-  const userType = useAppSelector((store)=>store.auth.userType)
+  const userType = useAppSelector((store)=>store?.auth?.userType)
   
 
 
   if(!userType){
-    <ActivityIndicator size="large"/>
+    return <ActivityIndicator size="large"/>
   }
 
   return (
@@ -108,7 +107,6 @@ const StackNavigation = () => {
         <Stack.Screen name="Add Products" options={{headerShown:true}} component={AddProducts}/>
         <Stack.Screen name="Edit Products" options={{headerShown:true}} component={EditProducts}/>
         <Stack.Screen name="All Products" options={{headerShown:true}} component={AllProducts}/>
-         <Stack.Screen name="Seller Profile" options={{headerShown:true}} component={SellerProfile}/>
         <Stack.Screen name="Brand Profile" options={{headerShown:true}} component={BrandProfile}/>
         <Stack.Screen name="Reward" options={{headerShown:true}} component={Reward}/>
         <Stack.Screen name="Payment screen" options={{headerShown:true}} component={PaymentScreen}/>

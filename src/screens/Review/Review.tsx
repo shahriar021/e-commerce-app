@@ -56,7 +56,7 @@ const Review = () => {
                 <View className='flex-1 bg-[#121212] p-4  w-full'>
                     {isLoading&&<ActivityIndicator size={"large"}/>}
 
-                    {getReview?.data?.data?.map((item: any) => <View className='bg-[#2C2C2C] rounded-lg overflow-hidden p-2 mt-2 mb-3'>
+                    {!getReview?.data?.data?.length ?<Text className='text-white text-center font-medium text-lg'>No Reviews</Text> :getReview?.data?.data?.map((item: any) => <View className='bg-[#2C2C2C] rounded-lg overflow-hidden p-2 mt-2 mb-3'>
                         <View className='flex-row justify-between mt-2 mb-1'>
                             <View className='flex-row gap-2 items-center'>
                                 <View style={{ width: scale(30), height: scale(30) }}>

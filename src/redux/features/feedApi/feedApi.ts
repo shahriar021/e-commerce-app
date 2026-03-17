@@ -47,7 +47,7 @@ const feedApi=baseApi.injectEndpoints({
                     body:formData
                 }
             },
-            invalidatesTags:['feedPost']
+            invalidatesTags:['feedPost','profile']
         }),
 
         getComments:builder.query({

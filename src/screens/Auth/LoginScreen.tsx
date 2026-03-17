@@ -89,6 +89,7 @@ const LoginScreen = () => {
             setLoading(false)
             const errorMessage = err?.data?.message || err?.message || "Something went wrong!";
             Alert.alert("Error", errorMessage);
+            console.log(err,"erorororor")
         }
     };
 

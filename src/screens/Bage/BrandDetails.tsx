@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import {  useRoute,RouteProp } from '@react-navigation/native'
 import { AntDesign, Feather, Ionicons } from '@expo/vector-icons'
 import { scale, verticalScale } from 'react-native-size-matters'
@@ -23,7 +23,8 @@ const BrandDetails = ({navigation}:Props) => {
     const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
     const { data: getData } = useGetBrandWithIdQuery({ token, id: id })
 
-    navigation.setOptions({
+    useLayoutEffect(()=>{
+        navigation.setOptions({
         headerStyle: {
             backgroundColor: "#121212",
             elevation: 0,
@@ -41,6 +42,7 @@ const BrandDetails = ({navigation}:Props) => {
             </TouchableOpacity>
         )
     });
+    },[navigation])
 
 
     return (
@@ -65,7 +67,7 @@ const BrandDetails = ({navigation}:Props) => {
 
                 {data?.data?.data?.map((item:BrandItem, index:number) =>
 
-                    <TouchableOpacity key={index} className='relative gap-3 rounded-xl overflow-hidden mt-1 mb-1 mr-3' style={{ width: scale(150), height: verticalScale(150) }}>
+                    <TouchableOpacity key={index} className='relative gap-3 rounded-xl overflow-hidden mt-1 mb-1 mr-3' style={{ width: scale(150), height: verticalScale(150) }} onPress={() => navigation.navigate("Brand Details", { id: item._id })}>
                         <Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%" }} />
                         <Text className='absolute  bottom-3 left-0 right-0 text-xl font-instrumentSansSemiBold text-white text-center'>{item.brandName}</Text>
                     </TouchableOpacity>
