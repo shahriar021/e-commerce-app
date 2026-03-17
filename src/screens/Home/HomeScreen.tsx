@@ -4,16 +4,15 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 import {
   View,
   ScrollView,
-  Image,
   Dimensions,
   Text,
   TouchableOpacity,
-  Animated,
   NativeSyntheticEvent,
   NativeScrollEvent,
+  RefreshControl,
 } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
-import { images, images2 } from "./demo";
+import { images } from "./demo";
 import BrandWeek from "src/components/ui/homepage/BrandWeek";
 import SearchModal from "./SearchModal";
 import { useFeatureBrandsQuery } from "src/redux/features/brand/brandApi";
@@ -21,6 +20,8 @@ import { useAppSelector } from "src/redux/hooks";
 import { useGetAddToCartQuery } from "src/redux/features/cart/cartApi";
 import { RootStackParamList } from "src/types/screens";
 import { StackNavigationProp } from '@react-navigation/stack';
+import { Image } from 'expo-image'
+
 
 const { width } = Dimensions.get("screen");
 
@@ -32,7 +33,7 @@ const HomeScreen = () => {
   const [searchModal, setSearchModal] = useState(false)
   const [loadMore, setLoadMore] = useState(5)
   const token = useAppSelector((state) => state.auth.token);
-  const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
+  const { data, isFetching, refetch } = useFeatureBrandsQuery({ token, limit: loadMore })
   const { data: getCart } = useGetAddToCartQuery(token);
 
 
@@ -66,7 +67,9 @@ const HomeScreen = () => {
     }, [images.length])
   );
 
-
+  const onRefresh = useCallback(() => {
+    refetch();
+  }, [refetch]);
 
   const handleScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const index = Math.round(event.nativeEvent.contentOffset.x / width);
@@ -80,7 +83,14 @@ const HomeScreen = () => {
 
   return (
     <>
-      <ScrollView className="bg-[#121212] flex-1" contentContainerStyle={{ paddingBottom: 100 }}>
+      <ScrollView className="bg-[#121212] flex-1" contentContainerStyle={{ paddingBottom: 100 }} refreshControl={
+        <RefreshControl
+          refreshing={isFetching}
+          onRefresh={onRefresh}
+          tintColor="#4ADE80"
+          colors={["#4ADE80"]}
+        />
+      }>
         {/* Image Slider Wrapper */}
         <View style={{ position: "relative" }} >
           {/* Image ScrollView */}
@@ -98,7 +108,7 @@ const HomeScreen = () => {
                 key={index}
                 source={image}
                 style={{ width, height: verticalScale(550) }}
-                resizeMode="cover"
+                contentFit="cover"
               />
             ))}
           </ScrollView>
@@ -181,7 +191,7 @@ const HomeScreen = () => {
           <Text className="font-instrumentSansBold text-3xl text-center text-[#fff] mt-5">Featured Brands</Text>
           <Text className="font-instrumentSansSemiBold text-lg text-center text-[#fff] mt-2 max-w-[90%]">Discover premium collections from top designers</Text>
 
-          {data?.data?.data?.map((item: any,index:number) => <TouchableOpacity key={index} className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }} onPress={() => navigation.navigate("Brand Details", { id: item._id })}>
+          {data?.data?.data?.map((item: any, index: number) => <TouchableOpacity key={index} className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }} onPress={() => navigation.navigate("Brand Details", { id: item._id })}>
             <View className="rounded-3xl overflow-hidden" style={{ width: scale(80), height: verticalScale(80) }}>
               <Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%" }} className="rounded-3xl" />
             </View>

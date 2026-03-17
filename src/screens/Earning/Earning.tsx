@@ -5,6 +5,7 @@ import {
     ScrollView,
     Image,
     TouchableOpacity,
+    RefreshControl,
 } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -23,14 +24,16 @@ const Earning = () => {
     const currentMonthIndex = new Date().getMonth();
     const [year, setYear] = useState(date.getFullYear())
     const [showModal, setShowModal] = useState(false)
-    const { data: getEarningGraph } = useGetGraphQuery({token,year});
-    const { data: getEarningStats } = useGetEarningStatsQuery(token);
-    const { data: getTransaction } = useGetTransactionQuery(String(token));
+    const { data: getEarningGraph,refetch: refetchEarningGraph,isFetching: isFetchingEarningGraph } = useGetGraphQuery({token,year});
+    const { data: getEarningStats,refetch: refetchEarningStats,isFetching: isFetchingEarningStats } = useGetEarningStatsQuery(token);
+    const { data: getTransaction,refetch: refetchTransaction,isFetching: isFetchingTransaction } = useGetTransactionQuery(String(token));
     const data = getEarningGraph?.data.map((item: any, index: any) => ({
         value: item.earnings,
         label: item.month,
         frontColor: index === currentMonthIndex ? "#DCF3FF" : "#464747",
     }));
+
+    const isRefreshing = isFetchingEarningGraph || isFetchingEarningStats || isFetchingTransaction;
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -58,10 +61,32 @@ const Earning = () => {
         setShowModal(true)
     }
 
+    const onRefresh = React.useCallback(async () => {
+        // Trigger all three at once
+        // We use Promise.all to make it clean, though refetch doesn't strictly require it
+        try {
+            await Promise.all([
+                refetchEarningGraph(),
+                refetchEarningStats(),
+                refetchTransaction()
+            ]);
+        } catch (error) {
+            console.error("Refresh failed", error);
+        }
+    }, [refetchEarningGraph, refetchEarningStats, refetchTransaction]);
+
     return (
         <ScrollView
             className="flex-1 bg-[#121212] p-5"
             contentContainerStyle={{ paddingBottom: 100 }}
+            refreshControl={
+                    <RefreshControl
+                        refreshing={isRefreshing} // Shows spinner if any fetch is active
+                        onRefresh={onRefresh}
+                        tintColor="#86EFAC" // Your brand green
+                        colors={["#86EFAC"]}
+                    />
+                }
         >
             <View className="flex-row flex-wrap justify-between">
                 <View

@@ -7,7 +7,7 @@ import {
     useWindowDimensions,
     Animated,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
     AntDesign,
@@ -35,7 +35,8 @@ const DetailsProduct = () => {
     const { data } = useGetSpecificProductBasedOnIdQuery({ token, id: id });
     const [deleteProduct] = useDeleteProductMutation();
 
-    navigation.setOptions({
+    useLayoutEffect(()=>{
+        navigation.setOptions({
         headerStyle: {
             backgroundColor: "#121212",
             elevation: 0,
@@ -57,6 +58,7 @@ const DetailsProduct = () => {
             </TouchableOpacity>
         ),
     });
+    },[navigation])
 
     const handleDelete = async () => {
         try {
@@ -92,10 +94,8 @@ const DetailsProduct = () => {
                             borderRadius: 20,
                         }}
                     />
-                    <View className="absolute flex-row justify-between top-2 left-3 right-3 items-center ">
-                        <TouchableOpacity className="bg-[#252525] p-3 rounded-full">
-                            <Ionicons name="chevron-back-sharp" size={24} color="white" />
-                        </TouchableOpacity>
+                    <View className="absolute flex-end top-2 left-3 right-3 items-end ">
+                        
                         <Text className="text-[#86EFAC] p-2 rounded-2xl bg-[#14532D]">
                             {data?.data?.product[0]?.inStock ? "In Stock" : ""}
                         </Text>

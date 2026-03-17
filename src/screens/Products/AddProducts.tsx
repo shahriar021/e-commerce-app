@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     ScrollView,
     Image,
+    ActivityIndicator,
 } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -45,6 +46,7 @@ const AddProducts = () => {
     const [selectWSize3, setSelectWSize3] = useState("");
     const [selectHpSize3, setSelectHpSize3] = useState("");
     const [selectHGSize3, setSelectHGSize3] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const [postProduct] = useUploadProductMutation();
 
@@ -139,16 +141,20 @@ const AddProducts = () => {
                     selectWSize3={selectWSize3} setSelectWSize3={setSelectWSize3} selectChestSize3={selectChestSize3} setSelectChestSize3={setSelectChestSize3}
                 />
                 <TouchableOpacity
+                    disabled={isLoading}
+                    style={{ opacity: isLoading ? 0.6 : 1 }}
                     className="bg-[#1D3725] mt-3 mb-2 items-center p-3 rounded-lg"
                     onPress={() => handleSave({
                         selectedImage, slectedProductName, shortDescription, selectedColors, category, selectChestSize, selectChestSize2, selectChestSize3,
                         selectWSize, selectHpSize, selectHGSize, selectWSize2, selectHpSize2, selectHGSize2, selectWSize3, selectHpSize3, selectHGSize3, totalQuantity, price, dusPrice, isAvailble,
-                        shippingPrice, postProduct, token
+                        shippingPrice, postProduct, token, setIsLoading
                     })}
                 >
-                    <Text className="text-white font-instrumentSansBold">
-                        Save & Publish
-                    </Text>
+                    {isLoading ? (
+                        <ActivityIndicator color="white" />  // ✅ spinner
+                    ) : (
+                        <Text className="text-white font-instrumentSansBold">Save & Publish</Text>
+                    )}
                 </TouchableOpacity>
             </ScrollView>
             <ColorsModal

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Image, RefreshControl } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AntDesign, Ionicons } from '@expo/vector-icons'
@@ -13,7 +13,7 @@ const Products = () => {
 
     const navigation = useNavigation<any>()
     const token = useAppSelector((state) => state.auth.token)
-    const { data: getOrdersBrand, isLoading: orderBrandLoading } = useGetBrandOrderListQuery({ token, limit: 4 })
+    const { data: getOrdersBrand, isLoading: orderBrandLoading,refetch: refetchOrders, isFetching: ordersFetching } = useGetBrandOrderListQuery({ token, limit: 4 })
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -25,10 +25,21 @@ const Products = () => {
         })
     }, [navigation])
 
+    const onRefresh = React.useCallback(() => {
+        refetchOrders();
+    }, []);
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#121212", padding: 10 }}>
 
-            <ScrollView className='py-3 flex-1'>
+            <ScrollView className='py-3 flex-1' refreshControl={
+                    <RefreshControl
+                        refreshing={false} 
+                        onRefresh={onRefresh}
+                        tintColor="#86EFAC"
+                        colors={["#86EFAC"]}
+                    />
+                }>
                 <View className="flex-row justify-between items-center mb-2  p-2">
                     <View className='flex-1'>
                         <Text className=" text-white font-instrumentSansBold text-xl" >

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, ActivityIndicator, Alert, Keyboard, RefreshControl, } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, TextInput, ActivityIndicator, Alert, Keyboard, RefreshControl, } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { scale, verticalScale } from 'react-native-size-matters';
 import { AntDesign, Feather, FontAwesome5, Ionicons } from '@expo/vector-icons';
@@ -11,6 +11,7 @@ import { Comment, FeedCategoryResponse, Post, } from 'src/types/feed';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from 'src/types/screens';
 import { handleShare } from 'src/utils/feed/handleShare';
+import { Image } from 'expo-image'
 
 type Props = {
     navigation: StackNavigationProp<RootStackParamList, "Other/brand profile">;
@@ -203,7 +204,7 @@ const Feed = ({ navigation }: Props) => {
                                     <Text className='text-white font-instrumentRegular mt-2'>{item.totalComments}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity className=' p-2 rounded-full items-center justify-center gap-2' onPress={() => handleSave(item._id)}>
-                                    <Image source={require("../../../assets/e-icon/gb.png")} style={{ width: 18, height: 18 }} resizeMode='contain' /><Text className='text-white'>Save</Text>
+                                    <Image source={require("../../../assets/e-icon/gb.png")} style={{ width: 18, height: 18 }} contentFit='contain' /><Text className='text-white'>Save</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity className=' p-2 rounded-full items-center justify-center gap-2' onPress={() => handleShare(item?.attachment[0], item?.caption)}>
                                     <FontAwesome5 name="share" size={18} color="white" /><Text className='text-white'>Share</Text>

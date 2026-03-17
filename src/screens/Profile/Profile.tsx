@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useLayoutEffect, useState } from "react"
 import {
   View,
   Text,
-  Image,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
+  RefreshControl,
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -16,6 +17,8 @@ import CreatePostModal from "../Feed/CreatePostModal";
 import {  useGetLookbookQuery } from "src/redux/features/profile/profile/profileApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Lookbook from "./Lookbook";
+import { Image } from 'expo-image'
+
 
 type RootStackParamList = {
   Settings: undefined;
@@ -35,7 +38,8 @@ export default function YourComponent() {
   const [profile, setProfile] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [saveLoadlimit, setSaveLoadlimit] = useState(10);
-  const { data: getLookbook } = useGetLookbookQuery({ token, limit: saveLoadlimit });
+  const [isStorageLoading, setIsStorageLoading] = useState(true);
+  const { data: getLookbook,isLoading: isLookbookLoading, refetch } = useGetLookbookQuery({ token, limit: saveLoadlimit });
   const userType = useAppSelector((state) => state.auth.userType)
 
   useEffect(() => {
@@ -46,6 +50,8 @@ export default function YourComponent() {
           setProfile(JSON.parse(jsonValue));
         }
       } catch (e) {
+      }finally {
+        setIsStorageLoading(false); // Stop loading regardless of success/fail
       }
     };
 
@@ -81,7 +87,13 @@ export default function YourComponent() {
     setIsModalOpen(true)
   }
 
-
+  if (isStorageLoading || !profile?.data) {
+    return (
+      <View style={{ flex: 1, backgroundColor: '#121212', justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator color="#86EFAC" size="large" />
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1 relative">
@@ -93,6 +105,13 @@ export default function YourComponent() {
           paddingBottom: verticalScale(40),
           alignItems: 'center',
         }}
+        refreshControl={
+          <RefreshControl 
+            refreshing={isLookbookLoading} 
+            onRefresh={refetch} 
+            tintColor="#86EFAC"
+          />
+        }
         style={{ flex: 1, backgroundColor: '#121212' }}
       >
 
@@ -113,10 +132,9 @@ export default function YourComponent() {
               height: verticalScale(250),
               borderRadius: moderateScale(24),
             }}
-            resizeMode="cover"
+            contentFit="cover"
           />
 
-          {/* Profile Image (centered bottom) */}
           <View
             style={{
               width: scale(102),
@@ -139,20 +157,20 @@ export default function YourComponent() {
                 <Image
                   source={{ uri: profile?.data?.brandLogo?.[0] }}
                   style={{ width: "100%", height: "100%" }}
-                  resizeMode="cover"
+                  contentFit="cover"
                 />
               ) : (
                 <Image
                   source={{ uri: profile?.data?.profile?.[0] }}
                   style={{ width: "100%", height: "100%" }}
-                  resizeMode="cover"
+                  contentFit="cover"
                 />
               )
             ) : (
               <Image
                 source={require("../../../assets/e-icon/img (1).png")}
                 style={{ width: '100%', height: '100%' }}
-                resizeMode="cover"
+                contentFit="cover"
               />
             )}
           </View>

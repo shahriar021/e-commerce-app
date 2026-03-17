@@ -26,18 +26,18 @@ const ProviderHomePage = () => {
     const [year, setYear] = useState(date.getFullYear())
     const [showModal, setShowModal] = useState(false)
     const [refreshing, setRefreshing] = useState(false)
-    const { data: getBrandHomeStats,refetch } = useGetBrandHomeStatsQuery(token)
-    const { data: getBrandHomeGraph,refetch2 } = useGetBrandHomeGraphQuery({ token, year })
+    const { data: getBrandHomeStats, refetch } = useGetBrandHomeStatsQuery(token)
+    const { data: getBrandHomeGraph, refetch2 } = useGetBrandHomeGraphQuery({ token, year })
     const data = getBrandHomeGraph?.data.map((item: any, index: any) => ({
         value: item.orders,
         label: item.month,
         frontColor: index === currentMonthIndex ? "#DCF3FF" : "#464747",
     }));
-    const { data: getOrdersBrand, isLoading: orderBrandLoading,refetch3 } = useGetBrandOrderListQuery({
+    const { data: getOrdersBrand, isLoading: orderBrandLoading, refetch3 } = useGetBrandOrderListQuery({
         token,
         limit: 4,
     });
-    
+
 
     useEffect(() => {
         const loadProfile = async () => {
@@ -78,26 +78,26 @@ const ProviderHomePage = () => {
         setShowModal(true)
     }
 
-     const onRefresh = async () => {
-    setRefreshing(true)
-    await Promise.all([
-    refetch(),
-    refetch2(),
-    refetch3(),
-  ])
-    setRefreshing(false)
-  }
+    const onRefresh = async () => {
+        setRefreshing(true)
+        await Promise.all([
+            refetch(),
+            refetch2(),
+            refetch3(),
+        ])
+        setRefreshing(false)
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#121212", padding: 5 }}>
             <ScrollView className='p-3 flex-1' refreshControl={
-                    <RefreshControl
-                      refreshing={refreshing}
-                      onRefresh={onRefresh}
-                      tintColor="#ffffff"
-                      colors={["#237227"]}
-                    />
-                  }>
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    tintColor="#ffffff"
+                    colors={["#237227"]}
+                />
+            }>
                 <View className="flex-row justify-between items-center mb-2">
                     <View className='flex-col'>
                         <Text className=" text-white font-instrumentSansBold text-xl" >
@@ -105,7 +105,7 @@ const ProviderHomePage = () => {
                         </Text>
                         <Text className='font-instrumentSansSemiBold text-[#9CA3AF]'>{days[date.getDay() as keyof typeof days]} , {month[date.getMonth() as keyof typeof month]} {date.getDate()}</Text>
                     </View>
-                    <Notification/>
+                    <Notification />
                 </View>
                 <View className='flex-row flex-wrap  justify-between'>
                     {getBrandHomeStats?.data &&

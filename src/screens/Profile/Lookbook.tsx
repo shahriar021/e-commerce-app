@@ -9,10 +9,10 @@ const Lookbook = ({ data,setFavLimit=()=>{} ,currentLimit}:any) => {
   
       return (
           <View className='flex-1 bg-[#121212] w-full p-3'>
-              {favData?.map((item:any,index:any) => <View  key={index} className='flex-1 items-center bg-[#252525] p-2 rounded-3xl mt-1 mb-2'>
+              {!favData || favData?.length===0?<Text className="text-white text-center mt-4">No Lookbook here.</Text>:favData?.map((item:any,index:any) => <View  key={index} className='flex-1 items-center bg-[#252525] p-2 rounded-3xl mt-1 mb-2'>
                   <View className='flex-row gap-2 items-center  w-full p-1 m-2'>
                       <View style={{ width: scale(30), height: scale(30) }}>
-                          <Image source={{uri:item.profile[0]}} style={{ width: "100%", height: "100%" }} />
+                          <Image source={{uri:item.profile[0]}} style={{ width: "100%", height: "100%",borderRadius:10,overflow:"hidden" }} />
                       </View>
                       <View className='flex-col  gap-2'>
   

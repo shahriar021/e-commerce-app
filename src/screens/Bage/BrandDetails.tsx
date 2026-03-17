@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, Image, ActivityIndicator } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import {  useRoute,RouteProp } from '@react-navigation/native'
 import { AntDesign, Feather, Ionicons } from '@expo/vector-icons'
@@ -20,8 +20,8 @@ const BrandDetails = ({navigation}:Props) => {
     const { id } = route.params
     const [loadMore, setLoadMore] = useState(20)
     const token = useAppSelector((state) => state.auth.token);
-    const { data } = useFeatureBrandsQuery({ token, limit: loadMore })
-    const { data: getData } = useGetBrandWithIdQuery({ token, id: id })
+    const { data,isLoading:isFBrandLoading } = useFeatureBrandsQuery({ token, limit: loadMore })
+    const { data: getData,isLoading:isBrandIdLoading } = useGetBrandWithIdQuery({ token, id: id })
 
     useLayoutEffect(()=>{
         navigation.setOptions({
@@ -43,7 +43,10 @@ const BrandDetails = ({navigation}:Props) => {
         )
     });
     },[navigation])
-
+    
+    if(isBrandIdLoading || isFBrandLoading){
+        return <ActivityIndicator size={"small"} color={"white"}/>
+    }
 
     return (
         <View className='flex-1 bg-[#121212] p-3'>

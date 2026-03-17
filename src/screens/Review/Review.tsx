@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
-import React, { useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { ScrollView } from 'react-native'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { Rating } from 'react-native-ratings'
@@ -20,7 +20,8 @@ const Review = () => {
     const [loadMore,setLoadMore]=useState(10)
     const { data: getReview ,isLoading} = useGetALlReviewBasedOnIdQuery({ token, id: id, limit: loadMore })
 
-    navigation.setOptions({
+    useLayoutEffect(()=>{
+        navigation.setOptions({
         headerStyle: {
             backgroundColor: "#121212",
             elevation: 0,
@@ -37,6 +38,7 @@ const Review = () => {
             </TouchableOpacity>
         )
     });
+    },[navigation])
 
     const handleModal = () => {
         setIsModalOpen(true)
@@ -56,10 +58,10 @@ const Review = () => {
                 <View className='flex-1 bg-[#121212] p-4  w-full'>
                     {isLoading&&<ActivityIndicator size={"large"}/>}
 
-                    {!getReview?.data?.data?.length ?<Text className='text-white text-center font-medium text-lg'>No Reviews</Text> :getReview?.data?.data?.map((item: any) => <View className='bg-[#2C2C2C] rounded-lg overflow-hidden p-2 mt-2 mb-3'>
+                    {!getReview?.data?.data?.length ?<Text className='text-white text-center font-medium text-lg'>No Reviews</Text> :getReview?.data?.data?.map((item: any,index:any) => <View key={index} className='bg-[#2C2C2C] rounded-lg overflow-hidden p-2 mt-2 mb-3'>
                         <View className='flex-row justify-between mt-2 mb-1'>
                             <View className='flex-row gap-2 items-center'>
-                                <View style={{ width: scale(30), height: scale(30) }}>
+                                <View style={{ width: scale(30), height: scale(30),borderRadius:15,overflow:"hidden" }}>
                                     <Image source={{ uri: item.userInfo?.profile[0] }} style={{ width: "100%", height: "100%" }} />
                                 </View>
                                 <View className='flex-col  gap-2'>
@@ -83,10 +85,9 @@ const Review = () => {
 
                             </View>
 
-                            <SimpleLineIcons name="options-vertical" size={24} color="white" />
                         </View>
                         <Text className='font-instrumentRegular text-[#fff] mt-2'>{item?.comments}</Text>
-                        <View className='mt-2 rounded-xl overflow-hidden' style={{ width: scale(111), height: verticalScale(111) }}>
+                       {item?.attachment?.length && (<View className='mt-2 rounded-xl overflow-hidden' style={{ width: scale(111), height: verticalScale(111) }}>
 
                            
                             {item.attachment.map((imageUrl: string, index: number) => (
@@ -96,7 +97,7 @@ const Review = () => {
                                     style={{ width: 100, height: 100 }}
                                 />
                             ))}
-                        </View>
+                        </View>)}
                     </View>).sort()}
 
 

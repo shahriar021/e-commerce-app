@@ -190,7 +190,7 @@ const ProductDetails = ({ navigation }: Props) => {
                     </TouchableOpacity>
                 </View>
                 <View className="w-full p-3 ">
-                    <Text className="text-[#ADAEBC] font-instrumentSansSemiBold mb-2">
+                    {/* <Text className="text-[#ADAEBC] font-instrumentSansSemiBold mb-2">
                         Color
                     </Text>
                     <View className="flex-row gap-2 mt-1 mb-1">
@@ -220,6 +220,45 @@ const ProductDetails = ({ navigation }: Props) => {
                                 </TouchableOpacity>
                             )
                         )}
+                    </View> */}
+
+                    <Text className="text-[#ADAEBC] font-instrumentSansSemiBold mb-2">
+                        Color
+                    </Text>
+                    <View className="flex-row gap-2 mt-1 mb-1">
+                        {data?.data?.product[0]?.colors?.map((item: any, index: number) => (
+                            <TouchableOpacity
+                                key={`color-${index}`}
+                                onPress={() => setIsColor(item)}
+                                className={`rounded-full ${isColor === item ? "border-white" : "border-transparent"} border-2`}
+                            >
+                                <FontAwesome name="circle" size={24} color={item} />
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+
+                    <Text className="text-[#ADAEBC] font-instrumentSansSemiBold mt-2">
+                        Custom Size
+                    </Text>
+                    <View className="flex-row gap-2 mt-2">
+                        {data?.data?.product[0]?.measurement?.map((item: any, index: number) => {
+                            const isSelected = selectedSize?.size === item?.size; // Compare by property, not object reference
+                            return (
+                                <TouchableOpacity
+                                    key={`size-${index}`}
+                                    onPress={() => setSelectedSize(item)}
+                                    className={`w-[26px] h-[26px] rounded-full items-center justify-center border-2 ${isSelected ? "bg-white border-[#252525]" : "bg-[#252525] border-transparent"
+                                        }`}
+                                >
+                                    <Text
+                                        className={`text-xs font-bold ${isSelected ? "text-black" : "text-white"
+                                            }`}
+                                    >
+                                        {item.size}
+                                    </Text>
+                                </TouchableOpacity>
+                            );
+                        })}
                     </View>
 
                     <View className="mt-2 flex-row justify-between mb-5">
@@ -231,7 +270,7 @@ const ProductDetails = ({ navigation }: Props) => {
                     {/* review */}
                     <View className="flex-row justify-between mt-2 mb-1">
                         <View className="flex-row gap-2 items-center">
-                            <View style={{ width: scale(30), height: scale(30) }}>
+                            <View style={{ width: scale(30), height: scale(30),borderRadius:15,overflow:"hidden" }}>
                                 <Image
                                     source={{
                                         uri: getReview?.data?.data[0]?.userInfo?.profile[0],
@@ -239,7 +278,7 @@ const ProductDetails = ({ navigation }: Props) => {
                                     style={{ width: "100%", height: "100%" }}
                                 />
                             </View>
-                            <View className="flex-col gap-2">
+                            {getReview?.data?.data?.length > 0 && (<View className="flex-col gap-2">
                                 <View className="flex-row gap-2 items-center">
                                     <Text className="text-white font-instrumentSansSemiBold">
                                         {getReview?.data?.data[0]?.userInfo?.userName}
@@ -259,24 +298,24 @@ const ProductDetails = ({ navigation }: Props) => {
                                 <Text className="text-[#ADAEBC] font-instrumentRegular">
                                     {getTime(getReview?.data?.data[0]?.createdAt)}
                                 </Text>
-                            </View>
+                            </View>)}
                         </View>
                     </View>
                     <Text className="font-instrumentRegular text-[#fff] mt-2">
                         {getReview?.data?.data[0]?.comments || ""}
                     </Text>
-                    <View
-                        className="mt-2 rounded-xl overflow-hidden"
+                    {getReview?.data?.data[0]?.attachment[0] &&(<View
+                        className="mt-2 rounded-xl overflow-hidden "
                         style={{ width: scale(111), height: verticalScale(111) }}
                     >
                         <Image
                             source={{ uri: getReview?.data?.data[0]?.attachment[0] }}
                             style={{ width: "100%", height: "100%" }}
                         />
-                    </View>
+                    </View>)}
 
                     <TouchableOpacity
-                        className="bg-[#1D3725] flex-row items-center justify-center gap-2 mt-3 p-3 rounded-xl"
+                        className="bg-[#1D3725] flex-row items-center justify-center gap-2 mt-5 p-3 rounded-xl"
                         onPress={handleAddToCart}
                     >
                         <Image source={require("../../../assets/e-icon/Main Icon.png")} />

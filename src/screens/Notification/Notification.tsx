@@ -56,9 +56,10 @@ const Notification = () => {
     };
 
     const renderItem = ({ item, index }: { item: any; index: number }) => {
+        if (!item) return null;
         const icon = getIconForAction(item?.data?.action);
         return (
-            <TouchableOpacity
+            <View
                 activeOpacity={0.7}
                 style={{
                     flexDirection: 'row',
@@ -113,7 +114,7 @@ const Notification = () => {
                         </Text>
                     </View>
                 </View>
-            </TouchableOpacity>
+            </View>
         );
     };
 

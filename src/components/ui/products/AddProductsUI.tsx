@@ -23,7 +23,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                 placeholderTextColor={"#ADAEBC"}
                 onChangeText={setProductName}
             />
-            <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
+            <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2 ">
                 Short Description*
             </Text>
             <TextInput
@@ -33,12 +33,12 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                 placeholderTextColor={"#ADAEBC"}
                 onChangeText={setShorDesc}
             />
-            <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
+            <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2 ">
                 Category*
             </Text>
-            <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
+            <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1 ">
                 <TextInput
-                    className="mt-2 mb-2 bg-[#2C2C2C] p-3 rounded-lg"
+                    className="mt-2 mb-2 bg-[#2C2C2C] p-3 rounded-lg flex-1"
                     placeholder="category..."
                     style={{ color: "#ADAEBC" }}
                     placeholderTextColor={"#ADAEBC"}
@@ -71,7 +71,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                     selectedState={selectChestSize}
                     displayKey={"bust_range_cm"}
                 />
-                <AntDesign name="down" size={24} color="white" />
+               
             </View>
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
                 Waist*
@@ -83,7 +83,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                     selectedState={selectWSize}
                     displayKey={"waist_range_cm"}
                 />
-                <AntDesign name="down" size={24} color="white" />
+               
             </View>
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
                 Hips*
@@ -95,7 +95,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                     selectedState={selectHpSize}
                     displayKey={"hips_range_cm"}
                 />
-                <AntDesign name="down" size={24} color="white" />
+               
             </View>
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
                 Height Range*
@@ -107,7 +107,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                     selectedState={selectHGSize}
                     displayKey={"height_range_cm"}
                 />
-                <AntDesign name="down" size={24} color="white" />
+               
             </View>
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
                 Size Group for Medium*
@@ -122,7 +122,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                     selectedState={selectChestSize2}
                     displayKey={"bust_range_cm"}
                 />
-                <AntDesign name="down" size={24} color="white" />
+               
             </View>
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
                 Waist*
@@ -134,7 +134,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                     selectedState={selectWSize2}
                     displayKey={"waist_range_cm"}
                 />
-                <AntDesign name="down" size={24} color="white" />
+               
             </View>
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
                 Hips*
@@ -146,7 +146,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                     selectedState={selectHpSize2}
                     displayKey={"hips_range_cm"}
                 />
-                <AntDesign name="down" size={24} color="white" />
+               
             </View>
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
                 Height Range*
@@ -158,7 +158,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                     selectedState={selectHGSize2}
                     displayKey={"height_range_cm"}
                 />
-                <AntDesign name="down" size={24} color="white" />
+               
             </View>
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
                 Size Group for Large*
@@ -173,7 +173,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                     selectedState={selectChestSize3}
                     displayKey={"bust_range_cm"}
                 />
-                <AntDesign name="down" size={24} color="white" />
+               
             </View>
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
                 Waist*
@@ -185,7 +185,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                     selectedState={selectWSize3}
                     displayKey={"waist_range_cm"}
                 />
-                <AntDesign name="down" size={24} color="white" />
+               
             </View>
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
                 Hips*
@@ -197,7 +197,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                     selectedState={selectHpSize3}
                     displayKey={"hips_range_cm"}
                 />
-                <AntDesign name="down" size={24} color="white" />
+               
             </View>
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
                 Height Range*
@@ -209,7 +209,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                     selectedState={selectHGSize3}
                     displayKey={"height_range_cm"}
                 />
-                <AntDesign name="down" size={24} color="white" />
+               
             </View>
 
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
@@ -231,6 +231,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                 style={{ color: "#ADAEBC" }}
                 placeholderTextColor={"#ADAEBC"}
                 onChangeText={setPrice}
+                keyboardType='numeric'
             />
             <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">
                 Discount Price (Optional)
@@ -241,6 +242,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
                 style={{ color: "#ADAEBC" }}
                 placeholderTextColor={"#ADAEBC"}
                 onChangeText={setDisPrice}
+                keyboardType='numeric'
             />
 
             <View className="flex-row items-center justify-between">
