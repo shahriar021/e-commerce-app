@@ -148,7 +148,7 @@ export default function PaymentScreen() {
         },
       ]);
     } catch (err) {
-      console.log("Stripe Flow Error:", err);
+      
       Alert.alert("Error", "Something went wrong.");
     }
 

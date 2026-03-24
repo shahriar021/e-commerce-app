@@ -31,24 +31,26 @@ export type TCredentials = {
 
 type TAuthData = {
   user: null | TUser;
-  id:null | string;
+  id: null | string;
   credentials: null | TCredentials;
   profile: null;
   companyAuth: null | string;
   EXPO_PUBLIC_BASE_URL: string | null;
   userType: string | null;
-  token: boolean
+  token: boolean;
+  loading: boolean;
 };
 
 const initialState: TAuthData = {
   user: null,
-  id:null,
+  id: null,
   credentials: null,
   profile: null,
   companyAuth: null,
   EXPO_PUBLIC_BASE_URL: null,
   userType: null,
-  token: false
+  token: false,
+  loading: false,
 };
 
 const authSlice = createSlice({
@@ -56,28 +58,30 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      const { user, credentials } = action.payload
-      state.user = user
-      state.credentials = credentials
+      const { user, credentials } = action.payload;
+      state.user = user;
+      state.credentials = credentials;
     },
-    setId:(state,action)=>{
-      state.id=action.payload
+    setId: (state, action) => {
+      state.id = action.payload;
     },
     setCompanyAuth: (state, action) => {
-      state.companyAuth = action.payload
+      state.companyAuth = action.payload;
     },
     setBaseUrl: (state, action) => {
-      state.EXPO_PUBLIC_BASE_URL = action.payload
+      state.EXPO_PUBLIC_BASE_URL = action.payload;
     },
     setUserType: (state, action) => {
-      state.userType = action.payload
+      state.userType = action.payload;
     },
     setToken: (state, action) => {
-      state.token = action.payload
-    }
-  }
-})
+      state.token = action.payload;
+    },
+    setCamLoading: (state, action) => {
+      state.loading = action.payload;
+    },
+  },
+});
 
-export const { setUser, setCompanyAuth, setBaseUrl, setUserType, setToken,setId } =
-  authSlice.actions;
+export const { setUser, setCompanyAuth, setBaseUrl, setUserType, setToken, setId, setCamLoading } = authSlice.actions;
 export default authSlice.reducer;

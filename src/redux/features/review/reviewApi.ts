@@ -14,7 +14,8 @@ const reviewApi = baseApi.injectEndpoints({
                         Authorization: `Bearer ${token}`,
                     },
                 }
-            }
+            },
+            providesTags:['review']
         }),
 
         postReviewBasedOnId:builder.mutation({
@@ -29,7 +30,8 @@ const reviewApi = baseApi.injectEndpoints({
                     },
                     body:formData
                 }
-            }
+            },
+            invalidatesTags:['review']
         })
     })
 })

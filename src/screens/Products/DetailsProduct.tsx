@@ -3,7 +3,6 @@ import {
     Text,
     ScrollView,
     TouchableOpacity,
-    Image,
     useWindowDimensions,
     Animated,
 } from "react-native";
@@ -20,6 +19,7 @@ import {
 } from "src/redux/features/product/productApi";
 import { useAppSelector } from "src/redux/hooks";
 import { Toast } from "toastify-react-native";
+import { Image } from "expo-image";
 
 const DetailsProduct = () => {
     const navigation = useNavigation<any>();
@@ -139,8 +139,8 @@ const DetailsProduct = () => {
                         Color
                     </Text>
                     <View className="flex-row gap-2 mt-1 mb-1">
-                        {data?.data?.product[0]?.colors.map((item: any) => (
-                            <TouchableOpacity
+                        {data?.data?.product[0]?.colors.map((item: any,index:any) => (
+                            <TouchableOpacity key={index}
                                 onPress={() => setIsColor(item)}
                                 className={`rounded-full ${isColor == item ? "border-white" : "border-transparent"
                                     } border-2`}

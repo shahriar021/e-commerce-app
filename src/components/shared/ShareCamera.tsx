@@ -36,15 +36,14 @@ export const launchCameraAndHandlePermissions = async (): Promise<ImagePicker.Im
     }
 
     // 4. Launch the camera
-    const result = await ImagePicker.launchCameraAsync({
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-    });
+    const result: any = await ImagePicker.launchCameraAsync({
+          mediaTypes: ["images"],
+          quality: 0.4,
+        }).catch(() => ({ canceled: true }));
 
     // 5. Return the result
-    if (!result.canceled) {
-        return result.assets[0];
+    if (!result.canceled && result?.assets?.[0]?.uri) {
+      return result.assets[0];
     }
 
     return null;

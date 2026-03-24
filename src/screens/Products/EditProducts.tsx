@@ -92,7 +92,7 @@ const EditProducts = () => {
     // Load data into state when fetched
     useEffect(() => {
         if (data?.data?.product?.[0]) {
-            const product = data.data.product[0];
+            const product = data?.data?.product[0];
             setProductName(product.productName || "");
             setShortDescription(product.shortDescription || "");
             setCategory(product.category || "");

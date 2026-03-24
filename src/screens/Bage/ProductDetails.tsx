@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Image, useWindowDimensions, Alert, } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity,  useWindowDimensions, Alert, } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { AntDesign, Feather, FontAwesome, Ionicons, } from "@expo/vector-icons";
@@ -13,6 +13,7 @@ import { usePostFavProductMutation } from "src/redux/features/profile/favourite/
 import { RootStackParamList } from "src/types/screens";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { SizeData } from "src/types/brand";
+import { Image } from "expo-image";
 
 type Props = {
     navigation: StackNavigationProp<RootStackParamList, "Product Details">

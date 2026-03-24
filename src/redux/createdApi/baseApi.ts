@@ -24,6 +24,6 @@ export const baseApi =createApi({
   baseQuery:DynamicBaseQRY,
   refetchOnReconnect: true,  
   refetchOnFocus: true, 
-  tagTypes:['getCart','feedPost','favProduct','profile','product','brandOrderList','specificProfile','earningStats','earningGraph','earningTransaction'],
+  tagTypes:['getCart','feedPost','favProduct','profile','product','brandOrderList','specificProfile','earningStats','earningGraph','earningTransaction','review'],
   endpoints:()=>({})
 })

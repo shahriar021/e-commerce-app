@@ -39,9 +39,9 @@ const CreateModalSelecPicker = ({
   const filteredList = useMemo(() => {
     if (!data?.data) return [];
     if (isBrand) {
-      return data.data.filter((item: any) => item._id === brandId);
+      return data?.data?.filter((item: any) => item._id === brandId);
     }
-    return data.data;
+    return data?.data ?? [];
   }, [data, isBrand, brandId]);
 
   // auto select for brand user

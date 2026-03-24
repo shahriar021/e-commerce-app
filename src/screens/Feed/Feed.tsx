@@ -162,7 +162,7 @@ const Feed = ({ navigation }: Props) => {
                             <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile", { upID: item?.uploaderId })}>
                                 <View style={{ width: scale(30), height: scale(30) }}>
                                     {item?.uploaderType == "Brand" && item?.brandLogo?.[0] ? (
-                                        <Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%", borderRadius: 10, overflow: "hidden" }} />
+                                        <Image source={{ uri: item?.brandLogo?.[0] }} style={{ width: "100%", height: "100%", borderRadius: 10, overflow: "hidden" }} />
                                     ) : item?.uploaderType != "Brand" && item?.profile?.[0] ? (
                                         <Image source={{ uri: item.profile[0] }} style={{ width: "100%", height: "100%", borderRadius: 10, overflow: "hidden" }} />
                                     ) : (
@@ -184,11 +184,11 @@ const Feed = ({ navigation }: Props) => {
                         <Text className='font-instrumentSansBold text-white mt-2'>{item.caption}✨</Text>
 
                         <View className='flex-row gap-2 mt-3 '>
-                            {item.tags.map((item: string) => <Text key={item} className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#{item}</Text>)}
+                            {item?.tags?.map((item: string) => <Text key={item} className='bg-[#E5E7EB] text-white p-1 rounded-full text-center font-instrumentRegular' style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}>#{item}</Text>)}
                         </View>
 
                         <View className='relative mt-4 rounded-xl overflow-hidden ' style={{ width: scale(320), height: verticalScale(300) }}>
-                            <Image source={{ uri: item.attachment[0] }} style={{ width: "100%", height: "100%" }} />
+                            <Image source={{ uri: item?.attachment?.[0] }} style={{ width: "100%", height: "100%" }} />
 
 
                         </View>

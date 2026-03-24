@@ -35,7 +35,7 @@ const OrderHistoryDetails = () => {
         })
     }, [navigation])
     const orderData = (Array.isArray(getOrderHist?.data?.data)
-        ? getOrderHist.data.data
+        ? getOrderHist?.data?.data
         : []
     ).find(order => order._id === orderId);
 

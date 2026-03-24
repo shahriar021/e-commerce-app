@@ -83,16 +83,13 @@ const HomeScreen = () => {
 
   return (
     <>
-      <ScrollView className="bg-[#121212] flex-1" contentContainerStyle={{ paddingBottom: 100 }} refreshControl={
-        <RefreshControl
-          refreshing={isFetching}
-          onRefresh={onRefresh}
-          tintColor="#4ADE80"
-          colors={["#4ADE80"]}
-        />
-      }>
+      <ScrollView
+        className="bg-[#121212] flex-1"
+        contentContainerStyle={{ paddingBottom: 100 }}
+        refreshControl={<RefreshControl refreshing={isFetching} onRefresh={onRefresh} tintColor="#4ADE80" colors={["#4ADE80"]} />}
+      >
         {/* Image Slider Wrapper */}
-        <View style={{ position: "relative" }} >
+        <View style={{ position: "relative" }}>
           {/* Image ScrollView */}
           <ScrollView
             ref={scrollRef}
@@ -101,15 +98,9 @@ const HomeScreen = () => {
             showsHorizontalScrollIndicator={false}
             onScroll={handleScroll}
             scrollEventThrottle={16}
-            className="bg-red-300"
           >
             {images.map((image, index) => (
-              <Image
-                key={index}
-                source={image}
-                style={{ width, height: verticalScale(550) }}
-                contentFit="cover"
-              />
+              <Image key={index} source={image} style={{ width, height: verticalScale(550) }} contentFit="cover" />
             ))}
           </ScrollView>
 
@@ -118,10 +109,7 @@ const HomeScreen = () => {
             style={{ width: scale(30), height: verticalScale(30) }}
             onPress={() => navigation.navigate("Cart Page")}
           >
-            <Image
-              source={require("../../../assets/e-icon/Frame.png")}
-              style={{ width: "100%", height: "100%" }}
-            />
+            <Image source={require("../../../assets/e-icon/Frame.png")} style={{ width: "100%", height: "100%" }} />
             <View
               className="absolute bg-[#0CB24C] rounded-full items-center justify-center"
               style={{
@@ -131,7 +119,9 @@ const HomeScreen = () => {
                 height: 15,
               }}
             >
-              <Text className="text-white text-[10px] font-bold">{getCart?.data?.products?.reduce((acc: any, curr: any) => acc + 1, 0)}</Text>
+              <Text className="text-white text-[10px] font-bold">
+                {getCart?.data?.products?.reduce((acc: any, curr: any) => acc + 1, 0)}
+              </Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -140,24 +130,24 @@ const HomeScreen = () => {
             onPress={handleSearch}
           >
             <FontAwesome name="search" size={scale(34)} color="white" />
-
           </TouchableOpacity>
 
           <View className="absolute bottom-0 right-0 left-0 top-0 items-center justify-center ">
-            <Text className="text-white font-instrumentSansBold text-3xl max-w-[90%] text-center ">
-              One Platform, A Thousand Brands
-            </Text>
-            <TouchableOpacity className="bg-[#1D3725] w-[90%]  rounded-3xl p-4 items-center mt-3" onPress={() => navigation.navigate("Brand")}>
+            <Text className="text-white font-instrumentSansBold text-3xl max-w-[90%] text-center ">One Platform, A Thousand Brands</Text>
+            <TouchableOpacity
+              className="bg-[#1D3725] w-[90%]  rounded-3xl p-4 items-center mt-3"
+              onPress={() => navigation.navigate("Brand")}
+            >
               <Text className="font-instrumentSansSemiBold text-white">Explore Collections</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate("Feed")}
-              style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Feed")}
+              style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }}
               className="w-[90%] rounded-3xl p-4 items-center mt-3 border border-[#fff]"
             >
               <Text className="font-instrumentSansSemiBold text-white">The Movement</Text>
             </TouchableOpacity>
-
           </View>
 
           {/* Dot Indicator - Absolute over image */}
@@ -179,8 +169,7 @@ const HomeScreen = () => {
                   height: 8,
                   borderRadius: 4,
                   marginHorizontal: 4,
-                  backgroundColor:
-                    index === currentIndex ? "#FFFFFF" : "#888888",
+                  backgroundColor: index === currentIndex ? "#FFFFFF" : "#888888",
                 }}
               />
             ))}
@@ -189,21 +178,30 @@ const HomeScreen = () => {
 
         <View className=" items-center p-3 ">
           <Text className="font-instrumentSansBold text-3xl text-center text-[#fff] mt-5">Featured Brands</Text>
-          <Text className="font-instrumentSansSemiBold text-lg text-center text-[#fff] mt-2 max-w-[90%]">Discover premium collections from top designers</Text>
+          <Text className="font-instrumentSansSemiBold text-lg text-center text-[#fff] mt-2 max-w-[90%]">
+            Discover premium collections from top designers
+          </Text>
 
-          {data?.data?.data?.map((item: any, index: number) => <TouchableOpacity key={index} className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl" style={{ width: "95%", height: verticalScale(120) }} onPress={() => navigation.navigate("Brand Details", { id: item._id })}>
-            <View className="rounded-3xl overflow-hidden" style={{ width: scale(80), height: verticalScale(80) }}>
-              <Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%" }} className="rounded-3xl" />
-            </View>
-            <View className="flex-1">
-              <Text className="text-[#E5E7EB] font-instrumentSansSemiBold text-xl">{item.brandName}</Text>
-              <Text className="text-[#E5E7EB] font-instrumentRegular text-base mb-2">{item.theme}</Text>
-              <TouchableOpacity className="bg-[#1D3725] p-1 items-center rounded-2xl w-[80%]" >
-                <Text className="font-instrumentSansSemiBold text-white">View Collection</Text>
-              </TouchableOpacity>
-            </View>
-            <AntDesign name="right" size={24} color="#9CA3AF" />
-          </TouchableOpacity>)}
+          {data?.data?.data?.map((item: any, index: number) => (
+            <TouchableOpacity
+              key={index}
+              className="bg-[#212121] flex-row gap-3 items-center justify-between w-full mt-2 mb-2 p-2 px-3 rounded-3xl"
+              style={{ width: "95%", height: verticalScale(120) }}
+              onPress={() => navigation.navigate("Brand Details", { id: item._id })}
+            >
+              <View className="rounded-3xl overflow-hidden" style={{ width: scale(80), height: verticalScale(80) }}>
+                <Image source={{ uri: item?.brandLogo?.[0] }} style={{ width: "100%", height: "100%" }} className="rounded-3xl" />
+              </View>
+              <View className="flex-1">
+                <Text className="text-[#E5E7EB] font-instrumentSansSemiBold text-xl">{item.brandName}</Text>
+                <Text className="text-[#E5E7EB] font-instrumentRegular text-base mb-2">{item.theme}</Text>
+                <View className="bg-[#1D3725] p-1 items-center rounded-2xl w-[80%]">
+                  <Text className="font-instrumentSansSemiBold text-white">View Collection</Text>
+                </View>
+              </View>
+              <AntDesign name="right" size={24} color="#9CA3AF" />
+            </TouchableOpacity>
+          ))}
           <BrandWeek navigation={navigation} />
         </View>
       </ScrollView>

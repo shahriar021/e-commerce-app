@@ -1,4 +1,4 @@
-import { View, Text, Image, TextInput, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
+import { View, Text,  TextInput, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
 import React, { useLayoutEffect, useMemo, useState } from 'react'
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { AntDesign, Feather } from '@expo/vector-icons';
@@ -7,6 +7,7 @@ import { useAppSelector } from 'src/redux/hooks';
 import { RootStackParamList } from 'src/types/screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AllProduct } from 'src/types/brand';
+import { Image } from "expo-image";
 
 type Props = {
     navigation: StackNavigationProp<RootStackParamList, "Brand Products">
@@ -17,7 +18,7 @@ type BrandDetailsProps = RouteProp<RootStackParamList, "Brand Products">
 const BrandProducts = ({ navigation }: Props) => {
     const [loadMore, setLoadMore] = useState(20)
     const route = useRoute<BrandDetailsProps>();
-    const { ID } = route.params
+    const { ID } = route.params 
     const token = useAppSelector((state) => state.auth.token)
     const [isClothType, setIsClothType] = useState("ALL")
     const [searchQuery, setSearchQuery] = useState("")

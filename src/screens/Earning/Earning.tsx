@@ -3,7 +3,6 @@ import {
     Text,
     useWindowDimensions,
     ScrollView,
-    Image,
     TouchableOpacity,
     RefreshControl,
 } from "react-native";
@@ -15,6 +14,7 @@ import { BarChart } from "react-native-gifted-charts";
 import { useAppSelector } from "src/redux/hooks";
 import { useGetEarningStatsQuery, useGetGraphQuery, useGetTransactionQuery } from "src/redux/features/earning/earningApi";
 import InputYearPicker from "src/components/shared/inputYearPicker";
+import { Image } from "expo-image";
 
 const Earning = () => {
     const navigation = useNavigation<any>();
@@ -233,6 +233,7 @@ const Earning = () => {
                 </View>
                 <View className="">
                     <BarChart
+                    key={year}
                         data={data}
                         barWidth={10}
                         frontColor="#DCF3FF"

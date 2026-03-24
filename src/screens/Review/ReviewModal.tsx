@@ -1,4 +1,4 @@
-import { View, Text, Modal, useWindowDimensions, TouchableOpacity, ScrollView, Image, TextInput, Alert, Linking } from 'react-native'
+import { View, Text, Modal, useWindowDimensions, TouchableOpacity, ScrollView, Image, TextInput, Alert, Linking, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import { Entypo } from '@expo/vector-icons'
 import { scale, verticalScale } from 'react-native-size-matters'
@@ -7,6 +7,7 @@ import { usePostReviewBasedOnIdMutation } from 'src/redux/features/review/review
 import { useAppSelector } from 'src/redux/hooks'
 import * as ImagePicker from 'expo-image-picker';
 import { ImageObject } from 'src/types/search'
+import { Toast } from 'toastify-react-native'
 
 const ReviewModal = ({ visible, onClose, ID }: any) => {
     const token = useAppSelector((state) => state.auth.token)
@@ -15,8 +16,10 @@ const ReviewModal = ({ visible, onClose, ID }: any) => {
     const [comments, setComments] = useState('')
     const [rating, setRatings] = useState(0)
     const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
+    const [loading,setLoading]=useState(false)
 
     const handlePost = async () => {
+        setLoading(true)
         const formData = new FormData()
         const data = {
             ratings: rating,
@@ -34,7 +37,15 @@ const ReviewModal = ({ visible, onClose, ID }: any) => {
         formData.append("data", JSON.stringify(data))
         try {
             const res = await postReview({ token, id: ID, formData }).unwrap()
+            
+            Toast.success("Review done.")
         } catch (err) {
+            
+            if(err){
+                Toast.error("something went wrong.")
+            }
+        }finally{
+            setLoading(false)
         }
 
     }
@@ -136,7 +147,7 @@ const ReviewModal = ({ visible, onClose, ID }: any) => {
                         <TextInput className='bg-[#2C2C2C] flex-1 border w-full p-5 rounded-lg mt-4 ' placeholderTextColor={"#ADAEBC"} placeholder='Amazing quality and style! The fabric feels premium andthe fit is perfect. Definitely worth the price...' style={{ color: "#ADAEBC" }} multiline onChangeText={setComments} />
 
                         <TouchableOpacity className='bg-[#1D3725] w-full p-4 items-center rounded-xl mt-5 mb-4' onPress={handlePost}>
-                            <Text className='text-[#CACACA] font-instrumentSansBold text-xl'>Post</Text>
+                            <Text className='text-[#CACACA] font-instrumentSansBold text-xl'>{loading?<ActivityIndicator size={"small"} color={"white"}/>:"Post"}</Text>
                         </TouchableOpacity>
                     </ScrollView>
                 </View>

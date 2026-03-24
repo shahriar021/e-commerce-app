@@ -33,70 +33,70 @@ const MainLayout = () => {
     'instrumentSans-SemiBold': require("../../../assets/fonts/InstrumentSans-SemiBold.ttf"),
   });
 
-  useEffect(() => {
-    const getAndSendFCMToken = async () => {
-      try {
-        await messaging().requestPermission();
+  // useEffect(() => {
+  //   const getAndSendFCMToken = async () => {
+  //     try {
+  //       await messaging().requestPermission();
 
-        const fcToken = await messaging().getToken();
-        const payload = {
-          data: {
-            token: fcToken,
-            device: 'android'
-          }
-        };
+  //       const fcToken = await messaging().getToken();
+  //       const payload = {
+  //         data: {
+  //           token: fcToken,
+  //           device: 'android'
+  //         }
+  //       };
 
-        try {
+  //       try {
 
-          const res = await postNotiRegis({ token, body: payload }).unwrap();
+  //         const res = await postNotiRegis({ token, body: payload }).unwrap();
 
-        } catch (err) {
+  //       } catch (err) {
 
-        }
-      } catch (error) {
+  //       }
+  //     } catch (error) {
 
-      }
-    };
+  //     }
+  //   };
 
-    getAndSendFCMToken();
-
-
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-
-      await Notifications.setNotificationHandler({
-        handleNotification: async () => ({
-          shouldShowAlert: true,
-          shouldPlaySound: true,
-          shouldSetBadge: false,
-        }),
-      });
-
-      // Trigger the notification immediately
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: remoteMessage.notification.title,
-          body: remoteMessage.notification.body,
-        },
-        trigger: { type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,seconds: 1 },
-      });
-    });
+  //   getAndSendFCMToken();
 
 
-    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+  //   const unsubscribe = messaging().onMessage(async (remoteMessage) => {
 
-    });
+  //     await Notifications.setNotificationHandler({
+  //       handleNotification: async () => ({
+  //         shouldShowAlert: true,
+  //         shouldPlaySound: true,
+  //         shouldSetBadge: false,
+  //       }),
+  //     });
+
+  //     // Trigger the notification immediately
+  //     await Notifications.scheduleNotificationAsync({
+  //       content: {
+  //         title: remoteMessage.notification.title,
+  //         body: remoteMessage.notification.body,
+  //       },
+  //       trigger: { type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,seconds: 1 },
+  //     });
+  //   });
 
 
-    Notifications.addNotificationReceivedListener((notification) => {
+  //   messaging().setBackgroundMessageHandler(async (remoteMessage) => {
 
-    });
+  //   });
 
-    Notifications.addNotificationResponseReceivedListener((response) => {
 
-    });
+  //   Notifications.addNotificationReceivedListener((notification) => {
 
-    return unsubscribe;
-  }, []);
+  //   });
+
+  //   Notifications.addNotificationResponseReceivedListener((response) => {
+
+  //   });
+
+  //   return unsubscribe;
+  // }, []);
 
 
   useEffect(() => {

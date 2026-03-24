@@ -41,6 +41,8 @@ import Transaction from "src/screens/Earning/Transaction";
 import OrderHistoryDetails from "src/screens/Profile/orderHistoryDetails";
 import { RootStackParamList } from "src/types/screens";
 import Notification from "src/screens/Notification/Notification";
+import CameraScreen from "src/screens/Search/CameraScreen";
+import CameraScreenFeed from "src/screens/Feed/CameraScreenFeed";
 
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -73,49 +75,52 @@ const StackNavigation = () => {
           headerTintColor: "#006400",
         }}
       >
-        {<Stack.Screen
-          name="BottomScreen"
-          component={userType=="User"?BottomNavigation:ProviderBottomNavigation}
-          options={{
-            headerShown: false,
-          }}
-        />}
-        <Stack.Screen name="Profile" options={{headerShown:false}} component={Profile} />
-        <Stack.Screen name="Privacy" component={Privacy}/>
-        <Stack.Screen name="Terms" component={Terms}/>
-        <Stack.Screen name="Address" component={Address}/>
-        <Stack.Screen name="Setting" component={Setting}/>
-        <Stack.Screen name="Edit Profile" component={EditProfile}/>
-        <Stack.Screen name="Change Password" component={ChangePassword}/>
-        <Stack.Screen name="My Favourite" component={MyFavourite}/>
-        <Stack.Screen name="Order History" component={OrderHistory}/>
-        <Stack.Screen name="Order Details" component={OrderDetails}/>
-        <Stack.Screen name="Order List" options={{headerShown:true}} component={OrderList}/>
-        <Stack.Screen name="Search Result" options={{headerShown:false}} component={SearchResult}/>
-        <Stack.Screen name="Search Page" options={{headerShown:false}} component={SearchPage}/>
-        <Stack.Screen name="Withdraw" component={Withdraw}/>
-        <Stack.Screen name="Brand Details" options={{headerShown:true}} component={BrandDetails}/>
-        <Stack.Screen name="Brand Products" options={{headerShown:true}} component={BrandProducts}/>
-        <Stack.Screen name="See all products" options={{headerShown:true}} component={SeeAllProducts}/>
-        <Stack.Screen name="See all brands" options={{headerShown:true}} component={SeeAllBrands}/>
-        <Stack.Screen name="Product Details" options={{headerShown:true}} component={ProductDetails}/>
-        <Stack.Screen name="Details Product" options={{headerShown:true}} component={DetailsProduct}/>
-        <Stack.Screen name="Other/brand profile" options={{headerShown:true}} component={UsersORBrandProfile}/>
-        <Stack.Screen name="Cart Page" options={{headerShown:true}} component={CartPage}/>
-        <Stack.Screen name="Review" options={{headerShown:true}} component={Review}/>
-        <Stack.Screen name="Products" options={{headerShown:true}} component={Products}/>
-        <Stack.Screen name="Add Products" options={{headerShown:true}} component={AddProducts}/>
-        <Stack.Screen name="Edit Products" options={{headerShown:true}} component={EditProducts}/>
-        <Stack.Screen name="All Products" options={{headerShown:true}} component={AllProducts}/>
-        <Stack.Screen name="Brand Profile" options={{headerShown:true}} component={BrandProfile}/>
-        <Stack.Screen name="Reward" options={{headerShown:true}} component={Reward}/>
-        <Stack.Screen name="Payment screen" options={{headerShown:true}} component={PaymentScreen}/>
-        <Stack.Screen name="Transaction" options={{headerShown:true}} component={Transaction}/>
-        <Stack.Screen name="OrderHistoryDetails" options={{headerShown:true}} component={OrderHistoryDetails}/>
-        <Stack.Screen name="Notification" options={{headerShown:true}} component={Notification}/>
-
+        {
+          <Stack.Screen
+            name="BottomScreen"
+            component={userType == "User" ? BottomNavigation : ProviderBottomNavigation}
+            options={{
+              headerShown: false,
+            }}
+          />
+        }
+        <Stack.Screen name="Profile" options={{ headerShown: false }} component={Profile} />
+        <Stack.Screen name="Privacy" component={Privacy} />
+        <Stack.Screen name="Terms" component={Terms} />
+        <Stack.Screen name="Address" component={Address} />
+        <Stack.Screen name="Setting" component={Setting} />
+        <Stack.Screen name="Edit Profile" component={EditProfile} />
+        <Stack.Screen name="Change Password" component={ChangePassword} />
+        <Stack.Screen name="My Favourite" component={MyFavourite} />
+        <Stack.Screen name="Order History" component={OrderHistory} />
+        <Stack.Screen name="Order Details" component={OrderDetails} />
+        <Stack.Screen name="Order List" options={{ headerShown: true }} component={OrderList} />
+        <Stack.Screen name="Search Result" options={{ headerShown: false }} component={SearchResult} />
+        <Stack.Screen name="Search Page" options={{ headerShown: false }} component={SearchPage} />
+        <Stack.Screen name="Withdraw" component={Withdraw} />
+        <Stack.Screen name="Brand Details" options={{ headerShown: true }} component={BrandDetails} />
+        <Stack.Screen name="Brand Products" options={{ headerShown: true }} component={BrandProducts} />
+        <Stack.Screen name="See all products" options={{ headerShown: true }} component={SeeAllProducts} />
+        <Stack.Screen name="See all brands" options={{ headerShown: true }} component={SeeAllBrands} />
+        <Stack.Screen name="Product Details" options={{ headerShown: true }} component={ProductDetails} />
+        <Stack.Screen name="Details Product" options={{ headerShown: true }} component={DetailsProduct} />
+        <Stack.Screen name="Other/brand profile" options={{ headerShown: true }} component={UsersORBrandProfile} />
+        <Stack.Screen name="Cart Page" options={{ headerShown: true }} component={CartPage} />
+        <Stack.Screen name="Review" options={{ headerShown: true }} component={Review} />
+        <Stack.Screen name="Products" options={{ headerShown: true }} component={Products} />
+        <Stack.Screen name="Add Products" options={{ headerShown: true }} component={AddProducts} />
+        <Stack.Screen name="Edit Products" options={{ headerShown: true }} component={EditProducts} />
+        <Stack.Screen name="All Products" options={{ headerShown: true }} component={AllProducts} />
+        <Stack.Screen name="Brand Profile" options={{ headerShown: true }} component={BrandProfile} />
+        <Stack.Screen name="Reward" options={{ headerShown: true }} component={Reward} />
+        <Stack.Screen name="Payment screen" options={{ headerShown: true }} component={PaymentScreen} />
+        <Stack.Screen name="Transaction" options={{ headerShown: true }} component={Transaction} />
+        <Stack.Screen name="OrderHistoryDetails" options={{ headerShown: true }} component={OrderHistoryDetails} />
+        <Stack.Screen name="Notification" options={{ headerShown: true }} component={Notification} />
+        <Stack.Screen name="CameraScreen" options={{ headerShown: true }} component={CameraScreen} />
+        <Stack.Screen name="CameraScreenFeed" options={{ headerShown: true }} component={CameraScreenFeed} />
       </Stack.Navigator>
-      </>
+    </>
   );
 };
 

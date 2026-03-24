@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, TextInput, ScrollView, RefreshControl } from 'react-native'
+import { View, Text, TouchableOpacity,  TextInput, ScrollView, RefreshControl } from 'react-native'
 import React, { useLayoutEffect, useMemo, useState } from 'react'
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -6,6 +6,7 @@ import { scale } from 'react-native-size-matters';
 import { useAppSelector } from 'src/redux/hooks';
 import { useProductListBrandIdWiseQuery } from 'src/redux/features/product/productApi';
 import { Product } from 'src/types/products';
+import { Image } from "expo-image";
 
 const AllProducts = () => {
     const id = useAppSelector((state) => state.auth.id)

@@ -126,11 +126,7 @@ const Notification = () => {
             <View style={{ paddingHorizontal: 16, paddingTop: 16, paddingBottom: 12 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Text style={{ color: '#FFFFFF', fontSize: 24, fontWeight: '800' }}>Notifications</Text>
-                    {unreadCount > 0 && (
-                        <View style={{ backgroundColor: '#6C63FF', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 20 }}>
-                            <Text style={{ color: '#fff', fontSize: 12, fontWeight: '700' }}>{unreadCount} unread</Text>
-                        </View>
-                    )}
+                    
                 </View>
                 <Text style={{ color: '#555', fontSize: 13, marginTop: 4 }}>
                     {notiData?.data?.pagination?.total} total notifications

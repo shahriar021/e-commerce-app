@@ -22,7 +22,7 @@ const Lookbook = ({ data,setFavLimit=()=>{} ,currentLimit}:any) => {
                       </View>
   
                   </View>
-                  <Image source={{ uri: item.postDetails.attachment[0] }} style={{ width: '92%', height: verticalScale(250), borderRadius: 24 }} />
+                  <Image source={{ uri: item?.postDetails?.attachment?.[0] }} style={{ width: '92%', height: verticalScale(250), borderRadius: 24 }} />
                   <View className='w-full m-4'><Text className='text-white mt-3 mx-2 font-instrumentRegular' >{item.postDetails.caption} </Text></View>
               </View>)}
   

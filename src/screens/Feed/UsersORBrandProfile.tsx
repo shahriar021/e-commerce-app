@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import React, {  useLayoutEffect, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import Details from './Details';
 import { useGetUploaderProfileQuery } from 'src/redux/features/feedApi/feedApi';
 import { useAppSelector } from 'src/redux/hooks';
 import { usePostFollowMutation } from 'src/redux/features/profile/follow/followApi';
+import { Image } from "expo-image";
 
 const UsersORBrandProfile = () => {
   const token = useAppSelector((state) => state.auth.token)
@@ -78,7 +79,7 @@ const UsersORBrandProfile = () => {
             height: verticalScale(250),
             borderRadius: moderateScale(24),
           }}
-          resizeMode="cover"
+          contentFit="cover"
         />
 
         {/* Profile Image (centered bottom) */}
@@ -104,20 +105,20 @@ const UsersORBrandProfile = () => {
               <Image
                 source={{ uri: getSpecificUserData?.data?.brandLogo?.[0] }}
                 style={{ width: "100%", height: "100%" }}
-                resizeMode="cover"
+                contentFit="cover"
               />
             ) : (
               <Image
                 source={{ uri: getSpecificUserData?.data?.profile?.[0] }}
                 style={{ width: "100%", height: "100%" }}
-                resizeMode="cover"
+                contentFit="cover"
               />
             )
           ) : (
             <Image
               source={require("../../../assets/e-icon/img (1).png")}
               style={{ width: '100%', height: '100%' }}
-              resizeMode="cover"
+              contentFit="cover"
             />
           )}
         </View>

@@ -1,10 +1,11 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text,  TouchableOpacity } from 'react-native'
 import React, { useCallback, useState } from 'react'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { getTime } from 'src/components/shared/timeHistory'
 import { useAppSelector } from 'src/redux/hooks'
 import { useGetIndividualPostQuery } from 'src/redux/features/profile/profile/profileApi'
 import { useFocusEffect } from '@react-navigation/native'
+import { Image } from "expo-image";
 
 const Posts = ({ data}:any) => {
     const token = useAppSelector((state) => state.auth.token)
@@ -32,7 +33,7 @@ const Posts = ({ data}:any) => {
                     </View>
 
                 </View>
-                <Image source={{ uri: item.attachment[0] }} style={{ width: '92%', height: verticalScale(250), borderRadius: 24 }} />
+                <Image source={{ uri: item?.attachment?.[0] }} style={{ width: '92%', height: verticalScale(250), borderRadius: 24 }} />
                 <View className='w-full m-4'><Text className='text-white mt-3 mx-2 font-instrumentRegular' >{item.caption} </Text></View>
             </View>)}
 

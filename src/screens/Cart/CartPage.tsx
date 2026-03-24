@@ -1,7 +1,6 @@
 import {
 View,
     Text,
-    Image,
     useWindowDimensions,
     TouchableOpacity,
     ScrollView,
@@ -18,6 +17,7 @@ import {
 import { useAppSelector } from "src/redux/hooks";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "src/types/screens";
+import { Image } from "expo-image";
 
 type Props={
   navigation:StackNavigationProp<RootStackParamList,"Product Details">
@@ -38,7 +38,7 @@ const CartPage = ({navigation}:Props) => {
     useEffect(() => {
         if (data?.data?.products) {
             const obj: { [key: string]: number } = {};
-            data.data.products.forEach((p: any) => {
+            data?.data?.products?.forEach((p: any) => {
                 obj[p.productId] = p.quantity;
             });
             setPrQuantity(obj);
@@ -120,7 +120,7 @@ const CartPage = ({navigation}:Props) => {
 
     const handlePaymentOption = async () => {
         const body = {
-            data: data.data.products.map((item: any) => ({
+            data: data?.data?.products?.map((item: any) => ({
                 productId: item.productId,
                 color: item.color,
                 size: item.size,

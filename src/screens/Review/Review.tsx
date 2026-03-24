@@ -1,14 +1,15 @@
-import { View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { ScrollView } from 'react-native'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { Rating } from 'react-native-ratings'
-import { AntDesign, Feather, SimpleLineIcons } from '@expo/vector-icons'
+import { AntDesign, Feather } from '@expo/vector-icons'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import ReviewModal from './ReviewModal'
 import { useGetALlReviewBasedOnIdQuery } from 'src/redux/features/review/reviewApi'
 import { useAppSelector } from 'src/redux/hooks'
 import { getTime } from 'src/components/shared/timeHistory'
+import { Image } from "expo-image";
 
 const Review = () => {
     const route = useRoute()
@@ -62,7 +63,7 @@ const Review = () => {
                         <View className='flex-row justify-between mt-2 mb-1'>
                             <View className='flex-row gap-2 items-center'>
                                 <View style={{ width: scale(30), height: scale(30),borderRadius:15,overflow:"hidden" }}>
-                                    <Image source={{ uri: item.userInfo?.profile[0] }} style={{ width: "100%", height: "100%" }} />
+                                    <Image source={{ uri: item?.userInfo?.profile[0] }} style={{ width: "100%", height: "100%" }} />
                                 </View>
                                 <View className='flex-col  gap-2'>
                                     <View className='flex-row gap-2 items-center'>
@@ -90,7 +91,7 @@ const Review = () => {
                        {item?.attachment?.length && (<View className='mt-2 rounded-xl overflow-hidden' style={{ width: scale(111), height: verticalScale(111) }}>
 
                            
-                            {item.attachment.map((imageUrl: string, index: number) => (
+                            {item?.attachment?.map((imageUrl: string, index: number) => (
                                 <Image
                                     key={index}
                                     source={{ uri: imageUrl }}

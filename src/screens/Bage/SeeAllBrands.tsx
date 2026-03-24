@@ -1,4 +1,4 @@
-import { Text, Image, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
+import { Text,  TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { Feather } from '@expo/vector-icons';
 import { verticalScale } from 'react-native-size-matters';
@@ -8,6 +8,7 @@ import { RootStackParamList } from 'src/types/screens';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { BrandItem } from 'src/types/brand';
 import { View } from 'react-native';
+import { Image } from "expo-image";
 
 type Props = {
     navigation: StackNavigationProp<RootStackParamList, "Brand Details">
@@ -46,14 +47,14 @@ const SeeAllBrands = ({ navigation }: Props) => {
 
         >
             {data?.data?.data?.length > 0 ? (
-                data.data.data.map((item: BrandItem, index: number) => (
+                data?.data?.data?.map((item: BrandItem, index: number) => (
                     <TouchableOpacity
                         key={index}
                         className="relative gap-3 rounded-xl overflow-hidden mt-1 mb-1"
                         style={{ width: "48%", height: verticalScale(150) }}
                         onPress={() => navigation.navigate("Brand Details", { id: item._id })}
                     >
-                        <Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%" }} />
+                        <Image source={{ uri: item?.brandLogo?.[0] }} style={{ width: "100%", height: "100%" }} />
                         <Text className="absolute bottom-3 left-0 right-0 text-xl font-instrumentSansBold text-white text-center">
                             {item.brandName}
                         </Text>

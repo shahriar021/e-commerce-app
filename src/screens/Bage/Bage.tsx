@@ -1,9 +1,10 @@
-import { View, Text, Image, TextInput, TouchableOpacity, ScrollView, ActivityIndicator, RefreshControl } from 'react-native'
+import { View, Text,  TextInput, TouchableOpacity, ScrollView, ActivityIndicator, RefreshControl } from 'react-native'
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { useAppSelector } from 'src/redux/hooks'
 import { useFeatureBrandsQuery } from 'src/redux/features/brand/brandApi'
 import { RootStackParamList } from 'src/types/screens'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { Image } from "expo-image";
 
 type Props={
   navigation:StackNavigationProp<RootStackParamList,"Cart Page">
@@ -21,7 +22,7 @@ const Bage = ({navigation}:Props) => {
     // Filter
     let filtered = rawData;
     if (search) {
-      filtered = rawData.filter((item: any) => 
+      filtered = rawData?.filter((item: any) => 
         item?.brandName?.toLowerCase().includes(search.toLowerCase())
       );
     }
@@ -81,17 +82,17 @@ const Bage = ({navigation}:Props) => {
           }
         >
           <View className='flex-wrap flex-row gap-2 justify-between '>
-            {displayData.length === 0 ? (
+            {displayData?.length === 0 ? (
                 <Text className='text-white text-center w-full mt-10 font-robotoBold'>No Items found!</Text>
             ) : (
-                displayData.map((item: any) => (
+                displayData?.map((item: any) => (
                     <TouchableOpacity 
                         key={item._id} 
                         className='relative rounded-xl overflow-hidden mt-1 mb-1' 
                         style={{ width: "48%", aspectRatio: 1 }} 
-                        onPress={() => navigation.navigate("Brand Details", { id: item._id })}
+                        onPress={() => navigation.navigate("Brand Details", { id: item?._id })}
                     >
-                        <Image source={{ uri: item.brandLogo[0] }} style={{ width: "100%", height: "100%" }} />
+                        <Image source={{ uri: item?.brandLogo?.[0] }} style={{ width: "100%", height: "100%" }} />
                         <Text className='absolute bottom-3 left-0 right-0 text-xl font-instrumentSansBold text-white text-center'>
                           {item?.brandName || ""}
                         </Text>
