@@ -37,6 +37,7 @@ export const ProviderBottomNavigation = () => {
   
 
   const { width } = useWindowDimensions();
+  
 
   return (
     <View className="bg-transparent flex-1">
@@ -79,7 +80,7 @@ export const ProviderBottomNavigation = () => {
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }} className="">
                 <Image source={require("../../assets/e-icon/home-olive.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Home</Text>}
+                {focused && <Text className="text-center w-[50px]" style={{ color: "#2ECC71", fontSize: 10 }}>Home</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -94,7 +95,7 @@ export const ProviderBottomNavigation = () => {
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }} className="">
                 <Image source={require("../../assets/e-icon/earning-olive.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Earning</Text>}
+                {focused && <Text className="text-center w-[50px]" style={{ color: "#2ECC71", fontSize: 10 }}>Earning</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -108,7 +109,7 @@ export const ProviderBottomNavigation = () => {
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }}>
                 <Image source={require("../../assets/e-icon/feed-olive.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Feed</Text>}
+                {focused && <Text className="text-center w-[50px]" style={{ color: "#2ECC71", fontSize: 10 }}>Feed</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -125,14 +126,14 @@ export const ProviderBottomNavigation = () => {
               <View style={{ alignItems: "center" }} className="">
 
                 <Image source={require("../../assets/e-icon/product-olive.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Products</Text>}
+                {focused && <Text className="text-center w-[50px]" style={{ color: "#2ECC71", fontSize: 10 }}>Products</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
           }}
         />
         <BottomTabs.Screen
-          name="Profile"
+          name="ProfilePro"
           component={DrawerNavigation}
           options={{
             headerShown: false,
@@ -140,7 +141,7 @@ export const ProviderBottomNavigation = () => {
               <View style={{ alignItems: "center" }} className="">
 
                 <Image source={require("../../assets/e-icon/profile-olive.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Profile</Text>}
+                {focused && <Text className="text-center w-[50px]" style={{ color: "#2ECC71", fontSize: 10 }}>Profile</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,

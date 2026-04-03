@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { BottomNavigation } from "./BottomNavigation";
-import { 
+import {
   Profile,
   Privacy,
   Terms,
@@ -48,18 +48,24 @@ import CameraScreenFeed from "src/screens/Feed/CameraScreenFeed";
 const Stack = createStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
-  const userType = useAppSelector((store)=>store?.auth?.userType)
-  
+  const userType = useAppSelector((store) => {
+    return store?.auth?.userType ?? null;
+  });
 
 
-  if(!userType){
-    return <ActivityIndicator size="large"/>
+
+  // if(!userType){
+  //   return <ActivityIndicator size="large"/>
+  // }
+  if (!userType) {
+    return <ActivityIndicator size="large" />
   }
 
   return (
     <>
       {/* @ts-ignore */}
       <Stack.Navigator
+        key={userType}
         screenOptions={{
           cardStyle: {
             backgroundColor: "#121212",
@@ -77,6 +83,7 @@ const StackNavigation = () => {
       >
         {
           <Stack.Screen
+            key={userType}
             name="BottomScreen"
             component={userType == "User" ? BottomNavigation : ProviderBottomNavigation}
             options={{
@@ -84,7 +91,7 @@ const StackNavigation = () => {
             }}
           />
         }
-        <Stack.Screen name="Profile" options={{ headerShown: false }} component={Profile} />
+        {/* <Stack.Screen name="Profile" options={{ headerShown: false }} component={Profile} /> */}
         <Stack.Screen name="Privacy" component={Privacy} />
         <Stack.Screen name="Terms" component={Terms} />
         <Stack.Screen name="Address" component={Address} />

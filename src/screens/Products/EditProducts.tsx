@@ -74,6 +74,7 @@ const EditProducts = () => {
     ]);
 
     const { data, isFetching } = useGetSpecificProductBasedOnIdQuery({ token, id });
+    console.log(id,"edit")
     const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
     const openCamera = async () => {
@@ -164,6 +165,7 @@ const EditProducts = () => {
             const res = await updateProduct({ token, id, body: formData }).unwrap();
             navigation.navigate("All Products");
         } catch (err) {
+            console.log(err)
         }
     };
 
@@ -213,9 +215,9 @@ const EditProducts = () => {
                                     resizeMode="contain"
                                     style={{ width: "100%", height: "100%" }}
                                 />
-                                <TouchableOpacity className="absolute z-10 bg-white rounded-full right-0 top-0">
+                                {/* <TouchableOpacity className="absolute z-10 bg-white rounded-full right-0 top-0">
                                     <AntDesign name="minus" size={24} color="red" />
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </View>
                         ))}
                     </View>

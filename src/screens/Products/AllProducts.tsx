@@ -54,7 +54,7 @@ const AllProducts = () => {
 
     return (
         <View className='flex-1 bg-[#121212] p-5'>
-            <View className='border p-2 mb-2 rounded-xl bg-[#252525] flex-row gap-3'>
+            <View className='border p-2 mb-2 rounded-xl bg-[#252525] flex-row gap-3 items-center'>
                 <Image source={require("../../../assets/e-icon/search-normal.png")} style={{ width: 24, height: 24 }} />
                 <TextInput
                     className='flex-1 font-instrumentSansSemiBold text-white'
@@ -77,11 +77,11 @@ const AllProducts = () => {
                 }>
                     {/* 4. Map over filteredProducts instead of products */}
                     {products?.length > 0 ? (
-                        filteredProducts.map((item) => (
+                        filteredProducts.map((item,index) => (
                             <TouchableOpacity
-                                key={item.id}
+                                key={index}
                                 className='bg-[#212121] p-2 rounded-xl mt-1 mb-2 flex-row justify-between items-center gap-2'
-                                onPress={() => navigation.navigate("Details Product", { id: item.id })}
+                                onPress={() => navigation.navigate("Details Product", { id: item._id })}
                             >
                                 <View style={{ width: scale(52), height: scale(52) }} className='rounded-xl overflow-hidden'>
                                     <Image source={{ uri: item.productImages[0] }} style={{ width: "100%", height: "100%" }} />

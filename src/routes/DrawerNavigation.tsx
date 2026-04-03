@@ -14,6 +14,7 @@ export const DrawerNavigation = () => {
             screenOptions={{
                 drawerStyle: {
                     backgroundColor: '#252525',
+                    width: 280,
                 },
                 drawerActiveTintColor: '#1A5EED',
                 drawerInactiveTintColor: '#333', 
@@ -24,7 +25,7 @@ export const DrawerNavigation = () => {
                 name="ProfileScreen"
                 component={Profile}
                 options={{
-                    headerShown: true,
+                    headerShown: false,
 
                     drawerIcon: ({ color }) => (
                         <Feather name="home" size={16} color={color} />

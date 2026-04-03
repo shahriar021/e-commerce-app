@@ -45,7 +45,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
         </TouchableOpacity>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Size Group for Small*</Text>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Bust/Chest*</Text>
-        <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
+        <View style={{ zIndex: 50, elevation: 50 }} className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
           <CreateProductSelecPicker
             data={womenSizeRangesCM}
             setSelectedState={setSelectChestSize}
@@ -54,7 +54,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
           />
         </View>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Waist*</Text>
-        <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
+        <View style={{ zIndex: 50, elevation: 50 }} className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
           <CreateProductSelecPicker
             data={womenSizeRangesCM}
             setSelectedState={setSelectWSize}
@@ -63,7 +63,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
           />
         </View>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Hips*</Text>
-        <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
+        <View style={{ zIndex: 50, elevation: 50 }} className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
           <CreateProductSelecPicker
             data={womenSizeRangesCM}
             setSelectedState={setSelectHpSize}
@@ -72,7 +72,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
           />
         </View>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Height Range*</Text>
-        <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
+        <View style={{ zIndex: 50, elevation: 50 }} className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
           <CreateProductSelecPicker
             data={womenSizeRangesCM}
             setSelectedState={setSelectHGSize}
@@ -82,7 +82,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
         </View>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Size Group for Medium*</Text>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Bust/Chest*</Text>
-        <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
+        <View style={{ zIndex: 50, elevation: 50 }} className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
           <CreateProductSelecPicker
             data={womenSizeRangesCM}
             setSelectedState={setSelectChestSize2}
@@ -91,7 +91,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
           />
         </View>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Waist*</Text>
-        <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
+        <View style={{ zIndex: 50, elevation: 50 }} className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
           <CreateProductSelecPicker
             data={womenSizeRangesCM}
             setSelectedState={setSelectWSize2}
@@ -100,7 +100,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
           />
         </View>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Hips*</Text>
-        <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
+        <View style={{ zIndex: 50, elevation: 50 }} className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
           <CreateProductSelecPicker
             data={womenSizeRangesCM}
             setSelectedState={setSelectHpSize2}
@@ -109,7 +109,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
           />
         </View>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Height Range*</Text>
-        <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
+        <View style={{ zIndex: 50, elevation: 50 }} className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
           <CreateProductSelecPicker
             data={womenSizeRangesCM}
             setSelectedState={setSelectHGSize2}
@@ -119,7 +119,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
         </View>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Size Group for Large*</Text>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Bust/Chest*</Text>
-        <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
+        <View  style={{ zIndex: 50, elevation: 50 }} className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
           <CreateProductSelecPicker
             data={womenSizeRangesCM}
             setSelectedState={setSelectChestSize3}
@@ -128,7 +128,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
           />
         </View>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Waist*</Text>
-        <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
+        <View style={{ zIndex: 50, elevation: 50 }} className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
           <CreateProductSelecPicker
             data={womenSizeRangesCM}
             setSelectedState={setSelectWSize3}
@@ -137,7 +137,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
           />
         </View>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Hips*</Text>
-        <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
+        <View style={{ zIndex: 50, elevation: 50 }} className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
           <CreateProductSelecPicker
             data={womenSizeRangesCM}
             setSelectedState={setSelectHpSize3}
@@ -146,7 +146,7 @@ const AddProductsUI = ({setProductName,setShorDesc,setCategory,handleColorModal,
           />
         </View>
         <Text className="text-[#fff] font-instrumentSansSemiBold mt-2 mb-2">Height Range*</Text>
-        <View className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
+        <View style={{ zIndex: 50, elevation: 50 }} className="flex-row items-center mt-2 gap-4 border rounded-xl bg-[#2C2C2C] px-1">
           <CreateProductSelecPicker
             data={womenSizeRangesCM}
             setSelectedState={setSelectHGSize3}

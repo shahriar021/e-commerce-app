@@ -3,7 +3,8 @@
     "name": "ARKIVE",
     "slug": "ARKIVE",
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -12,7 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "splash": {
       "image": "./assets/arkiveTransparent.png",
       "resizeMode": "contain",
@@ -21,10 +22,16 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.smartsoftware.sas",
-      "urlScheme": "staark"
+      "urlScheme": "staark",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera"
+      },
+      "deploymentTarget": "15.1",
+      "useFrameworks": "dynamic"
     },
     "android": {
-      "versionCode": 1,
+      "versionCode": 250,
       "largeHeap": true,
       "usesCleartextTraffic": true,
       "adaptiveIcon": {
@@ -48,7 +55,10 @@
               "scheme": "staark"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ]
     },
@@ -66,12 +76,21 @@
           "enablePhotosPermission": true
         }
       ],
-
       [
         "react-native-share",
         {
-          "ios": ["fb", "instagram", "twitter", "tiktoksharesdk"],
-          "android": ["com.facebook.katana", "com.instagram.android", "com.twitter.android", "com.zhiliaoapp.musically"],
+          "ios": [
+            "fb",
+            "instagram",
+            "twitter",
+            "tiktoksharesdk"
+          ],
+          "android": [
+            "com.facebook.katana",
+            "com.instagram.android",
+            "com.twitter.android",
+            "com.zhiliaoapp.musically"
+          ],
           "enableBase64ShareAndroid": true
         }
       ],
@@ -110,6 +129,19 @@
               "-P",
               "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
             ]
+          },
+          "ios": {
+            "useFrameworks": "static",
+            "extraPods": [
+              {
+                "name": "GoogleUtilities",
+                "modular_headers": true
+              },
+              {
+                "name": "FirebaseCoreInternal",
+                "modular_headers": true
+              }
+            ]
           }
         }
       ],
@@ -133,9 +165,8 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "a85a43b9-4bdc-4ae7-bc58-98b35eed0ecb"
+        "projectId": "3a9c2bc7-dac6-4dff-bf85-d913b1398ccb"
       }
-    },
-    "owner": "bdcalling"
+    }
   }
 }

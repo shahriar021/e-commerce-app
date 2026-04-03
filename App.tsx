@@ -10,10 +10,14 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StripeProvider } from "@stripe/stripe-react-native"
 import { ActivityIndicator, View } from "react-native";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function App() {
 
   const [publishableKey, setPublishableKey] = useState('');
+
+
 
   const fetchPublishableKey = async () => {
     setPublishableKey(process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY);

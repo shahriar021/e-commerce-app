@@ -1,3 +1,14 @@
+// index.ts
+if (typeof WeakRef === 'undefined') {
+  global.WeakRef = class WeakRef {
+    private _target: any;
+    constructor(target: any) { this._target = target; }
+    deref() { return this._target; }
+  } as any;
+}
+
+
+
 import { registerRootComponent } from 'expo';
 // import messaging from '@react-native-firebase/messaging';
 import App from './App';

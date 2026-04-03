@@ -13,7 +13,8 @@ type Props = {
 
 const MyFavourite = ({ navigation }: Props) => {
     const token = useAppSelector((state) => state.auth.token)
-    const { data: getFavData, isLoading } = useGetFavProductQuery(token,{refetchOnMountOrArgChange: true,})
+    const { data: getFavData, isLoading } = useGetFavProductQuery(token)
+    console.log(getFavData,"get fav data")
 
     useLayoutEffect(() => {
         navigation.setOptions({

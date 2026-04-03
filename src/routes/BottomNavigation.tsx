@@ -31,10 +31,10 @@ const CustomTabBarButton = ({ children, onPress, accessibilityState }: any) => {
 
 export const BottomNavigation = () => {
 
-  const { width } = useWindowDimensions();
+  
 
   return (
-    <View className="bg-transparent flex-1">
+    <View style={{ flex: 1 }}>
       {/* @ts-ignore */}
       <BottomTabs.Navigator
         screenOptions={{
@@ -46,11 +46,7 @@ export const BottomNavigation = () => {
             paddingBottom: 7,
             height: 72,
             backgroundColor: "#252525",
-            overflow: "hidden"
-          },
-          tabBarLabelStyle: {
-            fontSize: width > 450 ? 14 : 10,
-            width: "100%",
+            overflow: "hidden",
           },
           tabBarActiveTintColor: "#FFFFFF",
           tabBarInactiveTintColor: "#C5BAFF",
@@ -61,7 +57,6 @@ export const BottomNavigation = () => {
           },
           headerTitleStyle: {
             fontFamily: "HelveticaNeue-Black",
-            
           },
           tabBarLabelPosition: "below-icon",
           headerTintColor: "#5b21b6",
@@ -74,9 +69,9 @@ export const BottomNavigation = () => {
             headerShown: false,
             headerTitle: () => null,
             tabBarIcon: ({ focused }) => (
-              <View style={{ alignItems: "center" }} className="">
+              <View style={{ alignItems: "center" }}>
                 <Image source={require("../../assets/e-icon/home-olive.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Home</Text>}
+                {focused && <Text style={{ textAlign: 'center', width: 50, color: "#2ECC71", fontSize: 10 }}>Home</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -89,13 +84,12 @@ export const BottomNavigation = () => {
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }}>
                 <Image source={require("../../assets/e-icon/feed-olive.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Feed</Text>}
+                {focused && <Text style={{ textAlign: 'center', width: 50, color: "#2ECC71", fontSize: 10 }}>Feed</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
           }}
         />
-
         <BottomTabs.Screen
           name="Search"
           component={Search}
@@ -103,7 +97,7 @@ export const BottomNavigation = () => {
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }}>
                 <Image source={require("../../assets/e-icon/search-olive.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Search</Text>}
+                {focused && <Text style={{ textAlign: 'center', width: 50, color: "#2ECC71", fontSize: 10 }}>Search</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -115,9 +109,8 @@ export const BottomNavigation = () => {
           options={{
             tabBarIcon: ({ focused }) => (
               <View style={{ alignItems: "center" }}>
-
                 <Image source={require("../../assets/e-icon/brand-olive.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Brand</Text>}
+                {focused && <Text style={{ textAlign: 'center', width: 50, color: "#2ECC71", fontSize: 10 }}>Brand</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,
@@ -129,10 +122,9 @@ export const BottomNavigation = () => {
           options={{
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <View style={{ alignItems: "center" }} className="">
-
+              <View style={{ alignItems: "center" }}>
                 <Image source={require("../../assets/e-icon/profile-olive.png")} style={{ width: 24, height: 24 }} />
-                {focused && <Text className="text-center w-[50]" style={{ color: "#2ECC71", fontSize: 10 }}>Profile</Text>}
+                {focused && <Text style={{ textAlign: 'center', width: 50, color: "#2ECC71", fontSize: 10 }}>Profile</Text>}
               </View>
             ),
             tabBarButton: (props) => <CustomTabBarButton {...props} />,

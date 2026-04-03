@@ -5,6 +5,8 @@ import {
   Pressable,
   Alert,
   ScrollView,
+  Modal,
+  TouchableWithoutFeedback,
 } from "react-native";
 import React, { useId, useState } from "react";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
@@ -63,43 +65,35 @@ const CreateProductSelecPicker = ({
 
 
   return (
-    <View className="flex-1 relative">
-      <Pressable onPress={handlePress} disabled={disabled}>
-        <View
-          className=" px-3  rounded-md  relative h-[55px] justify-center"
-          onLayout={(event) => {
-            const { height } = event.nativeEvent.layout;
-            setInputBoxHeight(Math.ceil(height + 7));
-          }}
-        >
-          <Text className="text-[#fff] font-helvetica">
-            {selectedState ? getDisplayValue(selectedState) : "Select...."}
-          </Text>
-        </View>
-      </Pressable>
-      {isOverlayOpen && !disabled && (
-        <View
-          className="bg-white absolute max-h-[200px] px-2 w-full rounded-md border border-gray-300 z-10"
-          style={{ top: inputBoxHeight }}
-        >
-          <ScrollView>
-            {data?.map((item: any, index: number) => {
-              return (
-                <TouchableOpacity
-                  key={item?.size || item?.value || index} 
-                  onPress={() => handleItemPick(item)}
-                >
-                  <Text className="p-2 border-b border-gray-200 rounded-md">
-                    {getDisplayValue(item)}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </ScrollView>
-        </View>
-      )}
-    </View>
-  );
+  <View className="flex-1">
+    <Pressable onPress={handlePress} disabled={disabled}>
+      <View className="px-3 rounded-md h-[55px] justify-center">
+        <Text className="text-[#fff]">
+          {selectedState ? getDisplayValue(selectedState) : "Select...."}
+        </Text>
+      </View>
+    </Pressable>
+
+    {isOverlayOpen && (
+      <Modal visible={true} transparent={true} animationType="fade">
+        <TouchableWithoutFeedback onPress={() => dispatch(alterOverlay(null))}>
+          <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.1)' }}>
+            {/* You would need to calculate the position or just show a centered picker */}
+            <View className="bg-white m-10 mt-[200px] max-h-[300px] rounded-lg shadow-xl">
+               <ScrollView>
+                 {data?.map((item, index) => (
+                    <TouchableOpacity key={index} onPress={() => handleItemPick(item)} className="p-4 border-b border-gray-100">
+                      <Text>{getDisplayValue(item)}</Text>
+                    </TouchableOpacity>
+                 ))}
+               </ScrollView>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+    )}
+  </View>
+);
 };
 
 export default CreateProductSelecPicker;

@@ -95,6 +95,7 @@ const Feed = ({ navigation }: Props) => {
         } catch (err) {
             if (err) {
                 Toast.error("Something went wrong!")
+                console.log(err)
             }
         }
     }
@@ -249,6 +250,7 @@ const Feed = ({ navigation }: Props) => {
             </ScrollView>
             <CreatePostModal visible={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
+                source="feed"
             />
         </View>
     )

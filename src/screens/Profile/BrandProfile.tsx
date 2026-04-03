@@ -4,13 +4,15 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
 import { scale, verticalScale } from 'react-native-size-matters';
 import { useUpdateBrandProfileMutation } from 'src/redux/features/profile/profile/profileApi';
-import { launchCameraAndHandlePermissions } from 'src/components/shared/ShareCamera';
 import { CountryPicker } from "react-native-country-codes-picker";
 import { Toast } from 'toastify-react-native';
 import { useAppSelector } from 'src/redux/hooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ImageObject } from 'src/types/search';
 import { ProfileResponse } from 'src/types/profile';
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
+import { clearCapturedImage } from "src/redux/features/camera/cameraSlice";
 
 const BrandProfile = () => {
     const token = useAppSelector((state) => state.auth.token)
@@ -27,6 +29,9 @@ const BrandProfile = () => {
     const [theme, setTheme] = useState("");
     const [brandStory, setbrandStory] = useState("")
     const [profile, setProfile] = useState<ProfileResponse | null>(null);
+    const dispatch = useDispatch();
+    const capturedImageUri = useSelector((state: RootState) => state.camera.capturedImageUri);
+    const source = useSelector((state: RootState) => state.camera.source);
 
     useEffect(() => {
         const loadProfile = async () => {
@@ -82,20 +87,24 @@ const BrandProfile = () => {
         })
     }, [navigation])
 
-    const openCamera = async () => {
-        const asset: any = await launchCameraAndHandlePermissions();
-        if (asset) {
-            setSelectedImage(asset);
+    useEffect(() => {
+        if (capturedImageUri && source === "profile") {
+            setSelectedImage({ uri: capturedImageUri });
+            dispatch(clearCapturedImage());
         }
+        if (capturedImageUri && source === "cover") {
+            setSelectedImage2({ uri: capturedImageUri });
+            dispatch(clearCapturedImage());
+        }
+    }, [capturedImageUri]);
+
+    const openCamera = () => {
+        navigation.navigate("CameraScreenFeed", { source: "profile" });
     };
 
-    const openCamera2 = async () => {
-        const asset: any = await launchCameraAndHandlePermissions();
-        if (asset) {
-            setSelectedImage2(asset);
-        }
+    const openCamera2 = () => {
+        navigation.navigate("CameraScreenFeed", { source: "cover" });
     };
-
     const handleUpdate = async () => {
         setLoading(true);
         const formData = new FormData()
@@ -111,23 +120,19 @@ const BrandProfile = () => {
         formData.append("data", JSON.stringify(data))
 
         if (selectedImage) {
-
-            const imageFile: any = {
-                uri: selectedImage?.uri,
-                name: selectedImage?.fileName,
-                type: selectedImage?.mimeType
-            }
-            formData.append("brandLogo", imageFile)
+            formData.append("brandLogo", {
+                uri: selectedImage.uri,
+                name: selectedImage.uri.split("/").pop() || "photo.jpg",
+                type: "image/jpeg",
+            } as any);
         }
 
         if (selectedImage2) {
-
-            const imageFile: any = {
-                uri: selectedImage2?.uri,
-                name: selectedImage2?.fileName,
-                type: selectedImage2?.mimeType
-            }
-            formData.append("coverPhoto", imageFile)
+            formData.append("coverPhoto", {
+                uri: selectedImage2.uri,
+                name: selectedImage2.uri.split("/").pop() || "cover.jpg",
+                type: "image/jpeg",
+            } as any);
         }
 
 
@@ -138,6 +143,7 @@ const BrandProfile = () => {
             }
         } catch (err) {
             Toast.error("something went wrong!please try again later.")
+            console.log(err)
         } finally {
             setLoading(false)
         }
@@ -227,7 +233,7 @@ const BrandProfile = () => {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={openCamera2} className='bg-[#252525] w-full m-2 p-2 rounded-lg'>
-                <Text className='text-white'>{selectedImage2 ? selectedImage2?.fileName : "Change your cover photo"}</Text>
+                <Text className='text-white'>{selectedImage2 ? selectedImage2?.uri : "Change your cover photo"}</Text>
             </TouchableOpacity>
 
             <View className="items-center">

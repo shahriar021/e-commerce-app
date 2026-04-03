@@ -11,7 +11,7 @@ export interface AllProduct {
   colors: string[]; // Array of color hex codes
   createdAt: string;
   discountPrice: number;
-  id: string;
+  _id: string;
   inStock: boolean;
   isDeleted: boolean;
   measurement: any[]; // Adjust based on actual structure

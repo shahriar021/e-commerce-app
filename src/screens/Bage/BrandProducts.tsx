@@ -74,7 +74,7 @@ const BrandProducts = ({ navigation }: Props) => {
             key={index}
             style={{ width: "48%" }}
             className='bg-[#1D3725] items-center rounded-lg relative'
-            onPress={() => navigation.navigate("Product Details", { ID: item.id })}
+            onPress={() => navigation.navigate("Product Details", { ID: item._id })}
         >
             <Image source={{ uri: item.productImages[0] }} style={{ width: "100%", height: 160, borderRadius: 8 }} />
             <View className='bg-[#000000] border-[#1D3725] border-8 absolute p-1 bottom-14 rounded-full items-center justify-center' style={{ width: 50, height: 50 }}>

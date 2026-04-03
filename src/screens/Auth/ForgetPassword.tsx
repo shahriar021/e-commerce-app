@@ -53,6 +53,7 @@ const ForgetPassword = () => {
         Alert.alert(res.message || "Something went wrong");
       }
     } catch (err: any) {
+      console.log(err)
       const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
       Alert.alert("Error", errorMessage);
       setLoading(false)

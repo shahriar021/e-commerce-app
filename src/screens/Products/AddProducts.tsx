@@ -6,7 +6,7 @@ import {
     Image,
     ActivityIndicator,
 } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
     Feather,
@@ -15,10 +15,12 @@ import { scale, verticalScale } from "react-native-size-matters";
 import { womenSizeRangesCM } from "./demo";
 import { useUploadProductMutation } from "src/redux/features/product/productApi";
 import { useAppSelector } from "src/redux/hooks";
-import { launchCameraAndHandlePermissions } from "src/components/shared/ShareCamera";
 import ColorsModal from "./ColorsModal";
 import AddProductsUI from "src/components/ui/products/AddProductsUI";
 import { handleSave } from "src/utils/addProducts/handleSave";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
+import { clearCapturedImage } from "src/redux/features/camera/cameraSlice";
 
 const AddProducts = () => {
     const navigation = useNavigation<any>();
@@ -50,6 +52,11 @@ const AddProducts = () => {
 
     const [postProduct] = useUploadProductMutation();
 
+    const dispatch = useDispatch();
+   const capturedImageUri = useSelector((state: any) => state.camera.capturedImageUri);
+const source = useSelector((state: any) => state.camera.source); 
+    console.log(selectedImage,"----- image...")
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerStyle: {
@@ -74,17 +81,17 @@ const AddProducts = () => {
         });
     }, [navigation]);
 
-    const openCamera = async () => {
-        const asset = await launchCameraAndHandlePermissions();
-        if (asset) {
-            setSelectedImage((prev: any) => {
 
-                if (asset && asset.uri) {
-                    return [...prev, asset];
-                }
-                return prev;
-            })
-        }
+   useEffect(() => {
+  if (capturedImageUri && source === "product") {
+    setSelectedImage((prev: any) => [...prev, { uri: capturedImageUri }]);
+    dispatch(clearCapturedImage());
+  }
+}, [capturedImageUri]);
+
+
+    const openCamera = () => {
+         navigation.navigate("CameraScreenFeed", { source: "product" });
     };
 
     const handleColorModal = () => {

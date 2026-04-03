@@ -7,9 +7,9 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from "react-native";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { DrawerActions, useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { useAppSelector } from "src/redux/hooks";
 import Posts from "../Feed/Posts";
@@ -18,6 +18,7 @@ import {  useGetLookbookQuery } from "src/redux/features/profile/profile/profile
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Lookbook from "./Lookbook";
 import { Image } from 'expo-image'
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 type RootStackParamList = {
@@ -41,6 +42,7 @@ export default function YourComponent() {
   const [isStorageLoading, setIsStorageLoading] = useState(true);
   const { data: getLookbook,isLoading: isLookbookLoading, refetch } = useGetLookbookQuery({ token, limit: saveLoadlimit });
   const userType = useAppSelector((state) => state.auth.userType)
+  console.log(userType,"usertype")
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -74,7 +76,7 @@ export default function YourComponent() {
 
     }, [])
   );
-
+  console.log(profile,"profile")
   useLayoutEffect(() => {
     navigation.setOptions({
       headerStyle: { backgroundColor: "#121212" },
@@ -87,16 +89,24 @@ export default function YourComponent() {
     setIsModalOpen(true)
   }
 
-  if (isStorageLoading || !profile?.data) {
-    return (
-      <View style={{ flex: 1, backgroundColor: '#121212', justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator color="#86EFAC" size="large" />
-      </View>
-    );
-  }
+ if (isStorageLoading) {
+  return <ActivityIndicator />  // only show loader while AsyncStorage is reading
+}
+
+if (!profile?.data) {
+  return (
+    <View style={{ flex: 1, backgroundColor: '#121212', justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ color: 'white' }}>No profile found. Please log in again.</Text>
+    </View>
+  )
+}
 
   return (
+    <SafeAreaView style={{flex:1,backgroundColor: '#121212',padding:10}}>
     <View className="flex-1 relative">
+      <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+      <Feather name="menu" size={24} color="white" />
+    </TouchableOpacity>
       <TouchableOpacity className='absolute right-10 bottom-4 z-10 bg-[#1D3725] p-3 rounded-full' onPress={handleModal}>
         <AntDesign name="plus" size={24} color="white" />
       </TouchableOpacity>
@@ -181,19 +191,19 @@ export default function YourComponent() {
           <Text className='text-white font-instrumentSansSemiBold text-center'>{profile?.data?.theme}</Text>
           <View className='mt-3 flex-row gap-3'>
             <View className='bg-[#252525] p-2 items-center rounded-xl'>
-              <Text className='text-white font-instrumentRegular'>{profile?.data?.totalPosts | 0}</Text>
+              <Text className='text-white font-instrumentRegular'>{profile?.data?.totalPosts || 0}</Text>
               <Text className='text-[#9CA3AF] font-instrumentRegular' >Posts</Text>
             </View>
             <View className='bg-[#252525] p-2 items-center rounded-xl'>
-              <Text className='text-white font-instrumentRegular'>{profile?.data?.totalReacts | 0}</Text>
+              <Text className='text-white font-instrumentRegular'>{profile?.data?.totalReacts || 0}</Text>
               <Text className='text-[#9CA3AF] font-instrumentRegular' >Likes</Text>
             </View>
             <View className='bg-[#252525] p-2 items-center rounded-xl'>
-              <Text className='text-white font-instrumentRegular'>{profile?.data?.totalFollowing | 0}</Text>
+              <Text className='text-white font-instrumentRegular'>{profile?.data?.totalFollowing || 0}</Text>
               <Text className='text-[#9CA3AF] font-instrumentRegular' >Followings</Text>
             </View>
             <View className='bg-[#252525] p-2 items-center rounded-xl'>
-              <Text className='text-white font-instrumentRegular'>{profile?.data?.totalFollowers | 0}</Text>
+              <Text className='text-white font-instrumentRegular'>{profile?.data?.totalFollowers || 0}</Text>
               <Text className='text-[#9CA3AF] font-instrumentRegular' >Followers</Text>
             </View>
           </View>
@@ -215,8 +225,10 @@ export default function YourComponent() {
       <CreatePostModal visible={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onPostSuccess={() => setRefreshKey(prev => prev + 1)}
+        source="profile"
       />
     </View>
+    </SafeAreaView>
   );
 
 

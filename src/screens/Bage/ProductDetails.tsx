@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity,  useWindowDimensions, Alert, } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { AntDesign, Feather, FontAwesome, Ionicons, } from "@expo/vector-icons";
 import { Rating } from "react-native-ratings";
@@ -32,8 +32,14 @@ const ProductDetails = ({ navigation }: Props) => {
     const [selectedSize, setSelectedSize] = useState<SizeData | null>(null);
     const [quantity, setQuanity] = useState(1);
     const [limit] = useState(2);
-
     const { data } = useGetSpecificProductBasedOnIdQuery({ token, id: ID });
+    useEffect(() => {
+  if (data?.data?.product?.[0]?.isFavourite !== undefined) {
+    setIsHeart(data.data.product[0].isFavourite);
+  }
+}, [data]);
+
+    
     const { data: getReview } = useGetALlReviewBasedOnIdQuery({
         token,
         id: ID,
@@ -105,11 +111,13 @@ const ProductDetails = ({ navigation }: Props) => {
             const res = await postFavourite({ token, id }).unwrap();
             setIsHeart(res?.success);
         } catch (err) {
+            console.log(err)
         }
     };
 
     const handleNavigateToReview = () => {
         if (ID) {
+            console.log(ID)
             navigation.navigate("Review", { id: ID });
         }
     };
@@ -141,7 +149,7 @@ const ProductDetails = ({ navigation }: Props) => {
 
                         <TouchableOpacity
                             className="bg-[#252525] p-3 rounded-full"
-                            onPress={() => handleFav(data?.data?.product[0]?.id)}
+                            onPress={() => handleFav(data?.data?.product[0]?._id)}
                         >
                             {isHeart ? (
                                 <Ionicons name="heart" size={24} color="red" />
@@ -191,37 +199,7 @@ const ProductDetails = ({ navigation }: Props) => {
                     </TouchableOpacity>
                 </View>
                 <View className="w-full p-3 ">
-                    {/* <Text className="text-[#ADAEBC] font-instrumentSansSemiBold mb-2">
-                        Color
-                    </Text>
-                    <View className="flex-row gap-2 mt-1 mb-1">
-                        {data?.data?.product[0]?.colors.map((item: any, index: any) => (<TouchableOpacity key={index} onPress={() => setIsColor(item)} className={`rounded-full ${isColor == item ? "border-white" : "border-transparent"} border-2`}                           >                               <FontAwesome name="circle" size={24} color={item} />                           </TouchableOpacity>))}
-                    </View>
-                    <Text className="text-[#ADAEBC] font-instrumentSansSemiBold mt-2">
-                        Custom Size
-                    </Text>
-                    <View className="flex-row gap-2 mt-2">
-                        {data?.data?.product[0]?.measurement.map(
-                            (item: any, index: any) => (
-                                <TouchableOpacity
-                                    key={index}
-                                    onPress={() => setSelectedSize(item)}
-                                    className={`w-[26px] h-[26px] rounded-full items-center justify-center border-2 ${selectedSize === item ? "bg-white" : "bg-[#252525]"
-                                        } ${selectedSize === item
-                                            ? "border-[#252525]"
-                                            : "border-transparent"
-                                        }`}
-                                >
-                                    <Text
-                                        className={`text-xs font-bold ${selectedSize === item ? "text-black" : "text-white"
-                                            }`}
-                                    >
-                                        {item.size}
-                                    </Text>
-                                </TouchableOpacity>
-                            )
-                        )}
-                    </View> */}
+                    
 
                     <Text className="text-[#ADAEBC] font-instrumentSansSemiBold mb-2">
                         Color

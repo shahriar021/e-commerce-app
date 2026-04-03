@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./createdApi/baseApi";
 import authReducer from "./features/auth/authSlice";
 import pickerReducer from "./features/picker/pickerSlice";
+import cameraReducer from "./features/camera/cameraSlice"; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   persistReducer,
@@ -17,7 +18,7 @@ import { combineReducers } from "redux";
 
 // Persist Configurations
 const authPersistConfig = {
-  key: "dormitory-auth",
+  key: "arkive-auth",
   storage: AsyncStorage,
 };
 
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
   picker: pickerReducer,
   auth: persistReducer(authPersistConfig, authReducer),
+  camera: cameraReducer,
 });
 
 // Configure Store

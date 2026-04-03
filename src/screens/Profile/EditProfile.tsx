@@ -1,17 +1,18 @@
-import { View, Text, TouchableOpacity, Image, Dimensions, TextInput, ScrollView,  ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, Image, Dimensions, TextInput, ScrollView, ActivityIndicator } from 'react-native'
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
 import { scale, verticalScale } from 'react-native-size-matters'
 import { useUpdateProfileMutation } from 'src/redux/features/profile/profile/profileApi'
 import { useAppSelector } from 'src/redux/hooks'
-import * as ImagePicker from 'expo-image-picker';
-import { launchCameraAndHandlePermissions } from 'src/components/shared/ShareCamera'
 import { Toast } from 'toastify-react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { CountryPicker } from "react-native-country-codes-picker";
 import { ImageObject } from 'src/types/search'
 import { ProfileResponse } from 'src/types/profile'
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
+import { clearCapturedImage } from "src/redux/features/camera/cameraSlice";
 
 
 const EditProfile = () => {
@@ -31,6 +32,9 @@ const EditProfile = () => {
     const [profile, setProfile] = useState<ProfileResponse | null>(null);
     const [countryCode, setCountryCode] = useState('+93');
     const [show, setShow] = useState(false);
+    const dispatch = useDispatch();
+    const capturedImageUri = useSelector((state: RootState) => state.camera.capturedImageUri);
+    const source = useSelector((state: RootState) => state.camera.source);
 
     useEffect(() => {
         const loadProfile = async () => {
@@ -84,18 +88,23 @@ const EditProfile = () => {
         })
     }, [navigation])
 
-    const openCamera = async () => {
-        const asset:any = await launchCameraAndHandlePermissions();
-        if (asset) {
-            setSelectedImage(asset);
+    useEffect(() => {
+        if (capturedImageUri && source === "profile") {
+            setSelectedImage({ uri: capturedImageUri });
+            dispatch(clearCapturedImage());
         }
+        if (capturedImageUri && source === "cover") {
+            setSelectedImage2({ uri: capturedImageUri });
+            dispatch(clearCapturedImage());
+        }
+    }, [capturedImageUri]);
+
+    const openCamera = () => {
+        navigation.navigate("CameraScreenFeed", { source: "profile" });
     };
 
-    const openCamera2 = async () => {
-        const asset:any = await launchCameraAndHandlePermissions();
-        if (asset) {
-            setSelectedImage2(asset);
-        }
+    const openCamera2 = () => {
+        navigation.navigate("CameraScreenFeed", { source: "cover" });
     };
 
     const handleUpdate = async () => {
@@ -115,23 +124,19 @@ const EditProfile = () => {
         formData.append("data", JSON.stringify(data))
 
         if (selectedImage) {
-
-            const imageFile:any = {
-                uri: selectedImage?.uri,
-                name: selectedImage?.fileName,
-                type: selectedImage?.mimeType
-            }
-            formData.append("profile", imageFile)
+            formData.append("profile", {
+                uri: selectedImage.uri,
+                name: selectedImage.uri.split("/").pop() || "photo.jpg",
+                type: "image/jpeg",
+            } as any);
         }
 
         if (selectedImage2) {
-
-            const imageFile:any = {
-                uri: selectedImage2?.uri,
-                name: selectedImage2?.fileName,
-                type: selectedImage2?.mimeType
-            }
-            formData.append("coverPhoto", imageFile)
+            formData.append("coverPhoto", {
+                uri: selectedImage2.uri,
+                name: selectedImage2.uri.split("/").pop() || "cover.jpg",
+                type: "image/jpeg",
+            } as any);
         }
 
 
@@ -146,6 +151,7 @@ const EditProfile = () => {
             setLoading(false)
         }
     }
+    console.log(selectedImage2,"selectedImage2")
 
     return (
         <ScrollView contentContainerStyle={{ alignItems: "center", padding: 12 }}>
@@ -223,8 +229,10 @@ const EditProfile = () => {
                     <TextInput onChangeText={setFavStyle} style={{ flex: 1, fontSize: 16, color: 'white' }} placeholder={profile?.data?.favouriteStyles?.join(",")} placeholderTextColor="#aaa" />
                 </View>
             </View>
+            <Text className='font-bold text-white w-full mt-2'>Cover photo File Name</Text>
             <TouchableOpacity onPress={openCamera2} className='bg-[#252525] w-full m-2 p-2 rounded-lg'>
-                <Text className='text-white'>{selectedImage2 ? selectedImage2?.fileName : "Change your cover photo"}</Text>
+                
+                <Text className='text-white'>{selectedImage2 ? selectedImage2?.uri : "Change your cover photo"}</Text>
             </TouchableOpacity>
 
             <View className="items-center">

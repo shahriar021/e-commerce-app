@@ -2,13 +2,16 @@
  import { View, Text, TouchableOpacity, StyleSheet, Alert, Platform } from "react-native";
  import { Camera, useCameraDevice } from "react-native-vision-camera";
  import { useNavigation, useIsFocused } from "@react-navigation/native";
+import { useAppDispatch } from "src/redux/hooks";
+import { setCapturedImage } from "src/redux/features/camera/cameraSlice";
  
  const CameraScreenFeed = ({ route, navigation }: any) => {
-  const { onCapture } = route.params;
   const isFocused = useIsFocused();
   const camera = useRef<Camera>(null);
   const device = useCameraDevice("back");
   const [hasPermission, setHasPermission] = useState(false);
+   const dispatch = useAppDispatch();
+   const { source, modalId } = route.params;
 
   useEffect(() => {
     (async () => {
@@ -18,19 +21,20 @@
     })();
   }, []);
 
-  const takePhoto = async () => {
-    if (!camera.current) return;
-    try {
-      const photo = await camera.current.takeSnapshot({ quality: 80 });
-      const path = Platform.OS === "android" ? `file://${photo.path}` : photo.path;
+ 
 
-      // Send image back to modal
-      if (onCapture) onCapture(path);
-      navigation.goBack();
-    } catch (e) {
-      Alert.alert("Capture Error", "Try again");
-    }
-  };
+const takePhoto = async () => {
+  if (!camera.current) return;
+  try {
+    const photo = await camera.current.takeSnapshot({ quality: 80 });
+    const path = Platform.OS === "android" ? `file://${photo.path}` : photo.path;
+
+    dispatch(setCapturedImage({ uri: path, source, modalId }));
+    navigation.goBack();
+  } catch (e) {
+    Alert.alert("Capture Error", "Try again");
+  }
+};
 
   if (!hasPermission || !device)
     return (

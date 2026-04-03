@@ -37,7 +37,7 @@ type TAuthData = {
   companyAuth: null | string;
   EXPO_PUBLIC_BASE_URL: string | null;
   userType: string | null;
-  token: boolean;
+  token: string | null;
   loading: boolean;
 };
 
@@ -49,7 +49,7 @@ const initialState: TAuthData = {
   companyAuth: null,
   EXPO_PUBLIC_BASE_URL: null,
   userType: null,
-  token: false,
+  token: null,
   loading: false,
 };
 

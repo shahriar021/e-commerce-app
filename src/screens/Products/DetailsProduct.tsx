@@ -31,6 +31,7 @@ const DetailsProduct = () => {
     const token = useAppSelector((state) => state.auth.token);
     const route = useRoute();
     const { id } = route.params;
+    console.log(id,"detrails prodict")
 
     const { data } = useGetSpecificProductBasedOnIdQuery({ token, id: id });
     const [deleteProduct] = useDeleteProductMutation();

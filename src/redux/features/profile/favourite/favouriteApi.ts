@@ -21,7 +21,7 @@ const favouriteApi = baseApi.injectEndpoints({
             query:({token,id})=>{
 
                 return {
-                    url:`/favourite/post/${id}`,
+                    url:`/favourite/product/${id}`,
                     headers:{
                         Authorization:`Bearer ${token}`
                     },

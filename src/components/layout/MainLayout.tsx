@@ -17,7 +17,9 @@ import { usePostNotificationRegisterMutation } from "src/redux/features/notifica
 const MainLayout = () => {
   const token = useAppSelector((state) => state.auth.token);
   const [isSplashVisible, setIsSplashVisible] = useState(true);
-  const { data: getProfile, isSuccess } = useGetProfileQuery(token)
+  const { data: getProfile, isSuccess } = useGetProfileQuery(token, { 
+  skip: !token 
+})
   const [postNotiRegis] = usePostNotificationRegisterMutation()
 
   const [fontsLoaded] = useFonts({

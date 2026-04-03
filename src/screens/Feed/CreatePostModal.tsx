@@ -13,7 +13,7 @@ import {
   Platform,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import {  Entypo } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import { scale, verticalScale } from "react-native-size-matters";
 import CreateModalSelecPicker from "src/components/ui/feed/CreateModalSelecPicker";
 import { usePostFeedPostMutation } from "src/redux/features/feedApi/feedApi";
@@ -24,9 +24,10 @@ import { Toast } from "toastify-react-native";
 import { ImageObject } from "src/types/search";
 import { SelectedBrand } from "src/types/feed";
 import { useNavigation } from "@react-navigation/native";
-import { Camera, useCameraDevice } from "react-native-vision-camera";
+import { useDispatch, useSelector } from "react-redux";
+import { clearCapturedImage } from "src/redux/features/camera/cameraSlice";
 
-const CreatePostModal = ({ visible, onClose, onPostSuccess }: any) => {
+const CreatePostModal = ({ visible, onClose, onPostSuccess, source = "feed" }: any) => {
   const { height } = useWindowDimensions();
   const token = useAppSelector((state) => state.auth.token);
   const [loadMore] = useState(100);
@@ -37,91 +38,85 @@ const CreatePostModal = ({ visible, onClose, onPostSuccess }: any) => {
   const [comment, setComments] = useState("");
   const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<SelectedBrand | null>(null);
-  const camera = useRef<Camera>(null);
-  const device = useCameraDevice("back");
-  const [isCameraOpen, setIsCameraOpen] = useState(false);
-  const [hasPermission, setHasPermission] = useState(false);
   const navigation = useNavigation()
+  const dispatch = useDispatch()
 
   const userType = useAppSelector((state) => state.auth.userType);
-  console.log(selectedImage,"0-00");
 
-  useEffect(() => {
-    (async () => {
-      const status = await Camera.requestCameraPermission();
-      if (status !== "granted") Alert.alert("Camera permission is required");
-      setHasPermission(status === "granted");
-    })();
-  }, []);
+  const modalId = useRef(`modal-${source}-${Math.random().toString(36).slice(2)}`).current;
+
+  const capturedImageUri = useSelector((state: any) => state.camera.capturedImageUri);
+  const capturedSource = useSelector((state: any) => state.camera.source);
+  const capturedModalId = useSelector((state: any) => state.camera.modalId); 
+
+   useEffect(() => {
+    // Only process the image if it was meant for THIS modal instance
+    if (capturedImageUri && capturedModalId === modalId) {
+      setSelectedImage({ uri: capturedImageUri });
+      dispatch(clearCapturedImage());
+    }
+  }, [capturedImageUri, capturedModalId]);
 
   const handleHashTag = (text: string) => {
     const hashTagArray = text.split(" ").filter(Boolean);
     setHashtag([...new Set(hashTagArray)]);
   };
+
   const handlePost = async () => {
     if (!selectedImage || !comment || !selectedBrand) {
       Alert.alert("Fill all the fields to post!");
       return;
     }
+
     setLoading(true);
     const formData = new FormData();
 
-    const data = {
+    // ✅ Backend expects a "data" field as JSON string
+    const data = JSON.stringify({
       tags: hashtag,
       caption: comment,
-      brandName: selectedBrand?.brandName,
-      brandId: selectedBrand?._id,
-    };
-    if (selectedImage) {
-      const imageFile: any = {
-        uri: selectedImage?.uri,
-        name: selectedImage?.uri.split("/").pop() || "photo.jpg",
+      brandName: selectedBrand.brandName,
+      brandId: selectedBrand._id,
+    });
+    formData.append("data", data);
+
+    // ✅ Image as "attachment"
+    if (selectedImage?.uri) {
+      formData.append("attachment", {
+        uri: selectedImage.uri,
+        name: selectedImage.uri.split("/").pop() || "photo.jpg",
         type: "image/jpeg",
-      };
-      formData.append("attachment", imageFile);
+      } as any);
     }
-    formData.append("data", JSON.stringify(data));
+
     try {
       const res = await postFeed({ token, formData });
-      console.log(res,"90909");
-      if (res.data?.success) {
+
+      if (res?.data?.success) {
         setComments("");
         setHashtag([""]);
         Toast.success("Posted");
         onPostSuccess?.();
         onClose();
-      } else {
-        Toast.warn("Something went wrong campu!!");
+      } else if (res?.error) {
+        console.log("Server error:", res.error.data?.message);
+        Toast.warn("Something went wrong. Please try again.");
         onClose();
       }
     } catch (err) {
-      Toast.error("Something went wrong cecampu!!");
-      setLoading(false);
-      console.log(err);
+      console.log("Caught error:", err);
+      Toast.error("Unexpected error. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  // const openCamera = () => {
-  //   setIsCameraOpen(true);
-  // };
-  // const takePhoto = async () => {
-  //   if (!camera.current) return;
-  //   try {
-  //     const photo = await camera.current.takeSnapshot({ quality: 80 });
-  //     const path = Platform.OS === "android" ? `file://${photo.path}` : photo.path;
-  //     setSelectedImage({ uri: path });
-  //     setIsCameraOpen(false); 
-  //   } catch (e) {
-  //     Alert.alert("Capture Error", "Try again");
-  //   }
-  // };
-
-  
+   const handleOpenCamera = () => {
+    navigation.navigate("CameraScreenFeed", { source, modalId });
+  };
   return (
     <Modal visible={visible} onRequestClose={onClose} transparent>
-      <View className="justify-end flex-1 bg-black-50 ">
+      <View className="justify-end flex-1 bg-black/50 ">
         <View className="bg-black rounded-t-[32] overflow-hidden " style={{ height: height * 0.6 }}>
           <View className="mt-5 p-3 flex-row justify-between items-center mx-2">
             <Text className="font-instrumentSansBold text-white text-lg">Create Post</Text>
@@ -131,35 +126,12 @@ const CreatePostModal = ({ visible, onClose, onPostSuccess }: any) => {
           </View>
 
           <ScrollView contentContainerStyle={{ alignItems: "center", paddingHorizontal: 20, paddingBottom: 100 }}>
-            {/* <TouchableOpacity
-              style={{ width: scale(300), height: verticalScale(194) }}
-              className="items-center justify-center border border-dashed border-white  rounded-xl mt-5 bg-[#2C2C2C]"
-              onPress={openCamera}
-            >
-             
-              {selectedImage ? (
-                <Image source={{ uri: selectedImage.uri }} style={{ width: "100%", height: "100%" }} />
-              ) : (
-                <>
-                  <Image
-                    
-                    source={require("../../../assets/e-icon/Frame (1).png")}
-                    style={{ width: scale(30), height: verticalScale(30) }}
-                  />
-                  <Text className="mt-2 text-white" style={{ fontFamily: "prosto-One" }}>
-                    Tap to upload image or video (15-60s)
-                  </Text>
-                </>
-              )}
-            </TouchableOpacity> */}
             <TouchableOpacity
               style={{ width: scale(300), height: verticalScale(194) }}
               className="items-center justify-center border border-dashed border-white rounded-xl mt-5 bg-[#2C2C2C]"
-              onPress={() =>
-                navigation.navigate("CameraScreenFeed", {
-                  onCapture: (imagePath: string) => setSelectedImage({ uri: imagePath }),
-                })
-              }
+              
+                onPress={handleOpenCamera}
+              
             >
               {selectedImage ? (
                 <Image source={{ uri: selectedImage.uri }} style={{ width: "100%", height: "100%" }} />
