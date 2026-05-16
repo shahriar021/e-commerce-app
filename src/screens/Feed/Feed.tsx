@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView, TextInput, ActivityIndicator, Alert, Keyboard, RefreshControl, } from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { scale, verticalScale } from 'react-native-size-matters';
 import { AntDesign, Feather, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import CreatePostModal from './CreatePostModal';
@@ -12,6 +12,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from 'src/types/screens';
 import { handleShare } from 'src/utils/feed/handleShare';
 import { Image } from 'expo-image'
+import { useSelector } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
+import { useRequireAuth } from 'src/hooks/useRequireAuth';
 
 type Props = {
     navigation: StackNavigationProp<RootStackParamList, "Other/brand profile">;
@@ -19,6 +22,7 @@ type Props = {
 
 const Feed = ({ navigation }: Props) => {
 
+    const isGuest = useAppSelector((state)=>state.auth.isGuest)
     const token = useAppSelector((state) => state.auth.token)
     const [selectedItem, setSelectedItem] = useState("")
     const [selectedCid, setSelectedCid] = useState<string | null>(null)
@@ -31,9 +35,12 @@ const Feed = ({ navigation }: Props) => {
     const [postComment] = usePostCommentBasedOnIdMutation()
     const [postLike] = usePostLikeMutation()
     const [postSave] = usePostSaveMutation()
-    const { data: getPostData, isLoading, error, refetch } = useGetAllPostQuery({ token, limit: loadMore, tag: selectedItem })
+    const { data: getPostData, isLoading, error, refetch } = useGetAllPostQuery({ token: isGuest ? undefined : token, limit: loadMore, tag: selectedItem })
     const { data: getFeedCat } = useGetFeedFilterQuery(token) as { data?: FeedCategoryResponse }
     const { data: getComment } = useGetCommentsQuery({ token, pid: selectedCid })
+    const requireAuth = useRequireAuth();
+    const capturedImageUri = useSelector((state: any) => state.camera.capturedImageUri);
+    const modalId = useRef(`modal-feed-${Math.random().toString(36).slice(2)}`).current;
 
     const comments = getComment?.data?.comments;
     const feedCatgory = getFeedCat?.data ? getFeedCat?.data.map(item => item) : [];
@@ -42,9 +49,17 @@ const Feed = ({ navigation }: Props) => {
     }
     const onRefresh = async () => {
         setRefreshing(true)
-        await refetch() // your RTK Query refetch function
+        await refetch() 
         setRefreshing(false)
     }
+
+useFocusEffect(
+  React.useCallback(() => {
+    if (capturedImageUri) {
+      setIsModalOpen(true);
+    }
+  }, [capturedImageUri])
+);
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -69,6 +84,7 @@ const Feed = ({ navigation }: Props) => {
     }
 
     const handleComment = async (id: any) => {
+        requireAuth(async () => {
         if (!comment) {
             Alert.alert("put some comment..");
             return;
@@ -86,10 +102,11 @@ const Feed = ({ navigation }: Props) => {
             setComments('')
         } catch (err) {
             setLoading(false)
-        }
+        }})
     }
 
     const handleLike = async (id: string) => {
+        requireAuth(async () => {
         try {
             const res = await postLike({ token, id }).unwrap()
         } catch (err) {
@@ -98,9 +115,11 @@ const Feed = ({ navigation }: Props) => {
                 console.log(err)
             }
         }
+    })
     }
 
     const handleSave = async (id: string) => {
+        requireAuth(async () => {
         try {
             const res = await postSave({ token, id }).unwrap()
             if (res.success) {
@@ -110,7 +129,7 @@ const Feed = ({ navigation }: Props) => {
             if (err) {
                 Toast.error("Something went wrong!")
             }
-        }
+        }})
     }
 
     const handleSaveCat = (item: string) => {
@@ -127,9 +146,13 @@ const Feed = ({ navigation }: Props) => {
         } else {
             setSelectedCid(cid)
         }
-
     }
-
+    const handleUserNav=(item:any)=>{
+        
+        requireAuth(async () => {
+        navigation.navigate("Other/brand profile", { upID: item })
+        })
+    }
 
     return (
         <View className='flex-1 bg-[#121212] p-5 relative'>
@@ -160,7 +183,7 @@ const Feed = ({ navigation }: Props) => {
                 {getPostData?.data?.data?.map((item: Post, index: number) =>
                     <View key={index}>
                         <View className='flex-row justify-between mt-4 mb-1 '>
-                            <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => navigation.navigate("Other/brand profile", { upID: item?.uploaderId })}>
+                            <TouchableOpacity className='flex-row gap-2 items-center' onPress={() => handleUserNav(item?.uploaderId)}>
                                 <View style={{ width: scale(30), height: scale(30) }}>
                                     {item?.uploaderType == "Brand" && item?.brandLogo?.[0] ? (
                                         <Image source={{ uri: item?.brandLogo?.[0] }} style={{ width: "100%", height: "100%", borderRadius: 10, overflow: "hidden" }} />
@@ -251,6 +274,7 @@ const Feed = ({ navigation }: Props) => {
             <CreatePostModal visible={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 source="feed"
+                modalId={modalId}
             />
         </View>
     )

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -19,6 +19,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Lookbook from "./Lookbook";
 import { Image } from 'expo-image'
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 
 
 type RootStackParamList = {
@@ -42,7 +43,16 @@ export default function YourComponent() {
   const [isStorageLoading, setIsStorageLoading] = useState(true);
   const { data: getLookbook,isLoading: isLookbookLoading, refetch } = useGetLookbookQuery({ token, limit: saveLoadlimit });
   const userType = useAppSelector((state) => state.auth.userType)
-  console.log(userType,"usertype")
+  const modalId = useRef(`modal-profile-${Math.random().toString(36).slice(2)}`).current;
+  const capturedImageUri = useSelector((state: any) => state.camera.capturedImageUri);
+
+  useFocusEffect(
+  useCallback(() => {
+    if (capturedImageUri) {
+      setIsModalOpen(true);
+    }
+  }, [capturedImageUri])
+);
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -226,6 +236,7 @@ if (!profile?.data) {
         onClose={() => setIsModalOpen(false)}
         onPostSuccess={() => setRefreshKey(prev => prev + 1)}
         source="profile"
+         modalId={modalId}
       />
     </View>
     </SafeAreaView>

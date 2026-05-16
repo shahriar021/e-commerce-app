@@ -22,12 +22,29 @@ import { setCapturedImage } from "src/redux/features/camera/cameraSlice";
   }, []);
 
  
+// const takePhoto = async () => {
+//   if (!camera.current) return;
+//   try {
+//     const photo = await camera.current.takeSnapshot({ quality: 80 });
+//     const path = Platform.OS === "android" ? `file://${photo.path}` : photo.path;
 
+//     dispatch(setCapturedImage({ uri: path, source, modalId }));
+//     navigation.goBack();
+//   } catch (e) {
+//     Alert.alert("Capture Error", "Try again");
+//   }
+// };
 const takePhoto = async () => {
   if (!camera.current) return;
   try {
-    const photo = await camera.current.takeSnapshot({ quality: 80 });
-    const path = Platform.OS === "android" ? `file://${photo.path}` : photo.path;
+    let path;
+    if (Platform.OS === 'android') {
+      const photo = await camera.current.takeSnapshot({ quality: 80 });
+      path = `file://${photo.path}`;
+    } else {
+      const photo = await camera.current.takePhoto({});
+      path = photo.path;
+    }
 
     dispatch(setCapturedImage({ uri: path, source, modalId }));
     navigation.goBack();
@@ -45,7 +62,7 @@ const takePhoto = async () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "black" }}>
-      <Camera ref={camera} style={StyleSheet.absoluteFill} device={device} isActive={isFocused} />
+      <Camera ref={camera} style={StyleSheet.absoluteFill} device={device} isActive={isFocused} photo={true}/>
       <TouchableOpacity onPress={takePhoto} style={styles.button}>
         <View style={styles.inner} />
       </TouchableOpacity>

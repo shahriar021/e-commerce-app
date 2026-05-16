@@ -128,12 +128,34 @@ export default function PaymentScreen() {
       setStatus("Opening payment sheet...");
 
       // 3️⃣ Present PaymentSheet
-      const { error: presentError } = await presentPaymentSheet();
+      // const { error: presentError } = await presentPaymentSheet();
 
-      if (presentError) {
-        Alert.alert("Payment Failed", presentError.message);
+      // if (presentError) {
+      //   Alert.alert("Payment Failed", presentError.message);
+      //   setProcessing(false);
+      //   setStatus("Payment cancelled or failed.");
+      //   return;
+      // }
+      try {
+        const { error: presentError } = await presentPaymentSheet();
+
+        if (presentError) {
+          if (presentError.code === 'Canceled') {
+            setStatus('Payment cancelled.');
+          } else {
+            Alert.alert("Payment Failed", presentError.message);
+          }
+          setProcessing(false);
+          setStatus("Payment cancelled or failed.");
+          return;
+        }
+      } catch (e) {
+        Alert.alert(
+          "Payment Unavailable",
+          "Payment is temporarily unavailable on this iOS version. Please try again later or contact support."
+        );
         setProcessing(false);
-        setStatus("Payment cancelled or failed.");
+        setStatus("Payment unavailable.");
         return;
       }
 
@@ -148,7 +170,7 @@ export default function PaymentScreen() {
         },
       ]);
     } catch (err) {
-      
+
       Alert.alert("Error", "Something went wrong.");
     }
 

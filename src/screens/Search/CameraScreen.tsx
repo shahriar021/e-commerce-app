@@ -35,22 +35,28 @@ const CameraScreen = () => {
   }, []);
 
   // 3. Simple capture function
-  const takePhoto = async () => {
-    if (!camera.current) return;
-    try {
-      // Use Snapshot - it's the most stable for Android Play Store releases
-      const photo = await camera.current.takeSnapshot({ quality: 80 });
-
-      const path = Platform.OS === "android" ? `file://${photo.path}` : photo.path;
-
+ const takePhoto = async () => {
+  if (!camera.current) return;
+  try {
+    let photo;
+    if (Platform.OS === 'android') {
+      photo = await camera.current.takeSnapshot({ quality: 80 });
+      const path = `file://${photo.path}`;
       navigation.navigate("BottomScreen", {
         screen: "Search",
         params: { capturedImage: path },
       });
-    } catch (e) {
-      Alert.alert("Capture Error", "Try restarting the app");
+    } else {
+      photo = await camera.current.takePhoto({});
+      navigation.navigate("BottomScreen", {
+        screen: "Search",
+        params: { capturedImage: photo.path },
+      });
     }
-  };
+  } catch (e) {
+    Alert.alert("Capture Error", "Try restarting the app");
+  }
+};
 
   // UI Checks
   if (!hasPermission)
@@ -76,6 +82,7 @@ const CameraScreen = () => {
         // No 'photo={true}', no 'video', no 'format'.
         // This forces the library to use the "Legacy" stable mode.
         isActive={isFocused}
+        photo={true} 
       />
       <TouchableOpacity onPress={takePhoto} style={styles.button}>
         <View style={styles.inner} />

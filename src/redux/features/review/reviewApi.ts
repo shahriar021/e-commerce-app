@@ -10,9 +10,9 @@ const reviewApi = baseApi.injectEndpoints({
                 return {
                     url: `/review?productId=${id}&limit=${limit}`,
                     method: "GET",
-                    headers: {
+                    headers: token ? {
                         Authorization: `Bearer ${token}`,
-                    },
+                    } : {},
                 }
             },
             providesTags:['review']

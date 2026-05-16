@@ -9,12 +9,13 @@ import { useAppSelector } from 'src/redux/hooks'
 import { Image } from "expo-image";
 
 const SearchPage = () => {
+    const isGuest= useAppSelector((state)=>state.auth.isGuest)
     const token=useAppSelector((state)=>state.auth.token)
     const [isClothType, setIsClothType] = useState("ALL Results")
     const navigation = useNavigation<any>()
     const route=useRoute()
     const {search}=route.params
-    const {data:getSearchData}=useGetSearchProductByTextQuery({token,text:search})
+    const {data:getSearchData}=useGetSearchProductByTextQuery({token:isGuest?undefined:token,text:search})
     return (
       <View className="flex-1">
         <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: "#121212" }}>

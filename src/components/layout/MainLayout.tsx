@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import StackNavigation from "src/routes/StackNavigation";
@@ -13,14 +13,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import messaging from '@react-native-firebase/messaging';
 import * as Notifications from 'expo-notifications';
 import { usePostNotificationRegisterMutation } from "src/redux/features/notification/notificationApi";
+import { isTokenExpired } from "src/utils/isTokenExpired";
+import { setToken } from "src/redux/features/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const MainLayout = () => {
   const token = useAppSelector((state) => state.auth.token);
+  const isGuest = useAppSelector((state) => state.auth.isGuest);
+  console.log(isGuest,"in main")
   const [isSplashVisible, setIsSplashVisible] = useState(true);
   const { data: getProfile, isSuccess } = useGetProfileQuery(token, { 
   skip: !token 
 })
   const [postNotiRegis] = usePostNotificationRegisterMutation()
+
+  const dispatch = useDispatch()
 
   const [fontsLoaded] = useFonts({
     'prosto-One': require("../../../assets/fonts/ProstoOne-Regular.ttf"),
@@ -34,6 +41,12 @@ const MainLayout = () => {
     'instrumentSans-Regular': require("../../../assets/fonts/InstrumentSans-Regular.ttf"),
     'instrumentSans-SemiBold': require("../../../assets/fonts/InstrumentSans-SemiBold.ttf"),
   });
+  useEffect(() => {
+    if (token && isTokenExpired(token)) {
+      dispatch(setToken(null))
+      Alert.alert("Session Expired", "Please login again")
+    }
+  }, [token]) 
 
   // useEffect(() => {
   //   const getAndSendFCMToken = async () => {
@@ -140,7 +153,7 @@ const MainLayout = () => {
       <NavigationContainer>
         <View style={{ flex: 1 }}>
           <StatusBar style="light" />
-          {token ? (
+          {token || isGuest ? (
             <StackNavigation />
           ) : (
             <AuthStack />

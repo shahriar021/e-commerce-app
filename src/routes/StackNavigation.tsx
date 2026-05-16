@@ -43,6 +43,7 @@ import { RootStackParamList } from "src/types/screens";
 import Notification from "src/screens/Notification/Notification";
 import CameraScreen from "src/screens/Search/CameraScreen";
 import CameraScreenFeed from "src/screens/Feed/CameraScreenFeed";
+import LoginScreen from "src/screens/Auth/LoginScreen";
 
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -51,15 +52,14 @@ const StackNavigation = () => {
   const userType = useAppSelector((store) => {
     return store?.auth?.userType ?? null;
   });
+  const isGuest = useAppSelector((store) => store?.auth?.isGuest);
 
 
 
-  // if(!userType){
-  //   return <ActivityIndicator size="large"/>
-  // }
-  if (!userType) {
-    return <ActivityIndicator size="large" />
-  }
+  
+  if (!userType && !isGuest) {
+  return <ActivityIndicator size="large" />;
+}
 
   return (
     <>
@@ -85,13 +85,15 @@ const StackNavigation = () => {
           <Stack.Screen
             key={userType}
             name="BottomScreen"
-            component={userType == "User" ? BottomNavigation : ProviderBottomNavigation}
+            // component={userType == "User" ? BottomNavigation : ProviderBottomNavigation}
+            component={BottomNavigation}
             options={{
               headerShown: false,
             }}
           />
         }
         {/* <Stack.Screen name="Profile" options={{ headerShown: false }} component={Profile} /> */}
+         <Stack.Screen options={{headerShown:true}} name="Login Screen" component={LoginScreen}/>
         <Stack.Screen name="Privacy" component={Privacy} />
         <Stack.Screen name="Terms" component={Terms} />
         <Stack.Screen name="Address" component={Address} />

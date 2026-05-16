@@ -16,14 +16,19 @@ type Props = {
 type BrandDetailsProps = RouteProp<RootStackParamList, "Brand Products">
 
 const BrandProducts = ({ navigation }: Props) => {
+    const isGuest = useAppSelector((state) => state.auth.isGuest);
     const [loadMore, setLoadMore] = useState(20)
     const route = useRoute<BrandDetailsProps>();
     const { ID } = route.params 
     const token = useAppSelector((state) => state.auth.token)
     const [isClothType, setIsClothType] = useState("ALL")
     const [searchQuery, setSearchQuery] = useState("")
-    const { data } = useProductListBrandIdWiseQuery({ token, id: ID, limit: loadMore })
+    const { data ,isLoading, error, isError } = useProductListBrandIdWiseQuery({ token: isGuest ? undefined : token,  id: ID, limit: loadMore })
     const { data: getCat } = useGetCategoryListQuery({ token, id: ID })
+    console.log("data:", data)
+console.log("isLoading:", isLoading)
+console.log("error:", error)
+console.log("isError:", isError)
 
 
     useLayoutEffect(() => {

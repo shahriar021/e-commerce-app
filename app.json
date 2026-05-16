@@ -8,7 +8,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/arkiveTransparent.png",
+    "icon": "./assets/arkiveIos.png",
     "userInterfaceStyle": "light",
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -28,7 +28,8 @@
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera"
       },
       "deploymentTarget": "15.1",
-      "useFrameworks": "dynamic"
+      "useFrameworks": "dynamic",
+      "appleTeamId": "8Q87GSTTX3"
     },
     "android": {
       "versionCode": 250,
@@ -67,6 +68,7 @@
     },
     "plugins": [
       "./plugins/withRootBuildGradle",
+      "./plugins/withIosXcode16Fix",
       "@react-native-firebase/app",
       [
         "react-native-vision-camera",
@@ -118,11 +120,11 @@
         {
           "android": {
             "ndkVersion": "27.1.12297006",
-            "agpVersion": "8.5.1",
-            "kotlinVersion": "2.0.21",
-            "targetSdkVersion": 35,
-            "compileSdkVersion": 35,
-            "buildToolsVersion": "35.0.0",
+            "agpVersion": "8.9.1",
+            "kotlinVersion": "2.1.10",
+            "targetSdkVersion": 36,
+            "compileSdkVersion": 36,
+            "buildToolsVersion": "36.0.0",
             "newArchEnabled": false,
             "freeCompilerArgs": [
               "-Xskip-prerelease-check",

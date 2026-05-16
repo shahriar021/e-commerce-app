@@ -10,17 +10,19 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
   RefreshControl,
+  Alert,
 } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
 import { images } from "./demo";
 import BrandWeek from "src/components/ui/homepage/BrandWeek";
 import SearchModal from "./SearchModal";
 import { useFeatureBrandsQuery } from "src/redux/features/brand/brandApi";
-import { useAppSelector } from "src/redux/hooks";
+import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { useGetAddToCartQuery } from "src/redux/features/cart/cartApi";
 import { RootStackParamList } from "src/types/screens";
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Image } from 'expo-image'
+import { setGuestMode } from "src/redux/features/auth/authSlice";
 
 
 const { width } = Dimensions.get("screen");
@@ -33,9 +35,10 @@ const HomeScreen = () => {
   const [searchModal, setSearchModal] = useState(false)
   const [loadMore, setLoadMore] = useState(5)
   const token = useAppSelector((state) => state.auth.token);
-  const { data, isFetching, refetch } = useFeatureBrandsQuery({ token, limit: loadMore })
-  const { data: getCart } = useGetAddToCartQuery(token);
-
+  const isGuest = useAppSelector((state) => state.auth.isGuest);
+  const { data, isFetching, refetch,error, isLoading  } = useFeatureBrandsQuery({ token, limit: loadMore },{skip:false})
+  const { data: getCart } = useGetAddToCartQuery(token, { skip: !token });
+  const dispatch = useAppDispatch();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -89,7 +92,7 @@ const HomeScreen = () => {
         refreshControl={<RefreshControl refreshing={isFetching} onRefresh={onRefresh} tintColor="#4ADE80" colors={["#4ADE80"]} />}
       >
         {/* Image Slider Wrapper */}
-        <View style={{ position: "relative" }}>
+        <View >
           {/* Image ScrollView */}
           <ScrollView
             ref={scrollRef}
@@ -104,33 +107,7 @@ const HomeScreen = () => {
             ))}
           </ScrollView>
 
-          <TouchableOpacity
-            className="absolute right-5 top-16"
-            style={{ width: scale(30), height: verticalScale(30) }}
-            onPress={() => navigation.navigate("Cart Page")}
-          >
-            <Image source={require("../../../assets/e-icon/Frame.png")} style={{ width: "100%", height: "100%" }} />
-            <View
-              className="absolute bg-[#0CB24C] rounded-full items-center justify-center"
-              style={{
-                top: -2,
-                right: -3,
-                width: 15,
-                height: 15,
-              }}
-            >
-              <Text className="text-white text-[10px] font-bold">
-                {getCart?.data?.products?.reduce((acc: any, curr: any) => acc + 1, 0)}
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            className="absolute right-20 top-16"
-            style={{ width: scale(30), height: verticalScale(30) }}
-            onPress={handleSearch}
-          >
-            <FontAwesome name="search" size={scale(34)} color="white" />
-          </TouchableOpacity>
+
 
           <View className="absolute bottom-0 right-0 left-0 top-0 items-center justify-center ">
             <Text className="text-white font-instrumentSansBold text-3xl max-w-[90%] text-center ">One Platform, A Thousand Brands</Text>
@@ -174,6 +151,51 @@ const HomeScreen = () => {
               />
             ))}
           </View>
+        </View>
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+          }}
+          pointerEvents="box-none"  // passes touches through to ScrollView beneath
+        >
+          <TouchableOpacity
+            className="absolute right-5 top-16"
+            style={{ width: scale(30), height: verticalScale(30) }}
+            onPress={() => {
+              if (isGuest) {
+               dispatch(setGuestMode(false));
+               Alert.alert("You have to log in to explore more")
+              } else {
+                navigation.navigate("Cart Page");
+              }
+            }}
+          >
+            <Image source={require("../../../assets/e-icon/Frame.png")} style={{ width: "100%", height: "100%" }} />
+            <View
+              className="absolute bg-[#0CB24C] rounded-full items-center justify-center"
+              style={{
+                top: -2,
+                right: -3,
+                width: 15,
+                height: 15,
+              }}
+            >
+              <Text className="text-white text-[10px] font-bold">
+                {getCart?.data?.products?.reduce((acc: any, curr: any) => acc + 1, 0)}
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="absolute right-20 top-16"
+            style={{ width: scale(30), height: verticalScale(30) }}
+            onPress={handleSearch}
+          >
+            <FontAwesome name="search" size={scale(34)} color="white" />
+          </TouchableOpacity>
         </View>
 
         <View className=" items-center p-3 ">

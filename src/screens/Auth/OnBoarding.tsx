@@ -12,9 +12,12 @@ import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import { scale, verticalScale } from "react-native-size-matters";
 import { NavigationProp } from "src/types/auth";
+import { useAppDispatch } from "src/redux/hooks";
+import { setGuestMode } from "src/redux/features/auth/authSlice";
 
 const OnBoarding = () => {
   const navigation = useNavigation<NavigationProp>()
+  const dispatch = useAppDispatch();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -66,6 +69,9 @@ const OnBoarding = () => {
 
           <TouchableOpacity className="mt-2 mb-2 border border-[#FFFFFF] w-full items-center p-3 rounded-lg" onPress={() => navigation.navigate("Sign Up as User")}>
             <Text className="text-white font-instrumentSansBold">Sign Up as User</Text>
+          </TouchableOpacity>
+          <TouchableOpacity className="mt-2 mb-2 border border-[#FFFFFF] w-full items-center p-3 rounded-lg" onPress={() => dispatch(setGuestMode(true))}>
+            <Text className="text-white font-instrumentSansBold">Browse as Guest</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>

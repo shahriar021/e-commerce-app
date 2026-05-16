@@ -26,8 +26,9 @@ import { SelectedBrand } from "src/types/feed";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCapturedImage } from "src/redux/features/camera/cameraSlice";
+import { useRequireAuth } from "src/hooks/useRequireAuth";
 
-const CreatePostModal = ({ visible, onClose, onPostSuccess, source = "feed" }: any) => {
+const CreatePostModal = ({ visible, onClose, onPostSuccess, source = "feed",modalId }: any) => {
   const { height } = useWindowDimensions();
   const token = useAppSelector((state) => state.auth.token);
   const [loadMore] = useState(100);
@@ -38,24 +39,24 @@ const CreatePostModal = ({ visible, onClose, onPostSuccess, source = "feed" }: a
   const [comment, setComments] = useState("");
   const [selectedImage, setSelectedImage] = useState<ImageObject | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<SelectedBrand | null>(null);
+  const requireAuth = useRequireAuth();
+
   const navigation = useNavigation()
   const dispatch = useDispatch()
 
   const userType = useAppSelector((state) => state.auth.userType);
 
-  const modalId = useRef(`modal-${source}-${Math.random().toString(36).slice(2)}`).current;
 
   const capturedImageUri = useSelector((state: any) => state.camera.capturedImageUri);
   const capturedSource = useSelector((state: any) => state.camera.source);
   const capturedModalId = useSelector((state: any) => state.camera.modalId); 
 
-   useEffect(() => {
-    // Only process the image if it was meant for THIS modal instance
-    if (capturedImageUri && capturedModalId === modalId) {
-      setSelectedImage({ uri: capturedImageUri });
-      dispatch(clearCapturedImage());
-    }
-  }, [capturedImageUri, capturedModalId]);
+ useEffect(() => {
+  if (capturedImageUri && visible) {
+    setSelectedImage({ uri: capturedImageUri });
+    dispatch(clearCapturedImage()); 
+  }
+}, [visible]); 
 
   const handleHashTag = (text: string) => {
     const hashTagArray = text.split(" ").filter(Boolean);
@@ -63,6 +64,7 @@ const CreatePostModal = ({ visible, onClose, onPostSuccess, source = "feed" }: a
   };
 
   const handlePost = async () => {
+    requireAuth(async () => {
     if (!selectedImage || !comment || !selectedBrand) {
       Alert.alert("Fill all the fields to post!");
       return;
@@ -109,11 +111,18 @@ const CreatePostModal = ({ visible, onClose, onPostSuccess, source = "feed" }: a
     } finally {
       setLoading(false);
     }
-  };
+  })};
 
-   const handleOpenCamera = () => {
+  //  const handleOpenCamera = () => {
+  //   navigation.navigate("CameraScreenFeed", { source, modalId });
+  // };
+
+  const handleOpenCamera = () => {
+  onClose(); // close modal first
+  setTimeout(() => {
     navigation.navigate("CameraScreenFeed", { source, modalId });
-  };
+  }, 300); // wait for modal to close
+};
   return (
     <Modal visible={visible} onRequestClose={onClose} transparent>
       <View className="justify-end flex-1 bg-black/50 ">

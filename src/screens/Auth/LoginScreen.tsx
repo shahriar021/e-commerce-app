@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native"
 import React, { useLayoutEffect, useState } from "react"
 import { ActivityIndicator, Alert, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useDispatch } from "react-redux"
-import { setToken, setUserType, setId } from "src/redux/features/auth/authSlice";
+import { setToken, setUserType, setId, setRefToken } from "src/redux/features/auth/authSlice";
 import { useLoginMutation } from "src/redux/features/auth/authApi"
 import { NavigationProp } from "src/types/auth"
 
@@ -76,8 +76,10 @@ const LoginScreen = () => {
     }
     try {
       const res = await loginData(ldata).unwrap();
+      console.log(res,"log in")
       if (userTypes === res?.data?.role) {
         dispatch(setToken(res.data.accessToken));
+        dispatch(setRefToken(res.data.refreshToken));
         dispatch(setUserType(userTypes));
         if (res?.data?.id) {
           dispatch(setId(res.data.id))
@@ -92,7 +94,7 @@ const LoginScreen = () => {
       const errorMessage = err?.data?.message || err?.message || "Something went wrong!";
       Alert.alert("Error", errorMessage);
     } finally {
-      setLoading(false); // ✅ always resets, success or failure
+      setLoading(false); 
     }
   };
 

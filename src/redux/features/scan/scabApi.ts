@@ -18,9 +18,9 @@ const scanApi = baseApi.injectEndpoints({
       query: ({ token, text }) => {
         return {
           url: `/product?searchTerm=${text}`,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: token ? {
+                        Authorization: `Bearer ${token}`,
+                    } : {},
           method: "GET",
         };
       },

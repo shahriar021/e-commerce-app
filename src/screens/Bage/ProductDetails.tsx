@@ -1,10 +1,10 @@
-import { View, Text, ScrollView, TouchableOpacity,  useWindowDimensions, Alert, } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, useWindowDimensions, Alert, } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { AntDesign, Feather, FontAwesome, Ionicons, } from "@expo/vector-icons";
 import { Rating } from "react-native-ratings";
 import { scale, verticalScale } from "react-native-size-matters";
-import { useAppSelector } from "src/redux/hooks";
+import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { useGetSpecificProductBasedOnIdQuery } from "src/redux/features/product/productApi";
 import { useGetALlReviewBasedOnIdQuery } from "src/redux/features/review/reviewApi";
 import { getTime } from "src/components/shared/timeHistory";
@@ -14,6 +14,8 @@ import { RootStackParamList } from "src/types/screens";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { SizeData } from "src/types/brand";
 import { Image } from "expo-image";
+import { useRequireAuth } from "src/hooks/useRequireAuth";
+import { setGuestMode } from "src/redux/features/auth/authSlice";
 
 type Props = {
     navigation: StackNavigationProp<RootStackParamList, "Product Details">
@@ -22,6 +24,7 @@ type Props = {
 type BrandDetailsProps = RouteProp<RootStackParamList, "Product Details">
 
 const ProductDetails = ({ navigation }: Props) => {
+    const isGuest = useAppSelector((state) => state.auth.isGuest);
     const route = useRoute<BrandDetailsProps>();
     const { ID } = route.params ?? {};
     const token = useAppSelector((state) => state.auth.token);
@@ -32,21 +35,24 @@ const ProductDetails = ({ navigation }: Props) => {
     const [selectedSize, setSelectedSize] = useState<SizeData | null>(null);
     const [quantity, setQuanity] = useState(1);
     const [limit] = useState(2);
-    const { data } = useGetSpecificProductBasedOnIdQuery({ token, id: ID });
+    const requireAuth = useRequireAuth()
+    const dispatch = useAppDispatch()
+    const { data, error } = useGetSpecificProductBasedOnIdQuery({ token: isGuest ? undefined : token, id: ID });
     useEffect(() => {
-  if (data?.data?.product?.[0]?.isFavourite !== undefined) {
-    setIsHeart(data.data.product[0].isFavourite);
-  }
-}, [data]);
+        if (data?.data?.product?.[0]?.isFavourite !== undefined) {
+            setIsHeart(data.data.product[0].isFavourite);
+        }
+    }, [data]);
 
-    
+    console.log(ID,"review")
     const { data: getReview } = useGetALlReviewBasedOnIdQuery({
-        token,
+        token: isGuest ? undefined : token,
         id: ID,
         limit: limit,
     });
     const [postCart] = usePostAddToCartMutation();
     const [postFavourite] = usePostFavProductMutation();
+    console.log(error)
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -81,30 +87,54 @@ const ProductDetails = ({ navigation }: Props) => {
         }
     };
 
+    // const handleAddToCart = async () => {
+    //     if (!isColor || !selectedSize || !quantity) {
+    //         Alert.alert("Please select quantity,size and color properly.");
+    //         return;
+    //     }
+    //     const body = {
+    //         data: {
+    //             productId: ID,
+    //             color: isColor,
+    //             size: selectedSize.size,
+    //             quantity: quantity,
+    //         },
+    //     };
+    //     try {
+    //         const res = await postCart({ token, data: body }).unwrap();
+    //         if (res.success == true) {
+    //             Alert.alert(res.message);
+    //             navigation.navigate("Cart Page" as never);
+    //         }
+    //     } catch (err) {
+    //         Alert.alert("Something went wrong!");
+    //     }
+    // };
     const handleAddToCart = async () => {
-        if (!isColor || !selectedSize || !quantity) {
-            Alert.alert("Please select quantity,size and color properly.");
-            return;
-        }
-        const body = {
-            data: {
-                productId: ID,
-                color: isColor,
-                size: selectedSize.size,
-                quantity: quantity,
-            },
-        };
-        try {
-            const res = await postCart({ token, data: body }).unwrap();
-            if (res.success == true) {
-                Alert.alert(res.message);
-                navigation.navigate("Cart Page" as never);
+        requireAuth(async () => {
+            if (!isColor || !selectedSize || !quantity) {
+                Alert.alert("Please select quantity, size and color properly.");
+                return;
             }
-        } catch (err) {
-            Alert.alert("Something went wrong!");
-        }
+            const body = {
+                data: {
+                    productId: ID,
+                    color: isColor,
+                    size: selectedSize.size,
+                    quantity: quantity,
+                },
+            };
+            try {
+                const res = await postCart({ token, data: body }).unwrap();
+                if (res.success == true) {
+                    Alert.alert(res.message);
+                    navigation.navigate("Cart Page" as never);
+                }
+            } catch (err) {
+                Alert.alert("Something went wrong!");
+            }
+        });
     };
-
     const handleFav = async (id: string) => {
 
         try {
@@ -117,7 +147,7 @@ const ProductDetails = ({ navigation }: Props) => {
 
     const handleNavigateToReview = () => {
         if (ID) {
-            console.log(ID)
+
             navigation.navigate("Review", { id: ID });
         }
     };
@@ -149,13 +179,16 @@ const ProductDetails = ({ navigation }: Props) => {
 
                         <TouchableOpacity
                             className="bg-[#252525] p-3 rounded-full"
-                            onPress={() => handleFav(data?.data?.product[0]?._id)}
+                            onPress={() => {
+                                if (isGuest) {
+                                    dispatch(setGuestMode(false));
+                                    Alert.alert("You have to log in to explore more");
+                                } else {
+                                    handleFav(data?.data?.product[0]?._id);
+                                }
+                            }}
                         >
-                            {isHeart ? (
-                                <Ionicons name="heart" size={24} color="red" />
-                            ) : (
-                                <Ionicons name="heart" size={24} color="white" />
-                            )}
+                            <Ionicons name="heart" size={24} color={isHeart ? "red" : "white"} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -199,7 +232,7 @@ const ProductDetails = ({ navigation }: Props) => {
                     </TouchableOpacity>
                 </View>
                 <View className="w-full p-3 ">
-                    
+
 
                     <Text className="text-[#ADAEBC] font-instrumentSansSemiBold mb-2">
                         Color
@@ -249,7 +282,7 @@ const ProductDetails = ({ navigation }: Props) => {
                     {/* review */}
                     <View className="flex-row justify-between mt-2 mb-1">
                         <View className="flex-row gap-2 items-center">
-                            <View style={{ width: scale(30), height: scale(30),borderRadius:15,overflow:"hidden" }}>
+                            <View style={{ width: scale(30), height: scale(30), borderRadius: 15, overflow: "hidden" }}>
                                 <Image
                                     source={{
                                         uri: getReview?.data?.data[0]?.userInfo?.profile[0],
@@ -283,7 +316,7 @@ const ProductDetails = ({ navigation }: Props) => {
                     <Text className="font-instrumentRegular text-[#fff] mt-2">
                         {getReview?.data?.data[0]?.comments || ""}
                     </Text>
-                    {getReview?.data?.data[0]?.attachment[0] &&(<View
+                    {getReview?.data?.data[0]?.attachment[0] && (<View
                         className="mt-2 rounded-xl overflow-hidden "
                         style={{ width: scale(111), height: verticalScale(111) }}
                     >

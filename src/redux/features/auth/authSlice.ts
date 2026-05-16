@@ -38,7 +38,9 @@ type TAuthData = {
   EXPO_PUBLIC_BASE_URL: string | null;
   userType: string | null;
   token: string | null;
+  refreshToken:string | null;
   loading: boolean;
+  isGuest: boolean;
 };
 
 const initialState: TAuthData = {
@@ -51,6 +53,8 @@ const initialState: TAuthData = {
   userType: null,
   token: null,
   loading: false,
+  refreshToken:null,
+  isGuest: false,
 };
 
 const authSlice = createSlice({
@@ -77,11 +81,17 @@ const authSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
+    setRefToken: (state, action) => {
+      state.refreshToken = action.payload;
+    },
     setCamLoading: (state, action) => {
       state.loading = action.payload;
     },
+    setGuestMode: (state, action) => {
+  state.isGuest = action.payload;
+},
   },
 });
 
-export const { setUser, setCompanyAuth, setBaseUrl, setUserType, setToken, setId, setCamLoading } = authSlice.actions;
+export const { setUser, setCompanyAuth, setBaseUrl, setUserType, setToken, setId, setCamLoading,setRefToken,setGuestMode } = authSlice.actions;
 export default authSlice.reducer;

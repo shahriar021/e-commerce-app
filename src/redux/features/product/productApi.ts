@@ -61,12 +61,12 @@ const productApi = baseApi.injectEndpoints({
                 return {
                     url: `/product?brandId=${id}&limit=${limit}`,
                     method: "GET",
-                    headers: {
+                    headers: token ? {
                         Authorization: `Bearer ${token}`,
-                    },
+                    } : {},
                 };
             },
-            providesTags:['product']
+            providesTags: ['product']
         }),
 
         getProductIdWise: builder.query({
@@ -74,9 +74,9 @@ const productApi = baseApi.injectEndpoints({
                 return {
                     url: `/product?_id=${id}`,
                     method: "GET",
-                    headers: {
+                    headers: token ? {
                         Authorization: `Bearer ${token}`,
-                    },
+                    } : {},
                 };
             },
         }),
@@ -85,9 +85,9 @@ const productApi = baseApi.injectEndpoints({
             query: ({ token, id }) => {
                 return {
                     url: `/product?_id=${id}`,
-                    headers: {
+                    headers: token ? {
                         Authorization: `Bearer ${token}`,
-                    },
+                    } : {},
                     method: "GET",
                 };
             },
@@ -104,7 +104,7 @@ const productApi = baseApi.injectEndpoints({
                     body: formData,
                 };
             },
-            invalidatesTags:['product']
+            invalidatesTags: ['product']
         }),
 
         deleteProduct: builder.mutation({
@@ -117,40 +117,40 @@ const productApi = baseApi.injectEndpoints({
                     },
                 };
             },
-            invalidatesTags:['product']
+            invalidatesTags: ['product']
         }),
 
-        updateProduct:builder.mutation({
-            query:({token,id,body})=>{
-                return{
-                    url:`/product/${id}`,
-                    method:"PATCH",
-                    headers:{
-                        Authorization:`Bearer ${token}`
+        updateProduct: builder.mutation({
+            query: ({ token, id, body }) => {
+                return {
+                    url: `/product/${id}`,
+                    method: "PATCH",
+                    headers: {
+                        Authorization: `Bearer ${token}`
                     },
                     body
                 }
             },
-            invalidatesTags:['product']
+            invalidatesTags: ['product']
         }),
 
-        getCategoryList:builder.query({
-            query:({token,id})=>{
-                return{
-                    url:`/stats/categorylist/${id}`,
-                    headers:{
-                        Authorization:`Bearer ${token}`
+        getCategoryList: builder.query({
+            query: ({ token, id }) => {
+                return {
+                    url: `/stats/categorylist/${id}`,
+                    headers: {
+                        Authorization: `Bearer ${token}`
                     }
                 }
             }
         }),
 
-        getSearchProduct:builder.query({
-            query:({token,name})=>{
-                return{
-                    url:`/product?searchTerm=${name}`,
-                    headers:{
-                        Authorization:`Bearer ${token}`
+        getSearchProduct: builder.query({
+            query: ({ token, name }) => {
+                return {
+                    url: `/product?searchTerm=${name}`,
+                    headers: {
+                        Authorization: `Bearer ${token}`
                     }
                 }
             }

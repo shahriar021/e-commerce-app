@@ -10,9 +10,9 @@ const feedApi=baseApi.injectEndpoints({
 
                     url:`/post?limit=${limit}&tags=${tag}`,
                     method:"GET",
-                    headers:{
-                        Authorization:`Bearer ${token}`
-                    }
+                    headers: token ? {
+                        Authorization: `Bearer ${token}`,
+                    } : {},
                 }
             },
             providesTags:['feedPost']
