@@ -13,6 +13,7 @@ const LoginScreen = () => {
   const [userTypes, setUserTypes] = useState<string>("")
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [dropdownY, setDropdownY] = useState(0)
   const [loading, setLoading] = useState(false)
   const [isVisible, setIsVisible] = useState(false);
   const [loginData] = useLoginMutation()
@@ -106,7 +107,8 @@ const LoginScreen = () => {
           It is quick and easy to log in. Enter your email and password below.
         </Text>
 
-        <View className=" bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2">
+        <View className=" bg-[#2C2C2C] mt-3 mb-2 rounded-lg overflow-hidden flex-row items-center p-2"
+        onLayout={(e) => setDropdownY(e.nativeEvent.layout.y + e.nativeEvent.layout.height)}>
           <View className="flex-1"  >
             <Text style={{ color: "#ADAEBC" }}>{userTypes ? userTypes : "Select Types"}</Text>
           </View>
@@ -116,7 +118,8 @@ const LoginScreen = () => {
         </View>
 
         {isType && (
-          <View className="absolute bg-[#121212] top-44 z-10 right-3 rounded-lg p-2 gap-2 border border-white">
+          <View className="absolute bg-[#121212] top-44 z-10 right-3 rounded-lg p-2 gap-2 border border-white"
+          style={{ top: dropdownY }}>
             <TouchableOpacity
               className="bg-[#2C2C2C] p-2 rounded-lg"
               onPress={() => {

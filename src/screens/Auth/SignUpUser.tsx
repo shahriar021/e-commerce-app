@@ -42,7 +42,7 @@ const SignUpUser = () => {
     }, [navigation])
 
     const handleSignUpUser = async () => {
-        if (!email || !password || !firstName || !lastName || !phoneNumber) {
+        if (!email || !password || !firstName || !lastName ) {
             Alert.alert("Please fill up the fields!")
             return;
         }
@@ -122,7 +122,7 @@ const SignUpUser = () => {
                     />
 
                     <TextInput
-                        placeholder="Phone number"
+                        placeholder=" Phone number (Optional)"
                         placeholderTextColor="#aaa"
                         keyboardType="phone-pad"
                         style={{ flex: 1, fontSize: 16, color: 'white' }}

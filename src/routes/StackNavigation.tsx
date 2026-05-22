@@ -10,6 +10,7 @@ import {
   ChangePassword,
   EditProfile,
   Withdraw,
+  OnBoarding,
 } from "src/screens";
 
 import { ProviderBottomNavigation } from "./ProviderBottomNavigation";

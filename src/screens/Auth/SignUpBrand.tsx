@@ -23,7 +23,7 @@ const SignUpBrand = () => {
   const [theme, setTheme] = useState("")
   const [countryCode, setCountryCode] = useState('+93');
   const [show, setShow] = useState(false);
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false)
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -52,10 +52,10 @@ const SignUpBrand = () => {
       setSelectedImage(asset);
     }
   }
+  console.log("selectedImage:", selectedImage)
   const handleSignUpBrand = async () => {
-    setLoading(true)
-    const formData = new FormData();
-    if (!email || !password || !phoneNumber) {
+
+    if (!email || !password) {
       Alert.alert("Please fill up the fields!")
       return;
     }
@@ -64,6 +64,16 @@ const SignUpBrand = () => {
       Alert.alert("Password doesn't match")
       return;
     }
+
+    if (!selectedImage) {
+      Alert.alert("Please add a brand logo")
+      return;
+    }
+
+    setLoading(true)
+
+    const formData = new FormData();
+
     const userData = {
       brandName: brandName,
       theme: theme,
@@ -79,10 +89,10 @@ const SignUpBrand = () => {
 
     if (selectedImage) {
 
-      const imageFile:any = {
-        uri: selectedImage?.uri,
-        name: selectedImage?.fileName,
-        type: selectedImage?.mimeType
+      const imageFile: any = {
+        uri: selectedImage.uri,
+        name: selectedImage.fileName || `brandlogo_${Date.now()}.jpg`,
+        type: selectedImage.mimeType || 'image/jpeg',
       }
       formData.append("brandLogo", imageFile)
     }
@@ -91,16 +101,20 @@ const SignUpBrand = () => {
     formData.append("data", JSON.stringify(userData));
 
     try {
-      setLoading(false)
+      
       const res = await postBody(formData).unwrap();
       Alert.alert(res.message);
       if (res.message === "Brand registered successfully") {
         navigation.navigate("OnBoarding" as never)
       }
     } catch (err: any) {
-      setLoading(false)
+      console.log(err?.data?.errorSources, "error")
+      
       const errorMessage = err?.data?.message || err?.message || "An unknown error occurred";
       Alert.alert("Error", errorMessage);
+    }
+    finally {
+      setLoading(false)
     }
 
   };
@@ -165,7 +179,7 @@ const SignUpBrand = () => {
 
           {/* Phone Input */}
           <TextInput
-            placeholder="Phone number"
+            placeholder=" Phone number (Optional)"
             placeholderTextColor="#aaa"
             keyboardType="phone-pad"
             style={{ flex: 1, fontSize: 16, color: 'white' }}
@@ -202,7 +216,7 @@ const SignUpBrand = () => {
             className="w-full rounded-lg  overflow-hidden"
             style={{ width: "100%", alignItems: "center", padding: 10 }}
           >
-            <Text className="text-[#121212] text-xl font-instrumentSansBold" >{loading?<ActivityIndicator size={"small"} color={"blue"}/>:"Create a Brand Account"}</Text>
+            <Text className="text-[#121212] text-xl font-instrumentSansBold" >{loading ? <ActivityIndicator size={"small"} color={"blue"} /> : "Create a Brand Account"}</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>

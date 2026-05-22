@@ -20,6 +20,7 @@ import Lookbook from "./Lookbook";
 import { Image } from 'expo-image'
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
+import GuestProfileShimmer from "./GeustModeProfile";
 
 
 type RootStackParamList = {
@@ -45,6 +46,7 @@ export default function YourComponent() {
   const userType = useAppSelector((state) => state.auth.userType)
   const modalId = useRef(`modal-profile-${Math.random().toString(36).slice(2)}`).current;
   const capturedImageUri = useSelector((state: any) => state.camera.capturedImageUri);
+  const isGuest = useAppSelector((state) => state.auth.isGuest)
 
   useFocusEffect(
   useCallback(() => {
@@ -100,16 +102,26 @@ export default function YourComponent() {
   }
 
  if (isStorageLoading) {
-  return <ActivityIndicator />  // only show loader while AsyncStorage is reading
+  return <ActivityIndicator />  
 }
+
+if (isGuest) {
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#121212' }}>
+      <GuestProfileShimmer navigation={navigation} />
+    </SafeAreaView>
+  )
+}
+
 
 if (!profile?.data) {
   return (
     <View style={{ flex: 1, backgroundColor: '#121212', justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ color: 'white' }}>No profile found. Please log in again.</Text>
+      <Text style={{ color: 'white' }}>No profile found. Please log in .</Text>
     </View>
   )
 }
+
 
   return (
     <SafeAreaView style={{flex:1,backgroundColor: '#121212',padding:10}}>

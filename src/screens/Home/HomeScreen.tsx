@@ -166,13 +166,19 @@ const HomeScreen = () => {
             className="absolute right-5 top-16"
             style={{ width: scale(30), height: verticalScale(30) }}
             onPress={() => {
-              if (isGuest) {
-               dispatch(setGuestMode(false));
-               Alert.alert("You have to log in to explore more")
-              } else {
-                navigation.navigate("Cart Page");
-              }
-            }}
+  if (isGuest) {
+    Alert.alert(
+      "Login Required",
+      "You need an account to view your cart.",
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Login", onPress: () => dispatch(setGuestMode(false)) }
+      ]
+    )
+  } else {
+    navigation.navigate("Cart Page");
+  }
+}}
           >
             <Image source={require("../../../assets/e-icon/Frame.png")} style={{ width: "100%", height: "100%" }} />
             <View
